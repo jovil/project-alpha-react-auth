@@ -26,7 +26,7 @@ export default function AuthComponent() {
         setMessage(result.message);
       })
       .catch((error) => {console.log(error)});
-  }, []);
+  }, [token]);
 
   const logout = () => {
     // destroy the cookie
