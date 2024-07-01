@@ -1,22 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import FreeComponent from "./FreeComponent";
-import ProtectedRoutes from "./ProtectedRoutes";
+import { BrowserRouter } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
+import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container);
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<App/>}/>
-        <Route exact path="/free" element={<FreeComponent/>} />
-        <Route path="/auth" element={<ProtectedRoutes/>} />
-      </Routes>
+      <App />
     </BrowserRouter>
   </React.StrictMode>
 );
