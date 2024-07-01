@@ -26,7 +26,7 @@ export default function Register() {
 
       fetch(dbUrl, configuration)
       .then((result) => {
-        setRegister(true);
+        if (result.ok) setRegister(true);
       })
       .catch((error) => {console.log(error)})
     }
