@@ -7,6 +7,7 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [login, setLogin] = useState(false);
+    const [emailNotFound, setEmailNotFound] = useState(false);
 
     const handleSubmit = async (e: any) => {
       e.preventDefault();
@@ -29,14 +30,16 @@ export default function Login() {
       await fetch(dbUrl, configuration)
       .then(response => response.json())
       .then((result) => {
-          setLogin(true);
-
+          if (!result.email) return setEmailNotFound(true)
           // set the cookie
           cookies.set("TOKEN", result.token, {
             path: "/",
           });
+
           // redirect user to the auth page
           window.location.href = "/auth";
+          setEmailNotFound(false)
+          setLogin(true);
       })
       .catch((error) => {
         console.log(error)
@@ -81,10 +84,13 @@ export default function Login() {
             </Button>
 
             {/* display success message */}
-            {login ? (
-              <p className="text-success">You Are Logged in Successfully</p>
-            ) : (
-              <p className="text-danger">You Are Not Logged in</p>
+            {login && (
+              <p className="text-success">You are logged in successfully.</p>
+            )}
+
+            {/* display email not found message */}
+            {emailNotFound && (
+              <p className="text-danger">Email doesn't exist.</p>
             )}
           </Form>
         </>
