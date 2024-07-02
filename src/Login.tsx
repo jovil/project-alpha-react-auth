@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Form, Button } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -8,6 +9,7 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [login, setLogin] = useState(false);
     const [emailNotFound, setEmailNotFound] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: any) => {
       e.preventDefault();
@@ -37,7 +39,9 @@ export default function Login() {
           });
 
           // redirect user to the auth page
-          window.location.href = "/auth";
+          navigate('/auth', {
+            state: { userEmail: result.email }
+          });
           setEmailNotFound(false)
           setLogin(true);
       })
