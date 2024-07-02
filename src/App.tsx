@@ -21,8 +21,8 @@ function App() {
       </Row>
 
       <Routes>
-        <Route exact path='/' element={<Account/>}/>
-        <Route exact path="/free" element={<FreeComponent/>} />
+        <Route path='/' element={<Account/>}/>
+        <Route path="/free" element={<FreeComponent/>} />
         <Route path="/auth" element={<ProtectedRoutes/>} />
       </Routes>
     </Container>

@@ -1,19 +1,21 @@
-import { React, useState } from 'react';
+import { useState } from 'react';
 import { Form, Button } from "react-bootstrap";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
-export default function Register() {
+export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [register, setRegister] = useState(false);
+    const [login, setLogin] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e: any) => {
       e.preventDefault();
 
-      const dbUrl = 'https://project-alpha-auth-db-app-b623d85e31d2.herokuapp.com/register';
+      const dbUrl = 'https://project-alpha-auth-db-app-b623d85e31d2.herokuapp.com/login';
 
       const postData = {
-        email: email,
-        password: password,
+        "email": email,
+        "password": password,
       };
 
       const configuration = {
@@ -24,16 +26,26 @@ export default function Register() {
         body: JSON.stringify(postData) // Convert the data to JSON string
       };
 
-      fetch(dbUrl, configuration)
+      await fetch(dbUrl, configuration)
+      .then(response => response.json())
       .then((result) => {
-        if (result.ok) setRegister(true);
+          setLogin(true);
+
+          // set the cookie
+          cookies.set("TOKEN", result.token, {
+            path: "/",
+          });
+          // redirect user to the auth page
+          window.location.href = "/auth";
       })
-      .catch((error) => {console.log(error)})
+      .catch((error) => {
+        console.log(error)
+      })
     }
 
     return (
         <>
-          <h2>Register</h2>
+          <h2>Login</h2>
           <Form
             onSubmit={(e)=>handleSubmit(e)}
           >
@@ -45,8 +57,7 @@ export default function Register() {
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter email"
-                />
+                placeholder="Enter email" />
             </Form.Group>
 
             {/* password */}
@@ -57,8 +68,7 @@ export default function Register() {
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-              />
+                placeholder="Password" />
             </Form.Group>
 
             {/* submit button */}
@@ -66,16 +76,16 @@ export default function Register() {
               variant="primary"
               type="submit"
               onClick={(e)=>handleSubmit(e)}
-            >
-              Submit
+              >
+              Login
             </Button>
 
             {/* display success message */}
-            {register ? (
-                <p className="text-success">You Are Registered Successfully</p>
-              ) : (
-                <p className="text-danger">You Are Not Registered</p>
-              )}
+            {login ? (
+              <p className="text-success">You Are Logged in Successfully</p>
+            ) : (
+              <p className="text-danger">You Are Not Logged in</p>
+            )}
           </Form>
         </>
     )
