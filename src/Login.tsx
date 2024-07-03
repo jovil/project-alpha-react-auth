@@ -21,7 +21,7 @@ const Login = () => {
     useEffect(() => {
       setEmail(userEmail);
       setPassword(userPassword);
-    }, [userEmail, userPassword])
+    }, [apiUrl, dbUrl, userEmail, userPassword])
 
     const handleLoginState = () => {
       setState({ ...state, isLoggedIn: true });
