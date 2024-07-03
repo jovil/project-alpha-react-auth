@@ -41,7 +41,7 @@ export default function AuthComponent() {
         setPostImage(avatar[0]);
       })
       .catch((error) => {console.log(error)});
-  }, [apiUrl, userEmail]);
+  }, [apiUrl, authUrl, userEmail]);
 
   const logout = () => {
     cookies.remove("TOKEN", { path: "/" });
