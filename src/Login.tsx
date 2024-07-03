@@ -15,6 +15,7 @@ const Login = () => {
     const location = useLocation();
     const { userEmail, userPassword } = location.state || { userEmail: '', userPassword: '' };
     const apiUrl = process.env.REACT_APP_API_URL;
+    console.log('apiUrl', apiUrl)
     const dbUrl = `${apiUrl}/login`;
 
     useEffect(() => {
