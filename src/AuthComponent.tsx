@@ -43,7 +43,7 @@ export default function AuthComponent() {
     }
 
     fetchUserData();
-  }, [apiUrl, authUrl, userEmail, setUserState]);
+  }, [apiUrl, authUrl, userEmail, userState]);
 
   const logout = () => {
     cookies.remove("TOKEN", { path: "/" });
