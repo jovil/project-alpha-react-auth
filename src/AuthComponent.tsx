@@ -41,7 +41,7 @@ export default function AuthComponent() {
         setPostImage(avatar[0]);
       })
       .catch((error) => {console.log(error)});
-  }, [token]);
+  }, [token, userEmail]);
 
 
 
