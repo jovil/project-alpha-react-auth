@@ -102,7 +102,7 @@ export default function AuthComponent() {
       </Button>
 
       {postImage && (
-        <img className="w-14 h-14" src={postImage.myFile || ''} />
+        <img className="w-14 h-14" src={postImage.myFile || ''} alt="" />
       )}
 
       <Form
