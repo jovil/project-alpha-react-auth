@@ -23,15 +23,15 @@ export default function AuthComponent() {
   const uploadsUrl = `${apiUrl}/uploads`;
   const { userEmail } = location.state || {};
 
-  // set configurations for the API call here
-  const authConfiguration = {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
   useEffect(() => {
+    // set configurations for the API call here
+    const authConfiguration = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     // make the API call
     fetch(authUrl, authConfiguration)
       .then(response => response.json())
