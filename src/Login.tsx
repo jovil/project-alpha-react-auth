@@ -14,6 +14,8 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { userEmail, userPassword } = location.state || { userEmail: '', userPassword: '' };
+    const apiUrl = process.env.REACT_APP_API_URL;
+    const dbUrl = `${apiUrl}/login`;
 
     useEffect(() => {
       setEmail(userEmail);
@@ -26,9 +28,6 @@ const Login = () => {
 
     const handleSubmit = async (e: any) => {
       e.preventDefault();
-      const apiUrl = process.env.REACT_APP_API_URL;
-      const dbUrl = `${apiUrl}/login`;
-
       const postData = {
         "email": email,
         "password": password,

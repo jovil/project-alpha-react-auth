@@ -30,7 +30,7 @@ export default function Register() {
       .then((result) => {
         if (result.ok) {
           setRegister(true);
-          navigate('/', {
+          navigate('/login', {
             state: {
               userEmail: postData.email,
               userPassword: postData.password

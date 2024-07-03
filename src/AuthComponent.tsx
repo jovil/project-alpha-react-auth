@@ -11,19 +11,20 @@ export default function AuthComponent() {
     myFile: any;
   }
 
+
   const apiUrl = process.env.REACT_APP_API_URL;
+  const uploadsUrl = `${apiUrl}/uploads`;
   const { state, setState } = useContext(GlobalStateContext);
   const [postImage, setPostImage] = useState<PostImageState>({
     email: '',
     myFile: ''
   })
   const location = useLocation();
-  const token = cookies.get("TOKEN");
-  const uploadsUrl = `${apiUrl}/uploads`;
   const { userEmail } = location.state || {};
 
   useEffect(() => {
     const authUrl = `${apiUrl}/auth-endpoint`;
+    const token = cookies.get("TOKEN");
     // set configurations for the API call here
     const authConfiguration = {
       method: 'GET',
@@ -31,7 +32,6 @@ export default function AuthComponent() {
         Authorization: `Bearer ${token}`,
       },
     };
-
     // make the API call
     fetch(authUrl, authConfiguration)
       .then(response => response.json())
@@ -41,9 +41,13 @@ export default function AuthComponent() {
         setPostImage(avatar[0]);
       })
       .catch((error) => {console.log(error)});
-  }, [token, userEmail]);
+  }, [])
 
-
+  const logout = () => {
+    cookies.remove("TOKEN", { path: "/" });
+    setState({ ...state, isLoggedIn: false });
+    window.location.href = "/";
+  }
 
   const uploadProfileImage = async (data: any) => {
     data.email = userEmail;
@@ -60,12 +64,6 @@ export default function AuthComponent() {
       .then((result) => {console.log(result)})
       .catch((error) => {console.log(error)})
     } catch (error) {console.log('error', error);}
-  }
-
-  const logout = () => {
-    cookies.remove("TOKEN", { path: "/" });
-    setState({ ...state, isLoggedIn: false });
-    window.location.href = "/";
   }
 
   function handleSubmit(e: any) {
