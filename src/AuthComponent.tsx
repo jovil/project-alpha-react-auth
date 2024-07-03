@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { GlobalStateContext } from './context'
 import { Button, Form } from "react-bootstrap";
 import { useLocation } from 'react-router-dom';
 import Cookies from "universal-cookie";
@@ -10,6 +11,7 @@ export default function AuthComponent() {
     myFile: any;
   }
 
+  const { state, setState } = useContext(GlobalStateContext);
   const [postImage, setPostImage] = useState<PostImageState>({
     email: '',
     myFile: ''
@@ -61,6 +63,7 @@ export default function AuthComponent() {
 
   const logout = () => {
     cookies.remove("TOKEN", { path: "/" });
+    setState({ ...state, isLoggedIn: false });
     window.location.href = "/";
   }
 

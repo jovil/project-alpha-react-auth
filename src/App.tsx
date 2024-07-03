@@ -1,12 +1,16 @@
+import React, { useContext } from 'react';
+import { GlobalStateContext } from './context';
 import { Container, Col, Row } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
-import Account from "./Home";
+import Home from "./Home";
 import FreeComponent from "./FreeComponent";
 import ProtectedRoutes from "./ProtectedRoutes";
 import "./App.css";
 import Register from "./Register";
 
 function App() {
+  const { state } = useContext(GlobalStateContext);
+
   return (
     <Container>
       <Row>
@@ -15,13 +19,15 @@ function App() {
             <a href="/">Home</a>
             <a href="/free">Free Component</a>
             <a href="/auth">Auth Component</a>
-            <a href="/register">Register</a>
+            {!state.isLoggedIn ? (
+              <a href="/register">Register</a>
+            ) : ''}
           </section>
         </Col>
       </Row>
 
       <Routes>
-        <Route path='/' element={<Account/>}/>
+        <Route path='/' element={<Home/>}/>
         <Route path="/free" element={<FreeComponent/>} />
         <Route path="/auth" element={<ProtectedRoutes/>} />
         <Route path="/register" element={<Register/>} />

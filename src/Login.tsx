@@ -1,15 +1,21 @@
-import { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { GlobalStateContext } from './context'
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
-export default function Login() {
+const Login = () => {
+    const { state, setState } = useContext(GlobalStateContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [login, setLogin] = useState(false);
     const [emailNotFound, setEmailNotFound] = useState(false);
     const navigate = useNavigate();
+
+    const handleLoginState = () => {
+      setState({ ...state, isLoggedIn: true });
+    };
 
     const handleSubmit = async (e: any) => {
       e.preventDefault();
@@ -38,6 +44,8 @@ export default function Login() {
             path: "/",
           });
 
+          handleLoginState();
+
           // redirect user to the auth page
           navigate('/auth', {
             state: { userEmail: result.email }
@@ -52,7 +60,7 @@ export default function Login() {
 
     return (
         <>
-          <h2>Login</h2>
+          <h2 className="text-4xl">Login</h2>
           <Form
             onSubmit={(e)=>handleSubmit(e)}
           >
@@ -80,7 +88,7 @@ export default function Login() {
 
             {/* submit button */}
             <Button
-              variant="primary"
+              variant="success"
               type="submit"
               onClick={(e)=>handleSubmit(e)}
               >
@@ -100,3 +108,5 @@ export default function Login() {
         </>
     )
 }
+
+export default Login;
