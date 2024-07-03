@@ -1,21 +1,21 @@
 import { Container, Col, Row } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
-import Account from "./Account";
+import Account from "./Home";
 import FreeComponent from "./FreeComponent";
 import ProtectedRoutes from "./ProtectedRoutes";
 import "./App.css";
+import Register from "./Register";
 
 function App() {
   return (
     <Container>
       <Row>
         <Col className="text-center">
-          <h1>React Authentication Tutorial</h1>
-
           <section id="navigation">
             <a href="/">Home</a>
             <a href="/free">Free Component</a>
             <a href="/auth">Auth Component</a>
+            <a href="/register">Register</a>
           </section>
         </Col>
       </Row>
@@ -24,6 +24,7 @@ function App() {
         <Route path='/' element={<Account/>}/>
         <Route path="/free" element={<FreeComponent/>} />
         <Route path="/auth" element={<ProtectedRoutes/>} />
+        <Route path="/register" element={<Register/>} />
       </Routes>
     </Container>
   );
