@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { GlobalStateContext } from './context';
 import { Container, Col, Row } from "react-bootstrap";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import Home from "./Home";
 import FreeComponent from "./FreeComponent";
 import ProtectedRoutes from "./ProtectedRoutes";
@@ -16,11 +16,11 @@ function App() {
       <Row>
         <Col className="text-center">
           <section id="navigation">
-            <a href="/">Home</a>
-            <a href="/free">Free Component</a>
-            <a href="/auth">Auth Component</a>
+            <Link to="/">Home</Link>
+            <Link to="/free">Free Component</Link>
+            <Link to="/auth">Auth Component</Link>
             {!state.isLoggedIn ? (
-              <a href="/register">Register</a>
+              <Link to="/register">Register</Link>
             ) : ''}
           </section>
         </Col>
