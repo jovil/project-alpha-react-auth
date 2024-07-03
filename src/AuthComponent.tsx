@@ -13,6 +13,7 @@ export default function AuthComponent() {
 
 
   const apiUrl = process.env.REACT_APP_API_URL;
+  const authUrl = `${apiUrl}/auth-endpoint`;
   const uploadsUrl = `${apiUrl}/uploads`;
   const { state, setState } = useContext(GlobalStateContext);
   const [postImage, setPostImage] = useState<PostImageState>({
@@ -23,7 +24,6 @@ export default function AuthComponent() {
   const { userEmail } = location.state || {};
 
   useEffect(() => {
-    const authUrl = `${apiUrl}/auth-endpoint`;
     const token = cookies.get("TOKEN");
     // set configurations for the API call here
     const authConfiguration = {
@@ -41,7 +41,7 @@ export default function AuthComponent() {
         setPostImage(avatar[0]);
       })
       .catch((error) => {console.log(error)});
-  }, [])
+  }, [apiUrl, userEmail]);
 
   const logout = () => {
     cookies.remove("TOKEN", { path: "/" });
