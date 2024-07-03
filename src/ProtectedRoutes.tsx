@@ -1,4 +1,3 @@
-import React from "react";
 import { Navigate } from "react-router-dom";
 import AuthComponent from "./AuthComponent";
 import Cookies from "universal-cookie";
