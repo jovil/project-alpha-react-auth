@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from "react-router-dom";
+import { GlobalStateProvider } from './context';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -11,9 +12,11 @@ const root = ReactDOM.createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <GlobalStateProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </GlobalStateProvider>
   </React.StrictMode>
 );
 
