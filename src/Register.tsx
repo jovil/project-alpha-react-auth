@@ -1,15 +1,17 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, Button } from "react-bootstrap";
 
 export default function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [register, setRegister] = useState(false);
+    const navigate = useNavigate();
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: any) => {
       e.preventDefault();
 
-      const dbUrl = 'https://project-alpha-auth-db-app-b623d85e31d2.herokuapp.com/register';
+      const dbUrl = 'http://localhost:3000/register';
 
       const postData = {
         email: email,
@@ -24,16 +26,24 @@ export default function Register() {
         body: JSON.stringify(postData) // Convert the data to JSON string
       };
 
-      fetch(dbUrl, configuration)
+      await fetch(dbUrl, configuration)
       .then((result) => {
-        if (result.ok) setRegister(true);
+        if (result.ok) {
+          setRegister(true);
+          navigate('/', {
+            state: {
+              userEmail: postData.email,
+              userPassword: postData.password
+            }
+          });
+        }
       })
       .catch((error) => {console.log(error)})
     }
 
     return (
         <>
-          <h2>Register</h2>
+          <h1 className="text-4xl">Register</h1>
           <Form
             onSubmit={(e)=>handleSubmit(e)}
           >
@@ -71,10 +81,8 @@ export default function Register() {
             </Button>
 
             {/* display success message */}
-            {register ? (
+            {register && (
                 <p className="text-success">You Are Registered Successfully</p>
-              ) : (
-                <p className="text-danger">You Are Not Registered</p>
               )}
           </Form>
         </>
