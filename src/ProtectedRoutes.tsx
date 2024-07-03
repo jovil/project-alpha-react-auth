@@ -6,7 +6,6 @@ const cookies = new Cookies();
 
 export default function ProtectedRoutes() {
   const token = cookies.get("TOKEN");
-  console.log(token)
 
   return token ? <AuthComponent /> : <Navigate to="/" />;
 }
