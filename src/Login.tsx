@@ -18,7 +18,7 @@ const Login = () => {
     useEffect(() => {
       setEmail(userEmail);
       setPassword(userPassword);
-    }, [])
+    }, [userEmail, userPassword])
 
     const handleLoginState = () => {
       setState({ ...state, isLoggedIn: true });
