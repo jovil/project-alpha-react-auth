@@ -19,11 +19,11 @@ export default function AuthComponent() {
   })
   const location = useLocation();
   const token = cookies.get("TOKEN");
-  const authUrl = `${apiUrl}/auth-endpoint`;
   const uploadsUrl = `${apiUrl}/uploads`;
   const { userEmail } = location.state || {};
 
   useEffect(() => {
+    const authUrl = `${apiUrl}/auth-endpoint`;
     // set configurations for the API call here
     const authConfiguration = {
       method: 'GET',
@@ -41,7 +41,7 @@ export default function AuthComponent() {
         setPostImage(avatar[0]);
       })
       .catch((error) => {console.log(error)});
-  }, [token, userEmail, authConfiguration, authUrl]);
+  }, [token, userEmail]);
 
 
 
