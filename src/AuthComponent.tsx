@@ -39,11 +39,10 @@ export default function AuthComponent() {
 
         const user = fetchUser[0];
         setUserState({ ...userState, email: user.email, myFile: user?.myFile })
-        console.log('11', user)
     }
 
     fetchUserData();
-  }, [apiUrl, authUrl, userEmail, userState]);
+  }, [apiUrl, authUrl, userEmail, userState, setUserState]);
 
   const logout = () => {
     cookies.remove("TOKEN", { path: "/" });
