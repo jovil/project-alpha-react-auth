@@ -10,27 +10,25 @@ export default function AuthComponent() {
     myFile: any;
   }
 
-  const [message, setMessage] = useState("");
   const [postImage, setPostImage] = useState<PostImageState>({
     email: '',
     myFile: ''
   })
   const location = useLocation();
   const token = cookies.get("TOKEN");
+  const authUrl = 'http://localhost:3000/auth-endpoint';
   const uploadsUrl = 'http://localhost:3000/uploads';
   const { userEmail } = location.state || {};
 
+  // set configurations for the API call here
+  const authConfiguration = {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   useEffect(() => {
-    const authUrl = 'http://localhost:3000/auth-endpoint';
-
-    // set configurations for the API call here
-    const authConfiguration = {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
     // make the API call
     fetch(authUrl, authConfiguration)
       .then(response => response.json())
@@ -38,7 +36,6 @@ export default function AuthComponent() {
         const request: any[] = result;
         const avatar = request.filter(data => data.email.includes(userEmail))
         setPostImage(avatar[0]);
-        setMessage(result.message);
       })
       .catch((error) => {console.log(error)});
   }, [token]);
@@ -63,9 +60,7 @@ export default function AuthComponent() {
   }
 
   const logout = () => {
-    // destroy the cookie
     cookies.remove("TOKEN", { path: "/" });
-    // redirect user to the landing page
     window.location.href = "/";
   }
 
@@ -98,7 +93,6 @@ export default function AuthComponent() {
   return (
     <div className="text-center">
       <h1>Auth Component</h1>
-      <h3 className="text-danger">{message}</h3>
 
       {/* logout */}
       <Button type="submit" variant="danger" onClick={() => logout()}>
@@ -121,7 +115,9 @@ export default function AuthComponent() {
             accept=".jpeg, .png, .jpg"
             onChange={(e) => handleFileUpload(e)} />
         </Form.Group>
-        <Button type="submit">Submit</Button>
+        {!postImage && (
+          <Button type="submit">Submit</Button>
+        )}
       </Form>
     </div>
   );
