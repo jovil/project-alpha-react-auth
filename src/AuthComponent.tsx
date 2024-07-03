@@ -7,6 +7,10 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 export default function AuthComponent() {
+  interface ApiResponse {
+    email: string;
+    myFile: string;
+  }
   const apiUrl = process.env.REACT_APP_API_URL;
   const authUrl = `${apiUrl}/auth-endpoint`;
   const uploadsUrl = `${apiUrl}/uploads`;
@@ -28,21 +32,18 @@ export default function AuthComponent() {
         },
       };
 
-      // make the API call
-      const fetchUser: any = await fetch(authUrl, authConfiguration)
-        .then(response => response.json())
-        .then((result) => {
-          const request: any[] = result;
-          return request.filter(data => data.email.includes(userState.email))
-        })
-        .catch((error) => {console.log(error)});
-
-        const user = fetchUser[0];
-        setUserState({ ...userState, email: user.email, myFile: user?.myFile })
+      try {
+        const response = await fetch(authUrl, authConfiguration);
+        const result = await response.json();
+        const user = result.find((data: ApiResponse) => data.email === userState.email);
+        if (user) setUserState({ email: user.email, myFile: user.myFile });
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
     }
 
     fetchUserData();
-  }, [apiUrl, authUrl, userEmail, userState, setUserState]);
+  }, [apiUrl, authUrl, userEmail, setUserState]);
 
   const logout = () => {
     cookies.remove("TOKEN", { path: "/" });
