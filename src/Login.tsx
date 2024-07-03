@@ -26,8 +26,8 @@ const Login = () => {
 
     const handleSubmit = async (e: any) => {
       e.preventDefault();
-
-      const dbUrl = 'https://project-alpha-auth-db-app-b623d85e31d2.herokuapp.com/login';
+      const apiUrl = process.env.REACT_APP_API_URL;
+      const dbUrl = `${apiUrl}/login`;
 
       const postData = {
         "email": email,

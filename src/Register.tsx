@@ -10,8 +10,8 @@ export default function Register() {
 
     const handleSubmit = async (e: any) => {
       e.preventDefault();
-
-      const dbUrl = 'http://localhost:3000/register';
+      const apiUrl = process.env.REACT_APP_API_URL;
+      const dbUrl = `${apiUrl}/register`;
 
       const postData = {
         email: email,

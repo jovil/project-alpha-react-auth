@@ -11,6 +11,7 @@ export default function AuthComponent() {
     myFile: any;
   }
 
+  const apiUrl = process.env.REACT_APP_API_URL;
   const { state, setState } = useContext(GlobalStateContext);
   const [postImage, setPostImage] = useState<PostImageState>({
     email: '',
@@ -18,8 +19,8 @@ export default function AuthComponent() {
   })
   const location = useLocation();
   const token = cookies.get("TOKEN");
-  const authUrl = 'http://localhost:3000/auth-endpoint';
-  const uploadsUrl = 'http://localhost:3000/uploads';
+  const authUrl = `${apiUrl}/auth-endpoint`;
+  const uploadsUrl = `${apiUrl}/uploads`;
   const { userEmail } = location.state || {};
 
   // set configurations for the API call here

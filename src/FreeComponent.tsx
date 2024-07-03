@@ -4,7 +4,8 @@ export default function FreeComponent() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const url = 'https://project-alpha-auth-db-app-b623d85e31d2.herokuapp.com/free-endpoint';
+    const apiUrl = process.env.REACT_APP_API_URL;
+    const url = `${apiUrl}/free-endpoint`;
 
     const configuration = {
       method: 'GET',
