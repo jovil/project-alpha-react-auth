@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { GlobalStateContext } from "./context";
 import { useUser } from "./UserContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
@@ -13,7 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
   const [emailNotFound, setEmailNotFound] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const { userEmail, userPassword } = location.state || {
     userEmail: "",
@@ -54,13 +54,13 @@ const Login = () => {
         cookies.set("TOKEN", result.token, {
           path: "/",
         });
-        console.log("TOKEN", result.token);
+
         handleLoginState();
         setEmailNotFound(false);
         setLogin(true);
         setUserState({ ...userState, email: result.email });
         // redirect user to the auth page
-        // navigate('/auth');
+        navigate("/auth");
       })
       .catch((error) => {
         console.log(error);
