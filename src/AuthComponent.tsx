@@ -2,7 +2,6 @@ import { useContext, useEffect, useCallback } from "react";
 import { GlobalStateContext } from './context'
 import { useUser } from './UserContext'
 import { Button, Form } from "react-bootstrap";
-import { useLocation } from 'react-router-dom';
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -16,8 +15,6 @@ export default function AuthComponent() {
   const uploadsUrl = `${apiUrl}/uploads`;
   const { state, setState } = useContext(GlobalStateContext);
   const { userState, setUserState } = useUser();
-  const location = useLocation();
-  const { userEmail } = location.state || {};
 
   const fetchUserData = useCallback(async () => {
     const token = cookies.get("TOKEN");
@@ -51,7 +48,7 @@ export default function AuthComponent() {
   }
 
   const uploadProfileImage = async (data: any) => {
-    data.email = userEmail;
+    setUserState({ ...userState, email: userState.email })
 
     try {
       await fetch(uploadsUrl, {
@@ -59,7 +56,7 @@ export default function AuthComponent() {
         headers: {
           'Content-Type': 'application/json' // Specify the content type as JSON
         },
-        body: JSON.stringify(data) // Convert the data to JSON string
+        body: JSON.stringify(userState) // Convert the data to JSON string
       })
       .then(response => response.json())
       .then((result) => {console.log(result)})
