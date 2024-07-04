@@ -19,15 +19,16 @@ export default function AuthComponent() {
   const location = useLocation();
   const { userEmail } = location.state || {};
   const token = cookies.get("TOKEN");
-  // set configurations for the API call here
-  const authConfiguration = {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }
 
   const fetchUserData = useCallback(async () => {
+    // set configurations for the API call here
+    const authConfiguration = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
     try {
       const response = await fetch(authUrl, authConfiguration);
       const result = await response.json();
@@ -36,7 +37,7 @@ export default function AuthComponent() {
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
-  }, []);
+  }, [authUrl, setUserState, userState.email]);
 
   useEffect(() => {
     console.log("Initial userState:", userState);
