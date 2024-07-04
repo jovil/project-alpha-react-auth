@@ -18,9 +18,11 @@ export default function AuthComponent() {
   const { userState, setUserState } = useUser();
   const location = useLocation();
   const { userEmail } = location.state || {};
-  const token = cookies.get("TOKEN");
 
   const fetchUserData = useCallback(async () => {
+    console.log("Initial userState:", userState);
+
+    const token = cookies.get("TOKEN");
     // set configurations for the API call here
     const authConfiguration = {
       method: 'GET',
@@ -40,7 +42,6 @@ export default function AuthComponent() {
   }, [authUrl, setUserState, userState.email]);
 
   useEffect(() => {
-    console.log("Initial userState:", userState);
     fetchUserData();
   }, [fetchUserData]);
 
