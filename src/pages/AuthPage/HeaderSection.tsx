@@ -16,18 +16,18 @@ const HeaderSection = () => {
   const uploadsUrl = `${apiUrl}/uploads`;
   const { state, setState } = useContext(GlobalStateContext);
   const { userState, setUserState } = useUser();
+  const token = cookies.get("TOKEN");
+
+  // set configurations for the API call here
+  const authConfiguration = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
   const fetchUserData = useCallback(async () => {
-    const token = cookies.get("TOKEN");
     console.log("headerSection", token);
-    // set configurations for the API call here
-    const authConfiguration = {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json", // Specify the content type as JSON
-      },
-    };
 
     try {
       const response = await fetch(authUrl, authConfiguration);
@@ -39,7 +39,7 @@ const HeaderSection = () => {
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
-  }, [authUrl, setUserState, userState.email]);
+  }, [authUrl, setUserState, userState.email, token, authConfiguration]);
 
   useEffect(() => {
     fetchUserData();
