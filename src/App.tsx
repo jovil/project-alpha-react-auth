@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { GlobalStateContext } from './context';
+import { useContext } from "react";
+import { GlobalStateContext } from "./context";
 import { Container, Col, Row, Button, Stack } from "react-bootstrap";
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./Home";
@@ -7,7 +7,7 @@ import FreeComponent from "./FreeComponent";
 import ProtectedRoutes from "./ProtectedRoutes";
 import "./App.css";
 import Register from "./Register";
-import Login from './Login';
+import Login from "./Login";
 
 function App() {
   const { state } = useContext(GlobalStateContext);
@@ -34,17 +34,19 @@ function App() {
                   <Button variant="outline-dark">Register</Button>
                 </Link>
               </>
-            ) : ''}
-            </Stack>
+            ) : (
+              ""
+            )}
+          </Stack>
         </Col>
       </Row>
 
       <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path="/free" element={<FreeComponent/>} />
-        <Route path="/auth" element={<ProtectedRoutes/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/register" element={<Register/>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/free" element={<FreeComponent />} />
+        <Route path="/auth" element={<ProtectedRoutes />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Container>
   );
