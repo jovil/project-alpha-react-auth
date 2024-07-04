@@ -128,7 +128,7 @@ const HeaderSection = () => {
                   onChange={(e) => handleFileUpload(e)}
                 />
               </Form.Group>
-              {!userState.myFile && <Button type="submit">Submit</Button>}
+              <Button type="submit">Submit</Button>
             </Form>
           </Stack>
         </Col>
