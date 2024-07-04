@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { GlobalStateContext } from "./context";
 import { useUser } from "./UserContext";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
@@ -13,7 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
   const [emailNotFound, setEmailNotFound] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const location = useLocation();
   const { userEmail, userPassword } = location.state || {
     userEmail: "",
