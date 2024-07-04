@@ -41,8 +41,7 @@ const AuthComponent = () => {
     };
 
     try {
-      const response = await fetch(url, configuration);
-      const result = await response.json();
+      await fetch(url, configuration);
       navigate("/");
     } catch (error) {
       console.log("error", error);
