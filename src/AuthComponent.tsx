@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useCallback } from "react";
 import { GlobalStateContext } from './context'
 import { useUser } from './UserContext'
 import { Button, Form } from "react-bootstrap";
@@ -18,32 +18,30 @@ export default function AuthComponent() {
   const { userState, setUserState } = useUser();
   const location = useLocation();
   const { userEmail } = location.state || {};
+  const token = cookies.get("TOKEN");
+  // set configurations for the API call here
+  const authConfiguration = {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const fetchUserData = useCallback(async () => {
+    try {
+      const response = await fetch(authUrl, authConfiguration);
+      const result = await response.json();
+      const user = result.find((data: ApiResponse) => data.email === userState.email);
+      if (user) setUserState({ email: user.email, myFile: user.myFile });
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }, []);
 
   useEffect(() => {
     console.log("Initial userState:", userState);
-
-    async function fetchUserData() {
-      const token = cookies.get("TOKEN");
-      // set configurations for the API call here
-      const authConfiguration = {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      try {
-        const response = await fetch(authUrl, authConfiguration);
-        const result = await response.json();
-        const user = result.find((data: ApiResponse) => data.email === userState.email);
-        if (user) setUserState({ email: user.email, myFile: user.myFile });
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    }
-
     fetchUserData();
-  }, [apiUrl, authUrl, userState, userEmail, setUserState]);
+  }, [fetchUserData]);
 
   const logout = () => {
     cookies.remove("TOKEN", { path: "/" });
