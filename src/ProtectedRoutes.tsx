@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import AuthComponent from "./AuthComponent";
+import AuthComponent from "./pages/AuthPage/AuthComponent";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 

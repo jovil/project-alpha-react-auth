@@ -1,12 +1,12 @@
 import { useContext, useEffect, useCallback } from "react";
-import { GlobalStateContext } from "./context";
-import { useUser } from "./UserContext";
+import { GlobalStateContext } from "../../context";
+import { useUser } from "../../UserContext";
 import { Button, Form, Row, Col, Stack } from "react-bootstrap";
-import iconUpload from "./icon-upload.svg";
+import iconUpload from "../../assets/images/icon-upload.svg";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
-export default function AuthComponent() {
+const HeaderSection = () => {
   interface ApiResponse {
     email: string;
     myFile: string;
@@ -100,7 +100,7 @@ export default function AuthComponent() {
   }
 
   return (
-    <div className="text-center">
+    <section className="text-center">
       <Row>
         <Col></Col>
         <Col className="flex justify-center" xs={6}>
@@ -149,6 +149,8 @@ export default function AuthComponent() {
           </Stack>
         </Col>
       </Row>
-    </div>
+    </section>
   );
-}
+};
+
+export default HeaderSection;

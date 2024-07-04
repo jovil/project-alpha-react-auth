@@ -14,40 +14,44 @@ function App() {
 
   return (
     <Container>
-      <Row className="my-10">
-        <Col></Col>
-        <Col className="flex justify-center" xs={6}>
-          <Stack className="gap-x-8" direction="horizontal">
-            <Link to="/">Home</Link>
-            <Link to="/free">Free Component</Link>
-            <Link to="/auth">Auth Component</Link>
-          </Stack>
-        </Col>
-        <Col>
-          <Stack className="flex justify-end" direction="horizontal" gap={3}>
-            {!state.isLoggedIn ? (
-              <>
-                <Link to="/login">
-                  <Button variant="primary">Login</Button>
-                </Link>
-                <Link to="/register">
-                  <Button variant="outline-dark">Register</Button>
-                </Link>
-              </>
-            ) : (
-              ""
-            )}
-          </Stack>
-        </Col>
-      </Row>
+      <header>
+        <Row className="my-10">
+          <Col></Col>
+          <Col className="flex justify-center" xs={6}>
+            <Stack className="gap-x-8" direction="horizontal">
+              <Link to="/">Home</Link>
+              <Link to="/free">Free Component</Link>
+              <Link to="/auth">Auth Component</Link>
+            </Stack>
+          </Col>
+          <Col>
+            <Stack className="flex justify-end" direction="horizontal" gap={3}>
+              {!state.isLoggedIn ? (
+                <>
+                  <Link to="/login">
+                    <Button variant="primary">Login</Button>
+                  </Link>
+                  <Link to="/register">
+                    <Button variant="outline-dark">Register</Button>
+                  </Link>
+                </>
+              ) : (
+                ""
+              )}
+            </Stack>
+          </Col>
+        </Row>
+      </header>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/free" element={<FreeComponent />} />
-        <Route path="/auth" element={<ProtectedRoutes />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/free" element={<FreeComponent />} />
+          <Route path="/auth" element={<ProtectedRoutes />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </main>
     </Container>
   );
 }
