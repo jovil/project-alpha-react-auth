@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useUser } from "../../UserContext";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
@@ -25,7 +25,7 @@ const AuthComponent = () => {
     });
   };
 
-  const setPostEmailState = useCallback(() => {
+  useEffect(() => {
     setPost((prev) => {
       return {
         ...prev,
@@ -34,14 +34,15 @@ const AuthComponent = () => {
     });
   }, [userState.email]);
 
-  useEffect(() => {
-    console.log("auth");
-    // setPostEmailState();
-  }, [setPostEmailState]);
-
   const handleClick = async (e: any) => {
     e.preventDefault();
-
+    setPost((prev) => {
+      return {
+        ...prev,
+        email: userState.email,
+      };
+    });
+    console.log("create post", post);
     const configuration = {
       method: "POST", // Specify the request method
       headers: {
