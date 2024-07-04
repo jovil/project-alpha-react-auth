@@ -20,8 +20,6 @@ export default function AuthComponent() {
   const { userEmail } = location.state || {};
 
   const fetchUserData = useCallback(async () => {
-    console.log("Initial userState:", userState);
-
     const token = cookies.get("TOKEN");
     // set configurations for the API call here
     const authConfiguration = {
