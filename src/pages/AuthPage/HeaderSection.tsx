@@ -18,16 +18,15 @@ const HeaderSection = () => {
   const { userState, setUserState } = useUser();
   const token = cookies.get("TOKEN");
 
-  // set configurations for the API call here
-  const authConfiguration = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
   const fetchUserData = useCallback(async () => {
     console.log("headerSection", token);
+    // set configurations for the API call here
+    const authConfiguration = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(authUrl, authConfiguration);
@@ -39,7 +38,7 @@ const HeaderSection = () => {
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
-  }, [authUrl, setUserState, userState.email, token, authConfiguration]);
+  }, [authUrl, setUserState, userState.email, token]);
 
   useEffect(() => {
     fetchUserData();
