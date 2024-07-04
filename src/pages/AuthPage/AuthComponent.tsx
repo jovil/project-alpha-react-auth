@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useUser } from "../../UserContext";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
@@ -25,9 +25,19 @@ const AuthComponent = () => {
     });
   };
 
+  const setPostEmailState = useCallback(() => {
+    setPost((prev) => {
+      return {
+        ...prev,
+        email: userState.email,
+      };
+    });
+  }, [userState.email]);
+
   useEffect(() => {
-    setPost({ ...post, email: userState.email });
-  }, [post, userState.email]);
+    console.log("auth");
+    // setPostEmailState();
+  }, [setPostEmailState]);
 
   const handleClick = async (e: any) => {
     e.preventDefault();

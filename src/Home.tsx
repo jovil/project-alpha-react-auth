@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import { useUser } from "./UserContext";
 
 export default function Home() {
-  const { userState } = useUser();
   const [posts, setPosts] = useState([]);
-  const url = `${process.env.REACT_APP_API_URL}/posts?email=${userState.email}`;
+  const url = `${process.env.REACT_APP_API_URL}/posts`;
 
   const fetchPosts = useCallback(async () => {
     const configuration = {
@@ -17,6 +15,7 @@ export default function Home() {
     try {
       const response = await fetch(url, configuration);
       const result = await response.json();
+      console.log("1", result);
       setPosts(result);
     } catch (error) {
       console.log("error creating post", error);
@@ -24,6 +23,7 @@ export default function Home() {
   }, [url]);
 
   useEffect(() => {
+    console.log("home");
     fetchPosts();
   }, [fetchPosts]);
 
@@ -35,6 +35,7 @@ export default function Home() {
             {posts?.map((post: any) => {
               return (
                 <div key={post._id}>
+                  <h2>{post.email}</h2>
                   <h2>{post.title}</h2>
                   <p>{post.description}</p>
                 </div>
