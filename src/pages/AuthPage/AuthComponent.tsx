@@ -27,7 +27,7 @@ const AuthComponent = () => {
 
   useEffect(() => {
     setPost({ ...post, email: userState.email });
-  }, [post.email, userState.email]);
+  }, [post, userState.email]);
 
   const handleClick = async (e: any) => {
     e.preventDefault();
