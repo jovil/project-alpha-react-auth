@@ -1,14 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import { GlobalStateProvider } from './context';
-import { UserProvider } from './UserContext';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
+import { GlobalStateProvider } from "./context";
+import { UserProvider } from "./UserContext";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
 
-const container = document.getElementById('root') as HTMLElement;
+const container = document.getElementById("root") as HTMLElement;
 const root = ReactDOM.createRoot(container);
 
 root.render(
