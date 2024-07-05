@@ -8,8 +8,8 @@ const CreatePost = () => {
   const navigate = useNavigate();
   const [post, setPost] = useState({
     email: "",
-    title: "",
-    description: "",
+    image: "",
+    caption: "",
   });
   const url = `${process.env.REACT_APP_API_URL}/create`;
 
@@ -60,24 +60,17 @@ const CreatePost = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-2 pt-10">
+      <div className="flex flex-col gap-2 pt-10 w-[500px] mx-auto">
         <h1 className="title">Create post</h1>
         <Form className="flex flex-col gap-5">
           <Form.Group className="flex flex-col gap-4">
             <Form.Control
               className="border border-dark/40 p-3 rounded"
-              name="title"
-              placeholder="Title"
+              name="caption"
+              placeholder="Caption"
               onChange={handleChange}
-              value={post.title}
+              value={post.caption}
               autoFocus
-            />
-            <Form.Control
-              className="border border-dark/40 p-3 rounded"
-              name="description"
-              placeholder="Description"
-              onChange={handleChange}
-              value={post.description}
             />
           </Form.Group>
           <Button onClick={createPost}>Save</Button>

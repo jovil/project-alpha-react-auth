@@ -33,7 +33,18 @@
   }
 }
 
+html {
+  min-height: 100%;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
+  position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

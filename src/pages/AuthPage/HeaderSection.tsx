@@ -4,12 +4,13 @@ import { useUser } from "../../UserContext";
 import { Form } from "react-bootstrap";
 import iconUpload from "../../assets/images/icon-upload.svg";
 import Cookies from "universal-cookie";
+import defaultAvatar from "../../assets/images/avatar.jpeg";
 const cookies = new Cookies();
 
 const HeaderSection = () => {
   interface ApiResponse {
     email: string;
-    myFile: string;
+    avatar: string;
   }
   const apiUrl = process.env.REACT_APP_API_URL;
   const authUrl = `${apiUrl}/auth-endpoint`;
@@ -33,7 +34,7 @@ const HeaderSection = () => {
       const user = result.find(
         (data: ApiResponse) => data.email === userState.email
       );
-      if (user) setUserState({ email: user.email, myFile: user.myFile });
+      if (user) setUserState({ email: user.email, avatar: user.avatar });
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -46,12 +47,16 @@ const HeaderSection = () => {
   const logout = () => {
     cookies.remove("TOKEN", { path: "/" });
     setState({ ...state, isLoggedIn: false });
-    setUserState({ email: undefined, myFile: undefined });
+    setUserState({ email: undefined, avatar: undefined });
     window.location.href = "/";
   };
 
   const uploadProfileImage = async (data: any) => {
-    setUserState({ ...userState, email: userState.email });
+    setUserState({
+      ...userState,
+      email: userState.email,
+      avatar: userState.avatar,
+    });
     console.log("save avatar", userState);
     try {
       await fetch(uploadsUrl, {
@@ -63,7 +68,7 @@ const HeaderSection = () => {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log(result);
+          console.log("result", result);
         })
         .catch((error) => {
           console.log(error);
@@ -81,7 +86,7 @@ const HeaderSection = () => {
   const handleFileUpload = async (e: any) => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
-    setUserState({ ...userState, myFile: base64 });
+    setUserState({ ...userState, avatar: base64 });
   };
 
   function convertToBase64(file: File) {
@@ -106,13 +111,11 @@ const HeaderSection = () => {
         <div className="flex justify-center col-span-8">
           <div className="flex flex-col justify-center items-center gap-4">
             <div className="text-xs font-medium flex flex-col gap-3 items-center">
-              {userState.myFile && (
-                <img
-                  className="w-14 h-14 border border-dark/80 object-cover rounded shadow-md"
-                  src={userState.myFile || ""}
-                  alt=""
-                />
-              )}
+              <img
+                className="w-14 h-14 border border-dark/60 object-cover rounded shadow-md"
+                src={userState.avatar || defaultAvatar}
+                alt=""
+              />
               <p>{userState.email}</p>
             </div>
             <Form

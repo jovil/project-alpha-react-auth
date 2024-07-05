@@ -2,27 +2,36 @@ import { useState, useEffect } from "react";
 import { useUser } from "../UserContext";
 import { Form } from "react-bootstrap";
 import Cookies from "universal-cookie";
+import defaultAvatar from "../assets/images/avatar.jpeg";
 const cookies = new Cookies();
 
 const CreatePostModal = () => {
-  const [post, setPost] = useState({
+  const [post, setPost] = useState<{
+    email: string;
+    image: any;
+    caption: string;
+    _id: string;
+  }>({
     email: "",
-    title: "",
-    description: "",
+    image: "",
+    caption: "",
+    _id: "",
   });
+
   const [showModal, setShowModal] = useState(false);
-  const { userState, setUserState } = useUser();
+  const { userState } = useUser();
   const token = cookies.get("TOKEN");
   const url = `${process.env.REACT_APP_API_URL}/create`;
 
   useEffect(() => {
-    setPost((prev) => {
+    console.log("1", userState);
+    setPost((prev: any) => {
       return {
         ...prev,
         email: userState.email,
       };
     });
-  }, [userState.email]);
+  }, [userState]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -75,8 +84,9 @@ const CreatePostModal = () => {
   const handleFileUpload = async (e: any) => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
+    setPost({ ...post, image: base64 });
+    console.log("11", post);
     setShowModal(true);
-    // setPost({ ...userState, myFile: base64 });
   };
 
   function convertToBase64(file: File) {
@@ -101,15 +111,15 @@ const CreatePostModal = () => {
           className="bg-dark/80 backdrop-blur p-4 fixed inset-0 z-10 flex justify-center items-center"
           onClick={closeModal}
         >
-          <section className="container p-4 mx-auto flex flex-col gap-4 bg-white rounded-md">
+          <section className="w-[500px] p-4 mx-auto flex flex-col gap-4 bg-white rounded-md">
             <header>
               <h2>Create post</h2>
             </header>
             <div className="flex flex-col gap-4 items-center w-full">
-              {userState.myFile && (
+              {post.image && (
                 <img
-                  className="w-full h-[50vh] object-cover border rounded"
-                  src={userState.myFile || ""}
+                  className="w-full h-[50vh] object-cover border border-dark/40 rounded"
+                  src={post.image}
                   alt=""
                 />
               )}
@@ -117,18 +127,11 @@ const CreatePostModal = () => {
                 <Form.Group className="flex flex-col gap-4">
                   <Form.Control
                     className="border border-dark/40 p-3 rounded"
-                    placeholder="Title"
-                    name="title"
-                    value={post.title}
+                    placeholder="Caption"
+                    name="caption"
+                    value={post.caption}
                     onChange={handleChange}
                     autoFocus
-                  />
-                  <Form.Control
-                    className="border border-dark/40 p-3 rounded"
-                    placeholder="Description"
-                    name="description"
-                    value={post.description}
-                    onChange={handleChange}
                   />
                   <button type="submit" className="hidden">
                     Save
@@ -136,26 +139,29 @@ const CreatePostModal = () => {
                 </Form.Group>
               </Form>
             </div>
-            <footer className="flex gap-5">
-              <button className="btn-primary" onClick={createPost}>
+            <footer className="flex justify-end gap-3">
+              <button className="btn-primary text-sm" onClick={createPost}>
                 Publish
               </button>
-              <button className="btn-outline-danger" onClick={closeModal}>
+              <button
+                className="btn-outline-danger text-sm"
+                onClick={closeModal}
+              >
                 Close
               </button>
             </footer>
           </section>
         </div>
       )}
-      <div className="bg-white/10 backdrop-blur-sm shadow-md-reverse fixed bottom-0 right-0 left-0 border-t border-dark/30 flex justify-between items-center px-5 py-3">
+      <div className="bg-white/10 backdrop-blur shadow-md-reverse fixed bottom-0 right-0 left-0 border-t border-dark/10 flex justify-between items-center px-5 py-3">
         <img
           className="rounded-full w-10 h-10 object-cover border border-dark/30"
-          src={userState.myFile}
+          src={userState.avatar || defaultAvatar}
           alt=""
         />
         <Form className="flex flex-col">
           <Form.Label className="m-0" htmlFor="file-upload">
-            <div className="btn-primary text-sm flex gap-2 justify-center items-center">
+            <div className="btn-primary text-sm flex gap-2 justify-center items-center cursor-pointer">
               Create post
             </div>
           </Form.Label>

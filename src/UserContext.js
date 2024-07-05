@@ -1,14 +1,16 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useEffect, useContext } from "react";
 
 export const UserContext = createContext();
 
 const getInitialState = () => {
   try {
-    const savedState = localStorage.getItem('userState');
-    return savedState ? JSON.parse(savedState) : { email: undefined, myFile: undefined };
+    const savedState = localStorage.getItem("userState");
+    return savedState
+      ? JSON.parse(savedState)
+      : { email: undefined, avatar: undefined };
   } catch (error) {
-    console.error('Error parsing localStorage userState:', error);
-    return { email: undefined, myFile: undefined };
+    console.error("Error parsing localStorage userState:", error);
+    return { email: undefined, avatar: undefined };
   }
 };
 
@@ -17,9 +19,9 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     try {
-      localStorage.setItem('userState', JSON.stringify(userState));
+      localStorage.setItem("userState", JSON.stringify(userState));
     } catch (error) {
-      console.error('Error saving userState to localStorage:', error);
+      console.error("Error saving userState to localStorage:", error);
     }
   }, [userState]);
 

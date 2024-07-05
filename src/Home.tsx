@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import CreatePostModal from "./components/CreatePostModal";
+import loading from "./assets/images/loading.gif";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -16,12 +17,14 @@ export default function Home() {
     try {
       const response = await fetch(url, configuration);
       const result = await response.json();
-      console.table(result);
+      console.table("all posts", result);
       setPosts(result);
     } catch (error) {
       console.log("error creating post", error);
     }
-  }, [url]);
+
+    console.log("effect home");
+  }, [url, setPosts]);
 
   useEffect(() => {
     fetchPosts();
@@ -29,24 +32,32 @@ export default function Home() {
 
   return (
     <>
-      <section className="flex flex-col gap-5">
-        {posts ? (
+      <section className="grid grid-cols-3 gap-1 max-w-[908px] mx-auto">
+        {posts.length ? (
           <>
             {posts?.toReversed().map((post: any) => {
               return (
                 <div
-                  className="border border-dark/80 shadow-md rounded p-4"
+                  className="w-[300px] h-[320px] border border-dark/80 shadow-md rounded p-4 flex flex-col gap-2"
                   key={post._id}
                 >
-                  <h2>{post.email}</h2>
-                  <h2>{post.title}</h2>
-                  <p>{post.description}</p>
+                  <img
+                    className="aspect-square object-cover rounded-sm"
+                    src={post.image}
+                    alt=""
+                    loading="lazy"
+                  />
+                  <p className="text-sm">{post.caption}</p>
                 </div>
               );
             })}
           </>
         ) : (
-          ""
+          <img
+            className="w-6 h-6 absolute inset-1/2 -translate-x-1/2 -translate-y-1/2"
+            src={loading}
+            alt=""
+          />
         )}
       </section>
       <CreatePostModal />
