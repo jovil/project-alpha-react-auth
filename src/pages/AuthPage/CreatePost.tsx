@@ -13,6 +13,15 @@ const CreatePost = () => {
   });
   const url = `${process.env.REACT_APP_API_URL}/create`;
 
+  useEffect(() => {
+    setPost((prev) => {
+      return {
+        ...prev,
+        email: userState.email,
+      };
+    });
+  }, [userState.email]);
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
 
@@ -24,16 +33,7 @@ const CreatePost = () => {
     });
   };
 
-  useEffect(() => {
-    setPost((prev) => {
-      return {
-        ...prev,
-        email: userState.email,
-      };
-    });
-  }, [userState.email]);
-
-  const handleClick = async (e: any) => {
+  const createPost = async (e: any) => {
     e.preventDefault();
     setPost((prev) => {
       return {
@@ -60,26 +60,27 @@ const CreatePost = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-2">
-        <h1 className="title">Create Post</h1>
+      <div className="flex flex-col gap-2 pt-10">
+        <h1 className="title">Create post</h1>
         <Form className="flex flex-col gap-5">
           <Form.Group className="flex flex-col gap-4">
             <Form.Control
-              className="border border-dark p-3"
+              className="border border-dark/40 p-3 rounded"
               name="title"
               placeholder="Title"
               onChange={handleChange}
               value={post.title}
+              autoFocus
             />
             <Form.Control
-              className="border border-dark p-3"
+              className="border border-dark/40 p-3 rounded"
               name="description"
               placeholder="Description"
               onChange={handleChange}
               value={post.description}
             />
           </Form.Group>
-          <Button onClick={handleClick}>Save</Button>
+          <Button onClick={createPost}>Save</Button>
         </Form>
       </div>
     </>

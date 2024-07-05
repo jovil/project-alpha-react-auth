@@ -105,20 +105,23 @@ const HeaderSection = () => {
         <div className="col-span-2"></div>
         <div className="flex justify-center col-span-8">
           <div className="flex flex-col justify-center items-center gap-4">
-            {userState.myFile && (
-              <img
-                className="w-14 h-14 border rounded"
-                src={userState.myFile || ""}
-                alt=""
-              />
-            )}
+            <div className="text-xs font-medium flex flex-col gap-3 items-center">
+              {userState.myFile && (
+                <img
+                  className="w-14 h-14 border border-dark/80 object-cover rounded shadow-md"
+                  src={userState.myFile || ""}
+                  alt=""
+                />
+              )}
+              <p>{userState.email}</p>
+            </div>
             <Form
               onSubmit={(e) => handleSubmit(e)}
               className="flex flex-col gap-3"
             >
               <Form.Label htmlFor="file-upload">
                 <div className="text-sm btn-primary flex gap-2 justify-center items-center cursor-pointer">
-                  Upload
+                  <p>Upload</p>
                   <img className="h-4 w-4 m-0" src={iconUpload} alt="" />
                 </div>
               </Form.Label>
@@ -131,7 +134,7 @@ const HeaderSection = () => {
                   onChange={(e) => handleFileUpload(e)}
                 />
               </Form.Group>
-              <button className="btn-primary" type="submit">
+              <button className="btn-primary text-sm" type="submit">
                 Submit
               </button>
             </Form>
@@ -140,7 +143,7 @@ const HeaderSection = () => {
         <div className="col-span-2">
           <div className="flex justify-end items-center">
             <button
-              className="btn-outline-danger text-xs"
+              className="btn-outline-danger text-xs font-semibold"
               type="submit"
               onClick={() => logout()}
             >

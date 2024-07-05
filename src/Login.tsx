@@ -68,56 +68,63 @@ const Login = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-2">
       <h2 className="text-4xl">Login</h2>
-      <Form onSubmit={(e) => handleSubmit(e)}>
-        {/* email */}
-        <Form.Group className="flex flex-col gap-2" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            className="border border-dark p-3"
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter email"
-          />
-        </Form.Group>
+      <Form className="flex flex-col gap-4" onSubmit={(e) => handleSubmit(e)}>
+        <div className="flex flex-col gap-4">
+          {/* email */}
+          <Form.Group
+            className="flex flex-col gap-2"
+            controlId="formBasicEmail"
+          >
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              className="border border-dark/40 p-3 rounded"
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter email"
+            />
+          </Form.Group>
 
-        {/* password */}
-        <Form.Group
-          className="flex flex-col gap-2"
-          controlId="formBasicPassword"
-        >
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            className="border border-dark p-3"
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-        </Form.Group>
+          {/* password */}
+          <Form.Group
+            className="flex flex-col gap-2"
+            controlId="formBasicPassword"
+          >
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              className="border border-dark/40 p-3 rounded"
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+          </Form.Group>
+        </div>
 
-        {/* submit button */}
-        <button
-          className="btn-primary"
-          type="submit"
-          onClick={(e) => handleSubmit(e)}
-        >
-          Login
-        </button>
+        <div>
+          {/* submit button */}
+          <button
+            className="btn-primary"
+            type="submit"
+            onClick={(e) => handleSubmit(e)}
+          >
+            Login
+          </button>
 
-        {/* display success message */}
-        {login && (
-          <p className="text-success">You are logged in successfully.</p>
-        )}
+          {/* display success message */}
+          {login && (
+            <p className="text-success">You are logged in successfully.</p>
+          )}
 
-        {/* display email not found message */}
-        {emailNotFound && <p className="text-danger">Email doesn't exist.</p>}
+          {/* display email not found message */}
+          {emailNotFound && <p className="text-danger">Email doesn't exist.</p>}
+        </div>
       </Form>
-    </>
+    </div>
   );
 };
 

@@ -1,29 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUser } from "../UserContext";
 import { Form } from "react-bootstrap";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 const CreatePostModal = () => {
-  const [updatedPost, setUpdatedPost] = useState<{
-    title: string;
-    description: string;
-    _id: string;
-  }>({
+  const [post, setPost] = useState({
+    email: "",
     title: "",
     description: "",
-    _id: "",
   });
   const [showModal, setShowModal] = useState(false);
   const { userState, setUserState } = useUser();
   const token = cookies.get("TOKEN");
+  const url = `${process.env.REACT_APP_API_URL}/create`;
 
-  const handleClose = () => setShowModal(false);
+  useEffect(() => {
+    setPost((prev) => {
+      return {
+        ...prev,
+        email: userState.email,
+      };
+    });
+  }, [userState.email]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
 
-    setUpdatedPost((prev) => {
+    setPost((prev) => {
       return {
         ...prev,
         [name]: value,
@@ -31,28 +35,40 @@ const CreatePostModal = () => {
     });
   };
 
-  const saveUpdatedPost = () => {
-    console.log(updatedPost);
+  const createPost = async (e: any) => {
+    e.preventDefault();
 
-    // axios
-    //   .put(
-    //     `${process.env.REACT_APP_DB_URL}/update/${updatedPost._id}`,
-    //     updatedPost
-    //   )
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
+    console.log("e", e.target);
 
-    handleClose();
+    setPost((prev) => {
+      return {
+        ...prev,
+        email: userState.email,
+      };
+    });
+
+    console.log("create post", post);
+
+    const configuration = {
+      method: "POST", // Specify the request method
+      headers: {
+        "Content-Type": "application/json", // Specify the content type as JSON
+      },
+      body: JSON.stringify(post), // Convert the data to JSON string
+    };
+
+    try {
+      await fetch(url, configuration);
+    } catch (error) {
+      console.log("error", error);
+    }
+
+    setShowModal(false);
     window.location.reload();
   };
 
-  function handleSubmit(e: any) {
-    e.preventDefault();
-    console.log("Submit");
-    // uploadProfileImage(userState);
-  }
-
-  const closeModal = () => {
+  const closeModal = (e: React.MouseEvent<HTMLElement>) => {
+    if (e.target !== e.currentTarget) return;
     setShowModal(false);
   };
 
@@ -60,7 +76,7 @@ const CreatePostModal = () => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
     setShowModal(true);
-    setUserState({ ...userState, myFile: base64 });
+    // setPost({ ...userState, myFile: base64 });
   };
 
   function convertToBase64(file: File) {
@@ -82,12 +98,12 @@ const CreatePostModal = () => {
     <>
       {showModal && (
         <div
-          className="bg-dark/80 backdrop-blur fixed inset-0 z-10"
+          className="bg-dark/80 backdrop-blur p-4 fixed inset-0 z-10 flex justify-center items-center"
           onClick={closeModal}
         >
-          <section className="container p-4 mx-auto">
+          <section className="container p-4 mx-auto flex flex-col gap-4 bg-white rounded-md">
             <header>
-              <h2>Update post</h2>
+              <h2>Create post</h2>
             </header>
             <div className="flex flex-col gap-4 items-center w-full">
               {userState.myFile && (
@@ -97,45 +113,49 @@ const CreatePostModal = () => {
                   alt=""
                 />
               )}
-              <Form className="w-full">
-                <Form.Group className="flex flex-col gap-3">
+              <Form className="w-full" onSubmit={(e) => createPost(e)}>
+                <Form.Group className="flex flex-col gap-4">
                   <Form.Control
-                    placeholder="title"
+                    className="border border-dark/40 p-3 rounded"
+                    placeholder="Title"
                     name="title"
-                    value={updatedPost.title ? updatedPost.title : ""}
+                    value={post.title}
                     onChange={handleChange}
+                    autoFocus
                   />
                   <Form.Control
-                    placeholder="description"
+                    className="border border-dark/40 p-3 rounded"
+                    placeholder="Description"
                     name="description"
-                    value={
-                      updatedPost.description ? updatedPost.description : ""
-                    }
+                    value={post.description}
                     onChange={handleChange}
                   />
+                  <button type="submit" className="hidden">
+                    Save
+                  </button>
                 </Form.Group>
               </Form>
             </div>
-            <footer>
-              <button className="btn-primary" onClick={saveUpdatedPost}>
+            <footer className="flex gap-5">
+              <button className="btn-primary" onClick={createPost}>
                 Publish
               </button>
-              <button className="btn-outline-danger" onClick={handleClose}>
+              <button className="btn-outline-danger" onClick={closeModal}>
                 Close
               </button>
             </footer>
           </section>
         </div>
       )}
-      <div className="fixed bottom-0 right-0 left-0 border-t flex justify-between items-center p-3">
+      <div className="bg-white/10 backdrop-blur-sm shadow-md-reverse fixed bottom-0 right-0 left-0 border-t border-dark/30 flex justify-between items-center px-5 py-3">
         <img
-          className="rounded-full w-10 h-10 object-cover"
+          className="rounded-full w-10 h-10 object-cover border border-dark/30"
           src={userState.myFile}
           alt=""
         />
-        <Form onSubmit={(e) => handleSubmit(e)} className="flex flex-col">
+        <Form className="flex flex-col">
           <Form.Label className="m-0" htmlFor="file-upload">
-            <div className="bg-[#0d6efd] hover:bg-[#0b5ed7] transition-colors ease-in-out duration-150 px-3 py-1.5 rounded-md cursor-pointer text-white flex gap-2 justify-center items-center">
+            <div className="btn-primary text-sm flex gap-2 justify-center items-center">
               Create post
             </div>
           </Form.Label>
@@ -148,7 +168,6 @@ const CreatePostModal = () => {
               onChange={(e) => handleFileUpload(e)}
             />
           </Form.Group>
-          {/* <Button type="submit">Submit</Button> */}
         </Form>
       </div>
     </>

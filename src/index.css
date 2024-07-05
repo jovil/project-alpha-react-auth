@@ -4,19 +4,32 @@
 
 @layer components {
   .btn-primary {
-    @apply py-2 px-5 bg-blue border border-blue text-white font-semibold rounded-[6px] shadow-md hover:bg-[#0b5ed7] hover:border-[#0b5ed7] focus:outline-none;
+    @apply py-2 px-5 bg-blue border border-blue text-white font-medium rounded-md shadow-md hover:bg-[#0b5ed7] hover:border-[#0b5ed7] focus:outline-none;
   }
 }
 
 @layer components {
   .btn-outline-dark {
-    @apply py-2 px-5 bg-transparent border border-dark text-dark font-semibold rounded-[6px] shadow-md hover:text-white hover:bg-dark focus:outline-none;
+    @apply py-2 px-5 bg-transparent border border-dark text-dark font-medium rounded-md shadow-md hover:text-white hover:bg-dark focus:outline-none;
   }
 }
 
 @layer components {
   .btn-outline-danger {
-    @apply py-2 px-5 bg-transparent border border-danger text-danger font-semibold rounded-[6px] shadow-md hover:text-white hover:bg-danger focus:outline-none;
+    @apply py-2 px-5 bg-transparent border border-danger text-danger font-medium rounded-md shadow-md hover:text-white hover:bg-danger focus:outline-none;
+  }
+}
+
+@layer components {
+  .nav-button {
+    @apply py-1.5 px-5 bg-[#E5E5E5] text-dark rounded-md focus:outline-none;
+  }
+}
+
+@layer utilities {
+  .shadow-md-reverse {
+    box-shadow: 0 -2px 6px -1px rgb(0 0 0 / 0.1),
+      0 -2px 4px -2px rgb(0 0 0 / 0.1);
   }
 }
 

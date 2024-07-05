@@ -32,9 +32,12 @@ export default function Home() {
       <section className="flex flex-col gap-5">
         {posts ? (
           <>
-            {posts?.map((post: any) => {
+            {posts?.toReversed().map((post: any) => {
               return (
-                <div key={post._id}>
+                <div
+                  className="border border-dark/80 shadow-md rounded p-4"
+                  key={post._id}
+                >
                   <h2>{post.email}</h2>
                   <h2>{post.title}</h2>
                   <p>{post.description}</p>

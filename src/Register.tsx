@@ -44,52 +44,58 @@ export default function Register() {
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-2">
       <h1 className="text-4xl">Register</h1>
-      <Form onSubmit={(e) => handleSubmit(e)}>
-        {/* email */}
-        <Form.Group className="flex flex-col gap-2" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            className="border border-dark p-3"
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter email"
-          />
-        </Form.Group>
+      <Form className="flex flex-col gap-4" onSubmit={(e) => handleSubmit(e)}>
+        <div className="flex flex-col gap-4">
+          {/* email */}
+          <Form.Group
+            className="flex flex-col gap-2"
+            controlId="formBasicEmail"
+          >
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              className="border border-dark/40 p-3 rounded"
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter email"
+            />
+          </Form.Group>
 
-        {/* password */}
-        <Form.Group
-          className="flex flex-col gap-2"
-          controlId="formBasicPassword"
-        >
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            className="border border-dark p-3"
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-        </Form.Group>
+          {/* password */}
+          <Form.Group
+            className="flex flex-col gap-2"
+            controlId="formBasicPassword"
+          >
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              className="border border-dark/40 p-3 rounded"
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+          </Form.Group>
+        </div>
+        <div>
+          {/* submit button */}
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={(e) => handleSubmit(e)}
+          >
+            Submit
+          </Button>
 
-        {/* submit button */}
-        <Button
-          variant="primary"
-          type="submit"
-          onClick={(e) => handleSubmit(e)}
-        >
-          Submit
-        </Button>
-
-        {/* display success message */}
-        {register && (
-          <p className="text-success">You Are Registered Successfully</p>
-        )}
+          {/* display success message */}
+          {register && (
+            <p className="text-success">You Are Registered Successfully</p>
+          )}
+        </div>
       </Form>
-    </>
+    </div>
   );
 }

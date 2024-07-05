@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { GlobalStateContext } from "./context";
-import { useLocation, Routes, Route, Link } from "react-router-dom";
+import { useLocation, Routes, Route, Link, NavLink } from "react-router-dom";
 import Home from "./Home";
 import ProtectedRoutes from "./ProtectedRoutes";
 import "./App.css";
@@ -21,9 +21,29 @@ function App() {
       <header>
         <div className="py-6 flex flex-col gap-5 sm:gap-4">
           <div className="flex justify-center order-1">
-            <div className="flex gap-8">
-              <Link to="/">Home</Link>
-              <Link to="/auth">Account</Link>
+            <div className="flex gap-2 items-center">
+              <NavLink
+                to="/"
+                className={({ isActive }: { isActive: any }) =>
+                  isActive
+                    ? "nav-button bg-neutral-300 rounded-full text-sm"
+                    : "text-sm px-5 py-2"
+                }
+              >
+                Home
+              </NavLink>
+              {token && (
+                <NavLink
+                  to="/auth"
+                  className={({ isActive }: { isActive: any }) =>
+                    isActive
+                      ? "nav-button bg-neutral-300 rounded-full text-sm"
+                      : "text-sm px-5 py-2"
+                  }
+                >
+                  Account
+                </NavLink>
+              )}
             </div>
           </div>
           <div>
@@ -35,7 +55,7 @@ function App() {
                       <>
                         {location.pathname !== "/login" && (
                           <Link to="/login">
-                            <button className="btn-primary text-xs">
+                            <button className="btn-primary text-xs font-semibold">
                               Login
                             </button>
                           </Link>
@@ -43,7 +63,7 @@ function App() {
                       </>
                       {location.pathname !== "/register" && (
                         <Link to="/register">
-                          <button className="btn-outline-dark text-xs">
+                          <button className="btn-outline-dark text-xs font-semibold">
                             Register
                           </button>
                         </Link>
@@ -59,7 +79,7 @@ function App() {
         </div>
       </header>
 
-      <main>
+      <main className="py-16">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<ProtectedRoutes />} />
