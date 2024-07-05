@@ -19,3 +19,8 @@
     @apply py-2 px-5 bg-transparent border border-danger text-danger font-semibold rounded-[6px] shadow-md hover:text-white hover:bg-danger focus:outline-none;
   }
 }
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
