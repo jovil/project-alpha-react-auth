@@ -1,7 +1,7 @@
 import { useContext, useEffect, useCallback } from "react";
 import { GlobalStateContext } from "../../context";
 import { useUser } from "../../UserContext";
-import { Button, Form, Row, Col, Stack } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import iconUpload from "../../assets/images/icon-upload.svg";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
@@ -52,7 +52,7 @@ const HeaderSection = () => {
 
   const uploadProfileImage = async (data: any) => {
     setUserState({ ...userState, email: userState.email });
-
+    console.log("save avatar", userState);
     try {
       await fetch(uploadsUrl, {
         method: "POST", // Specify the request method
@@ -101,10 +101,10 @@ const HeaderSection = () => {
 
   return (
     <section className="text-center">
-      <Row>
-        <Col></Col>
-        <Col className="flex justify-center" xs={6}>
-          <Stack className="justify-center items-center gap-4">
+      <div className="grid grid-cols-12">
+        <div className="col-span-2"></div>
+        <div className="flex justify-center col-span-8">
+          <div className="flex flex-col justify-center items-center gap-4">
             {userState.myFile && (
               <img
                 className="w-14 h-14 border rounded"
@@ -112,14 +112,17 @@ const HeaderSection = () => {
                 alt=""
               />
             )}
-            <Form onSubmit={(e) => handleSubmit(e)} className="flex flex-col">
+            <Form
+              onSubmit={(e) => handleSubmit(e)}
+              className="flex flex-col gap-3"
+            >
               <Form.Label htmlFor="file-upload">
-                <div className="text-sm bg-[#0d6efd] hover:bg-[#0b5ed7] transition-colors ease-in-out duration-150 px-3 py-1.5 rounded-md cursor-pointer text-white flex gap-2 justify-center items-center">
+                <div className="text-sm btn-primary flex gap-2 justify-center items-center cursor-pointer">
                   Upload
                   <img className="h-4 w-4 m-0" src={iconUpload} alt="" />
                 </div>
               </Form.Label>
-              <Form.Group className="d-none">
+              <Form.Group className="hidden">
                 <Form.Control
                   id="file-upload"
                   type="file"
@@ -128,27 +131,24 @@ const HeaderSection = () => {
                   onChange={(e) => handleFileUpload(e)}
                 />
               </Form.Group>
-              <Button type="submit">Submit</Button>
+              <button className="btn-primary" type="submit">
+                Submit
+              </button>
             </Form>
-          </Stack>
-        </Col>
-        <Col>
-          <Stack
-            className="flex justify-end items-center h-full"
-            direction="horizontal"
-            gap={3}
-          >
-            <Button
-              className="text-xs"
+          </div>
+        </div>
+        <div className="col-span-2">
+          <div className="flex justify-end items-center">
+            <button
+              className="btn-outline-danger text-xs"
               type="submit"
-              variant="outline-danger"
               onClick={() => logout()}
             >
               Logout
-            </Button>
-          </Stack>
-        </Col>
-      </Row>
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

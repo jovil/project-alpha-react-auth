@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { GlobalStateContext } from "./context";
 import { useUser } from "./UserContext";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -72,9 +72,10 @@ const Login = () => {
       <h2 className="text-4xl">Login</h2>
       <Form onSubmit={(e) => handleSubmit(e)}>
         {/* email */}
-        <Form.Group controlId="formBasicEmail">
+        <Form.Group className="flex flex-col gap-2" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
+            className="border border-dark p-3"
             type="email"
             name="email"
             value={email}
@@ -84,9 +85,13 @@ const Login = () => {
         </Form.Group>
 
         {/* password */}
-        <Form.Group controlId="formBasicPassword">
+        <Form.Group
+          className="flex flex-col gap-2"
+          controlId="formBasicPassword"
+        >
           <Form.Label>Password</Form.Label>
           <Form.Control
+            className="border border-dark p-3"
             type="password"
             name="password"
             value={password}
@@ -96,13 +101,13 @@ const Login = () => {
         </Form.Group>
 
         {/* submit button */}
-        <Button
-          variant="success"
+        <button
+          className="btn-primary"
           type="submit"
           onClick={(e) => handleSubmit(e)}
         >
           Login
-        </Button>
+        </button>
 
         {/* display success message */}
         {login && (

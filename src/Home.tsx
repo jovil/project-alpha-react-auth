@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import CreatePostModal from "./components/CreatePostModal";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -15,7 +16,7 @@ export default function Home() {
     try {
       const response = await fetch(url, configuration);
       const result = await response.json();
-      console.log("1", result);
+      console.table(result);
       setPosts(result);
     } catch (error) {
       console.log("error creating post", error);
@@ -23,7 +24,6 @@ export default function Home() {
   }, [url]);
 
   useEffect(() => {
-    console.log("home");
     fetchPosts();
   }, [fetchPosts]);
 
@@ -46,6 +46,7 @@ export default function Home() {
           ""
         )}
       </section>
+      <CreatePostModal />
     </>
   );
 }
