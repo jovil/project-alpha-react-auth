@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
+import { usePosts } from "./PostsContext";
 import CreatePostModal from "./components/CreatePostModal";
 import loading from "./assets/images/loading.gif";
 
 export default function Home() {
-  const [posts, setPosts] = useState([]);
+  const { posts, setPosts } = usePosts();
   const url = `${process.env.REACT_APP_API_URL}/posts`;
 
   const fetchPosts = useCallback(async () => {
@@ -17,28 +18,33 @@ export default function Home() {
     try {
       const response = await fetch(url, configuration);
       const result = await response.json();
-      console.table("all posts", result);
+
       setPosts(result);
     } catch (error) {
       console.log("error creating post", error);
     }
-
-    console.log("effect home");
   }, [url, setPosts]);
 
   useEffect(() => {
+    if (posts.length) return;
+    console.log("fetchPosts");
     fetchPosts();
-  }, [fetchPosts]);
+  }, [fetchPosts, posts.length]);
+
+  // Log state changes using useEffect
+  useEffect(() => {
+    console.table("posts", posts);
+  }, [posts]);
 
   return (
     <>
-      <section className="grid grid-cols-3 gap-1 max-w-[908px] mx-auto">
+      <section className="grid grid-cols-3 gap-1 max-w-[908px] w-full mx-auto">
         {posts.length ? (
           <>
             {posts?.toReversed().map((post: any) => {
               return (
                 <div
-                  className="w-[300px] h-[320px] border border-dark/80 shadow-md rounded p-4 flex flex-col gap-2"
+                  className="max-w-[300px] w-full h-auto max-h-[320px] border border-dark/80 shadow-md rounded p-4 flex flex-col gap-2"
                   key={post._id}
                 >
                   <img

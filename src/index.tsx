@@ -4,6 +4,7 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { GlobalStateProvider } from "./context";
 import { UserProvider } from "./UserContext";
+import { PostsProvider } from "./PostsContext";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
@@ -14,9 +15,11 @@ root.render(
   <React.StrictMode>
     <GlobalStateProvider>
       <UserProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <PostsProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </PostsProvider>
       </UserProvider>
     </GlobalStateProvider>
   </React.StrictMode>
