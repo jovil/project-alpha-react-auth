@@ -3,6 +3,7 @@ import { useUser } from "../UserContext";
 import { Form } from "react-bootstrap";
 import Cookies from "universal-cookie";
 import defaultAvatar from "../assets/images/avatar.jpeg";
+import loading from "../assets/images/loading.gif";
 const cookies = new Cookies();
 
 const CreatePostModal = () => {
@@ -17,6 +18,7 @@ const CreatePostModal = () => {
     caption: "",
     _id: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
   const { userState } = useUser();
@@ -47,6 +49,7 @@ const CreatePostModal = () => {
   const createPost = async (e: any) => {
     e.preventDefault();
 
+    setIsLoading(true);
     console.log("e", e.target);
 
     setPost((prev) => {
@@ -68,12 +71,12 @@ const CreatePostModal = () => {
 
     try {
       await fetch(url, configuration);
+      setShowModal(false);
+      setIsLoading(false);
+      window.location.reload();
     } catch (error) {
       console.log("error", error);
     }
-
-    setShowModal(false);
-    window.location.reload();
   };
 
   const closeModal = (e: React.MouseEvent<HTMLElement>) => {
@@ -140,8 +143,15 @@ const CreatePostModal = () => {
               </Form>
             </div>
             <footer className="flex justify-end gap-3">
-              <button className="btn-primary text-sm" onClick={createPost}>
-                Publish
+              <button
+                className="min-w-[91px] btn-primary text-sm flex justify-center items-center"
+                onClick={createPost}
+              >
+                {isLoading ? (
+                  <img className="w-4 h-4 object-cover" src={loading} alt="" />
+                ) : (
+                  "Publish"
+                )}
               </button>
               <button
                 className="btn-outline-danger text-sm"
