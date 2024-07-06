@@ -1,10 +1,11 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { usePosts } from "./PostsContext";
 import CreatePostModal from "./components/CreatePostModal";
 import loading from "./assets/images/loading.gif";
 
 export default function Home() {
   const { posts, setPosts } = usePosts();
+  const [noPosts, setNoPosts] = useState(false);
   const url = `${process.env.REACT_APP_API_URL}/posts`;
 
   const fetchPosts = useCallback(async () => {
@@ -18,8 +19,8 @@ export default function Home() {
     try {
       const response = await fetch(url, configuration);
       const result = await response.json();
-
-      setPosts(result);
+      await setPosts(result);
+      if (result.length === 0) setNoPosts(true);
     } catch (error) {
       console.log("error creating post", error);
     }
@@ -58,6 +59,10 @@ export default function Home() {
               );
             })}
           </>
+        ) : noPosts ? (
+          <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
+            No posts.
+          </p>
         ) : (
           <img
             className="w-6 h-6 absolute inset-1/2 -translate-x-1/2 -translate-y-1/2"
