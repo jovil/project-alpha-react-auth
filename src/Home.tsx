@@ -6,6 +6,7 @@ import loading from "./assets/images/loading.gif";
 export default function Home() {
   const { posts, setPosts } = usePosts();
   const [noPosts, setNoPosts] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const url = `${process.env.REACT_APP_API_URL}/posts`;
 
   const fetchPosts = useCallback(async () => {
@@ -33,6 +34,10 @@ export default function Home() {
 
   useEffect(() => {}, [posts]);
 
+  const handlePostImageLoad = () => {
+    setIsLoading(false);
+  };
+
   return (
     <>
       <section className="grid grid-cols-3 gap-1 max-w-[908px] w-full mx-auto">
@@ -41,14 +46,24 @@ export default function Home() {
             {posts?.toReversed().map((post: any) => {
               return (
                 <div
-                  className="max-w-[300px] w-full h-auto max-h-[320px] border border-dark/80 shadow-md rounded p-4 flex flex-col gap-2"
+                  className="max-w-[300px] w-full h-auto max-h-[320px] border border-dark/80 shadow-md rounded p-4 flex flex-col gap-2 relative"
                   key={post._id}
                 >
+                  <img
+                    className={
+                      isLoading
+                        ? `w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0`
+                        : "hidden"
+                    }
+                    src={isLoading ? loading : ""}
+                    alt=""
+                  />
                   <img
                     className="aspect-square object-cover rounded-sm"
                     src={post.fileUrl}
                     alt=""
                     loading="lazy"
+                    onLoad={handlePostImageLoad}
                   />
                   <p className="text-sm">{post.caption}</p>
                 </div>
