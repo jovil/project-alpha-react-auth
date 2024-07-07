@@ -29,10 +29,12 @@ const HeaderSection = () => {
       const result = await response.json();
 
       if (result.email === userState.email) {
-        setUserState({
-          ...userState,
-          email: result.email,
-          avatar: result.avatar,
+        setUserState((prev: any) => {
+          return {
+            ...prev,
+            email: result.email,
+            avatar: result.avatar,
+          };
         });
       }
     } catch (error) {

@@ -22,7 +22,7 @@ const CreatePostModal = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
-  const { userState, setUserState } = useUser();
+  const { userState } = useUser();
   const token = cookies.get("TOKEN");
   const url = `${process.env.REACT_APP_API_URL}/create`;
 
@@ -64,11 +64,6 @@ const CreatePostModal = () => {
     console.log("create post", post);
 
     const file = post.image;
-    const postData = {
-      _id: post._id,
-      email: post.email,
-      caption: post.caption,
-    };
     const formData = new FormData();
     formData.append("image", file);
     formData.append(
