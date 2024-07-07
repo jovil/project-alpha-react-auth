@@ -18,6 +18,7 @@ const CreatePostModal = () => {
     caption: "",
     _id: "",
   });
+  const [imageBase64, setImageBase64] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
@@ -26,7 +27,6 @@ const CreatePostModal = () => {
   const url = `${process.env.REACT_APP_API_URL}/create`;
 
   useEffect(() => {
-    console.log("1", userState);
     setPost((prev: any) => {
       return {
         ...prev,
@@ -34,6 +34,8 @@ const CreatePostModal = () => {
       };
     });
   }, [userState]);
+
+  useEffect(() => {}, [post]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -61,16 +63,28 @@ const CreatePostModal = () => {
 
     console.log("create post", post);
 
+    const file = post.image;
+    const postData = {
+      email: post.email,
+      caption: post.caption,
+    };
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("post", JSON.stringify(postData));
+
+    console.log("image", file);
+    console.log("postData", postData);
+    console.log("formData", formData);
+
     const configuration = {
       method: "POST", // Specify the request method
-      headers: {
-        "Content-Type": "application/json", // Specify the content type as JSON
-      },
-      body: JSON.stringify(post), // Convert the data to JSON string
+      body: formData, // Convert the data to JSON string
     };
 
     try {
-      await fetch(url, configuration);
+      const response = await fetch(url, configuration);
+      const result = await response.json();
+      console.log("result", result);
       setShowModal(false);
       setIsLoading(false);
       window.location.reload();
@@ -87,8 +101,9 @@ const CreatePostModal = () => {
   const handleFileUpload = async (e: any) => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
-    setPost({ ...post, image: base64 });
-    console.log("11", post);
+    console.log("file", file);
+    setImageBase64(base64 as string);
+    setPost({ ...post, image: file });
     setShowModal(true);
   };
 
@@ -122,7 +137,7 @@ const CreatePostModal = () => {
               {post.image && (
                 <img
                   className="w-full h-[50vh] object-cover border border-dark/40 rounded"
-                  src={post.image}
+                  src={imageBase64}
                   alt=""
                 />
               )}

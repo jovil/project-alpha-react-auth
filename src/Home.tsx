@@ -28,14 +28,10 @@ export default function Home() {
 
   useEffect(() => {
     if (posts.length) return;
-    console.log("fetchPosts");
     fetchPosts();
   }, [fetchPosts, posts.length]);
 
-  // Log state changes using useEffect
-  useEffect(() => {
-    console.table("posts", posts);
-  }, [posts]);
+  useEffect(() => {}, [posts]);
 
   return (
     <>
@@ -50,7 +46,7 @@ export default function Home() {
                 >
                   <img
                     className="aspect-square object-cover rounded-sm"
-                    src={post.image}
+                    src={post.fileUrl}
                     alt=""
                     loading="lazy"
                   />

@@ -14,8 +14,6 @@ function App() {
   const location = useLocation();
   const token = cookies.get("TOKEN");
 
-  console.log(location.pathname);
-
   return (
     <div className="container mx-auto px-4">
       <header>
