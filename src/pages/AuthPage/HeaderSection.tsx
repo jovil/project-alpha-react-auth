@@ -8,15 +8,11 @@ import defaultAvatar from "../../assets/images/avatar.jpeg";
 const cookies = new Cookies();
 
 const HeaderSection = () => {
-  interface ApiResponse {
-    email: string;
-    avatar: string;
-  }
+  const { state, setState } = useContext(GlobalStateContext);
+  const { userState, setUserState } = useUser();
   const apiUrl = process.env.REACT_APP_API_URL;
   const authUrl = `${apiUrl}/auth-endpoint`;
   const uploadsUrl = `${apiUrl}/uploads`;
-  const { state, setState } = useContext(GlobalStateContext);
-  const { userState, setUserState } = useUser();
 
   const fetchUserData = useCallback(async () => {
     const token = cookies.get("TOKEN");
@@ -31,11 +27,14 @@ const HeaderSection = () => {
     try {
       const response = await fetch(authUrl, authConfiguration);
       const result = await response.json();
-      const user = result.find(
-        (data: ApiResponse) => data.email === userState.email
-      );
-      if (user)
-        setUserState({ ...userState, email: user.email, avatar: user.avatar });
+
+      if (result.email === userState.email) {
+        setUserState({
+          ...userState,
+          email: result.email,
+          avatar: result.avatar,
+        });
+      }
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
