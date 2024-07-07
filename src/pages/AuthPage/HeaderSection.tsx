@@ -34,7 +34,8 @@ const HeaderSection = () => {
       const user = result.find(
         (data: ApiResponse) => data.email === userState.email
       );
-      if (user) setUserState({ email: user.email, avatar: user.avatar });
+      if (user)
+        setUserState({ ...userState, email: user.email, avatar: user.avatar });
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -47,7 +48,7 @@ const HeaderSection = () => {
   const logout = () => {
     cookies.remove("TOKEN", { path: "/" });
     setState({ ...state, isLoggedIn: false });
-    setUserState({ email: undefined, avatar: undefined });
+    setUserState({ ...userState, email: undefined, avatar: undefined });
     window.location.href = "/";
   };
 

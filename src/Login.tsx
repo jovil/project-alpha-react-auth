@@ -31,7 +31,7 @@ const Login = () => {
     setState({ ...state, isLoggedIn: true });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleLogin = async (e: any) => {
     e.preventDefault();
     const postData = {
       email: email,
@@ -55,10 +55,16 @@ const Login = () => {
           path: "/",
         });
 
+        console.log("result", result);
+
         handleLoginState();
         setEmailNotFound(false);
         setLogin(true);
-        setUserState({ ...userState, email: result.email });
+        setUserState({
+          ...userState,
+          email: result.email,
+          userId: result.userId,
+        });
         // redirect user to the auth page
         navigate("/auth");
       })
@@ -70,7 +76,7 @@ const Login = () => {
   return (
     <div className="flex flex-col gap-2">
       <h2 className="text-4xl">Login</h2>
-      <Form className="flex flex-col gap-4" onSubmit={(e) => handleSubmit(e)}>
+      <Form className="flex flex-col gap-4" onSubmit={(e) => handleLogin(e)}>
         <div className="flex flex-col gap-4">
           {/* email */}
           <Form.Group
@@ -110,7 +116,7 @@ const Login = () => {
           <button
             className="btn-primary"
             type="submit"
-            onClick={(e) => handleSubmit(e)}
+            onClick={(e) => handleLogin(e)}
           >
             Login
           </button>
