@@ -22,7 +22,7 @@ const CreatePostModal = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
-  const { userState } = useUser();
+  const { userState, setUserState } = useUser();
   const token = cookies.get("TOKEN");
   const url = `${process.env.REACT_APP_API_URL}/create`;
 
@@ -52,11 +52,11 @@ const CreatePostModal = () => {
     e.preventDefault();
 
     setIsLoading(true);
-    console.log("e", e.target);
 
     setPost((prev) => {
       return {
         ...prev,
+        _id: userState._id,
         email: userState.email,
       };
     });
@@ -65,16 +65,20 @@ const CreatePostModal = () => {
 
     const file = post.image;
     const postData = {
+      _id: post._id,
       email: post.email,
       caption: post.caption,
     };
     const formData = new FormData();
     formData.append("image", file);
-    formData.append("post", JSON.stringify(postData));
-
-    console.log("image", file);
-    console.log("postData", postData);
-    console.log("formData", formData);
+    formData.append(
+      "post",
+      JSON.stringify({
+        _id: userState._id,
+        email: userState.email,
+        caption: post.caption,
+      })
+    );
 
     const configuration = {
       method: "POST", // Specify the request method
