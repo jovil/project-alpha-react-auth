@@ -178,28 +178,30 @@ const CreatePostModal = () => {
           </section>
         </div>
       )}
-      <div className="bg-white/10 backdrop-blur shadow-md-reverse fixed bottom-0 right-0 left-0 border-t border-dark/10 flex justify-between items-center px-5 py-3">
-        <img
-          className="rounded-full w-10 h-10 object-cover border border-dark/30"
-          src={userState.avatar || defaultAvatar}
-          alt=""
-        />
-        <Form className="flex flex-col">
-          <Form.Label className="m-0" htmlFor="file-upload">
-            <div className="btn-primary text-sm flex gap-2 justify-center items-center cursor-pointer">
-              Create post
-            </div>
-          </Form.Label>
-          <Form.Group className="hidden">
-            <Form.Control
-              id="file-upload"
-              type="file"
-              name="image"
-              accept=".jpeg, .png, .jpg"
-              onChange={(e) => handleFileUpload(e)}
-            />
-          </Form.Group>
-        </Form>
+      <div className="fixed bottom-0 right-0 left-0 px-4 py-3 ">
+        <div className="max-w-[908px] flex flex-col justify-center items-center gap-3.5 mx-auto">
+          <img
+            className="rounded-full w-10 h-10 object-cover border border-dark/30 shadow-md"
+            src={userState.avatar || defaultAvatar}
+            alt=""
+          />
+          <Form className="flex flex-col">
+            <Form.Label className="m-0" htmlFor="file-upload">
+              <div className="btn-primary rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer">
+                Create post
+              </div>
+            </Form.Label>
+            <Form.Group className="hidden">
+              <Form.Control
+                id="file-upload"
+                type="file"
+                name="image"
+                accept=".jpeg, .png, .jpg"
+                onChange={(e) => handleFileUpload(e)}
+              />
+            </Form.Group>
+          </Form>
+        </div>
       </div>
     </>
   ) : (
