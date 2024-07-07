@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useUser } from "../UserContext";
+import { useUser } from "../pages/Context/UserContext";
 import { Form } from "react-bootstrap";
 import Cookies from "universal-cookie";
 import defaultAvatar from "../assets/images/avatar.jpeg";

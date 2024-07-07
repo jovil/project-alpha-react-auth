@@ -1,6 +1,6 @@
 import { useContext, useEffect, useCallback } from "react";
-import { GlobalStateContext } from "../../context";
-import { useUser } from "../../UserContext";
+import { GlobalStateContext } from "../Context/context";
+import { useUser } from "../Context/UserContext";
 import { Form } from "react-bootstrap";
 import iconUpload from "../../assets/images/icon-upload.svg";
 import Cookies from "universal-cookie";

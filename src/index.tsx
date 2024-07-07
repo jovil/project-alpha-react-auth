@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import { GlobalStateProvider } from "./context";
-import { UserProvider } from "./UserContext";
-import { PostsProvider } from "./PostsContext";
+import { GlobalStateProvider } from "./pages/Context/context";
+import { UserProvider } from "./pages/Context/UserContext";
+import { PostsProvider } from "./pages/Context/PostsContext";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 

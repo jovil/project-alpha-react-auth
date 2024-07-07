@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
-import { GlobalStateContext } from "./context";
-import { useUser } from "./UserContext";
+import { GlobalStateContext } from "./pages/Context/context";
+import { useUser } from "./pages/Context/UserContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import Cookies from "universal-cookie";
