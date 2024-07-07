@@ -55,15 +55,13 @@ const Login = () => {
           path: "/",
         });
 
-        console.log("result", result);
-
         handleLoginState();
         setEmailNotFound(false);
         setLogin(true);
         setUserState({
           ...userState,
           email: result.email,
-          userId: result.userId,
+          _id: result._id,
         });
         // redirect user to the auth page
         navigate("/auth");

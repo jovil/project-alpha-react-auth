@@ -55,25 +55,21 @@ const HeaderSection = () => {
   const uploadProfileImage = async (data: any) => {
     setUserState({
       ...userState,
+      _id: userState._id,
       email: userState.email,
       avatar: userState.avatar,
     });
-    console.log("save avatar", userState);
+
     try {
-      await fetch(uploadsUrl, {
+      const response = await fetch(uploadsUrl, {
         method: "POST", // Specify the request method
         headers: {
           "Content-Type": "application/json", // Specify the content type as JSON
         },
         body: JSON.stringify(userState), // Convert the data to JSON string
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          console.log("result", result);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      });
+      const result = await response.json();
+      console.log("result", result);
     } catch (error) {
       console.log("error", error);
     }
