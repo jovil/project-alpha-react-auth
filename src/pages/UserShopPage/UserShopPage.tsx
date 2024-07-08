@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
+import { useUser } from "../Context/UserContext";
 import { useParams } from "react-router-dom";
 import HeaderSection from "./HeaderSection";
+import CreateProduct from "./CreateProduct";
 
 const UserShopPage = () => {
+  const { userState, setUserState } = useUser();
   const { userId } = useParams();
   const [profile, setProfile] = useState({
     avatar: "",
+    user: "",
   });
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
 
@@ -42,6 +46,7 @@ const UserShopPage = () => {
         profileHeader={profile}
         profileLoadingAvatar={isLoadingAvatar}
       />
+      {userId === userState._id && <CreateProduct />}
     </>
   );
 };
