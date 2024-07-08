@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { usePosts } from "./PostsContext";
+import { NavLink } from "react-router-dom";
+import { usePosts } from "./pages/Context/PostsContext";
 import CreatePostModal from "./components/CreatePostModal";
 import loading from "./assets/images/loading.gif";
 
@@ -32,7 +33,9 @@ export default function Home() {
     fetchPosts();
   }, [fetchPosts, posts.length]);
 
-  useEffect(() => {}, [posts]);
+  useEffect(() => {
+    console.log("posts", posts);
+  }, [posts]);
 
   const handlePostImageLoad = () => {
     setIsLoading(false);
@@ -46,7 +49,7 @@ export default function Home() {
             {posts?.toReversed().map((post: any) => {
               return (
                 <div
-                  className="max-w-[300px] w-full h-auto max-h-[320px] border border-dark/80 shadow-md rounded p-4 flex flex-col gap-2 relative"
+                  className="max-w-[300px] w-full h-auto min-h-[320px] border border-dark/80 shadow-md rounded p-4 pb-3 flex flex-col gap-3 relative"
                   key={post._id}
                 >
                   <img
@@ -65,7 +68,15 @@ export default function Home() {
                     loading="lazy"
                     onLoad={handlePostImageLoad}
                   />
-                  <p className="text-sm">{post.caption}</p>
+                  <div className="flex justify-between items-center">
+                    <p className="text-sm">{post.caption}</p>
+                    <NavLink
+                      className="btn-outline-dark text-xs shadow-none rounded-full"
+                      to={`/shop/${post.user}`}
+                    >
+                      Visit my shop
+                    </NavLink>
+                  </div>
                 </div>
               );
             })}

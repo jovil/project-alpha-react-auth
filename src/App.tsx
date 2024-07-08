@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { GlobalStateContext } from "./context";
+import { GlobalStateContext } from "./pages/Context/context";
 import { useLocation, Routes, Route, Link, NavLink } from "react-router-dom";
 import Home from "./Home";
 import ProtectedRoutes from "./ProtectedRoutes";
@@ -7,6 +7,7 @@ import "./App.css";
 import Register from "./Register";
 import Login from "./Login";
 import Cookies from "universal-cookie";
+import UserShopPage from "./pages/UserShopPage/UserShopPage";
 const cookies = new Cookies();
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
                 className={({ isActive }: { isActive: any }) =>
                   isActive
                     ? "nav-button bg-neutral-300 rounded-full text-sm"
-                    : "text-sm px-5 py-2"
+                    : "text-sm px-5 py-1.5"
                 }
               >
                 Home
@@ -36,7 +37,7 @@ function App() {
                   className={({ isActive }: { isActive: any }) =>
                     isActive
                       ? "nav-button bg-neutral-300 rounded-full text-sm"
-                      : "text-sm px-5 py-2"
+                      : "text-sm px-5 py-1.5"
                   }
                 >
                   Account
@@ -83,6 +84,7 @@ function App() {
           <Route path="/auth" element={<ProtectedRoutes />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path={`/shop/:userId`} element={<UserShopPage />} />
         </Routes>
       </main>
     </div>
