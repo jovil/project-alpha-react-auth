@@ -4,7 +4,7 @@ import { useUser } from "../Context/UserContext";
 import { Form } from "react-bootstrap";
 import iconUpload from "../../assets/images/icon-upload.svg";
 import Cookies from "universal-cookie";
-import defaultAvatar from "../../assets/images/avatar.jpeg";
+import defaultAvatar from "../../assets/images/toon_6.png";
 const cookies = new Cookies();
 
 const HeaderSection = () => {
