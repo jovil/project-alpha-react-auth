@@ -6,7 +6,7 @@ import CreateProduct from "./CreateProduct";
 import ProductListComponent from "./ProductListComponent";
 
 const UserShopPage = () => {
-  const { userState, setUserState } = useUser();
+  const { userState } = useUser();
   const { profileId } = useParams();
   const [profile, setProfile] = useState({
     avatar: "",

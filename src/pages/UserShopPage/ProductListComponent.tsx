@@ -28,11 +28,9 @@ const ProductListComponent = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [profileId]);
 
-  useEffect(() => {
-    console.log("products111", products);
-  }, [products]);
+  useEffect(() => {}, [products]);
 
   const handlePostImageLoad = () => {
     setIsLoading(false);
@@ -59,14 +57,14 @@ const ProductListComponent = () => {
                     alt=""
                   />
                   <img
-                    className="aspect-square object-cover rounded-sm"
+                    className="aspect-square w-full object-cover rounded-sm"
                     src={product.fileUrl}
                     alt=""
                     loading="lazy"
                     onLoad={handlePostImageLoad}
                   />
                 </div>
-                <div className="flex flex-col gap-3">
+                <div className="h-full flex flex-col justify-between gap-3">
                   <div className="flex flex-col gap-1.5">
                     <p>{product.productName}</p>
                     <p className="text-sm text-dark/80">

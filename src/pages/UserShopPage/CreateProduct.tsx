@@ -33,7 +33,7 @@ const CreateProduct = () => {
         _id: userState._id,
       };
     });
-  }, []);
+  }, [userState._id]);
 
   const createProduct = async (e: any) => {
     e.preventDefault();
@@ -43,7 +43,6 @@ const CreateProduct = () => {
     setProduct((prev) => {
       return {
         ...prev,
-        _id: userState._id,
         productName: product.productName,
         productDescription: product.productDescription,
         productPrice: product.price,
@@ -58,9 +57,6 @@ const CreateProduct = () => {
     const formData = new FormData();
     formData.append("image", file);
     formData.append("product", JSON.stringify(product));
-
-    console.log("formData", formData);
-    console.log("formData JSON", JSON.stringify(formData));
 
     const configuration = {
       method: "POST", // Specify the request method
@@ -101,7 +97,6 @@ const CreateProduct = () => {
 
     setImageBase64(base64 as string);
     setProductImage(file);
-    // setProduct({ ...product, image: file });
     setShowModal(true);
   };
 
@@ -197,7 +192,7 @@ const CreateProduct = () => {
           </section>
         </div>
       )}
-      <div className="fixed bottom-0 right-0 left-0 px-4 py-3 pointer-events-none">
+      <div className="fixed bottom-0 right-0 left-0 px-4 py-3.5 pointer-events-none">
         <div className="max-w-[908px] flex flex-col justify-center items-center gap-3.5 mx-auto">
           <img
             className="rounded-full w-10 h-10 object-cover border border-dark/30 shadow-md"
