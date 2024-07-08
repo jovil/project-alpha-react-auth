@@ -49,29 +49,31 @@ export default function Home() {
             {posts?.toReversed().map((post: any) => {
               return (
                 <div
-                  className="max-w-[300px] w-full h-auto min-h-[320px] border border-dark/80 shadow-md rounded p-4 pb-3 flex flex-col gap-3 relative"
+                  className="max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded p-4 pb-3 flex flex-col gap-3"
                   key={post._id}
                 >
-                  <img
-                    className={
-                      isLoading
-                        ? `w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0`
-                        : "hidden"
-                    }
-                    src={isLoading ? loading : ""}
-                    alt=""
-                  />
-                  <img
-                    className="aspect-square object-cover rounded-sm"
-                    src={post.fileUrl}
-                    alt=""
-                    loading="lazy"
-                    onLoad={handlePostImageLoad}
-                  />
-                  <div className="flex justify-between items-center">
+                  <div className="relative aspect-square">
+                    <img
+                      className={
+                        isLoading
+                          ? `w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0`
+                          : "hidden"
+                      }
+                      src={isLoading ? loading : ""}
+                      alt=""
+                    />
+                    <img
+                      className="aspect-square object-cover w-full rounded-sm"
+                      src={post.fileUrl}
+                      alt=""
+                      loading="lazy"
+                      onLoad={handlePostImageLoad}
+                    />
+                  </div>
+                  <div className="flex flex-col justify-between gap-3">
                     <p className="text-sm">{post.caption}</p>
                     <NavLink
-                      className="btn-outline-dark text-xs shadow-none rounded-full"
+                      className="btn-outline-dark text-xs text-center shadow-none rounded-full"
                       to={`/shop/${post.user}`}
                     >
                       Visit my shop

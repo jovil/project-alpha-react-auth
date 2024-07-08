@@ -3,10 +3,11 @@ import { useUser } from "../Context/UserContext";
 import { useParams } from "react-router-dom";
 import HeaderSection from "./HeaderSection";
 import CreateProduct from "./CreateProduct";
+import ProductListComponent from "./ProductListComponent";
 
 const UserShopPage = () => {
   const { userState, setUserState } = useUser();
-  const { userId } = useParams();
+  const { profileId } = useParams();
   const [profile, setProfile] = useState({
     avatar: "",
     user: "",
@@ -24,7 +25,7 @@ const UserShopPage = () => {
 
     const fetchProfile = async () => {
       try {
-        const response = await fetch(`${url}/${userId}`, configuration);
+        const response = await fetch(`${url}/${profileId}`, configuration);
         const result = await response.json();
         setProfile(result);
         setIsLoadingAvatar(false);
@@ -34,7 +35,7 @@ const UserShopPage = () => {
     };
 
     fetchProfile();
-  }, [userId, setProfile]);
+  }, [profileId, setProfile]);
 
   useEffect(() => {
     console.log("profile", profile);
@@ -46,7 +47,8 @@ const UserShopPage = () => {
         profileHeader={profile}
         profileLoadingAvatar={isLoadingAvatar}
       />
-      {userId === userState._id && <CreateProduct />}
+      {profileId === userState._id && <CreateProduct />}
+      <ProductListComponent />
     </>
   );
 };

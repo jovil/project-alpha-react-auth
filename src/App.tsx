@@ -84,7 +84,7 @@ function App() {
           <Route path="/auth" element={<ProtectedRoutes />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path={`/shop/:userId`} element={<UserShopPage />} />
+          <Route path={`/shop/:profileId`} element={<UserShopPage />} />
         </Routes>
       </main>
     </div>
