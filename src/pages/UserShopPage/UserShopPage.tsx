@@ -36,9 +36,7 @@ const UserShopPage = () => {
     fetchProfile();
   }, [profileId, setProfile]);
 
-  useEffect(() => {
-    console.log("profile", profile);
-  }, [profile]);
+  useEffect(() => {}, [profile]);
 
   return (
     <>

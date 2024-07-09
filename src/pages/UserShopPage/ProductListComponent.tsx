@@ -21,7 +21,6 @@ const ProductListComponent = () => {
         const response = await fetch(url, configuration);
         const result = await response.json();
         setProducts(result);
-        console.log("products result", result);
       } catch (error) {
         console.log("error", error);
       }

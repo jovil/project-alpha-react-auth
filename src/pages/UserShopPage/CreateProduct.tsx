@@ -52,8 +52,6 @@ const CreateProduct = () => {
     console.log("create product", product);
 
     const file = productImage;
-    console.log("file", file);
-
     const formData = new FormData();
     formData.append("image", file);
     formData.append("product", JSON.stringify(product));
@@ -64,9 +62,7 @@ const CreateProduct = () => {
     };
 
     try {
-      const response = await fetch(url, configuration);
-      const result = await response.json();
-      console.log("result", result);
+      await fetch(url, configuration);
       setShowModal(false);
       setIsLoading(false);
       window.location.reload();

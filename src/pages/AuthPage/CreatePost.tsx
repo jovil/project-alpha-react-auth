@@ -65,9 +65,8 @@ const CreatePost = () => {
     };
 
     try {
-      const response = await fetch(url, configuration);
-      const result = await response.json();
-      console.log("result", result);
+      await fetch(url, configuration);
+
       setShowModal(false);
       setIsLoading(false);
       window.location.reload();
@@ -95,7 +94,7 @@ const CreatePost = () => {
   const handleFileUpload = async (e: any) => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
-    console.log("file", file);
+
     setImageBase64(base64 as string);
     setPost({ ...post, image: file });
     setShowModal(true);
