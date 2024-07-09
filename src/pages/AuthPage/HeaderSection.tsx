@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalStateContext } from "../Context/context";
 import { useUser } from "../Context/UserContext";
 import { Form } from "react-bootstrap";
@@ -12,6 +12,36 @@ const HeaderSection = () => {
   const { userState, setUserState } = useUser();
   const apiUrl = process.env.REACT_APP_API_URL;
   const uploadsUrl = `${apiUrl}/uploads`;
+
+  useEffect(() => {
+    if (!userState.avatar64) {
+      const fetchUser = async () => {
+        const url = `${process.env.REACT_APP_API_URL}/user/${userState._id}`;
+
+        const configuration = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+
+        try {
+          const response = await fetch(url, configuration);
+          const result = await response.json();
+          setUserState((prev: any) => {
+            return {
+              ...prev,
+              avatar64: result.avatar,
+            };
+          });
+        } catch (error) {
+          console.log("error", error);
+        }
+      };
+
+      fetchUser();
+    }
+  }, []);
 
   const logout = () => {
     cookies.remove("TOKEN", { path: "/" });
