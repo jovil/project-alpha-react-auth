@@ -72,10 +72,10 @@ export default function Home() {
                   </div>
                   <div className="flex flex-col justify-between gap-3">
                     <p className="text-sm">{post.caption}</p>
-                    {post.user?.hasProducts && (
+                    {post.user?.hasPosted && (
                       <div className="ml-auto">
                         <NavLink
-                          className="btn-outline-dark font-normal text-xs text-center group shadow-none rounded-full flex items-center gap-1"
+                          className="btn-outline-dark font-normal text-xs text-center group rounded-full flex items-center gap-1"
                           to={`/shop/${post.user._id}`}
                         >
                           @{post.user.userName}

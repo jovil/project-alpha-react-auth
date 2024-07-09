@@ -188,9 +188,9 @@ const CreateProduct = () => {
       )}
       <Form className="flex flex-col">
         <button
-          disabled={!userState.hasProducts}
+          disabled={!userState.hasPosted}
           className={
-            !userState.hasProducts
+            !userState.hasPosted
               ? "pointer-events-none *:border-dark/20 *:text-dark/20 *:shadow-none"
               : ""
           }

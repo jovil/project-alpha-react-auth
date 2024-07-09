@@ -66,7 +66,7 @@ const CreatePost = () => {
 
     try {
       await fetch(url, configuration);
-      await updateHasProducts();
+      await updatehasPosted();
       setShowModal(false);
       setIsLoading(false);
       window.location.reload();
@@ -75,11 +75,11 @@ const CreatePost = () => {
     }
   };
 
-  const updateHasProducts = async () => {
-    const url = `${process.env.REACT_APP_API_URL}/update-hasProducts/${userState._id}`;
+  const updatehasPosted = async () => {
+    const url = `${process.env.REACT_APP_API_URL}/update-hasPosted/${userState._id}`;
 
-    const hasProducts = {
-      hasProducts: true,
+    const hasPosted = {
+      hasPosted: true,
     };
 
     try {
@@ -88,13 +88,13 @@ const CreatePost = () => {
         headers: {
           "Content-Type": "application/json", // Specify the content type as JSON
         },
-        body: JSON.stringify(hasProducts), // Convert the data to JSON string
+        body: JSON.stringify(hasPosted), // Convert the data to JSON string
       });
       const result = response.json();
       setUserState((prev: any) => {
         return {
           ...prev,
-          hasProducts: true,
+          hasPosted: true,
         };
       });
     } catch (error) {
