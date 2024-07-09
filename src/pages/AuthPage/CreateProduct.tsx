@@ -1,63 +1,81 @@
 import { useState, useEffect } from "react";
-import { useUser } from "../Context/UserContext";
+import { useUser } from "../../pages/Context/UserContext";
 import { Form } from "react-bootstrap";
+import Cookies from "universal-cookie";
 import loading from "../../assets/images/loading.gif";
+const cookies = new Cookies();
 
-const CreatePost = () => {
+const CreateProduct = () => {
   const { userState } = useUser();
-  const [post, setPost] = useState<{
-    email: string;
-    image: any;
-    caption: string;
-    _id: string;
-  }>({
-    email: "",
-    image: "",
-    caption: "",
-    _id: "",
-  });
+  const [showModal, setShowModal] = useState(false);
   const [imageBase64, setImageBase64] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const url = `${process.env.REACT_APP_API_URL}/create`;
+  const [productImage, setProductImage] = useState<string>("");
+  const [product, setProduct] = useState<{
+    productName: string;
+    productDescription: string;
+    price: string;
+    _id: string;
+  }>({
+    productName: "",
+    productDescription: "",
+    price: "",
+    _id: "",
+  });
+  const token = cookies.get("TOKEN");
+  const url = `${process.env.REACT_APP_API_URL}/create/product`;
 
   useEffect(() => {
-    setPost((prev: any) => {
+    setProduct((prev: any) => {
       return {
         ...prev,
-        email: userState.email,
+        _id: userState._id,
       };
     });
-  }, [userState]);
+  }, [userState._id]);
 
-  useEffect(() => {}, [post]);
+  const updateHasProducts = async () => {
+    const url = `${process.env.REACT_APP_API_URL}/update-hasProducts/${userState._id}`;
 
-  const createPost = async (e: any) => {
+    const hasProducts = {
+      hasProducts: true,
+    };
+
+    try {
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Specify the content type as JSON
+        },
+        body: JSON.stringify(hasProducts), // Convert the data to JSON string
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const createProduct = async (e: any) => {
     e.preventDefault();
 
     setIsLoading(true);
 
-    setPost((prev) => {
+    setProduct((prev) => {
       return {
         ...prev,
-        _id: userState._id,
-        email: userState.email,
+        productName: product.productName,
+        productDescription: product.productDescription,
+        productPrice: product.price,
       };
     });
 
-    console.log("create post", post);
+    console.log("create product", product);
 
-    const file = post.image;
+    const file = productImage;
+    console.log("file", file);
+
     const formData = new FormData();
     formData.append("image", file);
-    formData.append(
-      "post",
-      JSON.stringify({
-        _id: userState._id,
-        email: userState.email,
-        caption: post.caption,
-      })
-    );
+    formData.append("product", JSON.stringify(product));
 
     const configuration = {
       method: "POST", // Specify the request method
@@ -68,23 +86,12 @@ const CreatePost = () => {
       const response = await fetch(url, configuration);
       const result = await response.json();
       console.log("result", result);
+      await updateHasProducts();
       setShowModal(false);
       setIsLoading(false);
-      window.location.reload();
     } catch (error) {
       console.log("error", error);
     }
-  };
-
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-
-    setPost((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
   };
 
   const closeModal = (e: React.MouseEvent<HTMLElement>) => {
@@ -92,12 +99,23 @@ const CreatePost = () => {
     setShowModal(false);
   };
 
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+
+    setProduct((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
   const handleFileUpload = async (e: any) => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
-    console.log("file", file);
+
     setImageBase64(base64 as string);
-    setPost({ ...post, image: file });
+    setProductImage(file);
     setShowModal(true);
   };
 
@@ -116,7 +134,7 @@ const CreatePost = () => {
     });
   }
 
-  return (
+  return token ? (
     <>
       {showModal && (
         <div
@@ -125,26 +143,47 @@ const CreatePost = () => {
         >
           <section className="w-[500px] p-4 mx-auto flex flex-col gap-4 bg-white rounded-md">
             <header>
-              <h2>Create post</h2>
+              <h2>Create product</h2>
             </header>
             <div className="flex flex-col gap-4 items-center w-full">
-              {post.image && (
+              {productImage && (
                 <img
                   className="w-full h-[50vh] object-cover border border-dark/40 rounded"
                   src={imageBase64}
                   alt=""
                 />
               )}
-              <Form className="w-full" onSubmit={(e) => createPost(e)}>
+              <Form className="w-full" onSubmit={(e) => createProduct(e)}>
                 <Form.Group className="flex flex-col gap-4">
-                  <Form.Control
-                    className="border border-dark/40 p-3 rounded"
-                    placeholder="Caption"
-                    name="caption"
-                    value={post.caption}
-                    onChange={handleChange}
-                    autoFocus
-                  />
+                  <div className="grid grid-cols-12 gap-2">
+                    <Form.Control
+                      className="col-span-9 border border-dark/40 p-3 rounded"
+                      placeholder="Product Name"
+                      name="productName"
+                      value={product.productName}
+                      onChange={handleChange}
+                      autoFocus
+                      required
+                    />
+                    <Form.Control
+                      type="number"
+                      className="col-span-3 border border-dark/40 p-3 rounded"
+                      placeholder="Price (MYR)"
+                      name="price"
+                      value={product.price}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <Form.Group>
+                    <Form.Control
+                      className="w-full border border-dark/40 p-3 rounded"
+                      placeholder="Product Description"
+                      name="productDescription"
+                      value={product.productDescription}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
                   <button type="submit" className="hidden">
                     Save
                   </button>
@@ -154,7 +193,7 @@ const CreatePost = () => {
             <footer className="flex justify-end gap-3">
               <button
                 className="min-w-[91px] btn-primary text-sm flex justify-center items-center"
-                onClick={createPost}
+                onClick={createProduct}
               >
                 {isLoading ? (
                   <img className="w-4 h-4 object-cover" src={loading} alt="" />
@@ -173,14 +212,14 @@ const CreatePost = () => {
         </div>
       )}
       <Form className="flex flex-col">
-        <Form.Label className="m-0" htmlFor="post-file-upload">
+        <Form.Label className="m-0" htmlFor="product-file-upload">
           <div className="w-36 h-36 btn-outline-dark text-center rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer">
-            Create post
+            Create product
           </div>
         </Form.Label>
         <Form.Group className="hidden">
           <Form.Control
-            id="post-file-upload"
+            id="product-file-upload"
             type="file"
             name="image"
             accept=".jpeg, .png, .jpg"
@@ -189,7 +228,9 @@ const CreatePost = () => {
         </Form.Group>
       </Form>
     </>
+  ) : (
+    ""
   );
 };
 
-export default CreatePost;
+export default CreateProduct;

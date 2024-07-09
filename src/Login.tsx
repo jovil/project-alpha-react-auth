@@ -72,7 +72,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 w-[500px] mx-auto">
       <h2 className="text-4xl">Login</h2>
       <Form className="flex flex-col gap-4" onSubmit={(e) => handleLogin(e)}>
         <div className="flex flex-col gap-4">

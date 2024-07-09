@@ -44,7 +44,7 @@ export default function Register() {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 w-[500px] mx-auto">
       <h1 className="text-4xl">Register</h1>
       <Form className="flex flex-col gap-4" onSubmit={(e) => handleSubmit(e)}>
         <div className="flex flex-col gap-4">
