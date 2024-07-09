@@ -14,7 +14,7 @@ const UserShopPage = () => {
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
 
   useEffect(() => {
-    const url = `${process.env.REACT_APP_API_URL}/profile/${profileId}`;
+    const url = `${process.env.REACT_APP_API_URL}/user/${profileId}`;
     const configuration = {
       method: "GET",
       headers: {
@@ -26,7 +26,6 @@ const UserShopPage = () => {
       try {
         const response = await fetch(url, configuration);
         const result = await response.json();
-
         setProfile(result);
         setIsLoadingAvatar(false);
       } catch (error) {

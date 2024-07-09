@@ -22,14 +22,14 @@ const HeaderSection = ({
               src={
                 profileLoadingAvatar
                   ? loading
-                  : profileHeader.user.avatar
-                  ? profileHeader.user.avatar
+                  : profileHeader.avatar
+                  ? profileHeader.avatar
                   : defaultAvatar
               }
               alt=""
             />
           </div>
-          <p>{profileHeader.user?.userName}</p>
+          <p>{profileHeader.userName}</p>
         </div>
       </header>
     </>
