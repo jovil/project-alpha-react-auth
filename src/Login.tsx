@@ -61,6 +61,7 @@ const Login = () => {
         setUserState({
           ...userState,
           email: result.email,
+          userName: result.userName,
           _id: result._id,
         });
         // redirect user to the auth page
