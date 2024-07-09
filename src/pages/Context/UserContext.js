@@ -7,10 +7,22 @@ const getInitialState = () => {
     const savedState = localStorage.getItem("userState");
     return savedState
       ? JSON.parse(savedState)
-      : { _id: undefined, email: undefined, avatar: undefined };
+      : {
+          _id: undefined,
+          user: undefined,
+          email: undefined,
+          userName: undefined,
+          avatar: undefined,
+        };
   } catch (error) {
     console.error("Error parsing localStorage userState:", error);
-    return { _id: undefined, email: undefined, avatar: undefined };
+    return {
+      _id: undefined,
+      user: undefined,
+      email: undefined,
+      userName: undefined,
+      avatar: undefined,
+    };
   }
 };
 
