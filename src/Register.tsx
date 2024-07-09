@@ -1,12 +1,23 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { GlobalStateContext } from "./pages/Context/context";
+import { useUser } from "./pages/Context/UserContext";
 import { Form, Button } from "react-bootstrap";
+import Cookies from "universal-cookie";
 
 export default function Register() {
+  const cookies = new Cookies();
+  const { state, setState } = useContext(GlobalStateContext);
+  const { setUserState } = useUser();
   const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [register, setRegister] = useState(false);
   const navigate = useNavigate();
+
+  const handleLoginState = () => {
+    setState({ ...state, isLoggedIn: true });
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -15,6 +26,7 @@ export default function Register() {
 
     const postData = {
       email: email,
+      userName: userName,
       password: password,
     };
 
@@ -26,21 +38,29 @@ export default function Register() {
       body: JSON.stringify(postData), // Convert the data to JSON string
     };
 
-    await fetch(dbUrl, configuration)
-      .then((result) => {
-        if (result.ok) {
-          setRegister(true);
-          navigate("/login", {
-            state: {
-              userEmail: postData.email,
-              userPassword: postData.password,
-            },
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      const response = await fetch(dbUrl, configuration);
+      const result = await response.json();
+
+      await setUserState((prev: any) => {
+        return {
+          ...prev,
+          email: result.email,
+          _id: result._id,
+          userName: result.userName,
+        };
       });
+
+      cookies.set("TOKEN", result.token, {
+        path: "/",
+      });
+      setRegister(true);
+      handleLoginState();
+
+      navigate("/auth");
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   return (
@@ -61,6 +81,25 @@ export default function Register() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter email"
+              autoFocus
+              required
+            />
+          </Form.Group>
+
+          {/* userName */}
+          <Form.Group
+            className="flex flex-col gap-2"
+            controlId="formBasicUsername"
+          >
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              className="border border-dark/40 p-3 rounded"
+              type="text"
+              name="userName"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              placeholder="Enter username"
+              required
             />
           </Form.Group>
 
@@ -77,6 +116,7 @@ export default function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
+              required
             />
           </Form.Group>
         </div>
