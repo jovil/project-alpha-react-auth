@@ -48,6 +48,8 @@ export default function Register() {
           email: result.email,
           _id: result._id,
           userName: result.userName,
+          hasPosted: false,
+          hasProducts: false,
         };
       });
 

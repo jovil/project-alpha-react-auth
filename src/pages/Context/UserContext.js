@@ -15,6 +15,7 @@ const getInitialState = () => {
           avatar: undefined,
           avatar64: undefined,
           hasPosted: undefined,
+          hasProducts: undefined,
         };
   } catch (error) {
     console.error("Error parsing localStorage userState:", error);
@@ -26,6 +27,7 @@ const getInitialState = () => {
       avatar: undefined,
       avatar64: undefined,
       hasPosted: undefined,
+      hasProducts: undefined,
     };
   }
 };

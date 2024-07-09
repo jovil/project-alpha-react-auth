@@ -6,7 +6,7 @@ import loading from "../../assets/images/loading.gif";
 const cookies = new Cookies();
 
 const CreateProduct = () => {
-  const { userState } = useUser();
+  const { userState, setUserState } = useUser();
   const [showModal, setShowModal] = useState(false);
   const [imageBase64, setImageBase64] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
@@ -62,8 +62,31 @@ const CreateProduct = () => {
 
     try {
       await fetch(url, configuration);
+      !userState.hasProducts && (await updateHasProducts());
       setShowModal(false);
       setIsLoading(false);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const updateHasProducts = async () => {
+    const url = `${process.env.REACT_APP_API_URL}/update-hasProducts/${userState._id}`;
+
+    try {
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Specify the content type as JSON
+        },
+        body: JSON.stringify({ hasProducts: true }), // Convert the data to JSON string
+      });
+      setUserState((prev: any) => {
+        return {
+          ...prev,
+          hasProducts: true,
+        };
+      });
     } catch (error) {
       console.log("error", error);
     }
@@ -187,21 +210,18 @@ const CreateProduct = () => {
         </div>
       )}
       <Form className="flex flex-col">
-        <button
-          disabled={!userState.hasPosted}
-          className={
-            !userState.hasPosted
-              ? "pointer-events-none *:border-dark/20 *:text-dark/20 *:shadow-none"
-              : ""
-          }
+        <Form.Label
+          className={`w-36 h-36 btn-outline-dark text-center rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer m-0 select-none
+            ${
+              !userState.hasPosted
+                ? "pointer-events-none border-dark/20 text-dark/20 shadow-none"
+                : ""
+            }
+          `}
+          htmlFor="product-file-upload"
         >
-          <Form.Label
-            className="w-36 h-36 btn-outline-dark text-center rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer m-0 select-none"
-            htmlFor="product-file-upload"
-          >
-            Create product
-          </Form.Label>
-        </button>
+          <>Create product</>
+        </Form.Label>
         <Form.Group className="hidden">
           <Form.Control
             id="product-file-upload"

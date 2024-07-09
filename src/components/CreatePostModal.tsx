@@ -22,7 +22,7 @@ const CreatePostModal = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
-  const { userState } = useUser();
+  const { userState, setUserState } = useUser();
   const token = cookies.get("TOKEN");
   const url = `${process.env.REACT_APP_API_URL}/create`;
 
@@ -82,9 +82,32 @@ const CreatePostModal = () => {
 
     try {
       await fetch(url, configuration);
+      !userState.hasPosted && (await updateHasPosted());
       setShowModal(false);
       setIsLoading(false);
       window.location.reload();
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const updateHasPosted = async () => {
+    const url = `${process.env.REACT_APP_API_URL}/update-hasPosted/${userState._id}`;
+
+    try {
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Specify the content type as JSON
+        },
+        body: JSON.stringify({ hasPosted: true }), // Convert the data to JSON string
+      });
+      setUserState((prev: any) => {
+        return {
+          ...prev,
+          hasPosted: true,
+        };
+      });
     } catch (error) {
       console.log("error", error);
     }

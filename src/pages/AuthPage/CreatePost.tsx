@@ -66,7 +66,7 @@ const CreatePost = () => {
 
     try {
       await fetch(url, configuration);
-      await updatehasPosted();
+      !userState.hasPosted && (await updateHasPosted());
       setShowModal(false);
       setIsLoading(false);
       window.location.reload();
@@ -75,22 +75,17 @@ const CreatePost = () => {
     }
   };
 
-  const updatehasPosted = async () => {
+  const updateHasPosted = async () => {
     const url = `${process.env.REACT_APP_API_URL}/update-hasPosted/${userState._id}`;
 
-    const hasPosted = {
-      hasPosted: true,
-    };
-
     try {
-      const response = await fetch(url, {
+      await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json", // Specify the content type as JSON
         },
-        body: JSON.stringify(hasPosted), // Convert the data to JSON string
+        body: JSON.stringify({ hasPosted: true }), // Convert the data to JSON string
       });
-      const result = response.json();
       setUserState((prev: any) => {
         return {
           ...prev,
