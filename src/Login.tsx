@@ -64,8 +64,9 @@ const Login = () => {
           userName: result.userName,
           _id: result._id,
         });
+
         // redirect user to the auth page
-        navigate("/auth");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);

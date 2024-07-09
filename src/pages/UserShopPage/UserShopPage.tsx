@@ -10,12 +10,11 @@ const UserShopPage = () => {
   const { profileId } = useParams();
   const [profile, setProfile] = useState({
     avatar: "",
-    user: "",
   });
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
 
   useEffect(() => {
-    const url = `${process.env.REACT_APP_API_URL}/profile`;
+    const url = `${process.env.REACT_APP_API_URL}/profile/${profileId}`;
     const configuration = {
       method: "GET",
       headers: {
@@ -25,8 +24,9 @@ const UserShopPage = () => {
 
     const fetchProfile = async () => {
       try {
-        const response = await fetch(`${url}/${profileId}`, configuration);
+        const response = await fetch(url, configuration);
         const result = await response.json();
+
         setProfile(result);
         setIsLoadingAvatar(false);
       } catch (error) {
