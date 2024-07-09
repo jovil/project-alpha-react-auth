@@ -13,6 +13,7 @@ const getInitialState = () => {
           email: undefined,
           userName: undefined,
           avatar: undefined,
+          avatar64: undefined,
         };
   } catch (error) {
     console.error("Error parsing localStorage userState:", error);
@@ -22,6 +23,7 @@ const getInitialState = () => {
       email: undefined,
       userName: undefined,
       avatar: undefined,
+      avatar64: undefined,
     };
   }
 };

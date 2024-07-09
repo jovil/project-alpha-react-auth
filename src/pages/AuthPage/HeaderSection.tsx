@@ -22,26 +22,30 @@ const HeaderSection = () => {
       email: undefined,
       userName: undefined,
       avatar: undefined,
+      avatar64: undefined,
     });
     window.location.href = "/";
   };
 
   const uploadProfileImage = async (data: any) => {
-    setUserState({
-      ...userState,
-      avatar: userState.avatar,
-    });
+    const file = userState.avatar;
+    const formData = new FormData();
+    formData.append("avatar", file);
+    formData.append(
+      "user",
+      JSON.stringify({
+        _id: userState._id,
+      })
+    );
+
+    const configuration = {
+      method: "POST", // Specify the request method
+      body: formData, // Convert the data to JSON string
+    };
 
     try {
-      const response = await fetch(uploadsUrl, {
-        method: "POST", // Specify the request method
-        headers: {
-          "Content-Type": "application/json", // Specify the content type as JSON
-        },
-        body: JSON.stringify(userState), // Convert the data to JSON string
-      });
+      const response = await fetch(uploadsUrl, configuration);
       const result = await response.json();
-      console.log("result", result);
     } catch (error) {
       console.log("error", error);
     }
@@ -55,7 +59,7 @@ const HeaderSection = () => {
   const handleFileUpload = async (e: any) => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
-    setUserState({ ...userState, avatar: base64 });
+    setUserState({ ...userState, avatar: file, avatar64: base64 });
   };
 
   function convertToBase64(file: File) {
@@ -82,7 +86,7 @@ const HeaderSection = () => {
             <div className="text-xs font-medium flex flex-col gap-3 items-center">
               <img
                 className="w-14 h-14 border border-dark/60 object-cover rounded shadow-md"
-                src={userState.avatar || defaultAvatar}
+                src={userState.avatar64 ? userState.avatar64 : defaultAvatar}
                 alt=""
               />
               <p>{userState.userName}</p>
