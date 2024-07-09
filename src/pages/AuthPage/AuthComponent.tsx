@@ -9,10 +9,11 @@ const cookies = new Cookies();
 const AuthComponent = () => {
   const { userState, setUserState } = useUser();
   const apiUrl = process.env.REACT_APP_API_URL;
-  const authUrl = `${apiUrl}/auth-endpoint`;
+  const authUrl = `${apiUrl}/auth-endpoint/${userState._id}`;
 
   const fetchUserData = useCallback(async () => {
     const token = cookies.get("TOKEN");
+
     // set configurations for the API call here
     const authConfiguration = {
       method: "GET",
@@ -22,22 +23,11 @@ const AuthComponent = () => {
     };
 
     try {
-      const response = await fetch(authUrl, authConfiguration);
-      const result = await response.json();
-
-      if (result.email === userState.email) {
-        setUserState((prev: any) => {
-          return {
-            ...prev,
-            email: result.email,
-            avatar: result.avatar,
-          };
-        });
-      }
+      await fetch(authUrl, authConfiguration);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
-  }, [authUrl, setUserState, userState.email]);
+  }, [authUrl, setUserState]);
 
   useEffect(() => {
     fetchUserData();
