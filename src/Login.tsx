@@ -1,7 +1,7 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { GlobalStateContext } from "./pages/Context/context";
 import { useUser } from "./pages/Context/UserContext";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
@@ -14,18 +14,8 @@ const Login = () => {
   const [login, setLogin] = useState(false);
   const [emailNotFound, setEmailNotFound] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
-  const { userEmail, userPassword } = location.state || {
-    userEmail: "",
-    userPassword: "",
-  };
   const apiUrl = process.env.REACT_APP_API_URL;
   const dbUrl = `${apiUrl}/login`;
-
-  useEffect(() => {
-    setEmail(userEmail);
-    setPassword(userPassword);
-  }, [apiUrl, dbUrl, userEmail, userPassword]);
 
   const handleLoginState = () => {
     setState({ ...state, isLoggedIn: true });
