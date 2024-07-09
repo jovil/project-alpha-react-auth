@@ -7,7 +7,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 const AuthComponent = () => {
-  const { userState, setUserState } = useUser();
+  const { userState } = useUser();
   const apiUrl = process.env.REACT_APP_API_URL;
   const authUrl = `${apiUrl}/auth-endpoint/${userState._id}`;
 
@@ -27,7 +27,7 @@ const AuthComponent = () => {
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
-  }, [authUrl, setUserState]);
+  }, [authUrl]);
 
   useEffect(() => {
     fetchUserData();
