@@ -34,26 +34,6 @@ const CreateProduct = () => {
     });
   }, [userState._id]);
 
-  const updateHasProducts = async () => {
-    const url = `${process.env.REACT_APP_API_URL}/update-hasProducts/${userState._id}`;
-
-    const hasProducts = {
-      hasProducts: true,
-    };
-
-    try {
-      fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Specify the content type as JSON
-        },
-        body: JSON.stringify(hasProducts), // Convert the data to JSON string
-      });
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
   const createProduct = async (e: any) => {
     e.preventDefault();
 
@@ -82,7 +62,6 @@ const CreateProduct = () => {
 
     try {
       await fetch(url, configuration);
-      await updateHasProducts();
       setShowModal(false);
       setIsLoading(false);
     } catch (error) {
@@ -208,11 +187,21 @@ const CreateProduct = () => {
         </div>
       )}
       <Form className="flex flex-col">
-        <Form.Label className="m-0" htmlFor="product-file-upload">
-          <div className="w-36 h-36 btn-outline-dark text-center rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer">
+        <button
+          disabled={!userState.hasProducts}
+          className={
+            !userState.hasProducts
+              ? "pointer-events-none *:border-dark/20 *:text-dark/20 *:shadow-none"
+              : ""
+          }
+        >
+          <Form.Label
+            className="w-36 h-36 btn-outline-dark text-center rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer m-0 select-none"
+            htmlFor="product-file-upload"
+          >
             Create product
-          </div>
-        </Form.Label>
+          </Form.Label>
+        </button>
         <Form.Group className="hidden">
           <Form.Control
             id="product-file-upload"

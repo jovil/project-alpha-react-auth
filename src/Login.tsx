@@ -63,6 +63,7 @@ const Login = () => {
           email: result.email,
           userName: result.userName,
           _id: result._id,
+          hasProducts: result.hasProducts,
         });
 
         // redirect user to the auth page

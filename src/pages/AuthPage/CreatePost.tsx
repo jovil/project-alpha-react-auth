@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 import loading from "../../assets/images/loading.gif";
 
 const CreatePost = () => {
-  const { userState } = useUser();
+  const { userState, setUserState } = useUser();
   const [post, setPost] = useState<{
     email: string;
     image: any;
@@ -66,10 +66,37 @@ const CreatePost = () => {
 
     try {
       await fetch(url, configuration);
-
+      await updateHasProducts();
       setShowModal(false);
       setIsLoading(false);
       window.location.reload();
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const updateHasProducts = async () => {
+    const url = `${process.env.REACT_APP_API_URL}/update-hasProducts/${userState._id}`;
+
+    const hasProducts = {
+      hasProducts: true,
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Specify the content type as JSON
+        },
+        body: JSON.stringify(hasProducts), // Convert the data to JSON string
+      });
+      const result = response.json();
+      setUserState((prev: any) => {
+        return {
+          ...prev,
+          hasProducts: true,
+        };
+      });
     } catch (error) {
       console.log("error", error);
     }
@@ -173,7 +200,7 @@ const CreatePost = () => {
       )}
       <Form className="flex flex-col">
         <Form.Label className="m-0" htmlFor="post-file-upload">
-          <div className="w-36 h-36 btn-outline-dark text-center rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer">
+          <div className="w-36 h-36 btn-outline-dark text-center rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer select-none">
             Create post
           </div>
         </Form.Label>

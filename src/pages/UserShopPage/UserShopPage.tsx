@@ -9,7 +9,7 @@ const UserShopPage = () => {
   const { userState } = useUser();
   const { profileId } = useParams();
   const [profile, setProfile] = useState({
-    avatar: "",
+    avatar: undefined,
   });
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
 

@@ -1,15 +1,18 @@
-import { useContext, useEffect, useCallback } from "react";
+import { useContext, useEffect, useCallback, useState } from "react";
 import { GlobalStateContext } from "../Context/context";
 import { useUser } from "../Context/UserContext";
 import { Form } from "react-bootstrap";
-import iconUpload from "../../assets/images/icon-upload.svg";
 import Cookies from "universal-cookie";
 import defaultAvatar from "../../assets/images/toon_6.png";
-const cookies = new Cookies();
+import loading from "../../assets/images/loading.gif";
 
 const HeaderSection = () => {
+  const cookies = new Cookies();
   const { state, setState } = useContext(GlobalStateContext);
   const { userState, setUserState } = useUser();
+  const [isLoading, setIsLoading] = useState(false);
+  const [avatarUploaded, setAvatarUploaded] = useState(false);
+  const [avatarSavedMessage, setAvatarSavedMessage] = useState(false);
   const apiUrl = process.env.REACT_APP_API_URL;
   const uploadsUrl = `${apiUrl}/uploads`;
 
@@ -75,6 +78,12 @@ const HeaderSection = () => {
 
     try {
       await fetch(uploadsUrl, configuration);
+      setIsLoading(false);
+      setAvatarUploaded(false);
+      setAvatarSavedMessage(true);
+      setTimeout(() => {
+        setAvatarSavedMessage(false);
+      }, 800);
     } catch (error) {
       console.log("error", error);
     }
@@ -82,6 +91,7 @@ const HeaderSection = () => {
 
   function handleSubmit(e: any) {
     e.preventDefault();
+    setIsLoading(true);
     uploadProfileImage(userState);
   }
 
@@ -89,6 +99,7 @@ const HeaderSection = () => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
     setUserState({ ...userState, avatar: file, avatar64: base64 });
+    setAvatarUploaded(true);
   };
 
   function convertToBase64(file: File) {
@@ -124,12 +135,13 @@ const HeaderSection = () => {
               onSubmit={(e) => handleSubmit(e)}
               className="flex flex-col gap-3"
             >
-              <Form.Label htmlFor="file-upload">
-                <div className="text-sm btn-primary flex gap-2 justify-center items-center cursor-pointer">
-                  <p>Upload</p>
-                  <img className="h-4 w-4 m-0" src={iconUpload} alt="" />
-                </div>
-              </Form.Label>
+              {!avatarUploaded && (
+                <Form.Label htmlFor="file-upload">
+                  <div className="text-xs btn-outline-dark flex gap-2 justify-center items-center cursor-pointer">
+                    {!avatarSavedMessage ? "Upload" : "Saved!"}
+                  </div>
+                </Form.Label>
+              )}
               <Form.Group className="hidden">
                 <Form.Control
                   id="file-upload"
@@ -139,9 +151,23 @@ const HeaderSection = () => {
                   onChange={(e) => handleFileUpload(e)}
                 />
               </Form.Group>
-              <button className="btn-primary text-sm" type="submit">
-                Submit
-              </button>
+              {avatarUploaded && (
+                <button
+                  className={
+                    isLoading
+                      ? "btn-outline-dark min-w-[90px] text-xs flex justify-center items-center text-dark/20 border-dark/20 shadow-none pointer-events-none"
+                      : "btn-outline-dark min-w-[90px] text-xs flex justify-center items-center"
+                  }
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <img className="w-5 h-5" src={loading} alt="" />
+                  ) : (
+                    <>Save</>
+                  )}
+                </button>
+              )}
             </Form>
           </div>
         </div>

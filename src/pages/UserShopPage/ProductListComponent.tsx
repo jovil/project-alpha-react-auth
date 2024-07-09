@@ -46,15 +46,13 @@ const ProductListComponent = () => {
                 key={product._id}
               >
                 <div className="relative aspect-square">
-                  <img
-                    className={
-                      isLoading
-                        ? `w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0`
-                        : "hidden"
-                    }
-                    src={isLoading ? loading : ""}
-                    alt=""
-                  />
+                  {isLoading && (
+                    <img
+                      className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
+                      src={loading}
+                      alt=""
+                    />
+                  )}
                   <img
                     className="aspect-square w-full object-cover rounded-sm"
                     src={product.fileUrl}
