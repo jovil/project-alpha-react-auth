@@ -16,15 +16,19 @@ const HeaderSection = () => {
   const logout = () => {
     cookies.remove("TOKEN", { path: "/" });
     setState({ ...state, isLoggedIn: false });
-    setUserState({ ...userState, email: undefined, avatar: undefined });
+    setUserState({
+      _id: undefined,
+      user: undefined,
+      email: undefined,
+      userName: undefined,
+      avatar: undefined,
+    });
     window.location.href = "/";
   };
 
   const uploadProfileImage = async (data: any) => {
     setUserState({
       ...userState,
-      _id: userState._id,
-      email: userState.email,
       avatar: userState.avatar,
     });
 
@@ -81,7 +85,7 @@ const HeaderSection = () => {
                 src={userState.avatar || defaultAvatar}
                 alt=""
               />
-              <p>{userState.email}</p>
+              <p>{userState.userName}</p>
             </div>
             <Form
               onSubmit={(e) => handleSubmit(e)}
