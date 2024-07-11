@@ -93,7 +93,7 @@ const CreateProduct = () => {
       productId: productId,
       name: productName,
       description: productDescription,
-      images: fileUrl,
+      images: fileUrl, // string array
       unit_label: "1",
       default_price_data: {
         currency: "myr",

@@ -32,7 +32,9 @@ const ProductListComponent = () => {
     fetchProducts();
   }, [profileId]);
 
-  useEffect(() => {}, [products]);
+  useEffect(() => {
+    console.log("products", products);
+  }, [products]);
 
   useEffect(() => {
     document.body.style.overflow = isProductModalVisible ? "hidden" : "auto";
