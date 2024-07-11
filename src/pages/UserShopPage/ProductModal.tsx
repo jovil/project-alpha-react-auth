@@ -50,14 +50,19 @@ const ProductModal = ({
     <>
       <div className="fixed inset-0 bg-dark/80 z-20" onClick={onToggleModal}>
         <div className="h-full overflow-scroll">
-          <div className="w-2/5 min-h-[calc(100vh-16px)] m-2 bg-white rounded ml-auto p-2 flex flex-col gap-4">
+          <div className="w-2/5 min-h-[calc(100vh-16px)] m-2 bg-white rounded ml-auto p-2 flex flex-col gap-3">
             <img className="rounded w-full" src={product.fileUrl} alt="" />
             <h2 className="text-xl">{product.productName}</h2>
             <p className="text-dark/80">{product.productDescription}</p>
             <p className="text-md">RM {product.productPrice}</p>
-            <NavLink to={product.paymentLink} className="btn-primary">
-              Buy now
-            </NavLink>
+            <div>
+              <NavLink
+                to={product.paymentLink}
+                className="btn-primary inline-block"
+              >
+                Buy now
+              </NavLink>
+            </div>
           </div>
         </div>
       </div>
