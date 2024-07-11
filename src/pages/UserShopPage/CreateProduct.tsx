@@ -35,12 +35,7 @@ const CreateProduct = () => {
 
   return token ? (
     <>
-      {isShowModal && (
-        <CreateProductModal
-          productId={product._id}
-          onToggleModal={handleToggleModal}
-        />
-      )}
+      {isShowModal && <CreateProductModal onToggleModal={handleToggleModal} />}
       <div className="fixed bottom-0 right-0 left-0 z-10 px-4 py-3.5 pointer-events-none">
         <div className="max-w-[908px] flex flex-col justify-center items-center gap-3.5 mx-auto">
           <img

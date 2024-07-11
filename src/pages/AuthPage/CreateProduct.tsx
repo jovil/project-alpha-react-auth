@@ -34,12 +34,7 @@ const CreateProduct = () => {
 
   return token ? (
     <>
-      {isShowModal && (
-        <CreateProductModal
-          productId={product._id}
-          onToggleModal={handleToggleModal}
-        />
-      )}
+      {isShowModal && <CreateProductModal onToggleModal={handleToggleModal} />}
       <button
         className={`w-36 h-36 btn-outline-dark text-center rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer m-0 select-none
           ${

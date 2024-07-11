@@ -4,13 +4,7 @@ import { Form } from "react-bootstrap";
 import loading from "../assets/images/loading.gif";
 import { useLocation } from "react-router-dom";
 
-const CreateProductModal = ({
-  productId,
-  onToggleModal,
-}: {
-  productId: any;
-  onToggleModal: any;
-}) => {
+const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
   const { userState, setUserState } = useUser();
   const [productImages, setProductImages] = useState<string[]>([]);
   const [imageBase64Array, setImageBase64Array] = useState<string[]>([]);
