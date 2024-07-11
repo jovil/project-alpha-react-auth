@@ -67,7 +67,7 @@ const ProductListComponent = () => {
                   )}
                   <img
                     className="aspect-square w-full object-cover rounded-sm"
-                    src={product.fileUrl}
+                    src={product.fileUrl[0]}
                     alt=""
                     loading="lazy"
                     onLoad={handlePostImageLoad}
