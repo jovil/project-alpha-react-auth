@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
+import ProductModal from "./ProductModal";
 
 const ProductListComponent = () => {
   const { profileId } = useParams();
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isProductModalVisible, setIsProductModalVisible] = useState(false);
+  const [productId, setProductId] = useState();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -31,15 +34,24 @@ const ProductListComponent = () => {
 
   useEffect(() => {}, [products]);
 
+  useEffect(() => {
+    document.body.style.overflow = isProductModalVisible ? "hidden" : "auto";
+  }, [isProductModalVisible]);
+
   const handlePostImageLoad = () => {
     setIsLoading(false);
+  };
+
+  const handleToggleModal = (productItemId: any) => {
+    setProductId(productItemId);
+    setIsProductModalVisible((prevState) => !prevState);
   };
 
   return (
     <section className="grid grid-cols-3 gap-1 max-w-[908px] w-full py-16 mx-auto">
       {products.length ? (
         <>
-          {products?.map((product: any) => {
+          {products?.toReversed().map((product: any) => {
             return (
               <div
                 className="max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded p-4 pb-3 flex flex-col gap-3"
@@ -61,14 +73,24 @@ const ProductListComponent = () => {
                     onLoad={handlePostImageLoad}
                   />
                 </div>
-                <div className="h-full flex flex-col justify-between gap-3">
+                <div className="h-full flex flex-col justify-between gap-4">
                   <div className="flex flex-col gap-1.5">
                     <p>{product.productName}</p>
                     <p className="text-sm text-dark/80">
                       {product.productDescription}
                     </p>
                   </div>
-                  <p className="ml-auto">RM {product.productPrice}</p>
+                  <div className="flex justify-between items-center">
+                    <button
+                      className="btn-outline-dark text-xs"
+                      onClick={() => {
+                        handleToggleModal(product._id);
+                      }}
+                    >
+                      Show product
+                    </button>
+                    <p className="ml-auto">RM {product.productPrice}</p>
+                  </div>
                 </div>
               </div>
             );
@@ -78,6 +100,9 @@ const ProductListComponent = () => {
         <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
           No products.
         </p>
+      )}
+      {isProductModalVisible && (
+        <ProductModal productId={productId} onToggleModal={handleToggleModal} />
       )}
     </section>
   );

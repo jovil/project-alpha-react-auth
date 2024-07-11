@@ -48,8 +48,6 @@ const CreateProduct = () => {
       };
     });
 
-    console.log("create product", product);
-
     const file = productImage;
     const formData = new FormData();
     formData.append("image", file);
@@ -61,10 +59,61 @@ const CreateProduct = () => {
     };
 
     try {
-      await fetch(url, configuration);
+      const response = await fetch(url, configuration);
+      const data = await response.json();
+      console.log("data", data);
+      await createStripeProduct(
+        data.post._id,
+        data.post.productName,
+        data.post.productDescription,
+        data.post.productPrice,
+        data.post.fileUrl
+      );
       !userState.hasProducts && (await updateHasProducts());
       setShowModal(false);
       setIsLoading(false);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const createStripeProduct = async (
+    productId: string,
+    productName: string,
+    productDescription: string,
+    productPrice: string,
+    fileUrl: string[]
+  ) => {
+    const parsedPrice = Math.round(parseInt(productPrice) * 100);
+    const product = {
+      productId: productId,
+      name: productName,
+      description: productDescription,
+      images: [fileUrl],
+      unit_label: "1",
+      default_price_data: {
+        currency: "myr",
+        unit_amount: parsedPrice,
+      },
+      metadata: {
+        merchantName: userState.userName,
+        merchantEmail: userState.email,
+      },
+    };
+
+    const url = `${process.env.REACT_APP_API_URL}/create/stripe/product`;
+    const configuration = {
+      method: "POST", // Specify the request method
+      headers: {
+        "Content-Type": "application/json", // Specify the content type as JSON
+      },
+      body: JSON.stringify(product), // Convert the data to JSON string
+    };
+
+    try {
+      const response = await fetch(url, configuration);
+      const result = await response.json();
+      console.log("result", result);
     } catch (error) {
       console.log("error", error);
     }

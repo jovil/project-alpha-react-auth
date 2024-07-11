@@ -34,7 +34,7 @@ export default function Home() {
   }, [fetchPosts, posts.length]);
 
   useEffect(() => {
-    console.log("posts", posts);
+    // console.log("posts", posts);
   }, [posts]);
 
   const handlePostImageLoad = () => {

@@ -8,8 +8,12 @@ import ProductListComponent from "./ProductListComponent";
 const UserShopPage = () => {
   const { userState } = useUser();
   const { profileId } = useParams();
-  const [profile, setProfile] = useState({
-    avatar: undefined,
+  const [profile, setProfile] = useState<{
+    profileName: string;
+    email: string;
+  }>({
+    profileName: "",
+    email: "",
   });
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
 
