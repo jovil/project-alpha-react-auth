@@ -30,7 +30,7 @@ const ProductListComponent = () => {
     };
 
     fetchProducts();
-  }, [profileId]);
+  }, [profileId, products]);
 
   useEffect(() => {
     console.log("products", products);
