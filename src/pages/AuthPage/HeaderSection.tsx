@@ -1,6 +1,6 @@
 import { useContext, useEffect, useCallback, useState } from "react";
-import { GlobalStateContext } from "../Context/context";
-import { useUser } from "../Context/UserContext";
+import { GlobalStateContext } from "../../context/Context";
+import { useUser } from "../../context/UserContext";
 import { Form } from "react-bootstrap";
 import Cookies from "universal-cookie";
 import defaultAvatar from "../../assets/images/toon_6.png";

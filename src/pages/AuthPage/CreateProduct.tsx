@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useUser } from "../../pages/Context/UserContext";
+import { useUser } from "../../context/UserContext";
 import Cookies from "universal-cookie";
 import CreateProductModal from "../../components/CreateProductModal";
 const cookies = new Cookies();

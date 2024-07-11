@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useUser } from "../Context/UserContext";
+import { useUser } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 import HeaderSection from "./HeaderSection";
 import CreateProduct from "./CreateProduct";

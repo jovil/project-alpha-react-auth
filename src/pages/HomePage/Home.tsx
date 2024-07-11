@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { useUser } from "./pages/Context/UserContext";
+import { useUser } from "../../context/UserContext";
 import { NavLink } from "react-router-dom";
-import { usePosts } from "./pages/Context/PostsContext";
-import CreatePostModal from "./components/CreatePostModal";
-import loading from "./assets/images/loading.gif";
+import { usePosts } from "../../context/PostsContext";
+import CreatePostModal from "../../components/CreatePostModal";
+import loading from "../../assets/images/loading.gif";
 import { Form } from "react-bootstrap";
-import defaultAvatar from "./assets/images/toon_6.png";
+import defaultAvatar from "../../assets/images/toon_6.png";
 
 export default function Home() {
   const { userState } = useUser();

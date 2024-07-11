@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUser } from "../pages/Context/UserContext";
+import { useUser } from "../context/UserContext";
 import { Form } from "react-bootstrap";
 import loading from "../assets/images/loading.gif";
 import { useLocation } from "react-router-dom";

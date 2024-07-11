@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { GlobalStateContext } from "./pages/Context/context";
+import { GlobalStateContext } from "./context/Context";
 import { useLocation, Routes, Route, Link, NavLink } from "react-router-dom";
-import Home from "./Home";
+import Home from "./pages/HomePage/Home";
 import ProtectedRoutes from "./ProtectedRoutes";
 import "./App.css";
-import Register from "./Register";
-import Login from "./Login";
+import Register from "./pages/RegisterPage/RegisterPage";
+import Login from "./pages/LoginPage/Login";
 import Cookies from "universal-cookie";
 import UserShopPage from "./pages/UserShopPage/UserShopPage";
 const cookies = new Cookies();

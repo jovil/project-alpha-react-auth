@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useUser } from "../pages/Context/UserContext";
+import { useUser } from "../context/UserContext";
 import { Form } from "react-bootstrap";
 import Cookies from "universal-cookie";
 

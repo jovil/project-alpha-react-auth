@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useUser } from "../../pages/Context/UserContext";
+import { useUser } from "../../context/UserContext";
 import Cookies from "universal-cookie";
 import defaultAvatar from "../../assets/images/avatar.jpeg";
 import CreateProductModal from "../../components/CreateProductModal";
