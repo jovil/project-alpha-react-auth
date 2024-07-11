@@ -8,6 +8,7 @@ const cookies = new Cookies();
 const CreateProduct = () => {
   const { userState } = useUser();
   const [isShowModal, setIsShowModal] = useState(false);
+  // eslint-disable-next-line
   const [product, setProduct] = useState<{
     _id: string;
   }>({

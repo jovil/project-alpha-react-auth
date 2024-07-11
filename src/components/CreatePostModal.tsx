@@ -8,12 +8,12 @@ const cookies = new Cookies();
 
 const CreatePostModal = ({
   isImageBase64,
-  isAvatar,
+  isPostImage,
   isShowModal,
   onToggleModal,
 }: {
   isImageBase64: string;
-  isAvatar: any;
+  isPostImage: any;
   isShowModal: boolean;
   onToggleModal: any;
 }) => {
@@ -39,10 +39,10 @@ const CreatePostModal = ({
       return {
         ...prev,
         email: userState.email,
-        image: isAvatar,
+        image: isPostImage,
       };
     });
-  }, [userState]);
+  }, [userState, isPostImage]);
 
   useEffect(() => {}, [post]);
 
@@ -71,7 +71,7 @@ const CreatePostModal = ({
 
     console.log("create post", post);
 
-    const file = isAvatar;
+    const file = isPostImage;
     const formData = new FormData();
     formData.append("image", file);
     formData.append(
@@ -138,7 +138,7 @@ const CreatePostModal = ({
               <h2>Create post</h2>
             </header>
             <div className="flex flex-col gap-4 items-center w-full">
-              {isAvatar && (
+              {isPostImage && (
                 <img
                   className="w-full h-[50vh] object-cover border border-dark/40 rounded"
                   src={isImageBase64}

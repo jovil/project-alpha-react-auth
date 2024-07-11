@@ -13,7 +13,7 @@ export default function Home() {
   const [noPosts, setNoPosts] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [imageBase64, setImageBase64] = useState<string>("");
-  const [avatar, setAvatar] = useState();
+  const [postImage, setPostImage] = useState();
   const [showModal, setShowModal] = useState(false);
   const url = `${process.env.REACT_APP_API_URL}/posts`;
 
@@ -57,7 +57,7 @@ export default function Home() {
     const base64 = await convertToBase64(file);
 
     setImageBase64(base64 as string);
-    setAvatar(file);
+    setPostImage(file);
     setShowModal(true);
   };
 
@@ -161,7 +161,7 @@ export default function Home() {
       </section>
       <CreatePostModal
         isShowModal={showModal}
-        isAvatar={avatar}
+        isPostImage={postImage}
         isImageBase64={imageBase64}
         onToggleModal={handleToggleModal}
       />

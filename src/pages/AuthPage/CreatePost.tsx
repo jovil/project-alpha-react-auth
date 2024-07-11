@@ -4,7 +4,7 @@ import CreatePostModal from "../../components/CreatePostModal";
 
 const CreatePost = () => {
   const [imageBase64, setImageBase64] = useState<string>("");
-  const [avatar, setAvatar] = useState();
+  const [postImage, setPostImage] = useState();
   const [showModal, setShowModal] = useState(false);
 
   const handleToggleModal = (value: boolean) => {
@@ -16,7 +16,7 @@ const CreatePost = () => {
     const base64 = await convertToBase64(file);
 
     setImageBase64(base64 as string);
-    setAvatar(file);
+    setPostImage(file);
     setShowModal(true);
   };
 
@@ -39,7 +39,7 @@ const CreatePost = () => {
     <>
       <CreatePostModal
         isShowModal={showModal}
-        isAvatar={avatar}
+        isPostImage={postImage}
         isImageBase64={imageBase64}
         onToggleModal={handleToggleModal}
       />
