@@ -3,15 +3,26 @@ import { useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import ProductModal from "./ProductModal";
 
+interface Product {
+  _id: string;
+  user: string;
+  fileUrl: string[];
+  productName: string;
+  productDescription: string;
+  productPrice: string;
+  paymentLink: string;
+}
+
 const ProductListComponent = () => {
   const { profileId } = useParams();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
   const [productId, setProductId] = useState();
 
   const fetchProducts = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/products/${profileId}`;
+    console.log("Fetching products from:", url); // Log the URL being fetched
     const configuration = {
       method: "GET",
       headers: {
@@ -24,8 +35,15 @@ const ProductListComponent = () => {
       const result = await response.json();
       setProducts(result);
       console.log("Fetched products:", result);
+
+      // Ensure result is an array and contains the expected fields
+      if (Array.isArray(result)) {
+        setProducts(result);
+      } else {
+        console.error("Unexpected API response:", result);
+      }
     } catch (error) {
-      console.log("error", error);
+      console.log("Error fetching products:", error);
     }
   }, [profileId]);
 
@@ -75,8 +93,8 @@ const ProductListComponent = () => {
                   )}
                   <img
                     className="aspect-square w-full object-cover rounded-sm"
-                    src={product?.fileUrl[0]}
-                    alt=""
+                    src={product.fileUrl[0] || ""}
+                    alt={product.productName}
                     loading="lazy"
                     onLoad={handlePostImageLoad}
                   />
