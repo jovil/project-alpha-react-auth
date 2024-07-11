@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import ProductModal from "./ProductModal";
@@ -10,27 +10,27 @@ const ProductListComponent = () => {
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
   const [productId, setProductId] = useState();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const url = `${process.env.REACT_APP_API_URL}/products/${profileId}`;
-      const configuration = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json", // Specify the content type as JSON
-        },
-      };
-
-      try {
-        const response = await fetch(url, configuration);
-        const result = await response.json();
-        setProducts(result);
-      } catch (error) {
-        console.log("error", error);
-      }
+  const fetchProducts = useCallback(async () => {
+    const url = `${process.env.REACT_APP_API_URL}/products/${profileId}`;
+    const configuration = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json", // Specify the content type as JSON
+      },
     };
 
+    try {
+      const response = await fetch(url, configuration);
+      const result = await response.json();
+      setProducts(result);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }, [profileId]);
+
+  useEffect(() => {
     fetchProducts();
-  }, [profileId, products]);
+  }, [fetchProducts]);
 
   useEffect(() => {
     console.log("products", products);
@@ -69,7 +69,7 @@ const ProductListComponent = () => {
                   )}
                   <img
                     className="aspect-square w-full object-cover rounded-sm"
-                    src={product.fileUrl[0]}
+                    src={product?.fileUrl[0]}
                     alt=""
                     loading="lazy"
                     onLoad={handlePostImageLoad}
