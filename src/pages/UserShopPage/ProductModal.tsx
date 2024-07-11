@@ -55,12 +55,12 @@ const ProductModal = ({
         onClick={onToggleModal}
       >
         <div
-          className="h-full w-2/5 min-h-[calc(100vh-16px)] overflow-scroll ml-auto"
+          className="h-full w-2/5 overflow-scroll ml-auto"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="m-2 bg-white rounded p-2 flex flex-col gap-3">
+          <div className="min-h-[calc(100vh-16px)] m-2 bg-white rounded p-2 flex flex-col gap-3">
             {product ? (
-              <div>
+              <>
                 <div>
                   {product.fileUrl.map((url, urlIndex) => (
                     <img
@@ -83,7 +83,7 @@ const ProductModal = ({
                     Buy now
                   </NavLink>
                 </div>
-              </div>
+              </>
             ) : (
               <p>Loading...</p>
             )}
