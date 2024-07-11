@@ -23,6 +23,7 @@ const ProductListComponent = () => {
       const response = await fetch(url, configuration);
       const result = await response.json();
       setProducts(result);
+      console.log("Fetched products:", result);
     } catch (error) {
       console.log("error", error);
     }
@@ -53,7 +54,12 @@ const ProductListComponent = () => {
     <section className="grid grid-cols-3 gap-1 max-w-[908px] w-full py-16 mx-auto">
       {products.length ? (
         <>
-          {products?.toReversed().map((product: any) => {
+          {products?.reverse().map((product: any) => {
+            if (!product || !product.fileUrl || !product.fileUrl.length) {
+              console.warn("Product or fileUrl is undefined or empty", product);
+              return null; // Skip this product if data is invalid
+            }
+
             return (
               <div
                 className="max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded p-4 pb-3 flex flex-col gap-3"
