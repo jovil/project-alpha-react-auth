@@ -2,11 +2,21 @@ import { useState, useEffect } from "react";
 import { useUser } from "../pages/Context/UserContext";
 import { Form } from "react-bootstrap";
 import Cookies from "universal-cookie";
-import defaultAvatar from "../assets/images/avatar.jpeg";
+
 import loading from "../assets/images/loading.gif";
 const cookies = new Cookies();
 
-const CreatePostModal = () => {
+const CreatePostModal = ({
+  isImageBase64,
+  isAvatar,
+  isShowModal,
+  onToggleModal,
+}: {
+  isImageBase64: string;
+  isAvatar: any;
+  isShowModal: boolean;
+  onToggleModal: any;
+}) => {
   const [post, setPost] = useState<{
     email: string;
     image: any;
@@ -18,10 +28,8 @@ const CreatePostModal = () => {
     caption: "",
     _id: "",
   });
-  const [imageBase64, setImageBase64] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false);
 
-  const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { userState, setUserState } = useUser();
   const token = cookies.get("TOKEN");
   const url = `${process.env.REACT_APP_API_URL}/create`;
@@ -31,6 +39,7 @@ const CreatePostModal = () => {
       return {
         ...prev,
         email: userState.email,
+        image: isAvatar,
       };
     });
   }, [userState]);
@@ -57,13 +66,12 @@ const CreatePostModal = () => {
       return {
         ...prev,
         _id: userState._id,
-        email: userState.email,
       };
     });
 
     console.log("create post", post);
 
-    const file = post.image;
+    const file = isAvatar;
     const formData = new FormData();
     formData.append("image", file);
     formData.append(
@@ -83,7 +91,7 @@ const CreatePostModal = () => {
     try {
       await fetch(url, configuration);
       !userState.hasPosted && (await updateHasPosted());
-      setShowModal(false);
+      onToggleModal(false);
       setIsLoading(false);
       window.location.reload();
     } catch (error) {
@@ -115,36 +123,12 @@ const CreatePostModal = () => {
 
   const closeModal = (e: React.MouseEvent<HTMLElement>) => {
     if (e.target !== e.currentTarget) return;
-    setShowModal(false);
+    onToggleModal(false);
   };
-
-  const handleFileUpload = async (e: any) => {
-    const file = e.target.files[0];
-    const base64 = await convertToBase64(file);
-
-    setImageBase64(base64 as string);
-    setPost({ ...post, image: file });
-    setShowModal(true);
-  };
-
-  function convertToBase64(file: File) {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  }
 
   return token ? (
     <>
-      {showModal && (
+      {isShowModal && (
         <div
           className="bg-dark/80 backdrop-blur p-4 fixed inset-0 z-10 flex justify-center items-center"
           onClick={closeModal}
@@ -154,10 +138,10 @@ const CreatePostModal = () => {
               <h2>Create post</h2>
             </header>
             <div className="flex flex-col gap-4 items-center w-full">
-              {post.image && (
+              {isAvatar && (
                 <img
                   className="w-full h-[50vh] object-cover border border-dark/40 rounded"
-                  src={imageBase64}
+                  src={isImageBase64}
                   alt=""
                 />
               )}
@@ -198,31 +182,6 @@ const CreatePostModal = () => {
           </section>
         </div>
       )}
-      <div className="fixed bottom-0 right-0 left-0 px-4 py-3.5 pointer-events-none">
-        <div className="max-w-[908px] flex flex-col justify-center items-center gap-3.5 mx-auto">
-          <img
-            className="rounded-full w-10 h-10 object-cover border border-dark/30 shadow-md"
-            src={userState.avatar64 ? userState.avatar64 : defaultAvatar}
-            alt=""
-          />
-          <Form className="flex flex-col pointer-events-auto">
-            <Form.Label className="m-0" htmlFor="file-upload">
-              <div className="btn-primary rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer">
-                Create post
-              </div>
-            </Form.Label>
-            <Form.Group className="hidden">
-              <Form.Control
-                id="file-upload"
-                type="file"
-                name="image"
-                accept=".jpeg, .png, .jpg"
-                onChange={(e) => handleFileUpload(e)}
-              />
-            </Form.Group>
-          </Form>
-        </div>
-      </div>
     </>
   ) : (
     ""

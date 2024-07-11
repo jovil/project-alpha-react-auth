@@ -5,10 +5,10 @@ export const PostsContext = createContext();
 
 // Create the provider component
 export const PostsProvider = ({ children }) => {
-  const [posts, setPosts] = useState([]);
+  const [allPosts, setAllPosts] = useState([]);
 
   return (
-    <PostsContext.Provider value={{ posts, setPosts }}>
+    <PostsContext.Provider value={{ allPosts, setAllPosts }}>
       {children}
     </PostsContext.Provider>
   );
