@@ -38,8 +38,8 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     });
 
     const formData = new FormData();
-    productImages.forEach((file) => {
-      formData.append(`images`, file);
+    productImages.forEach((file, index) => {
+      formData.append(`images-${index + 1}`, file);
     });
     formData.append("product", JSON.stringify(product));
 
