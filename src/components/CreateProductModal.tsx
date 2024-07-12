@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUser } from "../context/UserContext";
-import { Form } from "react-bootstrap";
 import loading from "../assets/images/loading.gif";
 import { useLocation } from "react-router-dom";
 
@@ -9,6 +8,10 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
   const [productImages, setProductImages] = useState<string[]>([]);
   const [imageBase64Array, setImageBase64Array] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [uploadedFilesLength, setUploadedFilesLength] = useState<number>(0);
+  const [hasUploadedImages, setHasUploadedImages] = useState<boolean>(true);
+  const [isInputProductNameEmpty, setIsInputProductNameEmpty] = useState(false);
+  const [isInputPriceEmpty, setIsInputPriceEmpty] = useState(false);
   const [product, setProduct] = useState<{
     productName: string;
     productDescription: string;
@@ -23,9 +26,45 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
   const location = useLocation();
   const url = `${process.env.REACT_APP_API_URL}/create/product`;
 
+  useEffect(() => {
+    if (product.productName.length > 0) setIsInputProductNameEmpty(false);
+  }, [product.productName]);
+
+  useEffect(() => {
+    if (product.price.length > 0) setIsInputPriceEmpty(false);
+  }, [product.price]);
+
+  useEffect(() => {
+    document.body.style.pointerEvents = isLoading ? "none" : "auto";
+  }, [isLoading]);
+
+  const handleProductNameInput = () => {
+    if (product.productName.length === 0) {
+      setIsInputProductNameEmpty(true);
+      return false; // Return false if title is empty
+    }
+    setIsInputProductNameEmpty(false);
+    return true; // Return true if title is valid
+  };
+
+  const handlePriceInput = () => {
+    if (product.price.length === 0) {
+      setIsInputPriceEmpty(true);
+      return false; // Return false if price is empty
+    }
+    setIsInputPriceEmpty(false);
+    return true; // Return true if price is valid
+  };
+
   const createProduct = async (e: any) => {
     e.preventDefault();
 
+    // Return if no images are uploaded
+    if (uploadedFilesLength === 0) return setHasUploadedImages(false);
+    // Return if title is empty
+    if (!handleProductNameInput()) return;
+    // Return if price is empty
+    if (!handlePriceInput()) return;
     setIsLoading(true);
 
     setProduct((prev) => {
@@ -58,7 +97,6 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
         data.productPrice,
         data.fileUrl
       );
-
       if (location.pathname === "/auth")
         !userState.hasProducts && (await updateHasProducts());
       onToggleModal(false);
@@ -125,8 +163,11 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     const base64Promises = files.map((file: any) => convertToBase64(file));
     const base64Images = await Promise.all(base64Promises);
 
+    setUploadedFilesLength(files.length);
     setImageBase64Array(base64Images as string[]);
     setProductImages(files.map((file: any) => file));
+    // Clear the input value to allow re-uploading the same file
+    e.target.value = "";
   };
 
   function convertToBase64(file: File) {
@@ -179,32 +220,41 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
             </header>
             <div className="flex flex-col gap-4 items-center w-full">
               <form
-                className="w-full flex flex-col border border-dashed border-dark/60 rounded pointer-events-auto"
+                className={`w-full flex flex-col border border-dashed border-dark/60 rounded pointer-events-auto ${
+                  !hasUploadedImages && uploadedFilesLength === 0
+                    ? "border-danger"
+                    : ""
+                }`}
                 encType="multipart/form-data"
               >
-                <Form.Label
-                  className="p-16 m-0 cursor-pointer"
+                <label
+                  className={`p-16 m-0 cursor-pointer ${
+                    isLoading ? "pointer-events-none" : ""
+                  }`}
                   htmlFor="product-file-upload"
                 >
                   <p className="text-sm flex justify-center items-center">
-                    Upload images
+                    {!hasUploadedImages && uploadedFilesLength === 0
+                      ? "Upload atleast 1 image"
+                      : "Upload images"}
                   </p>
-                </Form.Label>
-                <Form.Group className="hidden">
-                  <Form.Control
+                </label>
+                <div className="hidden">
+                  <input
                     id="product-file-upload"
                     multiple
                     type="file"
                     name="image"
                     accept=".jpeg, .png, .jpg"
                     onChange={(e) => handleFileUpload(e)}
+                    required
                   />
-                </Form.Group>
+                </div>
               </form>
               <div className="flex flex-nowrap gap-2 w-full">
                 {imageBase64Array.map((base64, index) => (
                   <div
-                    className="w-[25%] h-full aspect-square border border-dark/40 rounded"
+                    className="w-[25%] overflow-hidden h-full aspect-square border border-dark/40 rounded"
                     key={index}
                   >
                     <img
@@ -215,49 +265,53 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
                   </div>
                 ))}
               </div>
-              <Form
+              <form
                 className="w-full flex flex-col gap-3"
                 onSubmit={(e) => createProduct(e)}
               >
-                <Form.Group>
-                  <Form.Control
-                    className="w-full border border-dark/40 p-3 rounded"
-                    placeholder="Product Name"
-                    name="productName"
-                    value={product.productName}
-                    onChange={handleChange}
-                    autoFocus
-                    required
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Control
-                    type="number"
-                    className="w-full border border-dark/40 p-3 rounded"
-                    placeholder="Price (MYR)"
-                    name="price"
-                    value={product.price}
-                    onChange={handleChange}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Control
-                    className="w-full border border-dark/40 p-3 rounded"
-                    placeholder="Product Description"
-                    name="productDescription"
-                    value={product.productDescription}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
+                <input
+                  type="text"
+                  className={`border border-dark/40 p-3 rounded ${
+                    isInputProductNameEmpty ? "border-danger" : ""
+                  }`}
+                  placeholder="Product Name"
+                  name="productName"
+                  value={product.productName}
+                  onChange={handleChange}
+                  autoFocus
+                  required
+                />
+                <input
+                  type="number"
+                  className={`border border-dark/40 p-3 rounded ${
+                    isInputPriceEmpty ? "border-danger" : ""
+                  }`}
+                  placeholder="Price (MYR)"
+                  name="price"
+                  value={product.price}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="text"
+                  className="w-full border border-dark/40 p-3 rounded"
+                  placeholder="Product Description"
+                  name="productDescription"
+                  value={product.productDescription}
+                  onChange={handleChange}
+                />
                 <button type="submit" className="hidden">
                   Save
                 </button>
-              </Form>
+              </form>
             </div>
             <footer className="flex justify-end gap-3">
               <button
-                className="min-w-[91px] btn-primary text-sm flex justify-center items-center"
+                className={`min-w-[91px] btn-primary text-sm flex justify-center items-center ${
+                  isLoading
+                    ? "bg-blue/20 border-blue/20 text-white/20 shadow-none pointer-events-none"
+                    : ""
+                }`}
                 onClick={createProduct}
               >
                 {isLoading ? (
