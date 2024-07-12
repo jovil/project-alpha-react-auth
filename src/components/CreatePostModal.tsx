@@ -12,9 +12,9 @@ const CreatePostModal = ({
   onToggleModal,
 }: {
   isImageBase64: string;
-  isPostImage: any;
+  isPostImage: string | File;
   isShowModal: boolean;
-  onToggleModal: any;
+  onToggleModal: (value: boolean) => void;
 }) => {
   const [post, setPost] = useState<{
     email: string;
@@ -156,8 +156,8 @@ const CreatePostModal = ({
             <div className="flex flex-col gap-4 items-center w-full">
               {isPostImage && (
                 <img
-                  className="w-full h-[50vh] object-cover border border-dark/40 rounded"
-                  src={isImageBase64}
+                  className="w-full h-[50vh] object-cover border border-dark/40 rounded select-none"
+                  src={isImageBase64 ? isImageBase64 : undefined}
                   alt=""
                 />
               )}

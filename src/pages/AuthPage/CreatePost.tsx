@@ -4,7 +4,7 @@ import CreatePostModal from "../../components/CreatePostModal";
 
 const CreatePost = () => {
   const [imageBase64, setImageBase64] = useState<string>("");
-  const [postImage, setPostImage] = useState();
+  const [postImage, setPostImage] = useState<any>();
   const [showModal, setShowModal] = useState(false);
 
   const handleToggleModal = (value: boolean) => {
@@ -18,6 +18,8 @@ const CreatePost = () => {
     setImageBase64(base64 as string);
     setPostImage(file);
     setShowModal(true);
+    // Clear the input value to allow re-uploading the same file
+    e.target.value = "";
   };
 
   function convertToBase64(file: File) {
