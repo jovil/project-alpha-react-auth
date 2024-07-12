@@ -39,7 +39,7 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
 
     const formData = new FormData();
     productImages.forEach((file) => {
-      formData.append(`image`, file);
+      formData.append(`images`, file);
     });
     formData.append("product", JSON.stringify(product));
 
@@ -198,7 +198,7 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
                     id="product-file-upload"
                     multiple
                     type="file"
-                    name="image"
+                    name="images"
                     accept=".jpeg, .png, .jpg"
                     onChange={(e) => handleFileUpload(e)}
                   />
