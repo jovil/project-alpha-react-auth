@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import ProductModal from "./ProductModal";
