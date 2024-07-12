@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useUser } from "../context/UserContext";
-import { Form } from "react-bootstrap";
 import Cookies from "universal-cookie";
 
 import loading from "../assets/images/loading.gif";
@@ -30,6 +29,7 @@ const CreatePostModal = ({
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isInputEmpty, setIsInputEmpty] = useState(false);
   const { userState, setUserState } = useUser();
   const token = cookies.get("TOKEN");
   const url = `${process.env.REACT_APP_API_URL}/create`;
@@ -40,11 +40,18 @@ const CreatePostModal = ({
         ...prev,
         email: userState.email,
         image: isPostImage,
+        _id: userState._id,
       };
     });
   }, [userState, isPostImage]);
 
-  useEffect(() => {}, [post]);
+  useEffect(() => {
+    document.body.style.pointerEvents = isLoading ? "none" : "auto";
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (post.caption.length > 0) setIsInputEmpty(false);
+  }, [post]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -57,22 +64,9 @@ const CreatePostModal = ({
     });
   };
 
-  const createPost = async (e: any) => {
-    e.preventDefault();
-
-    setIsLoading(true);
-
-    setPost((prev) => {
-      return {
-        ...prev,
-        _id: userState._id,
-      };
-    });
-
-    console.log("create post", post);
-
-    const file = isPostImage;
+  const handleFormData = () => {
     const formData = new FormData();
+    const file = isPostImage;
     formData.append("image", file);
     formData.append(
       "post",
@@ -83,9 +77,31 @@ const CreatePostModal = ({
       })
     );
 
+    return formData;
+  };
+
+  // Modify handleCaption to return a boolean
+  const handleCaption = () => {
+    if (post.caption.length === 0) {
+      setIsInputEmpty(true);
+      return false; // Return false if caption is empty
+    }
+    setIsInputEmpty(false);
+    return true; // Return true if caption is valid
+  };
+
+  const createPost = async (e: any) => {
+    e.preventDefault();
+
+    // Return if caption is empty
+    if (!handleCaption()) return;
+    setIsLoading(true);
+
+    const formData = handleFormData();
+
     const configuration = {
-      method: "POST", // Specify the request method
-      body: formData, // Convert the data to JSON string
+      method: "POST",
+      body: formData,
     };
 
     try {
@@ -145,25 +161,33 @@ const CreatePostModal = ({
                   alt=""
                 />
               )}
-              <Form className="w-full" onSubmit={(e) => createPost(e)}>
-                <Form.Group className="flex flex-col gap-4">
-                  <Form.Control
-                    className="border border-dark/40 p-3 rounded"
+              <form className="w-full" onSubmit={(e) => createPost(e)}>
+                <div className="flex flex-col gap-4">
+                  <input
+                    type="text"
+                    className={`border border-dark/40 p-3 rounded ${
+                      isInputEmpty ? "border-danger" : ""
+                    }`}
                     placeholder="Caption"
                     name="caption"
                     value={post.caption}
                     onChange={handleChange}
                     autoFocus
+                    required
                   />
                   <button type="submit" className="hidden">
                     Save
                   </button>
-                </Form.Group>
-              </Form>
+                </div>
+              </form>
             </div>
             <footer className="flex justify-end gap-3">
               <button
-                className="min-w-[91px] btn-primary text-sm flex justify-center items-center"
+                className={`min-w-[91px] btn-primary text-sm flex justify-center items-center ${
+                  isLoading
+                    ? "bg-blue/20 border-blue/20 text-white/20 shadow-none pointer-events-none"
+                    : ""
+                }`}
                 onClick={createPost}
               >
                 {isLoading ? (
