@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import ProductModal from "./ProductModal";
@@ -32,9 +32,8 @@ const ProductListComponent = () => {
 
     try {
       const response = await fetch(url, configuration);
-      const result = await response.json();
-      setProducts(result);
-      console.log("Fetched products:", result);
+      const result: Product[] = await response.json();
+      console.log("Fetched produc12222ts:", result);
 
       // Ensure result is an array and contains the expected fields
       if (Array.isArray(result)) {

@@ -52,11 +52,11 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
       const response = await fetch(url, configuration);
       const data = await response.json();
       await createStripeProduct(
-        data.post._id,
-        data.post.productName,
-        data.post.productDescription,
-        data.post.productPrice,
-        data.post.fileUrl
+        data._id,
+        data.productName,
+        data.productDescription,
+        data.productPrice,
+        data.fileUrl
       );
 
       if (location.pathname === "/auth")
