@@ -15,7 +15,7 @@ export default function Home() {
   const [noPosts, setNoPosts] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [imageBase64, setImageBase64] = useState<string>("");
-  const [postImage, setPostImage] = useState();
+  const [postImage, setPostImage] = useState<any>();
   const [showModal, setShowModal] = useState(false);
   const url = `${process.env.REACT_APP_API_URL}/posts`;
   const token = cookies.get("TOKEN");
@@ -62,6 +62,8 @@ export default function Home() {
     setImageBase64(base64 as string);
     setPostImage(file);
     setShowModal(true);
+    // Clear the input value to allow re-uploading the same file
+    e.target.value = "";
   };
 
   function convertToBase64(file: File) {
