@@ -62,7 +62,7 @@ const ProductModal = ({
             {product ? (
               <>
                 <div>
-                  {product.fileUrl.map((url, urlIndex) => (
+                  {product.fileUrl.toReversed().map((url, urlIndex) => (
                     <img
                       className="rounded w-full"
                       key={urlIndex}

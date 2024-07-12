@@ -159,7 +159,7 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
   };
 
   const handleFileUpload = async (e: any) => {
-    const files = Array.from(e.target.files);
+    const files = Array.from(e.target.files).slice(0, 4);
     const base64Promises = files.map((file: any) => convertToBase64(file));
     const base64Images = await Promise.all(base64Promises);
 
@@ -251,10 +251,10 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
                   />
                 </div>
               </form>
-              <div className="flex flex-nowrap gap-2 w-full">
+              <div className="grid grid-cols-4 gap-2 w-full">
                 {imageBase64Array.map((base64, index) => (
                   <div
-                    className="w-[25%] overflow-hidden h-full aspect-square border border-dark/40 rounded"
+                    className="col-span-1 overflow-hidden h-full aspect-square border border-dark/40 rounded"
                     key={index}
                   >
                     <img
