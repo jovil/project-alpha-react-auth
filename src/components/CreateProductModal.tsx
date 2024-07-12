@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useUser } from "../context/UserContext";
 import { Form } from "react-bootstrap";
 import loading from "../assets/images/loading.gif";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 
 const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
-  const { userState, setUserState } = useUser();
+  const { userState } = useUser();
   const [productImages, setProductImages] = useState<string[]>([]);
   const [imageBase64Array, setImageBase64Array] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +20,7 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     price: "",
     _id: userState._id,
   });
-  const location = useLocation();
+  // const location = useLocation();
   const url = `${process.env.REACT_APP_API_URL}/create/product`;
 
   const createProduct = async (e: any) => {
@@ -70,47 +70,47 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     }
   };
 
-  const createStripeProduct = async (
-    productId: string,
-    productName: string,
-    productDescription: string,
-    productPrice: string,
-    fileUrl: string[]
-  ) => {
-    const parsedPrice = Math.round(parseInt(productPrice) * 100);
-    const product = {
-      productId: productId,
-      name: productName,
-      description: productDescription,
-      images: fileUrl, // string array
-      unit_label: "1",
-      default_price_data: {
-        currency: "myr",
-        unit_amount: parsedPrice,
-      },
-      metadata: {
-        merchantName: userState.userName,
-        merchantEmail: userState.email,
-      },
-    };
+  // const createStripeProduct = async (
+  //   productId: string,
+  //   productName: string,
+  //   productDescription: string,
+  //   productPrice: string,
+  //   fileUrl: string[]
+  // ) => {
+  //   const parsedPrice = Math.round(parseInt(productPrice) * 100);
+  //   const product = {
+  //     productId: productId,
+  //     name: productName,
+  //     description: productDescription,
+  //     images: fileUrl, // string array
+  //     unit_label: "1",
+  //     default_price_data: {
+  //       currency: "myr",
+  //       unit_amount: parsedPrice,
+  //     },
+  //     metadata: {
+  //       merchantName: userState.userName,
+  //       merchantEmail: userState.email,
+  //     },
+  //   };
 
-    const url = `${process.env.REACT_APP_API_URL}/create/stripe/product`;
-    const configuration = {
-      method: "POST", // Specify the request method
-      headers: {
-        "Content-Type": "application/json", // Specify the content type as JSON
-      },
-      body: JSON.stringify(product), // Convert the data to JSON string
-    };
+  //   const url = `${process.env.REACT_APP_API_URL}/create/stripe/product`;
+  //   const configuration = {
+  //     method: "POST", // Specify the request method
+  //     headers: {
+  //       "Content-Type": "application/json", // Specify the content type as JSON
+  //     },
+  //     body: JSON.stringify(product), // Convert the data to JSON string
+  //   };
 
-    try {
-      const response = await fetch(url, configuration);
-      const result = await response.json();
-      console.log("result", result);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+  //   try {
+  //     const response = await fetch(url, configuration);
+  //     const result = await response.json();
+  //     console.log("result", result);
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -147,27 +147,27 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     });
   }
 
-  const updateHasProducts = async () => {
-    const url = `${process.env.REACT_APP_API_URL}/update-hasProducts/${userState._id}`;
+  // const updateHasProducts = async () => {
+  //   const url = `${process.env.REACT_APP_API_URL}/update-hasProducts/${userState._id}`;
 
-    try {
-      await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Specify the content type as JSON
-        },
-        body: JSON.stringify({ hasProducts: true }), // Convert the data to JSON string
-      });
-      setUserState((prev: any) => {
-        return {
-          ...prev,
-          hasProducts: true,
-        };
-      });
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+  //   try {
+  //     await fetch(url, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json", // Specify the content type as JSON
+  //       },
+  //       body: JSON.stringify({ hasProducts: true }), // Convert the data to JSON string
+  //     });
+  //     setUserState((prev: any) => {
+  //       return {
+  //         ...prev,
+  //         hasProducts: true,
+  //       };
+  //     });
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // };
 
   return (
     <>
