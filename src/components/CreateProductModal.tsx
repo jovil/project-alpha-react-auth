@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useUser } from "../context/UserContext";
 import { Form } from "react-bootstrap";
 import loading from "../assets/images/loading.gif";
-// import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
   const { userState, setUserState } = useUser();
@@ -20,7 +20,7 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     price: "",
     _id: userState._id,
   });
-  // const location = useLocation();
+  const location = useLocation();
   const url = `${process.env.REACT_APP_API_URL}/create/product`;
 
   const createProduct = async (e: any) => {
@@ -51,66 +51,63 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     try {
       const response = await fetch(url, configuration);
       const data = await response.json();
-      console.log("data", data);
-      // await createStripeProduct(
-      //   data._id,
-      //   data.productName,
-      //   data.productDescription,
-      //   data.productPrice,
-      //   data.fileUrl
-      // );
+      await createStripeProduct(
+        data._id,
+        data.productName,
+        data.productDescription,
+        data.productPrice,
+        data.fileUrl
+      );
 
-      // if (location.pathname === "/auth")
-      !userState.hasProducts && (await updateHasProducts());
-      // onToggleModal(false);
-      // setIsLoading(false);
-      // window.location.reload();
+      if (location.pathname === "/auth")
+        !userState.hasProducts && (await updateHasProducts());
+      onToggleModal(false);
+      setIsLoading(false);
+      window.location.reload();
     } catch (error) {
       console.log("error", error);
     }
   };
 
-  // const createStripeProduct = async (
-  //   productId: string,
-  //   productName: string,
-  //   productDescription: string,
-  //   productPrice: string,
-  //   fileUrl: string[]
-  // ) => {
-  //   const parsedPrice = Math.round(parseInt(productPrice) * 100);
-  //   const product = {
-  //     productId: productId,
-  //     name: productName,
-  //     description: productDescription,
-  //     images: fileUrl, // string array
-  //     unit_label: "1",
-  //     default_price_data: {
-  //       currency: "myr",
-  //       unit_amount: parsedPrice,
-  //     },
-  //     metadata: {
-  //       merchantName: userState.userName,
-  //       merchantEmail: userState.email,
-  //     },
-  //   };
+  const createStripeProduct = async (
+    productId: string,
+    productName: string,
+    productDescription: string,
+    productPrice: string,
+    fileUrl: string[]
+  ) => {
+    const parsedPrice = Math.round(parseInt(productPrice) * 100);
+    const product = {
+      productId: productId,
+      name: productName,
+      description: productDescription,
+      images: fileUrl, // string array
+      unit_label: "1",
+      default_price_data: {
+        currency: "myr",
+        unit_amount: parsedPrice,
+      },
+      metadata: {
+        merchantName: userState.userName,
+        merchantEmail: userState.email,
+      },
+    };
 
-  //   const url = `${process.env.REACT_APP_API_URL}/create/stripe/product`;
-  //   const configuration = {
-  //     method: "POST", // Specify the request method
-  //     headers: {
-  //       "Content-Type": "application/json", // Specify the content type as JSON
-  //     },
-  //     body: JSON.stringify(product), // Convert the data to JSON string
-  //   };
+    const url = `${process.env.REACT_APP_API_URL}/create/stripe/product`;
+    const configuration = {
+      method: "POST", // Specify the request method
+      headers: {
+        "Content-Type": "application/json", // Specify the content type as JSON
+      },
+      body: JSON.stringify(product), // Convert the data to JSON string
+    };
 
-  //   try {
-  //     const response = await fetch(url, configuration);
-  //     const result = await response.json();
-  //     console.log("result", result);
-  //   } catch (error) {
-  //     console.log("error", error);
-  //   }
-  // };
+    try {
+      await fetch(url, configuration);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;

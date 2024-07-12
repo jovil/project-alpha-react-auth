@@ -27,11 +27,12 @@ const HeaderSection = () => {
     };
 
     try {
-      await fetch(url, configuration);
+      const response = await fetch(url, configuration);
+      const result = await response.json();
       setUserState((prev: any) => {
         return {
           ...prev,
-          // avatar64: result.avatar,
+          avatar64: result.avatar,
         };
       });
     } catch (error) {

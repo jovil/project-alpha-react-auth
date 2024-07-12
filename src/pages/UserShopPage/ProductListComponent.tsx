@@ -33,7 +33,6 @@ const ProductListComponent = () => {
     try {
       const response = await fetch(url, configuration);
       const result: Product[] = await response.json();
-      console.log("Fetched produc12222ts:", result);
 
       // Ensure result is an array and contains the expected fields
       if (Array.isArray(result)) {
@@ -71,7 +70,7 @@ const ProductListComponent = () => {
     <section className="grid grid-cols-3 gap-1 max-w-[908px] w-full py-16 mx-auto">
       {products.length ? (
         <>
-          {products?.reverse().map((product: any) => {
+          {products?.toReversed().map((product: any) => {
             if (!product || !product.fileUrl || !product.fileUrl.length) {
               console.warn("Product or fileUrl is undefined or empty", product);
               return null; // Skip this product if data is invalid
