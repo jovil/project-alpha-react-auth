@@ -51,19 +51,20 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     try {
       const response = await fetch(url, configuration);
       const data = await response.json();
-      await createStripeProduct(
-        data._id,
-        data.productName,
-        data.productDescription,
-        data.productPrice,
-        data.fileUrl
-      );
+      console.log("data", data);
+      // await createStripeProduct(
+      //   data._id,
+      //   data.productName,
+      //   data.productDescription,
+      //   data.productPrice,
+      //   data.fileUrl
+      // );
 
-      if (location.pathname === "/auth")
-        !userState.hasProducts && (await updateHasProducts());
-      onToggleModal(false);
-      setIsLoading(false);
-      window.location.reload();
+      // if (location.pathname === "/auth")
+      //   !userState.hasProducts && (await updateHasProducts());
+      // onToggleModal(false);
+      // setIsLoading(false);
+      // window.location.reload();
     } catch (error) {
       console.log("error", error);
     }

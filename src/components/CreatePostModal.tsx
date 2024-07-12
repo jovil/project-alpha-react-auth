@@ -93,7 +93,7 @@ const CreatePostModal = ({
       !userState.hasPosted && (await updateHasPosted());
       onToggleModal(false);
       setIsLoading(false);
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.log("error", error);
     }
