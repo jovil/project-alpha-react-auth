@@ -5,7 +5,7 @@ import loading from "../assets/images/loading.gif";
 // import { useLocation } from "react-router-dom";
 
 const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
-  const { userState } = useUser();
+  const { userState, setUserState } = useUser();
   const [productImages, setProductImages] = useState<string[]>([]);
   const [imageBase64Array, setImageBase64Array] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -61,7 +61,7 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
       // );
 
       // if (location.pathname === "/auth")
-      //   !userState.hasProducts && (await updateHasProducts());
+      !userState.hasProducts && (await updateHasProducts());
       // onToggleModal(false);
       // setIsLoading(false);
       // window.location.reload();
@@ -147,27 +147,27 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     });
   }
 
-  // const updateHasProducts = async () => {
-  //   const url = `${process.env.REACT_APP_API_URL}/update-hasProducts/${userState._id}`;
+  const updateHasProducts = async () => {
+    const url = `${process.env.REACT_APP_API_URL}/update-hasProducts/${userState._id}`;
 
-  //   try {
-  //     await fetch(url, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json", // Specify the content type as JSON
-  //       },
-  //       body: JSON.stringify({ hasProducts: true }), // Convert the data to JSON string
-  //     });
-  //     setUserState((prev: any) => {
-  //       return {
-  //         ...prev,
-  //         hasProducts: true,
-  //       };
-  //     });
-  //   } catch (error) {
-  //     console.log("error", error);
-  //   }
-  // };
+    try {
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Specify the content type as JSON
+        },
+        body: JSON.stringify({ hasProducts: true }), // Convert the data to JSON string
+      });
+      setUserState((prev: any) => {
+        return {
+          ...prev,
+          hasProducts: true,
+        };
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <>
