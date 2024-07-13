@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import HeaderSection from "./HeaderSection";
+import PostListComponent from "./PostListComponent";
 
 const UserPostListPage = () => {
   const { userId } = useParams();
@@ -39,6 +40,7 @@ const UserPostListPage = () => {
   return (
     <>
       <HeaderSection isUser={user} isLoadingAvatar={isLoadingAvatar} />
+      <PostListComponent />
     </>
   );
 };
