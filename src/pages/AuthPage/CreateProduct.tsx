@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import Cookies from "universal-cookie";
-import CreateProductModal from "../../components/CreateProductModal";
+import CreateProductModal from "../../components/CreateProductModalComponent";
 const cookies = new Cookies();
 
 const CreateProduct = () => {

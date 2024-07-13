@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form } from "react-bootstrap";
-import CreatePostModal from "../../components/CreatePostModal";
+import CreatePostModal from "../../components/CreatePostModalComponent";
 
 const CreatePost = () => {
   const [imageBase64, setImageBase64] = useState<string>("");

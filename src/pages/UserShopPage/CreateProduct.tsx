@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import Cookies from "universal-cookie";
 import defaultAvatar from "../../assets/images/toon_6.png";
-import CreateProductModal from "../../components/CreateProductModal";
+import CreateProductModal from "../../components/CreateProductModalComponent";
 const cookies = new Cookies();
 
 const CreateProduct = () => {

@@ -3,7 +3,7 @@ import { GlobalStateContext } from "../../context/Context";
 import { useUser } from "../../context/UserContext";
 import { NavLink } from "react-router-dom";
 import { usePosts } from "../../context/PostsContext";
-import CreatePostModal from "../../components/CreatePostModal";
+import CreatePostModal from "../../components/CreatePostModalComponent";
 import loading from "../../assets/images/loading.gif";
 import { Form } from "react-bootstrap";
 import defaultAvatar from "../../assets/images/toon_6.png";

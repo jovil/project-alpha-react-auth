@@ -1,0 +1,119 @@
+import { useEffect, useCallback, useState } from "react";
+import ProductModal from "../../components/ProductModalComponent";
+import loading from "../../assets/images/loading.gif";
+
+const ShopPage = () => {
+  const [allProducts, setAllProducts] = useState<any>();
+  const [isProductModalVisible, setIsProductModalVisible] = useState(false);
+  const [productId, setProductId] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchProducts = useCallback(async () => {
+    const url = `${process.env.REACT_APP_API_URL}/products`;
+    const configuration = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json", // Specify the content type as JSON
+      },
+    };
+
+    try {
+      const response = await fetch(url, configuration);
+      const result = await response.json();
+      setAllProducts(result);
+      console.log("products", result);
+    } catch (error) {
+      console.log("error creating post", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
+  const handleProductImageLoad = () => {
+    setIsLoading(false);
+  };
+
+  const handleToggleModal = (productItemId: any) => {
+    setProductId(productItemId);
+    setIsProductModalVisible((prevState) => !prevState);
+  };
+
+  return (
+    <>
+      <section className="grid grid-cols-3 gap-1 max-w-[908px] w-full py-16 mx-auto">
+        {allProducts?.length ? (
+          <>
+            {allProducts?.toReversed().map((product: any) => {
+              if (!product || !product.fileUrl || !product.fileUrl.length) {
+                console.warn(
+                  "Product or fileUrl is undefined or empty",
+                  product
+                );
+                return null; // Skip this product if data is invalid
+              }
+
+              return (
+                <div
+                  className="max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded p-4 pb-3 flex flex-col gap-3"
+                  key={product._id}
+                >
+                  <div className="relative aspect-square">
+                    {isLoading && (
+                      <img
+                        className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
+                        src={loading}
+                        alt=""
+                      />
+                    )}
+                    <img
+                      className="aspect-square w-full object-cover rounded-sm"
+                      src={product.fileUrl[product.fileUrl.length - 1] || ""}
+                      alt={product.productName}
+                      loading="lazy"
+                      onLoad={handleProductImageLoad}
+                    />
+                  </div>
+                  <div className="h-full flex flex-col justify-between gap-4">
+                    <div className="flex flex-col gap-1.5">
+                      <p>{product.productName}</p>
+                      <p className="text-sm text-dark/80">
+                        {product.productDescription}
+                      </p>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <button
+                        className="btn-outline-dark text-xs"
+                        onClick={() => {
+                          handleToggleModal(product._id);
+                        }}
+                      >
+                        Show product
+                      </button>
+                      <p className="ml-auto">RM {product.productPrice}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </>
+        ) : (
+          <>
+            <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
+              No products.
+            </p>
+          </>
+        )}
+        {isProductModalVisible && (
+          <ProductModal
+            productId={productId}
+            onToggleModal={handleToggleModal}
+          />
+        )}
+      </section>
+    </>
+  );
+};
+
+export default ShopPage;

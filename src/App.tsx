@@ -8,6 +8,7 @@ import Register from "./pages/RegisterPage/RegisterPage";
 import Login from "./pages/LoginPage/Login";
 import Cookies from "universal-cookie";
 import UserShopPage from "./pages/UserShopPage/UserShopPage";
+import ShopPage from "./pages/ShopPage/ShopPage";
 const cookies = new Cookies();
 
 function App() {
@@ -30,6 +31,17 @@ function App() {
                 }
               >
                 Home
+              </NavLink>
+              <NavLink
+                end
+                to="/shop"
+                className={({ isActive }: { isActive: any }) =>
+                  isActive
+                    ? "nav-button bg-neutral-300 rounded-full text-sm"
+                    : "text-sm px-5 py-1.5"
+                }
+              >
+                Shop
               </NavLink>
               {token && (
                 <NavLink
@@ -85,6 +97,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path={`/shop/:profileId`} element={<UserShopPage />} />
+          <Route path={`/shop`} element={<ShopPage />} />
         </Routes>
       </main>
     </div>

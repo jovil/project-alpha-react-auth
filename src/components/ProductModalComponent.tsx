@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import Swiper from "swiper";
 import "swiper/css";
 import { Thumbs } from "swiper/modules";
-import loading from "../../assets/images/loading.gif";
+import loading from "../assets/images/loading.gif";
 
 interface Product {
   productName: string;
