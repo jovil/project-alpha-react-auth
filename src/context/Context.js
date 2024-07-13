@@ -11,6 +11,7 @@ export const GlobalStateProvider = ({ children }) => {
       ? JSON.parse(savedState)
       : {
           isLoggedIn: false,
+          postsView: "grid",
         };
   });
 

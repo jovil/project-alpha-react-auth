@@ -143,7 +143,7 @@ const ProductModal = ({
 
                 <div className="flex flex-col gap-14">
                   <div className="flex flex-col gap-2">
-                    <h2 className="text-2xl">{product.productName}</h2>
+                    <h2 className="text-xl">{product.productName}</h2>
                     <p className="text-xl">RM {product.productPrice}</p>
                   </div>
 
