@@ -114,7 +114,10 @@ const PostListView = () => {
                     <div className="flex flex-col flex-grow justify-between gap-3">
                       <p className="text-sm">{post.caption}</p>
                       <div className="flex-grow flex justify-between items-center">
-                        <div className="flex gap-1.5 items-center">
+                        <NavLink
+                          className="flex gap-1.5 items-center"
+                          to={`/user/${post.user._id}`}
+                        >
                           {post.user.avatar.length > 0 ? (
                             <img
                               className="rounded-full w-6 h-6 border border-dark/10"
@@ -129,7 +132,7 @@ const PostListView = () => {
                             />
                           )}
                           <p className="text-xs">@{post.user.userName}</p>
-                        </div>
+                        </NavLink>
                         {post.user?.hasProducts && (
                           <div className="ml-auto">
                             <NavLink
