@@ -83,6 +83,7 @@ const HeaderSection = () => {
       setAvatarSavedMessage(true);
       setTimeout(() => {
         setAvatarSavedMessage(false);
+        window.location.reload();
       }, 800);
     } catch (error) {
       console.log("error", error);
