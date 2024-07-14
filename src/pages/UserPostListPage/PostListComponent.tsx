@@ -11,7 +11,7 @@ interface User {
 interface Posts {
   email: string;
   fileUrl: string;
-  caption: string;
+  charactherName: string;
   user: User;
 }
 
@@ -82,7 +82,8 @@ const ProductListComponent = () => {
                   />
                 </div>
                 <div className="h-full flex flex-col justify-between gap-4">
-                  <p className="text-sm">{post.caption}</p>
+                  <p className="text-sm">{post.characterName}</p>
+                  <p className="text-sm">{post.seriesTitle}</p>
                 </div>
               </div>
             );

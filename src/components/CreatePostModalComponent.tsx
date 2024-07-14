@@ -19,17 +19,21 @@ const CreatePostModal = ({
   const [post, setPost] = useState<{
     email: string;
     image: any;
-    caption: string;
+    characterName: string;
+    seriesTitle: string;
     _id: string;
   }>({
     email: "",
     image: "",
-    caption: "",
+    characterName: "",
+    seriesTitle: "",
     _id: "",
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isInputEmpty, setIsInputEmpty] = useState(false);
+  const [isCharacterNameInputEmpty, setIsCharacterNameInputEmpty] =
+    useState(false);
+  const [isSeriesTitleInputEmpty, setIsSeriesTitleInputEmpty] = useState(false);
   const { userState, setUserState } = useUser();
   const token = cookies.get("TOKEN");
   const url = `${process.env.REACT_APP_API_URL}/create`;
@@ -50,7 +54,8 @@ const CreatePostModal = ({
   }, [isLoading]);
 
   useEffect(() => {
-    if (post.caption.length > 0) setIsInputEmpty(false);
+    if (post.characterName.length > 0) setIsCharacterNameInputEmpty(false);
+    if (post.seriesTitle.length > 0) setIsSeriesTitleInputEmpty(false);
   }, [post]);
 
   const handleChange = (e: any) => {
@@ -73,28 +78,41 @@ const CreatePostModal = ({
       JSON.stringify({
         _id: userState._id,
         email: userState.email,
-        caption: post.caption,
+        characterName: post.characterName,
+        seriesTitle: post.seriesTitle,
       })
     );
 
     return formData;
   };
 
-  // Modify handleCaption to return a boolean
-  const handleCaption = () => {
-    if (post.caption.length === 0) {
-      setIsInputEmpty(true);
-      return false; // Return false if caption is empty
+  // Modify handleCharacterName to return a boolean
+  const handleCharacterName = () => {
+    if (post.characterName.length === 0) {
+      setIsCharacterNameInputEmpty(true);
+      return false; // Return false if characterName is empty
     }
-    setIsInputEmpty(false);
-    return true; // Return true if caption is valid
+    setIsCharacterNameInputEmpty(false);
+    return true; // Return true if characterName is valid
+  };
+
+  // Modify handleSeriesTitle to return a boolean
+  const handleSeriesTitle = () => {
+    if (post.seriesTitle.length === 0) {
+      setIsSeriesTitleInputEmpty(true);
+      return false; // Return false if seriesTitle is empty
+    }
+    setIsSeriesTitleInputEmpty(false);
+    return true; // Return true if seriesTitle is valid
   };
 
   const createPost = async (e: any) => {
     e.preventDefault();
 
-    // Return if caption is empty
-    if (!handleCaption()) return;
+    // Return if characterName is empty
+    if (!handleCharacterName()) return;
+    // Return if seriesTitle is empty
+    if (!handleSeriesTitle()) return;
     setIsLoading(true);
 
     const formData = handleFormData();
@@ -166,11 +184,23 @@ const CreatePostModal = ({
                   <input
                     type="text"
                     className={`border border-dark/40 p-3 rounded ${
-                      isInputEmpty ? "border-danger" : ""
+                      isCharacterNameInputEmpty ? "border-danger" : ""
                     }`}
-                    placeholder="Caption"
-                    name="caption"
-                    value={post.caption}
+                    placeholder="Character Name"
+                    name="characterName"
+                    value={post.characterName}
+                    onChange={handleChange}
+                    autoFocus
+                    required
+                  />
+                  <input
+                    type="text"
+                    className={`border border-dark/40 p-3 rounded ${
+                      isSeriesTitleInputEmpty ? "border-danger" : ""
+                    }`}
+                    placeholder="Series Title"
+                    name="seriesTitle"
+                    value={post.seriesTitle}
                     onChange={handleChange}
                     autoFocus
                     required
