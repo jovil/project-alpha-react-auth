@@ -32,7 +32,7 @@ function App() {
                     : "text-sm px-5 py-1.5"
                 }
               >
-                Home
+                Discover
               </NavLink>
               <NavLink
                 end

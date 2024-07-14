@@ -81,12 +81,14 @@ const SeriesPage = () => {
               {seriesPosts?.toReversed().map((post: any) => {
                 return (
                   <div
-                    className={`w-full h-auto border border-dark/80 shadow-md rounded p-4 pb-3 flex flex-col gap-3 ${
-                      state.seriesView === "grid" ? "max-w-[300px]" : ""
+                    className={`w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group ${
+                      state.seriesView === "grid"
+                        ? "max-w-[300px] aspect-[3/4]"
+                        : ""
                     }`}
                     key={post._id}
                   >
-                    <div className="relative aspect-square">
+                    <div className="h-full">
                       <img
                         className={
                           isLoading
@@ -97,15 +99,15 @@ const SeriesPage = () => {
                         alt=""
                       />
                       <img
-                        className="aspect-square object-cover w-full rounded-sm"
+                        className="object-cover w-full h-full rounded-sm"
                         src={post.fileUrl}
                         alt=""
                         loading="lazy"
                         onLoad={handlePostImageLoad}
                       />
                     </div>
-                    <div className="flex flex-col flex-grow justify-between gap-6">
-                      <p className="text-sm">{post.characterName}</p>
+                    <div className="flex flex-col flex-grow justify-between gap-6 absolute p-3 pt-12 bottom-0 w-full bg-gradient-to-t from-dark text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition">
+                      <p>{post.characterName}</p>
                     </div>
                   </div>
                 );

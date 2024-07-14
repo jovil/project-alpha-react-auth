@@ -29,7 +29,7 @@
 @layer components {
   .tag,
   .btn-outline-small {
-    @apply text-xs py-1.5 px-3 bg-transparent border border-dark/60 text-dark font-medium rounded-full shadow-md hover:text-white hover:bg-dark focus:outline-none select-none;
+    @apply text-xs py-1.5 px-3 bg-transparent border border-white font-medium rounded-full shadow-md hover:text-white hover:bg-dark hover:border-dark focus:outline-none select-none;
   }
 }
 

@@ -88,12 +88,14 @@ const PostListView = () => {
               {allPosts?.toReversed().map((post: any) => {
                 return (
                   <div
-                    className={`w-full h-auto border border-dark/80 shadow-md rounded p-4 pb-3 flex flex-col gap-3 ${
-                      state.postsView === "grid" ? "max-w-[300px]" : ""
+                    className={`w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group ${
+                      state.postsView === "grid"
+                        ? "max-w-[300px] aspect-[3/4]"
+                        : ""
                     }`}
                     key={post._id}
                   >
-                    <div className="relative aspect-square">
+                    <div className="h-full">
                       <img
                         className={
                           isLoading
@@ -104,15 +106,15 @@ const PostListView = () => {
                         alt=""
                       />
                       <img
-                        className="aspect-square object-cover w-full rounded-sm"
+                        className="object-cover w-full h-full rounded-sm"
                         src={post.fileUrl}
                         alt=""
                         loading="lazy"
                         onLoad={handlePostImageLoad}
                       />
                     </div>
-                    <div className="flex flex-col flex-grow justify-between gap-6">
-                      <p className="text-sm">{post.characterName}</p>
+                    <div className="flex flex-col justify-between gap-6 absolute p-3 pt-12 bottom-0 w-full bg-gradient-to-t from-dark text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition">
+                      <p>{post.characterName}</p>
                       <footer className="flex flex-col gap-2">
                         <div className="flex items-center gap-2">
                           <p className="text-xs">from</p>
@@ -141,7 +143,9 @@ const PostListView = () => {
                                 alt=""
                               />
                             )}
-                            <p className="text-xs">@{post.user.userName}</p>
+                            <p className="text-xs underline">
+                              @{post.user.userName}
+                            </p>
                           </NavLink>
                           {post.user?.hasProducts && (
                             <div className="ml-auto">
@@ -160,7 +164,7 @@ const PostListView = () => {
                                   <path
                                     className="group-hover:stroke-white"
                                     d="M20.25 6.75H3.75C3.33579 6.75 3 7.08579 3 7.5V19.5C3 19.9142 3.33579 20.25 3.75 20.25H20.25C20.6642 20.25 21 19.9142 21 19.5V7.5C21 7.08579 20.6642 6.75 20.25 6.75Z"
-                                    stroke="#171717"
+                                    stroke="#fff"
                                     strokeWidth="1.5"
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
@@ -168,7 +172,7 @@ const PostListView = () => {
                                   <path
                                     className="group-hover:stroke-white"
                                     d="M8.25 6.75C8.25 5.75544 8.64509 4.80161 9.34835 4.09835C10.0516 3.39509 11.0054 3 12 3C12.9946 3 13.9484 3.39509 14.6517 4.09835C15.3549 4.80161 15.75 5.75544 15.75 6.75"
-                                    stroke="#171717"
+                                    stroke="#fff"
                                     strokeWidth="1.5"
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
