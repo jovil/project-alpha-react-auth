@@ -73,7 +73,9 @@ const SeriesPage = () => {
         </header>
         <div
           className={`grid gap-1 ${
-            state.seriesView === "grid" ? "grid-cols-3" : ""
+            state.seriesView === "grid"
+              ? "tablet:grid-cols-2 desktop:grid-cols-3"
+              : ""
           }`}
         >
           {seriesPosts?.length ? (
@@ -83,7 +85,7 @@ const SeriesPage = () => {
                   <div
                     className={`w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group ${
                       state.seriesView === "grid"
-                        ? "max-w-[300px] aspect-[3/4]"
+                        ? "desktop:max-w-[300px] tablet:aspect-[3/4]"
                         : ""
                     }`}
                     key={post._id}
@@ -106,7 +108,7 @@ const SeriesPage = () => {
                         onLoad={handlePostImageLoad}
                       />
                     </div>
-                    <div className="flex flex-col flex-grow justify-between gap-6 absolute p-3 pt-12 bottom-0 w-full bg-gradient-to-t from-dark text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition">
+                    <div className="flex flex-col flex-grow justify-between gap-6 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
                       <p>{post.characterName}</p>
                     </div>
                   </div>

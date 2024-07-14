@@ -67,7 +67,7 @@ const ProductListComponent = () => {
   };
 
   return (
-    <section className="grid grid-cols-3 gap-1 max-w-[908px] w-full py-16 mx-auto">
+    <section className="grid tablet:grid-cols-2 desktop:grid-cols-3 gap-1 max-w-[908px] w-full py-16 mx-auto">
       {products.length ? (
         <>
           {products?.toReversed().map((product: any) => {
@@ -78,10 +78,10 @@ const ProductListComponent = () => {
 
             return (
               <div
-                className="max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group"
+                className="desktop:max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group"
                 key={product._id}
               >
-                <div className="relative aspect-[3/4]">
+                <div className="relative tablet:aspect-[3/4]">
                   {isLoading && (
                     <img
                       className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
@@ -90,28 +90,31 @@ const ProductListComponent = () => {
                     />
                   )}
                   <img
-                    className="aspect-[3/4] w-full object-cover rounded-sm"
+                    className="tablet:aspect-[3/4] w-full object-cover rounded-sm"
                     src={product.fileUrl[product.fileUrl.length - 1] || ""}
                     alt={product.productName}
                     loading="lazy"
                     onLoad={handlePostImageLoad}
                   />
                 </div>
-                <div className="flex flex-col justify-between gap-4 absolute p-3 pt-12 bottom-0 w-full bg-gradient-to-t from-dark text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition">
+                <div className="flex flex-col flex-grow justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
                   <div className="flex flex-col gap-1.5">
-                    <p>{product.productName}</p>
+                    <div className="flex flex-col gap-1.5">
+                      <p>{product.productName}</p>
+                      <p>RM {product.productPrice}</p>
+                    </div>
                     <p className="text-sm">{product.productDescription}</p>
                   </div>
-                  <div className="flex justify-between items-center">
+
+                  <div className="flex flex-col gap-2">
                     <button
-                      className="btn-outline-small text-xs"
+                      className="btn-outline-small-no-hover tablet:btn-outline-small text-xs"
                       onClick={() => {
                         handleToggleModal(product._id);
                       }}
                     >
                       Show product
                     </button>
-                    <p className="ml-auto">RM {product.productPrice}</p>
                   </div>
                 </div>
               </div>
