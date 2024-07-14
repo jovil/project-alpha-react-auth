@@ -31,6 +31,10 @@ module.exports = {
         "4xl": "2rem",
       },
     },
+    screens: {
+      tablet: "768px",
+      desktop: "1024px",
+    },
   },
   plugins: [],
 };
