@@ -113,7 +113,7 @@ const PostListView = () => {
                     </div>
                     <div className="flex flex-col flex-grow justify-between gap-3">
                       <p className="text-sm">{post.characterName}</p>
-                      <p className="text-sm">{post.seriesTitle}</p>
+                      <p className="text-sm">from {post.seriesTitle}</p>
                       <div className="flex-grow flex justify-between items-center">
                         <NavLink
                           className="flex gap-1.5 items-center"

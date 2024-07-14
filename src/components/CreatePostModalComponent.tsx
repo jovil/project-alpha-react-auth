@@ -184,7 +184,7 @@ const CreatePostModal = ({
                   <input
                     type="text"
                     className={`border border-dark/40 p-3 rounded ${
-                      isCharacterNameInputEmpty ? "border-danger" : ""
+                      isCharacterNameInputEmpty ? "!border-danger" : ""
                     }`}
                     placeholder="Character Name"
                     name="characterName"
@@ -196,13 +196,12 @@ const CreatePostModal = ({
                   <input
                     type="text"
                     className={`border border-dark/40 p-3 rounded ${
-                      isSeriesTitleInputEmpty ? "border-danger" : ""
+                      isSeriesTitleInputEmpty ? "!border-danger" : ""
                     }`}
                     placeholder="Series Title"
                     name="seriesTitle"
                     value={post.seriesTitle}
                     onChange={handleChange}
-                    autoFocus
                     required
                   />
                   <button type="submit" className="hidden">
