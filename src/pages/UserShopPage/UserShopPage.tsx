@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 import HeaderSection from "./HeaderSection";
-import CreateProduct from "./CreateProduct";
+import CreateProductComponent from "../../components/CreateProductComponent";
 import ProductListComponent from "./ProductListComponent";
 
 const UserShopPage = () => {
@@ -48,7 +48,7 @@ const UserShopPage = () => {
         profileHeader={profile}
         profileLoadingAvatar={isLoadingAvatar}
       />
-      {profileId === userState._id && <CreateProduct />}
+      {profileId === userState._id && <CreateProductComponent />}
       <ProductListComponent />
     </>
   );

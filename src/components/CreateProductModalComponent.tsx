@@ -222,7 +222,7 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
               <form
                 className={`w-full flex flex-col border border-dashed border-dark/60 rounded pointer-events-auto ${
                   !hasUploadedImages && uploadedFilesLength === 0
-                    ? "border-danger"
+                    ? "!border-danger"
                     : ""
                 }`}
                 encType="multipart/form-data"

@@ -1,12 +1,15 @@
 import { useEffect, useCallback, useState, useContext } from "react";
 import { GlobalStateContext } from "../../context/Context";
+import { useUser } from "../../context/UserContext";
 import ProductModal from "../../components/ProductModalComponent";
+import CreateProductComponent from "../../components/CreateProductComponent";
 import loading from "../../assets/images/loading.gif";
 import iconGrid from "../../assets/images/icon-grid.svg";
 import iconList from "../../assets/images/icon-list.svg";
 
 const ShopPage = () => {
   const { state, setState } = useContext(GlobalStateContext);
+  const { userState } = useUser();
   const [allProducts, setAllProducts] = useState<any>();
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
   const [productId, setProductId] = useState();
@@ -175,6 +178,7 @@ const ShopPage = () => {
           )}
         </div>
       </section>
+      {userState._id && <CreateProductComponent />}
     </>
   );
 };
