@@ -272,7 +272,7 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
                 <input
                   type="text"
                   className={`border border-dark/40 p-3 rounded ${
-                    isInputProductNameEmpty ? "border-danger" : ""
+                    isInputProductNameEmpty ? "!border-danger" : ""
                   }`}
                   placeholder="Product Name"
                   name="productName"
@@ -284,7 +284,7 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
                 <input
                   type="number"
                   className={`border border-dark/40 p-3 rounded ${
-                    isInputPriceEmpty ? "border-danger" : ""
+                    isInputPriceEmpty ? "!border-danger" : ""
                   }`}
                   placeholder="Price (MYR)"
                   name="price"
