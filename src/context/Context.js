@@ -13,6 +13,7 @@ export const GlobalStateProvider = ({ children }) => {
           isLoggedIn: false,
           postsView: "grid",
           productsView: "grid",
+          seriesView: "grid",
         };
   });
 
