@@ -56,7 +56,7 @@ const PostListView = () => {
   return (
     <>
       <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4">
-        <header className="flex justify-end items-center gap-2">
+        <header className="hidden tablet:flex justify-end items-center gap-2">
           <button>
             <img
               className={`w-7 h-7 p-1.5 rounded-full ${

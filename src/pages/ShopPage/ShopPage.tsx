@@ -54,7 +54,7 @@ const ShopPage = () => {
   return (
     <>
       <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4">
-        <header className="flex justify-end items-center gap-2">
+        <header className="hidden tablet:flex justify-end items-center gap-2">
           <button>
             <img
               className={`w-7 h-7 p-1.5 rounded-full ${
@@ -78,7 +78,9 @@ const ShopPage = () => {
         </header>
         <div
           className={`grid gap-1 ${
-            state.productsView === "grid" ? "grid-cols-3" : ""
+            state.productsView === "grid"
+              ? "tablet:grid-cols-2 desktop:grid-cols-3"
+              : ""
           }`}
         >
           {allProducts?.length ? (
@@ -96,16 +98,16 @@ const ShopPage = () => {
                   <div
                     className={`w-full h-auto border border-dark/80 shadow-md rounded ${
                       state.productsView === "grid"
-                        ? "max-w-[300px] flex-col aspect-[3/4] flex gap-3 relative overflow-hidden group"
-                        : "grid grid-cols-12"
+                        ? "desktop:max-w-[300px] flex-col tablet:aspect-[3/4] flex tablet:gap-3 relative overflow-hidden group"
+                        : "tablet:grid tablet:grid-cols-12"
                     }`}
                     key={product._id}
                   >
                     <div
                       className={`relative aspect-square ${
                         state.productsView === "grid"
-                          ? "aspect-[3/4] h-full"
-                          : "col-span-4"
+                          ? "tablet:aspect-[3/4] h-full"
+                          : "tablet:col-span-4"
                       }`}
                     >
                       {isLoading && (
@@ -116,7 +118,7 @@ const ShopPage = () => {
                         />
                       )}
                       <img
-                        className={`aspect-[3/4] w-full object-cover ${
+                        className={`tablet:aspect-[3/4] w-full object-cover ${
                           state.productsView === "grid"
                             ? "rounded-sm h-full"
                             : "rounded-l-sm"
@@ -128,10 +130,10 @@ const ShopPage = () => {
                       />
                     </div>
                     <div
-                      className={`flex flex-col justify-between gap-4 ${
+                      className={`flex flex-col justify-between gap-4 p-4 w-full ${
                         state.productsView === "grid"
-                          ? "absolute p-3 pt-12 bottom-0 w-full bg-gradient-to-t from-dark text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition"
-                          : "w-full col-span-8 p-4"
+                          ? "tablet:absolute tablet:p-3 tablet:pt-12 tablet:bottom-0 tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition"
+                          : "tablet:col-span-8"
                       }`}
                     >
                       <div className="flex flex-col gap-1.5">
@@ -142,7 +144,7 @@ const ShopPage = () => {
                         <button
                           className={`text-xs ${
                             state.productsView === "grid"
-                              ? "btn-outline-small"
+                              ? "btn-outline-overlay"
                               : "btn-outline-dark"
                           }`}
                           onClick={() => {
