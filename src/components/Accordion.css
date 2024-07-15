@@ -1,0 +1,26 @@
+.accordion {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.accordion-title {
+  cursor: pointer;
+  user-select: none;
+  transition: background 200ms ease;
+}
+
+.accordion-title:hover {
+  background: #e2e2e2;
+}
+
+.accordion-content {
+  display: none;
+}
+
+.accordion-item.active .accordion-content {
+  display: block;
+}
