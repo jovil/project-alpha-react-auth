@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import HeaderSection from "./HeaderSection";
 import CreatePost from "./CreatePost";
@@ -7,15 +7,15 @@ import Accordion from "../../components/Accordion";
 import loading from "../../assets/images/loading.gif";
 
 interface BankDetails {
-  accountHolderName: string;
+  accountHoldersName: string;
   bankName: string;
   accountNumber: number | string;
 }
 
 const AuthComponent = () => {
-  const { userState } = useUser();
+  const { userState, setUserState } = useUser();
   const [bankDetails, setBankDetails] = useState<BankDetails>({
-    accountHolderName: "",
+    accountHoldersName: "",
     bankName: "",
     accountNumber: "",
   });
@@ -23,11 +23,47 @@ const AuthComponent = () => {
   const [showSavedBankDetailsMessage, setShowSavedBankDetailsMessage] =
     useState(false);
 
+  const fetchUser = useCallback(async () => {
+    const url = `${process.env.REACT_APP_API_URL}/user/${userState._id}`;
+
+    const configuration = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      const response = await fetch(url, configuration);
+      const result = await response.json();
+      setUserState((prev: any) => {
+        return {
+          ...prev,
+          avatar64: result.avatar,
+          bankAccountDetails: result.bankAccountDetails
+            ? {
+                accountHoldersName:
+                  result.bankAccountDetails.accountHoldersName,
+                accountNumber: result.bankAccountDetails.accountNumber,
+                bankName: result.bankAccountDetails.bankName,
+              }
+            : prev.bankAccountDetails, // Preserve previous state if bankAccountDetails is undefined
+        };
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  }, [setUserState, userState._id]);
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
   const submitBankDetails = async (e: any) => {
     e.preventDefault();
     setIsSavingBankDetails(true);
     const postData = {
-      name: bankDetails.accountHolderName,
+      name: bankDetails.accountHoldersName,
       bank: bankDetails.bankName,
       account: bankDetails.accountNumber,
     };
@@ -46,10 +82,34 @@ const AuthComponent = () => {
       setShowSavedBankDetailsMessage(true);
       setTimeout(() => {
         setShowSavedBankDetailsMessage(false);
+        window.location.reload();
       }, 800);
     } catch (error) {
       console.log("error", error);
     }
+  };
+
+  const editBankDetails = (e: any) => {
+    e.preventDefault();
+    setBankDetails((prev: any) => {
+      return {
+        ...prev,
+        accountHoldersName: userState.bankAccountDetails.accountHoldersName,
+        bankName: userState.bankAccountDetails.bankName,
+        accountNumber: userState.bankAccountDetails.accountNumber,
+      };
+    });
+
+    setUserState((prev: any) => {
+      return {
+        ...prev,
+        bankAccountDetails: {
+          accountHoldersName: undefined,
+          accountNumber: undefined,
+          bankName: undefined,
+        },
+      };
+    });
   };
 
   const handleChange = (e: any) => {
@@ -78,11 +138,18 @@ const AuthComponent = () => {
                 className="border border-dark/40 p-3 rounded"
                 type="text"
                 placeholder="Account holder's name"
-                name="accountHolderName"
-                value={bankDetails.accountHolderName}
+                name="accountHoldersName"
+                value={
+                  userState.bankAccountDetails.accountHoldersName
+                    ? userState.bankAccountDetails.accountHoldersName
+                    : bankDetails.accountHoldersName
+                }
                 onChange={handleChange}
                 required
                 autoFocus
+                disabled={
+                  userState.bankAccountDetails.accountHoldersName ? true : false
+                }
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -92,9 +159,14 @@ const AuthComponent = () => {
                 type="text"
                 placeholder="Bank name"
                 name="bankName"
-                value={bankDetails.bankName}
+                value={
+                  userState.bankAccountDetails.bankName
+                    ? userState.bankAccountDetails.bankName
+                    : bankDetails.bankName
+                }
                 onChange={handleChange}
                 required
+                disabled={userState.bankAccountDetails.bankName ? true : false}
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -104,28 +176,50 @@ const AuthComponent = () => {
                 type="number"
                 placeholder="Account number"
                 name="accountNumber"
-                value={bankDetails.accountNumber}
+                value={
+                  userState.bankAccountDetails.accountNumber
+                    ? userState.bankAccountDetails.accountNumber
+                    : bankDetails.accountNumber
+                }
                 onChange={handleChange}
                 required
+                disabled={
+                  userState.bankAccountDetails.accountNumber ? true : false
+                }
               />
             </div>
-            <button
-              onClick={submitBankDetails}
-              className="btn-primary flex justify-center items-center"
-              type="submit"
-            >
-              {showSavedBankDetailsMessage ? (
-                "Saved!"
-              ) : (
-                <>
-                  {isSavingBankDetails ? (
-                    <img className="w-6 h-6" src={loading} alt="" />
+            {userState.bankAccountDetails.accountHoldersName &&
+            userState.bankAccountDetails.bankName &&
+            userState.bankAccountDetails.accountNumber ? (
+              <>
+                <button
+                  onClick={editBankDetails}
+                  className="btn-primary flex justify-center items-center"
+                >
+                  Edit
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={submitBankDetails}
+                  className="btn-primary flex justify-center items-center"
+                  type="submit"
+                >
+                  {showSavedBankDetailsMessage ? (
+                    "Saved!"
                   ) : (
-                    "Save"
+                    <>
+                      {isSavingBankDetails ? (
+                        <img className="w-6 h-6" src={loading} alt="" />
+                      ) : (
+                        "Save"
+                      )}
+                    </>
                   )}
-                </>
-              )}
-            </button>
+                </button>
+              </>
+            )}
           </form>
         </Accordion>
         <Accordion title="Add a “Hire Me” button to your profile">
