@@ -21,6 +21,29 @@ const getInitialState = () => {
             accountNumber: undefined,
             bankName: undefined,
           },
+          hiringDetails: {
+            email: undefined,
+            whatsApp: undefined,
+            location: undefined,
+            favoriteCharacters: undefined,
+            services: {
+              costumeMaking: false,
+              makeupAndOrProsthetics: false,
+              performanceAndOrActing: false,
+              voiceActing: false,
+              photography: false,
+              otherSkills: undefined,
+            },
+            availability: {
+              conventions: false,
+              photoshoots: false,
+              promotionalEvents: false,
+              onlineAppearancesAndOrStreams: false,
+              otherAvailability: undefined,
+            },
+            preferredSchedule: undefined,
+            travelAvailability: undefined,
+          },
         };
   } catch (error) {
     console.error("Error parsing localStorage userState:", error);
@@ -37,6 +60,29 @@ const getInitialState = () => {
         accountHoldersName: undefined,
         accountNumber: undefined,
         bankName: undefined,
+      },
+      hiringDetails: {
+        email: undefined,
+        whatsApp: undefined,
+        location: undefined,
+        favoriteCharacters: undefined,
+        services: {
+          costumeMaking: false,
+          makeupAndOrProsthetics: false,
+          performanceAndOrActing: false,
+          voiceActing: false,
+          photography: false,
+          otherSkills: undefined,
+        },
+        availability: {
+          conventions: false,
+          photoshoots: false,
+          promotionalEvents: false,
+          onlineAppearancesAndOrStreams: false,
+          otherAvailability: undefined,
+        },
+        preferredSchedule: undefined,
+        travelAvailability: undefined,
       },
     };
   }
