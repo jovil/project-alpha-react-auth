@@ -85,10 +85,13 @@ const AuthComponent = () => {
       type: "local",
     },
   });
+  const [isSavingHiringDetails, setIsSavingHiringDetails] = useState(false);
+  const [showSavedHiringDetailsMessage, setShowSavedHiringDetailsMessage] =
+    useState(false);
 
   const fetchUser = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/user/${userState._id}`;
-
+    console.log("1", userState.hiringDetails?.editingMode);
     const configuration = {
       method: "GET",
       headers: {
@@ -99,7 +102,7 @@ const AuthComponent = () => {
     try {
       const response = await fetch(url, configuration);
       const result = await response.json();
-      console.log("result", result);
+      // console.log("result", result);
       setUserState((prev: any) => {
         return {
           ...prev,
@@ -159,11 +162,18 @@ const AuthComponent = () => {
 
   useEffect(() => {
     fetchUser();
+    if (userState.hiringDetails?.email === undefined) {
+      setUserState((prev: any) => {
+        return {
+          ...prev,
+          hiringDetails: {
+            ...prev.hiringDetails,
+            editingMode: true,
+          },
+        };
+      });
+    }
   }, [fetchUser]);
-
-  useEffect(() => {
-    console.log("u", userState);
-  }, [userState]);
 
   const submitBankDetails = async (e: any) => {
     e.preventDefault();
@@ -229,6 +239,79 @@ const AuthComponent = () => {
     });
   };
 
+  const editHiringDetails = (e: any) => {
+    e.preventDefault();
+    setHiringDetails((prev: any) => {
+      return {
+        ...prev,
+        email: userState.hiringDetails?.email || "",
+        whatsApp: userState.hiringDetails?.whatsApp || "",
+        location: userState.hiringDetails?.location || "",
+        favoriteCharacters: userState.hiringDetails?.favoriteCharacters || "",
+        services: {
+          costumeMaking:
+            userState.hiringDetails?.services.costumeMaking || false,
+          makeupAndOrProsthetics:
+            userState.hiringDetails?.services.makeupAndOrProsthetics || false,
+          performanceAndOrActing:
+            userState.hiringDetails?.services.performanceAndOrActing || false,
+          voiceActing: userState.hiringDetails?.services.voiceActing || false,
+          photography: userState.hiringDetails?.services.photography || false,
+          otherSkills: userState.hiringDetails?.services?.otherSkills || "",
+        },
+        availability: {
+          conventions:
+            userState.hiringDetails?.availability.conventions || false,
+          photoshoots:
+            userState.hiringDetails?.availability.photoshoots || false,
+          promotionalEvents:
+            userState.hiringDetails?.availability.promotionalEvents || false,
+          onlineAppearancesAndOrStreams:
+            userState.hiringDetails?.availability
+              .onlineAppearancesAndOrStreams || false,
+          otherAvailability:
+            userState.hiringDetails?.availability?.otherAvailability || "",
+        },
+        preferredSchedule: userState.hiringDetails?.preferredSchedule,
+        travelAvailability: userState.hiringDetails?.travelAvailability,
+      };
+    });
+
+    setUserState((prev: any) => {
+      return {
+        ...prev,
+        hiringDetails: {
+          email: undefined,
+          whatsApp: undefined,
+          location: undefined,
+          favoriteCharacters: undefined,
+          services: {
+            costumeMaking: undefined,
+            makeupAndOrProsthetics: undefined,
+            performanceAndOrActing: undefined,
+            voiceActing: undefined,
+            photography: undefined,
+            otherSkills: undefined,
+          },
+          availability: {
+            conventions: undefined,
+            photoshoots: undefined,
+            promotionalEvents: undefined,
+            onlineAppearancesAndOrStreams: undefined,
+            otherAvailability: undefined,
+          },
+          preferredSchedule: {
+            type: undefined,
+          },
+          travelAvailability: {
+            type: undefined,
+          },
+          editingMode: true,
+        },
+      };
+    });
+  };
+
   const handleChangeHiringDetailsInput = (e: any) => {
     const { name, value } = e.target;
 
@@ -236,16 +319,6 @@ const AuthComponent = () => {
       ...prev,
       [name]: value,
     }));
-
-    setUserState((prev: any) => {
-      return {
-        ...prev,
-        hiringDetails: {
-          ...prev.hiringDetails,
-          [name]: value,
-        },
-      };
-    });
   };
 
   const handleServices = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -256,17 +329,6 @@ const AuthComponent = () => {
       services: {
         ...prev.services,
         [name]: checked,
-      },
-    }));
-
-    setUserState((prev: any) => ({
-      ...prev,
-      hiringDetails: {
-        ...prev.hiringDetails,
-        services: {
-          ...prev.hiringDetails?.services,
-          [name]: checked,
-        },
       },
     }));
   };
@@ -281,17 +343,6 @@ const AuthComponent = () => {
         [name]: value,
       },
     }));
-
-    setUserState((prev: any) => ({
-      ...prev,
-      hiringDetails: {
-        ...prev.hiringDetails,
-        services: {
-          ...prev.hiringDetails?.services,
-          [name]: value,
-        },
-      },
-    }));
   };
 
   const handleAvailability = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -304,17 +355,6 @@ const AuthComponent = () => {
         [name]: checked,
       },
     }));
-
-    setUserState((prev: any) => ({
-      ...prev,
-      hiringDetails: {
-        ...prev.hiringDetails,
-        availability: {
-          ...prev.hiringDetails?.availability,
-          [name]: checked,
-        },
-      },
-    }));
   };
 
   const handleAvailabilityInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -325,17 +365,6 @@ const AuthComponent = () => {
       availability: {
         ...prev.availability,
         [name]: value,
-      },
-    }));
-
-    setUserState((prev: any) => ({
-      ...prev,
-      hiringDetails: {
-        ...prev.hiringDetails,
-        availability: {
-          ...prev.hiringDetails?.availability,
-          [name]: value,
-        },
       },
     }));
   };
@@ -351,16 +380,6 @@ const AuthComponent = () => {
         type: value,
       },
     }));
-
-    setUserState((prev: any) => ({
-      ...prev,
-      hiringDetails: {
-        ...prev.hiringDetails,
-        preferredSchedule: {
-          type: value,
-        },
-      },
-    }));
   };
 
   const handleChangeTravelAvailability = (
@@ -374,21 +393,20 @@ const AuthComponent = () => {
         type: value,
       },
     }));
-
-    setUserState((prev: any) => ({
-      ...prev,
-      hiringDetails: {
-        ...prev.hiringDetails,
-        travelAvailability: {
-          type: value,
-        },
-      },
-    }));
   };
 
   const submitHiringDetails = async (e: any) => {
     e.preventDefault();
-
+    setIsSavingHiringDetails(true);
+    setUserState((prev: any) => {
+      return {
+        ...prev,
+        hiringDetails: {
+          ...prev.hiringDetails,
+          editingMode: false,
+        },
+      };
+    });
     const postData = {
       email: hiringDetails.email,
       whatsApp: hiringDetails.whatsApp,
@@ -425,7 +443,13 @@ const AuthComponent = () => {
     try {
       const response = await fetch(url, configuration);
       const result = await response.json();
-      console.log("result", result);
+      // console.log("result", result);
+      setIsSavingHiringDetails(false);
+      setShowSavedHiringDetailsMessage(true);
+      setTimeout(() => {
+        setShowSavedHiringDetailsMessage(false);
+        window.location.reload();
+      }, 800);
     } catch (error) {
       console.log("error", error);
     }
@@ -544,9 +568,14 @@ const AuthComponent = () => {
                 type="text"
                 placeholder="Email address"
                 name="email"
-                value={hiringDetails.email}
+                value={
+                  userState.hiringDetails?.email
+                    ? userState.hiringDetails.email
+                    : hiringDetails.email
+                }
                 onChange={handleChangeHiringDetailsInput}
                 required
+                disabled={!userState.hiringDetails?.editingMode}
               />
             </div>
 
@@ -557,9 +586,12 @@ const AuthComponent = () => {
                 type="number"
                 placeholder="Phone number"
                 name="whatsApp"
-                value={hiringDetails.whatsApp}
+                value={
+                  userState.hiringDetails?.whatsApp || hiringDetails.whatsApp
+                }
                 onChange={handleChangeHiringDetailsInput}
                 required
+                disabled={!userState.hiringDetails?.editingMode}
               />
             </div>
 
@@ -570,9 +602,12 @@ const AuthComponent = () => {
                 type="text"
                 placeholder="City, Country"
                 name="location"
-                value={hiringDetails.location}
+                value={
+                  userState.hiringDetails?.location || hiringDetails.location
+                }
                 onChange={handleChangeHiringDetailsInput}
                 required
+                disabled={!userState.hiringDetails?.editingMode}
               />
             </div>
 
@@ -583,9 +618,13 @@ const AuthComponent = () => {
                 type="text"
                 placeholder="Separate characters by comma (,)"
                 name="favoriteCharacters"
-                value={hiringDetails.favoriteCharacters}
+                value={
+                  userState.hiringDetails?.favoriteCharacters ||
+                  hiringDetails.favoriteCharacters
+                }
                 onChange={handleChangeHiringDetailsInput}
                 required
+                disabled={!userState.hiringDetails?.editingMode}
               />
             </div>
 
@@ -596,9 +635,13 @@ const AuthComponent = () => {
                   className="border border-dark/40 p-3 rounded"
                   type="checkbox"
                   name="costumeMaking"
-                  checked={hiringDetails.services.costumeMaking}
+                  checked={
+                    userState.hiringDetails?.services?.costumeMaking ||
+                    hiringDetails.services.costumeMaking
+                  }
                   onChange={handleServices}
                   required
+                  disabled={!userState.hiringDetails?.editingMode}
                 />
                 Costume making
               </label>
@@ -608,9 +651,13 @@ const AuthComponent = () => {
                   className="border border-dark/40 p-3 rounded"
                   type="checkbox"
                   name="makeupAndOrProsthetics"
-                  checked={hiringDetails.services.makeupAndOrProsthetics}
+                  checked={
+                    userState.hiringDetails?.services?.makeupAndOrProsthetics ||
+                    hiringDetails.services.makeupAndOrProsthetics
+                  }
                   onChange={handleServices}
                   required
+                  disabled={!userState.hiringDetails?.editingMode}
                 />
                 Makeup and/or prosthetics
               </label>
@@ -620,9 +667,13 @@ const AuthComponent = () => {
                   className="border border-dark/40 p-3 rounded"
                   type="checkbox"
                   name="performanceAndOrActing"
-                  checked={hiringDetails.services.performanceAndOrActing}
+                  checked={
+                    userState.hiringDetails?.services?.performanceAndOrActing ||
+                    hiringDetails.services.performanceAndOrActing
+                  }
                   onChange={handleServices}
                   required
+                  disabled={!userState.hiringDetails?.editingMode}
                 />
                 Performance/Acting
               </label>
@@ -632,9 +683,13 @@ const AuthComponent = () => {
                   className="border border-dark/40 p-3 rounded"
                   type="checkbox"
                   name="voiceActing"
-                  checked={hiringDetails.services.voiceActing}
+                  checked={
+                    userState.hiringDetails?.services?.voiceActing ||
+                    hiringDetails.services.voiceActing
+                  }
                   onChange={handleServices}
                   required
+                  disabled={!userState.hiringDetails?.editingMode}
                 />
                 Voice acting
               </label>
@@ -644,9 +699,13 @@ const AuthComponent = () => {
                   className="border border-dark/40 p-3 rounded"
                   type="checkbox"
                   name="photography"
-                  checked={hiringDetails.services.photography}
+                  checked={
+                    userState.hiringDetails?.services?.photography ||
+                    hiringDetails.services.photography
+                  }
                   onChange={handleServices}
                   required
+                  disabled={!userState.hiringDetails?.editingMode}
                 />
                 Photography
               </label>
@@ -658,9 +717,12 @@ const AuthComponent = () => {
                   type="text"
                   placeholder="Separate skills by comma (,)"
                   name="otherSkills"
-                  value={hiringDetails.services.otherSkills}
+                  value={
+                    userState.hiringDetails?.services?.otherSkills ||
+                    hiringDetails.services.otherSkills
+                  }
                   onChange={handleServicesInput}
-                  required
+                  disabled={!userState.hiringDetails?.editingMode}
                 />
               </div>
 
@@ -671,9 +733,13 @@ const AuthComponent = () => {
                     className="border border-dark/40 p-3 rounded"
                     type="checkbox"
                     name="conventions"
-                    checked={hiringDetails.availability.conventions}
+                    checked={
+                      userState.hiringDetails?.availability?.conventions ||
+                      hiringDetails.availability.conventions
+                    }
                     onChange={handleAvailability}
                     required
+                    disabled={!userState.hiringDetails?.editingMode}
                   />
                   Conventions
                 </label>
@@ -683,9 +749,13 @@ const AuthComponent = () => {
                     className="border border-dark/40 p-3 rounded"
                     type="checkbox"
                     name="photoshoots"
-                    checked={hiringDetails.availability.photoshoots}
+                    checked={
+                      userState.hiringDetails?.availability?.photoshoots ||
+                      hiringDetails.availability.photoshoots
+                    }
                     onChange={handleAvailability}
                     required
+                    disabled={!userState.hiringDetails?.editingMode}
                   />
                   Photoshoots
                 </label>
@@ -695,9 +765,14 @@ const AuthComponent = () => {
                     className="border border-dark/40 p-3 rounded"
                     type="checkbox"
                     name="promotionalEvents"
-                    checked={hiringDetails.availability.promotionalEvents}
+                    checked={
+                      userState.hiringDetails?.availability
+                        ?.promotionalEvents ||
+                      hiringDetails.availability.promotionalEvents
+                    }
                     onChange={handleAvailability}
                     required
+                    disabled={!userState.hiringDetails?.editingMode}
                   />
                   Promotional events
                 </label>
@@ -708,10 +783,13 @@ const AuthComponent = () => {
                     type="checkbox"
                     name="onlineAppearancesAndOrStreams"
                     checked={
+                      userState.hiringDetails?.availability
+                        ?.onlineAppearancesAndOrStreams ||
                       hiringDetails.availability.onlineAppearancesAndOrStreams
                     }
                     onChange={handleAvailability}
                     required
+                    disabled={!userState.hiringDetails?.editingMode}
                   />
                   Online appearances/streams
                 </label>
@@ -723,9 +801,13 @@ const AuthComponent = () => {
                     type="text"
                     placeholder="Separate availability by comma (,)"
                     name="otherAvailability"
-                    value={hiringDetails.availability.otherAvailability}
+                    value={
+                      userState.hiringDetails?.availability
+                        ?.otherAvailability ||
+                      hiringDetails.availability.otherAvailability
+                    }
                     onChange={handleAvailabilityInput}
-                    required
+                    disabled={!userState.hiringDetails?.editingMode}
                   />
                 </div>
 
@@ -738,10 +820,13 @@ const AuthComponent = () => {
                       name="preferredSchedule"
                       value="weekdays"
                       checked={
+                        userState.hiringDetails?.preferredSchedule?.type ===
+                          "weekdays" ||
                         hiringDetails.preferredSchedule.type === "weekdays"
                       }
                       onChange={handleChangePreferredSchedule}
                       required
+                      disabled={!userState.hiringDetails?.editingMode}
                     />
                     Weekdays
                   </label>
@@ -753,10 +838,13 @@ const AuthComponent = () => {
                       name="preferredSchedule"
                       value="weekends"
                       checked={
+                        userState.hiringDetails?.preferredSchedule?.type ===
+                          "weekends" ||
                         hiringDetails.preferredSchedule?.type === "weekends"
                       }
                       onChange={handleChangePreferredSchedule}
                       required
+                      disabled={!userState.hiringDetails?.editingMode}
                     />
                     Weekends
                   </label>
@@ -768,10 +856,13 @@ const AuthComponent = () => {
                       name="preferredSchedule"
                       value="flexible"
                       checked={
+                        userState.hiringDetails?.preferredSchedule?.type ===
+                          "flexible" ||
                         hiringDetails.preferredSchedule?.type === "flexible"
                       }
                       onChange={handleChangePreferredSchedule}
                       required
+                      disabled={!userState.hiringDetails?.editingMode}
                     />
                     Flexible
                   </label>
@@ -787,10 +878,13 @@ const AuthComponent = () => {
                       name="travelAvailability"
                       value="local"
                       checked={
+                        userState.hiringDetails?.travelAvailability?.type ===
+                          "local" ||
                         hiringDetails.travelAvailability?.type === "local"
                       }
                       onChange={handleChangeTravelAvailability}
                       required
+                      disabled={!userState.hiringDetails?.editingMode}
                     />
                     Local
                   </label>
@@ -802,10 +896,13 @@ const AuthComponent = () => {
                       name="travelAvailability"
                       value="national"
                       checked={
+                        userState.hiringDetails?.travelAvailability?.type ===
+                          "national" ||
                         hiringDetails.travelAvailability?.type === "national"
                       }
                       onChange={handleChangeTravelAvailability}
                       required
+                      disabled={!userState.hiringDetails?.editingMode}
                     />
                     National
                   </label>
@@ -817,24 +914,50 @@ const AuthComponent = () => {
                       name="travelAvailability"
                       value="international"
                       checked={
+                        userState.hiringDetails?.travelAvailability?.type ===
+                          "international" ||
                         hiringDetails.travelAvailability?.type ===
-                        "international"
+                          "international"
                       }
                       onChange={handleChangeTravelAvailability}
                       required
+                      disabled={!userState.hiringDetails?.editingMode}
                     />
                     International
                   </label>
                 </div>
               </div>
 
-              <button
-                onClick={submitHiringDetails}
-                className="btn-primary flex justify-center items-center"
-                type="submit"
-              >
-                Save
-              </button>
+              {userState.hiringDetails?.email ? (
+                <>
+                  <button
+                    onClick={editHiringDetails}
+                    className="btn-primary flex justify-center items-center"
+                  >
+                    Edit
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={submitHiringDetails}
+                    className="btn-primary flex justify-center items-center"
+                    type="submit"
+                  >
+                    {showSavedHiringDetailsMessage ? (
+                      "Saved!"
+                    ) : (
+                      <>
+                        {isSavingHiringDetails ? (
+                          <img className="w-6 h-6" src={loading} alt="" />
+                        ) : (
+                          "Save"
+                        )}
+                      </>
+                    )}
+                  </button>
+                </>
+              )}
             </div>
           </form>
         </Accordion>

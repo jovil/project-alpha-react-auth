@@ -43,6 +43,7 @@ const getInitialState = () => {
             },
             preferredSchedule: undefined,
             travelAvailability: undefined,
+            editingMode: true,
           },
         };
   } catch (error) {
@@ -83,6 +84,7 @@ const getInitialState = () => {
         },
         preferredSchedule: undefined,
         travelAvailability: undefined,
+        editingMode: true,
       },
     };
   }
