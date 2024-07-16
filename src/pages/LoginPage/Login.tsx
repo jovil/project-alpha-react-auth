@@ -108,7 +108,7 @@ const Login = () => {
           <button
             className="btn-primary"
             type="submit"
-            onClick={(e) => handleLogin(e)}
+            onSubmit={(e) => handleLogin(e)}
           >
             Login
           </button>

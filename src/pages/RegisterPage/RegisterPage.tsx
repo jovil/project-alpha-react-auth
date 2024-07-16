@@ -127,7 +127,7 @@ export default function Register() {
           <Button
             variant="primary"
             type="submit"
-            onClick={(e) => handleSubmit(e)}
+            onSubmit={(e) => handleSubmit(e)}
           >
             Submit
           </Button>

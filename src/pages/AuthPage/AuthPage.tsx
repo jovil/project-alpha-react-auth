@@ -535,7 +535,7 @@ const AuthComponent = () => {
             ) : (
               <>
                 <button
-                  onClick={submitBankDetails}
+                  onSubmit={submitBankDetails}
                   className="btn-primary flex justify-center items-center"
                   type="submit"
                 >
@@ -940,7 +940,7 @@ const AuthComponent = () => {
               ) : (
                 <>
                   <button
-                    onClick={submitHiringDetails}
+                    onSubmit={submitHiringDetails}
                     className="btn-primary flex justify-center items-center"
                     type="submit"
                   >
