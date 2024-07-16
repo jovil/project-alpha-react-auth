@@ -73,6 +73,7 @@ const AuthComponent = () => {
   };
 
   const { userState, setUserState } = useUser();
+  const [isEditing, setIsEditing] = useState<boolean>(true);
   const [bankDetails, setBankDetails] = useState<BankDetails>({
     accountHoldersName: "",
     bankName: "",
@@ -116,16 +117,41 @@ const AuthComponent = () => {
         };
       });
 
-      setHiringDetails({
-        ...initialHiringDetails,
-        ...result.hiringDetails,
-        services: result.hiringDetails.services.length
-          ? result.hiringDetails.services
-          : initialHiringDetails.services,
-        availability: result.hiringDetails.availability.length
-          ? result.hiringDetails.availability
-          : initialHiringDetails.availability,
-      });
+      // setHiringDetails({
+      //   ...initialHiringDetails,
+      //   ...result.hiringDetails,
+      //   services: result.hiringDetails.services.length
+      //     ? result.hiringDetails.services
+      //     : initialHiringDetails.services,
+      //   availability: result.hiringDetails.availability.length
+      //     ? result.hiringDetails.availability
+      //     : initialHiringDetails.availability,
+      // });
+      // setIsEditing(result.hiringDetails ? false : true);
+      const isHiringDetailsEmpty =
+        !result.hiringDetails ||
+        (!result.hiringDetails.email &&
+          !result.hiringDetails.whatsApp &&
+          !result.hiringDetails.location &&
+          !result.hiringDetails.favoriteCharacters &&
+          (!result.hiringDetails.services ||
+            result.hiringDetails.services.length === 0) &&
+          !result.hiringDetails.otherServices &&
+          (!result.hiringDetails.availability ||
+            result.hiringDetails.availability.length === 0) &&
+          !result.hiringDetails.otherAvailability &&
+          !result.hiringDetails.preferredSchedule &&
+          !result.hiringDetails.travelAvailability);
+
+      if (!isHiringDetailsEmpty) {
+        setHiringDetails(result.hiringDetails);
+        setIsEditing(false);
+        console.log("false");
+      } else {
+        setHiringDetails(initialHiringDetails);
+        setIsEditing(true);
+        console.log("true");
+      }
     } catch (error) {
       console.log("error", error);
     }
@@ -133,18 +159,12 @@ const AuthComponent = () => {
 
   useEffect(() => {
     fetchUser();
-    if (userState.hiringDetails?.email === undefined) {
-      setUserState((prev: any) => {
-        return {
-          ...prev,
-          hiringDetails: {
-            ...prev.hiringDetails,
-            editingMode: true,
-          },
-        };
-      });
-    }
   }, [fetchUser]);
+
+  useEffect(() => {
+    setHiringDetails(initialHiringDetails);
+    setIsEditing(true);
+  }, []);
 
   const submitBankDetails = async (e: any) => {
     e.preventDefault();
@@ -212,24 +232,7 @@ const AuthComponent = () => {
 
   const editHiringDetails = (e: any) => {
     e.preventDefault();
-    setHiringDetails((prev: any) => ({
-      ...prev,
-      email: userState.hiringDetails?.email || "",
-      whatsApp: userState.hiringDetails?.whatsApp || "",
-      location: userState.hiringDetails?.location || "",
-      favoriteCharacters: userState.hiringDetails?.favoriteCharacters || "",
-      services: userState.hiringDetails?.services || initialServices,
-      otherServices: userState.hiringDetails?.otherServices || "",
-      availability:
-        userState.hiringDetails?.availability || initialAvailability,
-      otherAvailability: userState.hiringDetails?.otherAvailability || "",
-      preferredSchedule: userState.hiringDetails?.preferredSchedule || {
-        type: "weekdays",
-      },
-      travelAvailability: userState.hiringDetails?.travelAvailability || {
-        type: "local",
-      },
-    }));
+    setIsEditing(true);
   };
 
   const handleChangeHiringDetailsInput = (
@@ -482,7 +485,7 @@ const AuthComponent = () => {
                 value={hiringDetails?.email}
                 onChange={handleChangeHiringDetailsInput}
                 required
-                disabled={!userState.hiringDetails?.editingMode}
+                disabled={!isEditing}
               />
             </div>
 
@@ -496,7 +499,7 @@ const AuthComponent = () => {
                 value={hiringDetails?.whatsApp}
                 onChange={handleChangeHiringDetailsInput}
                 required
-                disabled={!userState.hiringDetails?.editingMode}
+                disabled={!isEditing}
               />
             </div>
 
@@ -510,7 +513,7 @@ const AuthComponent = () => {
                 value={hiringDetails?.location}
                 onChange={handleChangeHiringDetailsInput}
                 required
-                disabled={!userState.hiringDetails?.editingMode}
+                disabled={!isEditing}
               />
             </div>
 
@@ -524,7 +527,7 @@ const AuthComponent = () => {
                 value={hiringDetails?.favoriteCharacters}
                 onChange={handleChangeHiringDetailsInput}
                 required
-                disabled={!userState.hiringDetails?.editingMode}
+                disabled={!isEditing}
               />
             </div>
 
@@ -538,6 +541,7 @@ const AuthComponent = () => {
                     name={service.service}
                     checked={service.serviceAvailable}
                     onChange={handleServices}
+                    disabled={!isEditing}
                   />
                   {service.service.replace(/([A-Z])/g, " $1").trim()}
                 </label>
@@ -552,7 +556,7 @@ const AuthComponent = () => {
                   name="otherServices"
                   value={hiringDetails?.otherServices}
                   onChange={handleHiringInput}
-                  disabled={!userState.hiringDetails?.editingMode}
+                  disabled={!isEditing}
                 />
               </div>
 
@@ -565,6 +569,7 @@ const AuthComponent = () => {
                       name={available.availabilityName}
                       checked={available.isAvailable}
                       onChange={handleAvailability}
+                      disabled={!isEditing}
                     />
                     {available.availabilityName}
                   </label>
@@ -579,7 +584,7 @@ const AuthComponent = () => {
                     name="otherAvailability"
                     value={hiringDetails?.otherAvailability}
                     onChange={handleHiringInput}
-                    disabled={!userState.hiringDetails?.editingMode}
+                    disabled={!isEditing}
                   />
                 </div>
 
@@ -597,7 +602,7 @@ const AuthComponent = () => {
                       }
                       onChange={handleChangePreferredSchedule}
                       required
-                      disabled={!userState.hiringDetails?.editingMode}
+                      disabled={!isEditing}
                     />
                     Weekdays
                   </label>
@@ -614,7 +619,7 @@ const AuthComponent = () => {
                       }
                       onChange={handleChangePreferredSchedule}
                       required
-                      disabled={!userState.hiringDetails?.editingMode}
+                      disabled={!isEditing}
                     />
                     Weekends
                   </label>
@@ -631,7 +636,7 @@ const AuthComponent = () => {
                       }
                       onChange={handleChangePreferredSchedule}
                       required
-                      disabled={!userState.hiringDetails?.editingMode}
+                      disabled={!isEditing}
                     />
                     Flexible
                   </label>
@@ -651,7 +656,7 @@ const AuthComponent = () => {
                       }
                       onChange={handleChangeTravelAvailability}
                       required
-                      disabled={!userState.hiringDetails?.editingMode}
+                      disabled={!isEditing}
                     />
                     Local
                   </label>
@@ -667,7 +672,7 @@ const AuthComponent = () => {
                       }
                       onChange={handleChangeTravelAvailability}
                       required
-                      disabled={!userState.hiringDetails?.editingMode}
+                      disabled={!isEditing}
                     />
                     National
                   </label>
@@ -684,23 +689,21 @@ const AuthComponent = () => {
                       }
                       onChange={handleChangeTravelAvailability}
                       required
-                      disabled={!userState.hiringDetails?.editingMode}
+                      disabled={!isEditing}
                     />
                     International
                   </label>
                 </div>
               </div>
 
-              {/* {userState.hiringDetails?.editingMode ? (
-                <>
-                  <button
-                    onClick={editHiringDetails}
-                    className="btn-primary flex justify-center items-center"
-                  >
-                    Edit
-                  </button>
-                </>
-              ) : ( */}
+              <>
+                <button
+                  onClick={editHiringDetails}
+                  className="btn-primary flex justify-center items-center"
+                >
+                  Edit
+                </button>
+              </>
               <>
                 <button
                   onSubmit={submitHiringDetails}
@@ -720,7 +723,6 @@ const AuthComponent = () => {
                   )}
                 </button>
               </>
-              {/*  )} */}
             </div>
           </form>
         </Accordion>
