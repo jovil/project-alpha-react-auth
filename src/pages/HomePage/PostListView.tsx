@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useContext } from "react";
+import { useCallback, useEffect, useState, useContext, useRef } from "react";
 import { GlobalStateContext } from "../../context/Context";
 import { usePosts } from "../../context/PostsContext";
 import { NavLink } from "react-router-dom";
@@ -11,10 +11,22 @@ const PostListView = () => {
   const { state, setState } = useContext(GlobalStateContext);
   const { allPosts, setAllPosts } = usePosts();
   const [noPosts, setNoPosts] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const url = `${process.env.REACT_APP_API_URL}/posts`;
+  const [postImageIsLoading, setPostImageLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const limit = 9;
+  const url = `${process.env.REACT_APP_API_URL}/posts?page=${page}&limit=${limit}`;
+  const isFetchingRef = useRef(false); // To keep track of fetching state
 
   const fetchPosts = useCallback(async () => {
+    if (isFetchingRef.current) return; // Prevent fetching if already in progress
+
+    isFetchingRef.current = true; // Set fetching state to true
+
+    if (isLoading) return;
+
+    setIsLoading(true);
+
     const configuration = {
       method: "GET",
       headers: {
@@ -25,24 +37,31 @@ const PostListView = () => {
     try {
       const response = await fetch(url, configuration);
       const result = await response.json();
-      await setAllPosts(result);
+      await setAllPosts((prevPosts: any) => [...prevPosts, ...result]);
+      console.log("result", result);
       if (result.length === 0) setNoPosts(true);
     } catch (error) {
       console.log("error creating post", error);
+    } finally {
+      setIsLoading(false);
+      isFetchingRef.current = false; // Reset fetching state after fetch is completed
     }
   }, [url, setAllPosts]);
 
   useEffect(() => {
-    if (allPosts?.length) return;
     fetchPosts();
-  }, [fetchPosts, allPosts?.length]);
+  }, [fetchPosts]);
 
   useEffect(() => {
-    console.log("posts", allPosts);
-  }, [allPosts]);
+    fetchPosts();
+  }, [page]);
+
+  const loadMorePosts = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
   const handlePostImageLoad = () => {
-    setIsLoading(false);
+    setPostImageLoading(false);
   };
 
   const handlePostsGridView = () => {
@@ -100,11 +119,11 @@ const PostListView = () => {
                     <div className="h-full">
                       <img
                         className={
-                          isLoading
+                          postImageIsLoading
                             ? `w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0`
                             : "hidden"
                         }
-                        src={isLoading ? loading : ""}
+                        src={postImageIsLoading ? loading : ""}
                         alt=""
                       />
                       <img
@@ -203,6 +222,9 @@ const PostListView = () => {
           )}
         </div>
       </section>
+      <footer data-site-footer>
+        <button onClick={loadMorePosts}>Load more posts</button>
+      </footer>
     </>
   );
 };
