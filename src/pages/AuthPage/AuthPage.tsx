@@ -20,13 +20,18 @@ interface TravelAvailability {
   type: "local" | "national" | "international";
 }
 
+// interface Services {
+//   costumeMaking: boolean;
+//   makeupAndOrProsthetics: boolean;
+//   performanceAndOrActing: boolean;
+//   voiceActing: boolean;
+//   photography: boolean;
+//   otherSkills: string;
+// }
+
 interface Services {
-  costumeMaking: boolean;
-  makeupAndOrProsthetics: boolean;
-  performanceAndOrActing: boolean;
-  voiceActing: boolean;
-  photography: boolean;
-  otherSkills: string;
+  service: string;
+  serviceAvailable: boolean;
 }
 
 interface Availability {
@@ -42,7 +47,8 @@ interface HiringDetails {
   whatsApp: number | string;
   location: string;
   favoriteCharacters: string;
-  services: Services;
+  services: Services[];
+  otherServices: string;
   availability: Availability;
   preferredSchedule: PreferredSchedule;
   travelAvailability: TravelAvailability;
@@ -63,14 +69,14 @@ const AuthComponent = () => {
     whatsApp: "",
     location: "",
     favoriteCharacters: "",
-    services: {
-      costumeMaking: false,
-      makeupAndOrProsthetics: false,
-      performanceAndOrActing: false,
-      voiceActing: false,
-      photography: false,
-      otherSkills: "",
-    },
+    services: [
+      { service: "Costume making", serviceAvailable: false },
+      { service: "Makeup and/or prosthetics", serviceAvailable: false },
+      { service: "Performance/Acting", serviceAvailable: false },
+      { service: "Voice acting", serviceAvailable: false },
+      { service: "Photography", serviceAvailable: false },
+    ],
+    otherServices: "",
     availability: {
       conventions: false,
       photoshoots: false,
@@ -121,18 +127,12 @@ const AuthComponent = () => {
                 location: result.hiringDetails.location,
                 favoriteCharacters: result.hiringDetails.favoriteCharacters,
                 services: result.hiringDetails.services
-                  ? {
-                      costumeMaking:
-                        result.hiringDetails.services.costumeMaking,
-                      makeupAndOrProsthetics:
-                        result.hiringDetails.services.makeupAndOrProsthetics,
-                      performanceAndOrActing:
-                        result.hiringDetails.services.performanceAndOrActing,
-                      voiceActing: result.hiringDetails.services.voiceActing,
-                      photography: result.hiringDetails.services.photography,
-                      otherSkills: result.hiringDetails.services.otherSkills,
-                    }
+                  ? result.hiringDetails.services.map((service: any) => ({
+                      service: service.service,
+                      serviceAvailable: service.serviceAvailable,
+                    }))
                   : prev.hiringDetails.services,
+                otherServices: result.hiringDetails.otherServices,
                 availability: result.hiringDetails.availability
                   ? {
                       conventions:
@@ -247,17 +247,11 @@ const AuthComponent = () => {
         whatsApp: userState.hiringDetails?.whatsApp || "",
         location: userState.hiringDetails?.location || "",
         favoriteCharacters: userState.hiringDetails?.favoriteCharacters || "",
-        services: {
-          costumeMaking:
-            userState.hiringDetails?.services.costumeMaking || false,
-          makeupAndOrProsthetics:
-            userState.hiringDetails?.services.makeupAndOrProsthetics || false,
-          performanceAndOrActing:
-            userState.hiringDetails?.services.performanceAndOrActing || false,
-          voiceActing: userState.hiringDetails?.services.voiceActing || false,
-          photography: userState.hiringDetails?.services.photography || false,
-          otherSkills: userState.hiringDetails?.services?.otherSkills || "",
-        },
+        services: userState.hiringDetails.services.map((service: any) => ({
+          service: service.service,
+          serviceAvailable: service.serviceAvailable,
+        })),
+        otherServices: userState.hiringDetails?.otherServices || "",
         availability: {
           conventions:
             userState.hiringDetails?.availability.conventions || false,
@@ -284,14 +278,14 @@ const AuthComponent = () => {
           whatsApp: undefined,
           location: undefined,
           favoriteCharacters: undefined,
-          services: {
-            costumeMaking: undefined,
-            makeupAndOrProsthetics: undefined,
-            performanceAndOrActing: undefined,
-            voiceActing: undefined,
-            photography: undefined,
-            otherSkills: undefined,
-          },
+          services: [
+            { service: "Costume making", serviceAvailable: false },
+            { service: "Makeup and/or prosthetics", serviceAvailable: false },
+            { service: "Performance/Acting", serviceAvailable: false },
+            { service: "Voice acting", serviceAvailable: false },
+            { service: "Photography", serviceAvailable: false },
+          ],
+          otherServices: undefined,
           availability: {
             conventions: undefined,
             photoshoots: undefined,
@@ -320,15 +314,21 @@ const AuthComponent = () => {
     }));
   };
 
+  useEffect(() => {
+    // console.log("services", hiringDetails.services);
+    console.log("otherServices", hiringDetails.otherServices);
+  }, [hiringDetails]);
+
   const handleServices = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
 
     setHiringDetails((prev) => ({
       ...prev,
-      services: {
-        ...prev.services,
-        [name]: checked,
-      },
+      services: prev.services.map((service) =>
+        service.service === name
+          ? { ...service, serviceAvailable: checked }
+          : service
+      ),
     }));
   };
 
@@ -337,10 +337,7 @@ const AuthComponent = () => {
 
     setHiringDetails((prev) => ({
       ...prev,
-      services: {
-        ...prev.services,
-        [name]: value,
-      },
+      [name]: value,
     }));
   };
 
@@ -411,14 +408,11 @@ const AuthComponent = () => {
       whatsApp: hiringDetails.whatsApp,
       location: hiringDetails.location,
       favoriteCharacters: hiringDetails.favoriteCharacters,
-      services: {
-        costumeMaking: hiringDetails.services.costumeMaking,
-        makeupAndOrProsthetics: hiringDetails.services.makeupAndOrProsthetics,
-        performanceAndOrActing: hiringDetails.services.performanceAndOrActing,
-        voiceActing: hiringDetails.services.voiceActing,
-        photography: hiringDetails.services.photography,
-        otherSkills: hiringDetails.services.otherSkills,
-      },
+      services: hiringDetails.services.map((service: any) => ({
+        service: service.service,
+        serviceAvailable: service.serviceAvailable,
+      })),
+      otherServices: hiringDetails.otherServices,
       availability: {
         conventions: hiringDetails.availability.conventions,
         photoshoots: hiringDetails.availability.photoshoots,
@@ -440,12 +434,13 @@ const AuthComponent = () => {
     };
 
     try {
+      console.log("postData", postData);
       await fetch(url, configuration);
       setIsSavingHiringDetails(false);
       setShowSavedHiringDetailsMessage(true);
       setTimeout(() => {
         setShowSavedHiringDetailsMessage(false);
-        window.location.reload();
+        // window.location.reload();
       }, 800);
     } catch (error) {
       console.log("error", error);
@@ -572,7 +567,7 @@ const AuthComponent = () => {
                 }
                 onChange={handleChangeHiringDetailsInput}
                 required
-                disabled={!userState.hiringDetails?.editingMode}
+                // disabled={!userState.hiringDetails?.editingMode}
               />
             </div>
 
@@ -588,7 +583,7 @@ const AuthComponent = () => {
                 }
                 onChange={handleChangeHiringDetailsInput}
                 required
-                disabled={!userState.hiringDetails?.editingMode}
+                // disabled={!userState.hiringDetails?.editingMode}
               />
             </div>
 
@@ -604,7 +599,7 @@ const AuthComponent = () => {
                 }
                 onChange={handleChangeHiringDetailsInput}
                 required
-                disabled={!userState.hiringDetails?.editingMode}
+                // disabled={!userState.hiringDetails?.editingMode}
               />
             </div>
 
@@ -621,23 +616,35 @@ const AuthComponent = () => {
                 }
                 onChange={handleChangeHiringDetailsInput}
                 required
-                disabled={!userState.hiringDetails?.editingMode}
+                // disabled={!userState.hiringDetails?.editingMode}
               />
             </div>
 
             <div className="flex flex-col gap-2">
               <p className="font-medium my-4">Services you offer:</p>
-              <label className="flex items-center gap-2">
+
+              {hiringDetails.services.map((service, index) => (
+                <label className="flex items-center gap-2" key={index}>
+                  <input
+                    type="checkbox"
+                    name={service.service}
+                    checked={service.serviceAvailable}
+                    onChange={handleServices}
+                  />
+                  {service.service}
+                </label>
+              ))}
+              {/* <label className="flex items-center gap-2">
                 <input
                   className="border border-dark/40 p-3 rounded"
                   type="checkbox"
-                  name="costumeMaking"
+                  name="Costume making"
                   checked={
                     userState.hiringDetails?.services?.costumeMaking ||
                     hiringDetails.services.costumeMaking
                   }
                   onChange={handleServices}
-                  disabled={!userState.hiringDetails?.editingMode}
+                  // disabled={!userState.hiringDetails?.editingMode}
                 />
                 Costume making
               </label>
@@ -646,13 +653,13 @@ const AuthComponent = () => {
                 <input
                   className="border border-dark/40 p-3 rounded"
                   type="checkbox"
-                  name="makeupAndOrProsthetics"
+                  name="Makeup and/or prosthetics"
                   checked={
                     userState.hiringDetails?.services?.makeupAndOrProsthetics ||
                     hiringDetails.services.makeupAndOrProsthetics
                   }
                   onChange={handleServices}
-                  disabled={!userState.hiringDetails?.editingMode}
+                  // disabled={!userState.hiringDetails?.editingMode}
                 />
                 Makeup and/or prosthetics
               </label>
@@ -661,13 +668,13 @@ const AuthComponent = () => {
                 <input
                   className="border border-dark/40 p-3 rounded"
                   type="checkbox"
-                  name="performanceAndOrActing"
+                  name="Performance/Acting"
                   checked={
                     userState.hiringDetails?.services?.performanceAndOrActing ||
                     hiringDetails.services.performanceAndOrActing
                   }
                   onChange={handleServices}
-                  disabled={!userState.hiringDetails?.editingMode}
+                  // disabled={!userState.hiringDetails?.editingMode}
                 />
                 Performance/Acting
               </label>
@@ -676,13 +683,13 @@ const AuthComponent = () => {
                 <input
                   className="border border-dark/40 p-3 rounded"
                   type="checkbox"
-                  name="voiceActing"
+                  name="Voice acting"
                   checked={
                     userState.hiringDetails?.services?.voiceActing ||
-                    hiringDetails.services.voiceActing
+                    hiringDetails.services.serviceAvailable
                   }
                   onChange={handleServices}
-                  disabled={!userState.hiringDetails?.editingMode}
+                  // disabled={!userState.hiringDetails?.editingMode}
                 />
                 Voice acting
               </label>
@@ -691,16 +698,16 @@ const AuthComponent = () => {
                 <input
                   className="border border-dark/40 p-3 rounded"
                   type="checkbox"
-                  name="photography"
+                  name="Photography"
                   checked={
                     userState.hiringDetails?.services?.photography ||
                     hiringDetails.services.photography
                   }
                   onChange={handleServices}
-                  disabled={!userState.hiringDetails?.editingMode}
+                  // disabled={!userState.hiringDetails?.editingMode}
                 />
                 Photography
-              </label>
+              </label> */}
 
               <div className="flex flex-col gap-2 mt-4">
                 <label>Other skills:</label>
@@ -708,13 +715,13 @@ const AuthComponent = () => {
                   className="border border-dark/40 p-3 rounded"
                   type="text"
                   placeholder="Separate skills by comma (,)"
-                  name="otherSkills"
+                  name="otherServices"
                   value={
-                    userState.hiringDetails?.services?.otherSkills ||
-                    hiringDetails.services.otherSkills
+                    userState.hiringDetails?.otherServices ||
+                    hiringDetails.otherServices
                   }
                   onChange={handleServicesInput}
-                  disabled={!userState.hiringDetails?.editingMode}
+                  // disabled={!userState.hiringDetails?.editingMode}
                 />
               </div>
 
@@ -730,7 +737,7 @@ const AuthComponent = () => {
                       hiringDetails.availability.conventions
                     }
                     onChange={handleAvailability}
-                    disabled={!userState.hiringDetails?.editingMode}
+                    // disabled={!userState.hiringDetails?.editingMode}
                   />
                   Conventions
                 </label>
@@ -745,7 +752,7 @@ const AuthComponent = () => {
                       hiringDetails.availability.photoshoots
                     }
                     onChange={handleAvailability}
-                    disabled={!userState.hiringDetails?.editingMode}
+                    // disabled={!userState.hiringDetails?.editingMode}
                   />
                   Photoshoots
                 </label>
@@ -761,7 +768,7 @@ const AuthComponent = () => {
                       hiringDetails.availability.promotionalEvents
                     }
                     onChange={handleAvailability}
-                    disabled={!userState.hiringDetails?.editingMode}
+                    // disabled={!userState.hiringDetails?.editingMode}
                   />
                   Promotional events
                 </label>
@@ -777,7 +784,7 @@ const AuthComponent = () => {
                       hiringDetails.availability.onlineAppearancesAndOrStreams
                     }
                     onChange={handleAvailability}
-                    disabled={!userState.hiringDetails?.editingMode}
+                    // disabled={!userState.hiringDetails?.editingMode}
                   />
                   Online appearances/streams
                 </label>
@@ -795,7 +802,7 @@ const AuthComponent = () => {
                       hiringDetails.availability.otherAvailability
                     }
                     onChange={handleAvailabilityInput}
-                    disabled={!userState.hiringDetails?.editingMode}
+                    // disabled={!userState.hiringDetails?.editingMode}
                   />
                 </div>
 
@@ -814,7 +821,7 @@ const AuthComponent = () => {
                       }
                       onChange={handleChangePreferredSchedule}
                       required
-                      disabled={!userState.hiringDetails?.editingMode}
+                      // disabled={!userState.hiringDetails?.editingMode}
                     />
                     Weekdays
                   </label>
@@ -832,7 +839,7 @@ const AuthComponent = () => {
                       }
                       onChange={handleChangePreferredSchedule}
                       required
-                      disabled={!userState.hiringDetails?.editingMode}
+                      // disabled={!userState.hiringDetails?.editingMode}
                     />
                     Weekends
                   </label>
@@ -850,7 +857,7 @@ const AuthComponent = () => {
                       }
                       onChange={handleChangePreferredSchedule}
                       required
-                      disabled={!userState.hiringDetails?.editingMode}
+                      // disabled={!userState.hiringDetails?.editingMode}
                     />
                     Flexible
                   </label>
@@ -872,7 +879,7 @@ const AuthComponent = () => {
                       }
                       onChange={handleChangeTravelAvailability}
                       required
-                      disabled={!userState.hiringDetails?.editingMode}
+                      // disabled={!userState.hiringDetails?.editingMode}
                     />
                     Local
                   </label>
@@ -890,7 +897,7 @@ const AuthComponent = () => {
                       }
                       onChange={handleChangeTravelAvailability}
                       required
-                      disabled={!userState.hiringDetails?.editingMode}
+                      // disabled={!userState.hiringDetails?.editingMode}
                     />
                     National
                   </label>
@@ -909,7 +916,7 @@ const AuthComponent = () => {
                       }
                       onChange={handleChangeTravelAvailability}
                       required
-                      disabled={!userState.hiringDetails?.editingMode}
+                      // disabled={!userState.hiringDetails?.editingMode}
                     />
                     International
                   </label>
