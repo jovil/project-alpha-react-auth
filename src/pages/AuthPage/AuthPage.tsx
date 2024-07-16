@@ -117,17 +117,6 @@ const AuthComponent = () => {
         };
       });
 
-      // setHiringDetails({
-      //   ...initialHiringDetails,
-      //   ...result.hiringDetails,
-      //   services: result.hiringDetails.services.length
-      //     ? result.hiringDetails.services
-      //     : initialHiringDetails.services,
-      //   availability: result.hiringDetails.availability.length
-      //     ? result.hiringDetails.availability
-      //     : initialHiringDetails.availability,
-      // });
-      // setIsEditing(result.hiringDetails ? false : true);
       const isHiringDetailsEmpty =
         !result.hiringDetails ||
         (!result.hiringDetails.email &&
@@ -146,11 +135,9 @@ const AuthComponent = () => {
       if (!isHiringDetailsEmpty) {
         setHiringDetails(result.hiringDetails);
         setIsEditing(false);
-        console.log("false");
       } else {
         setHiringDetails(initialHiringDetails);
         setIsEditing(true);
-        console.log("true");
       }
     } catch (error) {
       console.log("error", error);
@@ -245,11 +232,6 @@ const AuthComponent = () => {
       [name]: value,
     }));
   };
-
-  useEffect(() => {
-    console.log("hiringDetails", hiringDetails);
-    // console.log("otherServices", hiringDetails.otherServices);
-  }, [hiringDetails]);
 
   const handleServices = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
@@ -361,7 +343,7 @@ const AuthComponent = () => {
       setShowSavedHiringDetailsMessage(true);
       setTimeout(() => {
         setShowSavedHiringDetailsMessage(false);
-        // window.location.reload();
+        window.location.reload();
       }, 800);
     } catch (error) {
       console.log("error", error);
@@ -696,17 +678,16 @@ const AuthComponent = () => {
                 </div>
               </div>
 
-              <>
+              {!isEditing ? (
                 <button
                   onClick={editHiringDetails}
                   className="btn-primary flex justify-center items-center"
                 >
                   Edit
                 </button>
-              </>
-              <>
+              ) : (
                 <button
-                  onSubmit={submitHiringDetails}
+                  onClick={submitHiringDetails}
                   className="btn-primary flex justify-center items-center"
                   type="submit"
                 >
@@ -722,7 +703,7 @@ const AuthComponent = () => {
                     </>
                   )}
                 </button>
-              </>
+              )}
             </div>
           </form>
         </Accordion>
