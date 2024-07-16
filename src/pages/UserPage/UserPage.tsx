@@ -29,7 +29,7 @@ const UserPostListPage = () => {
         const result = await response.json();
         setUser(result);
         setIsLoadingAvatar(false);
-        console.log("user", result);
+        console.log("user", result.hiringDetails);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }

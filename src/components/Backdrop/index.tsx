@@ -9,7 +9,7 @@ const Backdrop = ({
 }) => {
   return (
     <motion.div
-      className="fixed inset-0 bg-dark/60 backdrop-blur z-20 cursor-pointer"
+      className="fixed inset-0 bg-dark/60 backdrop-blur z-20 cursor-pointer overflow-scroll"
       onClick={onClick}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

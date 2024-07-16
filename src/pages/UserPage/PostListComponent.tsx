@@ -42,10 +42,6 @@ const ProductListComponent = () => {
     fetchPosts();
   }, [fetchPosts]);
 
-  useEffect(() => {
-    console.log("posts", posts);
-  }, [posts]);
-
   const handlePostImageLoad = () => {
     setIsLoading(false);
   };
