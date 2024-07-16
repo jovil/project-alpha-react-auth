@@ -91,7 +91,6 @@ const AuthComponent = () => {
 
   const fetchUser = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/user/${userState._id}`;
-    console.log("1", userState.hiringDetails?.editingMode);
     const configuration = {
       method: "GET",
       headers: {
@@ -441,9 +440,7 @@ const AuthComponent = () => {
     };
 
     try {
-      const response = await fetch(url, configuration);
-      const result = await response.json();
-      // console.log("result", result);
+      await fetch(url, configuration);
       setIsSavingHiringDetails(false);
       setShowSavedHiringDetailsMessage(true);
       setTimeout(() => {
@@ -640,7 +637,6 @@ const AuthComponent = () => {
                     hiringDetails.services.costumeMaking
                   }
                   onChange={handleServices}
-                  required
                   disabled={!userState.hiringDetails?.editingMode}
                 />
                 Costume making
@@ -656,7 +652,6 @@ const AuthComponent = () => {
                     hiringDetails.services.makeupAndOrProsthetics
                   }
                   onChange={handleServices}
-                  required
                   disabled={!userState.hiringDetails?.editingMode}
                 />
                 Makeup and/or prosthetics
@@ -672,7 +667,6 @@ const AuthComponent = () => {
                     hiringDetails.services.performanceAndOrActing
                   }
                   onChange={handleServices}
-                  required
                   disabled={!userState.hiringDetails?.editingMode}
                 />
                 Performance/Acting
@@ -688,7 +682,6 @@ const AuthComponent = () => {
                     hiringDetails.services.voiceActing
                   }
                   onChange={handleServices}
-                  required
                   disabled={!userState.hiringDetails?.editingMode}
                 />
                 Voice acting
@@ -704,7 +697,6 @@ const AuthComponent = () => {
                     hiringDetails.services.photography
                   }
                   onChange={handleServices}
-                  required
                   disabled={!userState.hiringDetails?.editingMode}
                 />
                 Photography
@@ -738,7 +730,6 @@ const AuthComponent = () => {
                       hiringDetails.availability.conventions
                     }
                     onChange={handleAvailability}
-                    required
                     disabled={!userState.hiringDetails?.editingMode}
                   />
                   Conventions
@@ -754,7 +745,6 @@ const AuthComponent = () => {
                       hiringDetails.availability.photoshoots
                     }
                     onChange={handleAvailability}
-                    required
                     disabled={!userState.hiringDetails?.editingMode}
                   />
                   Photoshoots
@@ -771,7 +761,6 @@ const AuthComponent = () => {
                       hiringDetails.availability.promotionalEvents
                     }
                     onChange={handleAvailability}
-                    required
                     disabled={!userState.hiringDetails?.editingMode}
                   />
                   Promotional events
@@ -788,7 +777,6 @@ const AuthComponent = () => {
                       hiringDetails.availability.onlineAppearancesAndOrStreams
                     }
                     onChange={handleAvailability}
-                    required
                     disabled={!userState.hiringDetails?.editingMode}
                   />
                   Online appearances/streams
