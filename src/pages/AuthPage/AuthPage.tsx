@@ -34,12 +34,17 @@ interface Services {
   serviceAvailable: boolean;
 }
 
+// interface Availability {
+//   conventions: boolean;
+//   photoshoots: boolean;
+//   promotionalEvents: boolean;
+//   onlineAppearancesAndOrStreams: boolean;
+//   otherAvailability: string;
+// }
+
 interface Availability {
-  conventions: boolean;
-  photoshoots: boolean;
-  promotionalEvents: boolean;
-  onlineAppearancesAndOrStreams: boolean;
-  otherAvailability: string;
+  availabilityName: string;
+  isAvailable: boolean;
 }
 
 interface HiringDetails {
@@ -49,7 +54,8 @@ interface HiringDetails {
   favoriteCharacters: string;
   services: Services[];
   otherServices: string;
-  availability: Availability;
+  availability: Availability[];
+  otherAvailability: string;
   preferredSchedule: PreferredSchedule;
   travelAvailability: TravelAvailability;
 }
@@ -77,13 +83,13 @@ const AuthComponent = () => {
       { service: "Photography", serviceAvailable: false },
     ],
     otherServices: "",
-    availability: {
-      conventions: false,
-      photoshoots: false,
-      promotionalEvents: false,
-      onlineAppearancesAndOrStreams: false,
-      otherAvailability: "",
-    },
+    availability: [
+      { availabilityName: "Conventions", isAvailable: false },
+      { availabilityName: "Photoshoots", isAvailable: false },
+      { availabilityName: "Promotional events", isAvailable: false },
+      { availabilityName: "Online appearances/streams", isAvailable: false },
+    ],
+    otherAvailability: "",
     preferredSchedule: {
       type: "weekdays",
     },
@@ -134,20 +140,12 @@ const AuthComponent = () => {
                   : prev.hiringDetails.services,
                 otherServices: result.hiringDetails.otherServices,
                 availability: result.hiringDetails.availability
-                  ? {
-                      conventions:
-                        result.hiringDetails.availability.conventions,
-                      photoshoots:
-                        result.hiringDetails.availability.photoshoots,
-                      promotionalEvents:
-                        result.hiringDetails.availability.promotionalEvents,
-                      onlineAppearancesAndOrStreams:
-                        result.hiringDetails.availability
-                          .onlineAppearancesAndOrStreams,
-                      otherAvailability:
-                        result.hiringDetails.availability.otherAvailability,
-                    }
+                  ? result.hiringDetails.availability.map((available: any) => ({
+                      availabilityName: available.availabilityName,
+                      isAvailable: available.isAvailable,
+                    }))
                   : prev.hiringDetails.availability,
+                otherAvailability: result.hiringDetails.otherAvailability,
                 preferredSchedule: result.hiringDetails.preferredSchedule,
                 travelAvailability: result.hiringDetails.travelAvailability,
               }
@@ -252,19 +250,13 @@ const AuthComponent = () => {
           serviceAvailable: service.serviceAvailable,
         })),
         otherServices: userState.hiringDetails?.otherServices || "",
-        availability: {
-          conventions:
-            userState.hiringDetails?.availability.conventions || false,
-          photoshoots:
-            userState.hiringDetails?.availability.photoshoots || false,
-          promotionalEvents:
-            userState.hiringDetails?.availability.promotionalEvents || false,
-          onlineAppearancesAndOrStreams:
-            userState.hiringDetails?.availability
-              .onlineAppearancesAndOrStreams || false,
-          otherAvailability:
-            userState.hiringDetails?.availability?.otherAvailability || "",
-        },
+        availability: userState.hiringDetails.availability.map(
+          (available: any) => ({
+            availabilityName: available.availabilityName,
+            isAvailable: available.isAvailable,
+          })
+        ),
+        otherAvailability: userState.hiringDetails?.otherAvailability || "",
         preferredSchedule: userState.hiringDetails?.preferredSchedule,
         travelAvailability: userState.hiringDetails?.travelAvailability,
       };
@@ -286,13 +278,16 @@ const AuthComponent = () => {
             { service: "Photography", serviceAvailable: false },
           ],
           otherServices: undefined,
-          availability: {
-            conventions: undefined,
-            photoshoots: undefined,
-            promotionalEvents: undefined,
-            onlineAppearancesAndOrStreams: undefined,
-            otherAvailability: undefined,
-          },
+          availability: [
+            { availabilityName: "Conventions", isAvailable: false },
+            { availabilityName: "Photoshoots", isAvailable: false },
+            { availabilityName: "Promotional events", isAvailable: false },
+            {
+              availabilityName: "Online appearances/streams",
+              isAvailable: false,
+            },
+          ],
+          otherAvailability: undefined,
           preferredSchedule: {
             type: undefined,
           },
@@ -315,8 +310,8 @@ const AuthComponent = () => {
   };
 
   useEffect(() => {
-    // console.log("services", hiringDetails.services);
-    console.log("otherServices", hiringDetails.otherServices);
+    // console.log("availability", hiringDetails.availability);
+    // console.log("otherServices", hiringDetails.otherServices);
   }, [hiringDetails]);
 
   const handleServices = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -332,7 +327,7 @@ const AuthComponent = () => {
     }));
   };
 
-  const handleServicesInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleHiringInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setHiringDetails((prev) => ({
@@ -346,22 +341,11 @@ const AuthComponent = () => {
 
     setHiringDetails((prev) => ({
       ...prev,
-      availability: {
-        ...prev.availability,
-        [name]: checked,
-      },
-    }));
-  };
-
-  const handleAvailabilityInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setHiringDetails((prev) => ({
-      ...prev,
-      availability: {
-        ...prev.availability,
-        [name]: value,
-      },
+      availability: prev.availability.map((available) =>
+        available.availabilityName === name
+          ? { ...available, isAvailable: checked }
+          : available
+      ),
     }));
   };
 
@@ -413,14 +397,11 @@ const AuthComponent = () => {
         serviceAvailable: service.serviceAvailable,
       })),
       otherServices: hiringDetails.otherServices,
-      availability: {
-        conventions: hiringDetails.availability.conventions,
-        photoshoots: hiringDetails.availability.photoshoots,
-        promotionalEvents: hiringDetails.availability.promotionalEvents,
-        onlineAppearancesAndOrStreams:
-          hiringDetails.availability.onlineAppearancesAndOrStreams,
-        otherAvailability: hiringDetails.availability.otherAvailability,
-      },
+      availability: hiringDetails.availability.map((available: any) => ({
+        availabilityName: available.availabilityName,
+        isAvailable: available.isAvailable,
+      })),
+      otherAvailability: hiringDetails.otherAvailability,
       preferredSchedule: hiringDetails.preferredSchedule,
       travelAvailability: hiringDetails.travelAvailability,
     };
@@ -435,13 +416,13 @@ const AuthComponent = () => {
 
     try {
       console.log("postData", postData);
-      await fetch(url, configuration);
-      setIsSavingHiringDetails(false);
-      setShowSavedHiringDetailsMessage(true);
-      setTimeout(() => {
-        setShowSavedHiringDetailsMessage(false);
-        // window.location.reload();
-      }, 800);
+      // await fetch(url, configuration);
+      // setIsSavingHiringDetails(false);
+      // setShowSavedHiringDetailsMessage(true);
+      // setTimeout(() => {
+      //   setShowSavedHiringDetailsMessage(false);
+      //   // window.location.reload();
+      // }, 800);
     } catch (error) {
       console.log("error", error);
     }
@@ -720,18 +701,30 @@ const AuthComponent = () => {
                     userState.hiringDetails?.otherServices ||
                     hiringDetails.otherServices
                   }
-                  onChange={handleServicesInput}
+                  onChange={handleHiringInput}
                   // disabled={!userState.hiringDetails?.editingMode}
                 />
               </div>
 
               <div className="flex flex-col gap-2">
                 <p className="font-medium my-4">Availability:</p>
-                <label className="flex items-center gap-2">
+                {hiringDetails.availability.map((available, index) => (
+                  <label className="flex items-center gap-2" key={index}>
+                    <input
+                      type="checkbox"
+                      name={available.availabilityName}
+                      checked={available.isAvailable}
+                      onChange={handleAvailability}
+                    />
+                    {available.availabilityName}
+                  </label>
+                ))}
+
+                {/* <label className="flex items-center gap-2">
                   <input
                     className="border border-dark/40 p-3 rounded"
                     type="checkbox"
-                    name="conventions"
+                    name="Conventions"
                     checked={
                       userState.hiringDetails?.availability?.conventions ||
                       hiringDetails.availability.conventions
@@ -746,7 +739,7 @@ const AuthComponent = () => {
                   <input
                     className="border border-dark/40 p-3 rounded"
                     type="checkbox"
-                    name="photoshoots"
+                    name="Photoshoots"
                     checked={
                       userState.hiringDetails?.availability?.photoshoots ||
                       hiringDetails.availability.photoshoots
@@ -761,7 +754,7 @@ const AuthComponent = () => {
                   <input
                     className="border border-dark/40 p-3 rounded"
                     type="checkbox"
-                    name="promotionalEvents"
+                    name="Promotional events"
                     checked={
                       userState.hiringDetails?.availability
                         ?.promotionalEvents ||
@@ -777,7 +770,7 @@ const AuthComponent = () => {
                   <input
                     className="border border-dark/40 p-3 rounded"
                     type="checkbox"
-                    name="onlineAppearancesAndOrStreams"
+                    name="Online appearances/streams"
                     checked={
                       userState.hiringDetails?.availability
                         ?.onlineAppearancesAndOrStreams ||
@@ -787,7 +780,7 @@ const AuthComponent = () => {
                     // disabled={!userState.hiringDetails?.editingMode}
                   />
                   Online appearances/streams
-                </label>
+                </label> */}
 
                 <div className="flex flex-col gap-2 mt-4">
                   <label>Other:</label>
@@ -797,11 +790,10 @@ const AuthComponent = () => {
                     placeholder="Separate availability by comma (,)"
                     name="otherAvailability"
                     value={
-                      userState.hiringDetails?.availability
-                        ?.otherAvailability ||
-                      hiringDetails.availability.otherAvailability
+                      userState.hiringDetails?.otherAvailability ||
+                      hiringDetails.otherAvailability
                     }
-                    onChange={handleAvailabilityInput}
+                    onChange={handleHiringInput}
                     // disabled={!userState.hiringDetails?.editingMode}
                   />
                 </div>
@@ -923,7 +915,7 @@ const AuthComponent = () => {
                 </div>
               </div>
 
-              {userState.hiringDetails?.email ? (
+              {/* {userState.hiringDetails?.email ? (
                 <>
                   <button
                     onClick={editHiringDetails}
@@ -932,27 +924,27 @@ const AuthComponent = () => {
                     Edit
                   </button>
                 </>
-              ) : (
-                <>
-                  <button
-                    onSubmit={submitHiringDetails}
-                    className="btn-primary flex justify-center items-center"
-                    type="submit"
-                  >
-                    {showSavedHiringDetailsMessage ? (
-                      "Saved!"
-                    ) : (
-                      <>
-                        {isSavingHiringDetails ? (
-                          <img className="w-6 h-6" src={loading} alt="" />
-                        ) : (
-                          "Save"
-                        )}
-                      </>
-                    )}
-                  </button>
-                </>
-              )}
+              ) : ( */}
+              <>
+                <button
+                  onSubmit={submitHiringDetails}
+                  className="btn-primary flex justify-center items-center"
+                  type="submit"
+                >
+                  {showSavedHiringDetailsMessage ? (
+                    "Saved!"
+                  ) : (
+                    <>
+                      {isSavingHiringDetails ? (
+                        <img className="w-6 h-6" src={loading} alt="" />
+                      ) : (
+                        "Save"
+                      )}
+                    </>
+                  )}
+                </button>
+              </>
+              {/* )} */}
             </div>
           </form>
         </Accordion>
