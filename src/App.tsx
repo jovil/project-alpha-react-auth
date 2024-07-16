@@ -9,7 +9,7 @@ import Login from "./pages/LoginPage/Login";
 import Cookies from "universal-cookie";
 import UserShopPage from "./pages/UserShopPage/UserShopPage";
 import ShopPage from "./pages/ShopPage/ShopPage";
-import UserPostListPage from "./pages/UserPostListPage/UserPostListPage";
+import UserPage from "./pages/UserPage/UserPage";
 import SeriesPage from "./pages/SeriesPage/SeriesPage";
 const cookies = new Cookies();
 
@@ -99,7 +99,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path={`/shop/:profileId`} element={<UserShopPage />} />
-          <Route path={`/user/:userId`} element={<UserPostListPage />} />
+          <Route path={`/user/:userId`} element={<UserPage />} />
           <Route path={`/series/:seriesTitle`} element={<SeriesPage />} />
           <Route path={`/shop`} element={<ShopPage />} />
         </Routes>
