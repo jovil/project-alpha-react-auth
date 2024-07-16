@@ -525,7 +525,7 @@ const AuthComponent = () => {
                     onChange={handleServices}
                     disabled={!isEditing}
                   />
-                  {service.service.replace(/([A-Z])/g, " $1").trim()}
+                  {service.service}
                 </label>
               )) || <p>No services options set</p>}
 
