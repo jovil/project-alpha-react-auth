@@ -43,35 +43,35 @@ interface HiringDetails {
   travelAvailability?: TravelAvailability;
 }
 
+const initialServices: Services[] = [
+  { service: "Costume making", serviceAvailable: false },
+  { service: "Makeup and/or prosthetics", serviceAvailable: false },
+  { service: "Performance/Acting", serviceAvailable: false },
+  { service: "Voice acting", serviceAvailable: false },
+  { service: "Photography", serviceAvailable: false },
+];
+
+const initialAvailability: Availability[] = [
+  { availabilityName: "Conventions", isAvailable: false },
+  { availabilityName: "Photoshoots", isAvailable: false },
+  { availabilityName: "Promotional events", isAvailable: false },
+  { availabilityName: "Online appearances/streams", isAvailable: false },
+];
+
+const initialHiringDetails: HiringDetails = {
+  email: "",
+  whatsApp: "",
+  location: "",
+  favoriteCharacters: "",
+  services: initialServices,
+  otherServices: "",
+  availability: initialAvailability,
+  otherAvailability: "",
+  preferredSchedule: { type: "weekdays" },
+  travelAvailability: { type: "local" },
+};
+
 const AuthComponent = () => {
-  const initialServices: Services[] = [
-    { service: "Costume making", serviceAvailable: false },
-    { service: "Makeup and/or prosthetics", serviceAvailable: false },
-    { service: "Performance/Acting", serviceAvailable: false },
-    { service: "Voice acting", serviceAvailable: false },
-    { service: "Photography", serviceAvailable: false },
-  ];
-
-  const initialAvailability: Availability[] = [
-    { availabilityName: "Conventions", isAvailable: false },
-    { availabilityName: "Photoshoots", isAvailable: false },
-    { availabilityName: "Promotional events", isAvailable: false },
-    { availabilityName: "Online appearances/streams", isAvailable: false },
-  ];
-
-  const initialHiringDetails: HiringDetails = {
-    email: "",
-    whatsApp: "",
-    location: "",
-    favoriteCharacters: "",
-    services: initialServices,
-    otherServices: "",
-    availability: initialAvailability,
-    otherAvailability: "",
-    preferredSchedule: { type: "weekdays" },
-    travelAvailability: { type: "local" },
-  };
-
   const { userState, setUserState } = useUser();
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const [bankDetails, setBankDetails] = useState<BankDetails>({
