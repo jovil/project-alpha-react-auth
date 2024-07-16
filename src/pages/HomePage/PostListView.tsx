@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState, useContext, useRef } from "react";
 import { GlobalStateContext } from "../../context/Context";
-import { usePosts } from "../../context/PostsContext";
 import { NavLink } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
@@ -9,23 +8,19 @@ import iconList from "../../assets/images/icon-list.svg";
 
 const PostListView = () => {
   const { state, setState } = useContext(GlobalStateContext);
-  const { allPosts, setAllPosts } = usePosts();
+  const [allPosts, setAllPosts] = useState<any>([]);
   const [noPosts, setNoPosts] = useState(false);
   const [postImageIsLoading, setPostImageLoading] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const limit = 9;
   const url = `${process.env.REACT_APP_API_URL}/posts?page=${page}&limit=${limit}`;
   const isFetchingRef = useRef(false); // To keep track of fetching state
+  const observerRef = useRef<IntersectionObserver | null>(null); // To store the observer instance
 
   const fetchPosts = useCallback(async () => {
     if (isFetchingRef.current) return; // Prevent fetching if already in progress
 
     isFetchingRef.current = true; // Set fetching state to true
-
-    if (isLoading) return;
-
-    setIsLoading(true);
 
     const configuration = {
       method: "GET",
@@ -43,7 +38,6 @@ const PostListView = () => {
     } catch (error) {
       console.log("error creating post", error);
     } finally {
-      setIsLoading(false);
       isFetchingRef.current = false; // Reset fetching state after fetch is completed
     }
   }, [url, setAllPosts]);
@@ -54,7 +48,38 @@ const PostListView = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, [page]);
+  }, [page, fetchPosts]);
+
+  useEffect(() => {
+    const handleIntersect = (entries: any) => {
+      entries.forEach((entry: any) => {
+        if (entry.isIntersecting && !isFetchingRef.current) {
+          loadMorePosts();
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, {
+      root: null, // Use the viewport as the root
+      rootMargin: "0px", // No margin around the root
+      threshold: 0.1, // 10% of the target's visibility triggers the callback
+    });
+    observerRef.current = observer;
+
+    const footerElement = document.querySelector("[data-site-footer]");
+
+    // Check if the element exists and observe it
+    if (footerElement) {
+      observer.observe(footerElement);
+    }
+
+    // Cleanup observer on component unmount
+    return () => {
+      if (observerRef.current && footerElement) {
+        observer.unobserve(footerElement);
+      }
+    };
+  }, []);
 
   const loadMorePosts = () => {
     setPage((prevPage) => prevPage + 1);
@@ -222,7 +247,7 @@ const PostListView = () => {
           )}
         </div>
       </section>
-      <footer data-site-footer>
+      <footer className="flex justify-center p-8 text-dark/80" data-site-footer>
         <button onClick={loadMorePosts}>Load more posts</button>
       </footer>
     </>
