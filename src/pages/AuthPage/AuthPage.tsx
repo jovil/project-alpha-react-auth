@@ -677,34 +677,33 @@ const AuthComponent = () => {
                   </label>
                 </div>
               </div>
-
-              {!isEditing ? (
-                <button
-                  onClick={editHiringDetails}
-                  className="btn-primary flex justify-center items-center"
-                >
-                  Edit
-                </button>
-              ) : (
-                <button
-                  onClick={submitHiringDetails}
-                  className="btn-primary flex justify-center items-center"
-                  type="submit"
-                >
-                  {showSavedHiringDetailsMessage ? (
-                    "Saved!"
-                  ) : (
-                    <>
-                      {isSavingHiringDetails ? (
-                        <img className="w-6 h-6" src={loading} alt="" />
-                      ) : (
-                        "Save"
-                      )}
-                    </>
-                  )}
-                </button>
-              )}
             </div>
+            {!isEditing ? (
+              <button
+                onClick={editHiringDetails}
+                className="btn-primary flex justify-center items-center"
+              >
+                Edit
+              </button>
+            ) : (
+              <button
+                onClick={submitHiringDetails}
+                className="btn-primary flex justify-center items-center"
+                type="submit"
+              >
+                {showSavedHiringDetailsMessage ? (
+                  "Saved!"
+                ) : (
+                  <>
+                    {isSavingHiringDetails ? (
+                      <img className="w-6 h-6" src={loading} alt="" />
+                    ) : (
+                      "Save"
+                    )}
+                  </>
+                )}
+              </button>
+            )}
           </form>
         </Accordion>
       </section>
