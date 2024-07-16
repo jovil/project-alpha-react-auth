@@ -21,33 +21,6 @@ const getInitialState = () => {
             accountNumber: undefined,
             bankName: undefined,
           },
-          hiringDetails: {
-            email: undefined,
-            whatsApp: undefined,
-            location: undefined,
-            favoriteCharacters: undefined,
-            services: [
-              { service: "Costume making", serviceAvailable: false },
-              { service: "Makeup and/or prosthetics", serviceAvailable: false },
-              { service: "Performance/Acting", serviceAvailable: false },
-              { service: "Voice acting", serviceAvailable: false },
-              { service: "Photography", serviceAvailable: false },
-            ],
-            otherServices: undefined,
-            availability: [
-              { availabilityName: "Conventions", isAvailable: false },
-              { availabilityName: "Photoshoots", isAvailable: false },
-              { availabilityName: "Promotional events", isAvailable: false },
-              {
-                availabilityName: "Online appearances/streams",
-                isAvailable: false,
-              },
-            ],
-            otherAvailability: undefined,
-            preferredSchedule: undefined,
-            travelAvailability: undefined,
-            editingMode: true,
-          },
         };
   } catch (error) {
     console.error("Error parsing localStorage userState:", error);
@@ -64,33 +37,6 @@ const getInitialState = () => {
         accountHoldersName: undefined,
         accountNumber: undefined,
         bankName: undefined,
-      },
-      hiringDetails: {
-        email: undefined,
-        whatsApp: undefined,
-        location: undefined,
-        favoriteCharacters: undefined,
-        services: [
-          { service: "Costume making", serviceAvailable: false },
-          { service: "Makeup and/or prosthetics", serviceAvailable: false },
-          { service: "Performance/Acting", serviceAvailable: false },
-          { service: "Voice acting", serviceAvailable: false },
-          { service: "Photography", serviceAvailable: false },
-        ],
-        otherServices: undefined,
-        availability: [
-          { availabilityName: "Conventions", isAvailable: false },
-          { availabilityName: "Photoshoots", isAvailable: false },
-          { availabilityName: "Promotional events", isAvailable: false },
-          {
-            availabilityName: "Online appearances/streams",
-            isAvailable: false,
-          },
-        ],
-        otherAvailability: undefined,
-        preferredSchedule: undefined,
-        travelAvailability: undefined,
-        editingMode: true,
       },
     };
   }
