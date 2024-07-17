@@ -136,6 +136,16 @@ const CreatePostModal = ({
         title: "Post created successfully",
         text: "Your new post is now live.",
       });
+
+      // Clear post form
+      setPost((prev: any) => {
+        return {
+          ...prev,
+          image: "",
+          characterName: "",
+          seriesTitle: "",
+        };
+      });
     } catch (error) {
       console.log("error", error);
     }

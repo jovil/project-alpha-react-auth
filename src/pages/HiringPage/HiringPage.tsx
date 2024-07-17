@@ -92,7 +92,7 @@ const HiringPage = () => {
                       }`}
                       onClick={handleToggleModal}
                     >
-                      <div className="h-full">
+                      <div className="h-full w-full">
                         <img
                           className={
                             isLoading
