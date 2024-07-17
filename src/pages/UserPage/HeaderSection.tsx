@@ -52,7 +52,7 @@ const HeaderSection = ({
             <p>{isUser.userName}</p>
           </div>
           <div className="flex items-center gap-4">
-            {isUser?.hiringDetails && (
+            {isUser?.hasHiringDetails && (
               <button className="btn-outline-dark" onClick={handleToggleModal}>
                 Hire @{isUser.userName}
               </button>

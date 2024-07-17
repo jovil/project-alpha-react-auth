@@ -9,9 +9,11 @@ const UserPostListPage = () => {
   const [user, setUser] = useState<{
     profileName: string;
     email: string;
+    hasHiringDetails: boolean;
   }>({
     profileName: "",
     email: "",
+    hasHiringDetails: false,
   });
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
 
@@ -24,7 +26,6 @@ const UserPostListPage = () => {
         const result = await response.json();
         setUser(result);
         setIsLoadingAvatar(false);
-        console.log("user", result.hiringDetails);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
