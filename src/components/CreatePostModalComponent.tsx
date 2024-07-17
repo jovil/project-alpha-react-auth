@@ -19,7 +19,7 @@ const CreatePostModal = ({
 }) => {
   const cookies = new Cookies();
   const { userState, setUserState } = useUser();
-  const { allPosts, setAllPosts } = usePosts();
+  const { setAllPosts } = usePosts();
   const [post, setPost] = useState<{
     email: string;
     image: any;

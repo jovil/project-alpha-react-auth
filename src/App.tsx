@@ -17,7 +17,7 @@ import HiringPage from "./pages/HiringPage/HiringPage";
 function App() {
   const cookies = new Cookies();
   const { state } = useContext(GlobalStateContext);
-  const { userState, setUserState } = useUser();
+  const { userState } = useUser();
   const location = useLocation();
   const token = cookies.get("TOKEN");
 

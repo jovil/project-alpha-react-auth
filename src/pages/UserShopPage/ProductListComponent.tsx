@@ -17,7 +17,7 @@ interface Product {
 
 const ProductListComponent = () => {
   const { profileId } = useParams();
-  const { userState, setUserState } = useUser();
+  const { userState } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
