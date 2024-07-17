@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import iconGrid from "../../assets/images/icon-grid.svg";
 import iconList from "../../assets/images/icon-list.svg";
 import loading from "../../assets/images/loading.gif";
+import { getFetchConfig } from "../../utils/fetchConfig";
 
 const SeriesPage = () => {
   const { seriesTitle } = useParams();
@@ -13,15 +14,9 @@ const SeriesPage = () => {
 
   const fetchSeries = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/series/${seriesTitle}`;
-    const configuration = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json", // Specify the content type as JSON
-      },
-    };
 
     try {
-      const response = await fetch(url, configuration);
+      const response = await fetch(url, getFetchConfig);
       const result = await response.json();
       setSeriesPosts(result);
       console.log("result", result);

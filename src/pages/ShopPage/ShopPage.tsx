@@ -6,6 +6,7 @@ import CreateProductComponent from "../../components/CreateProductComponent";
 import loading from "../../assets/images/loading.gif";
 import iconGrid from "../../assets/images/icon-grid.svg";
 import iconList from "../../assets/images/icon-list.svg";
+import { getFetchConfig } from "../../utils/fetchConfig";
 
 const ShopPage = () => {
   const { state, setState } = useContext(GlobalStateContext);
@@ -17,15 +18,9 @@ const ShopPage = () => {
 
   const fetchProducts = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/products`;
-    const configuration = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json", // Specify the content type as JSON
-      },
-    };
 
     try {
-      const response = await fetch(url, configuration);
+      const response = await fetch(url, getFetchConfig);
       const result = await response.json();
       setAllProducts(result);
     } catch (error) {

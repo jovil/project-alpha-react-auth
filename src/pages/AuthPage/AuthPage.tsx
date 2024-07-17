@@ -5,6 +5,7 @@ import CreatePost from "./CreatePost";
 import CreateProduct from "./CreateProduct";
 import Accordion from "../../components/Accordion";
 import loading from "../../assets/images/loading.gif";
+import { getFetchConfig } from "../../utils/fetchConfig";
 
 interface BankDetails {
   accountHoldersName: string;
@@ -91,15 +92,9 @@ const AuthComponent = () => {
 
   const fetchUser = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/user/${userState._id}`;
-    const configuration = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
 
     try {
-      const response = await fetch(url, configuration);
+      const response = await fetch(url, getFetchConfig);
       const result = await response.json();
       console.log("result.hiringDetails", result.hiringDetails);
       setUserState((prev: any) => {

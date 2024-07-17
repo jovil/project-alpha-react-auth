@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import HeaderSection from "./HeaderSection";
 import PostListComponent from "./PostListComponent";
+import { getFetchConfig } from "../../utils/fetchConfig";
 
 const UserPostListPage = () => {
   const { userId } = useParams();
@@ -16,16 +17,10 @@ const UserPostListPage = () => {
 
   useEffect(() => {
     const url = `${process.env.REACT_APP_API_URL}/user/${userId}`;
-    const configuration = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
 
     const fetchUser = async () => {
       try {
-        const response = await fetch(url, configuration);
+        const response = await fetch(url, getFetchConfig);
         const result = await response.json();
         setUser(result);
         setIsLoadingAvatar(false);

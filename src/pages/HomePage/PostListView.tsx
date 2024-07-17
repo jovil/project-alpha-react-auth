@@ -6,6 +6,7 @@ import defaultAvatar from "../../assets/images/toon_6.png";
 import iconGrid from "../../assets/images/icon-grid.svg";
 import iconList from "../../assets/images/icon-list.svg";
 import end from "../../assets/images/end.png";
+import { getFetchConfig } from "../../utils/fetchConfig";
 
 const PostListView = () => {
   const { state, setState } = useContext(GlobalStateContext);
@@ -26,15 +27,8 @@ const PostListView = () => {
     // Return if there are no more posts to fetch
     if (postsRef.current < limit) return;
 
-    const configuration = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json", // Specify the content type as JSON
-      },
-    };
-
     try {
-      const response = await fetch(url, configuration);
+      const response = await fetch(url, getFetchConfig);
       const result = await response.json();
       await setAllPosts((prevPosts: any) => [...prevPosts, ...result]);
       console.log("result", result);

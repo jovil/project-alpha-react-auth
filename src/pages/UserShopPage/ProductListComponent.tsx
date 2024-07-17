@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import ProductModal from "../../components/ProductModalComponent";
+import { getFetchConfig } from "../../utils/fetchConfig";
 
 interface Product {
   _id: string;
@@ -22,16 +23,9 @@ const ProductListComponent = () => {
 
   const fetchProducts = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/products/${profileId}`;
-    console.log("Fetching products from:", url); // Log the URL being fetched
-    const configuration = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json", // Specify the content type as JSON
-      },
-    };
 
     try {
-      const response = await fetch(url, configuration);
+      const response = await fetch(url, getFetchConfig);
       const result: Product[] = await response.json();
 
       // Ensure result is an array and contains the expected fields

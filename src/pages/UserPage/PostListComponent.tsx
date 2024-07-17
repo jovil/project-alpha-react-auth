@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
+import { getFetchConfig } from "../../utils/fetchConfig";
 
 interface User {
   _id: string;
@@ -22,15 +23,9 @@ const ProductListComponent = () => {
 
   const fetchPosts = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/posts/${userId}`;
-    const configuration = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json", // Specify the content type as JSON
-      },
-    };
 
     try {
-      const response = await fetch(url, configuration);
+      const response = await fetch(url, getFetchConfig);
       const result: Posts[] = await response.json();
       setPosts(result);
     } catch (error) {

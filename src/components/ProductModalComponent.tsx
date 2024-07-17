@@ -4,6 +4,7 @@ import Swiper from "swiper";
 import "swiper/css";
 import { Thumbs } from "swiper/modules";
 import loading from "../assets/images/loading.gif";
+import { getFetchConfig } from "../utils/fetchConfig";
 
 interface Product {
   productName: string;
@@ -56,14 +57,9 @@ const ProductModal = ({
   useEffect(() => {
     const fetchProduct = async () => {
       const url = `${process.env.REACT_APP_API_URL}/product/${productId}`;
-      const configuration = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json", // Specify the content type as JSON
-        },
-      };
+
       try {
-        const response = await fetch(url, configuration);
+        const response = await fetch(url, getFetchConfig);
         const result = await response.json();
         // Ensure result is an object
         if (result && typeof result === "object") {
