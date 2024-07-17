@@ -52,27 +52,32 @@ const ShopPage = () => {
   return (
     <>
       <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4">
-        <header className="hidden tablet:flex justify-end items-center gap-2">
-          <button>
-            <img
-              className={`w-7 h-7 p-1.5 rounded-full ${
-                state.productsView === "list" ? "bg-dark/10" : ""
-              }`}
-              src={iconList}
-              onClick={handleProductsListView}
-              alt=""
-            />
-          </button>
-          <button>
-            <img
-              className={`w-7 h-7 p-1.5 rounded-full ${
-                state.productsView === "grid" ? "bg-dark/10" : ""
-              }`}
-              src={iconGrid}
-              onClick={handleProductsGridView}
-              alt=""
-            />
-          </button>
+        <header className="hidden tablet:flex justify-between items-center gap-2">
+          <>
+            <h1>All products</h1>
+          </>
+          <div className="flex justify-end">
+            <button>
+              <img
+                className={`w-7 h-7 p-1.5 rounded-full ${
+                  state.productsView === "list" ? "bg-dark/10" : ""
+                }`}
+                src={iconList}
+                onClick={handleProductsListView}
+                alt=""
+              />
+            </button>
+            <button>
+              <img
+                className={`w-7 h-7 p-1.5 rounded-full ${
+                  state.productsView === "grid" ? "bg-dark/10" : ""
+                }`}
+                src={iconGrid}
+                onClick={handleProductsGridView}
+                alt=""
+              />
+            </button>
+          </div>
         </header>
         <div
           className={`grid gap-1 ${

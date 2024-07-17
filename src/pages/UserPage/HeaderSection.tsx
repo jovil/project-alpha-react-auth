@@ -29,7 +29,7 @@ const HeaderSection = ({
       <header className="flex justify-center relative">
         <div className="text-xs font-medium flex flex-col gap-4 items-center">
           <div className="flex flex-col gap-3 items-center">
-            <div className="w-14 h-14 border border-dark/60 rounded shadow-md relative overflow-hidden">
+            <div className="w-16 h-16 border border-dark/60 rounded shadow-md relative overflow-hidden">
               {isLoadingAvatar && (
                 <img
                   className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"

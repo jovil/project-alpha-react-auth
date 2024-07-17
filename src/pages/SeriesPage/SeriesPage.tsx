@@ -43,31 +43,31 @@ const SeriesPage = () => {
 
   return (
     <>
-      <header className="text-xl flex justify-center">
-        <h1>{seriesTitle} series</h1>
-      </header>
       <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4">
-        <header className="hidden tablet:flex justify-end items-center gap-2">
-          <button>
-            <img
-              className={`w-7 h-7 p-1.5 rounded-full ${
-                state.seriesView === "list" ? "bg-dark/10" : ""
-              }`}
-              src={iconList}
-              onClick={handleListView}
-              alt=""
-            />
-          </button>
-          <button>
-            <img
-              className={`w-7 h-7 p-1.5 rounded-full ${
-                state.seriesView === "grid" ? "bg-dark/10" : ""
-              }`}
-              src={iconGrid}
-              onClick={handleGridView}
-              alt=""
-            />
-          </button>
+        <header className="hidden tablet:flex justify-between items-center gap-2">
+          <h1>{seriesTitle} series</h1>
+          <div className="flex justify-end">
+            <button>
+              <img
+                className={`w-7 h-7 p-1.5 rounded-full ${
+                  state.seriesView === "list" ? "bg-dark/10" : ""
+                }`}
+                src={iconList}
+                onClick={handleListView}
+                alt=""
+              />
+            </button>
+            <button>
+              <img
+                className={`w-7 h-7 p-1.5 rounded-full ${
+                  state.seriesView === "grid" ? "bg-dark/10" : ""
+                }`}
+                src={iconGrid}
+                onClick={handleGridView}
+                alt=""
+              />
+            </button>
+          </div>
         </header>
         <div
           className={`grid gap-1 ${

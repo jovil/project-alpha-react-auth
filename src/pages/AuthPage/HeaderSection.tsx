@@ -97,13 +97,13 @@ const HeaderSection = () => {
 
   return (
     <section className="text-center">
-      <div className="grid grid-cols-12">
+      <div className="max-w-[948px] mx-auto grid grid-cols-12">
         <div className="col-span-2"></div>
         <div className="flex justify-center col-span-8">
           <div className="flex flex-col justify-center items-center gap-4">
             <div className="text-xs font-medium flex flex-col gap-3 items-center">
               <img
-                className="w-14 h-14 border border-dark/60 object-cover rounded shadow-md"
+                className="w-16 h-16 border border-dark/60 object-cover rounded shadow-md"
                 src={userState.avatar64 ? userState.avatar64 : defaultAvatar}
                 alt=""
               />

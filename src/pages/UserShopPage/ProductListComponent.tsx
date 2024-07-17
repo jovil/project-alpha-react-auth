@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 import loading from "../../assets/images/loading.gif";
 import ProductModal from "../../components/ProductModalComponent";
 import { getFetchConfig } from "../../utils/fetchConfig";
@@ -16,6 +17,7 @@ interface Product {
 
 const ProductListComponent = () => {
   const { profileId } = useParams();
+  const { userState, setUserState } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
@@ -61,68 +63,81 @@ const ProductListComponent = () => {
   };
 
   return (
-    <section className="grid tablet:grid-cols-2 desktop:grid-cols-3 gap-1 max-w-[908px] w-full py-16 mx-auto">
-      {products.length ? (
-        <>
-          {products?.toReversed().map((product: any) => {
-            if (!product || !product.fileUrl || !product.fileUrl.length) {
-              console.warn("Product or fileUrl is undefined or empty", product);
-              return null; // Skip this product if data is invalid
-            }
+    <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4 py-16">
+      <header className="hidden tablet:flex justify-between items-center gap-2">
+        <h1>
+          <span className="capitalize">{userState.userName}</span>'s shop
+        </h1>
+      </header>
+      <div className="grid tablet:grid-cols-2 desktop:grid-cols-3 gap-1 max-w-[908px] w-full mx-auto">
+        {products.length ? (
+          <>
+            {products?.toReversed().map((product: any) => {
+              if (!product || !product.fileUrl || !product.fileUrl.length) {
+                console.warn(
+                  "Product or fileUrl is undefined or empty",
+                  product
+                );
+                return null; // Skip this product if data is invalid
+              }
 
-            return (
-              <div
-                className="desktop:max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group"
-                key={product._id}
-              >
-                <div className="relative tablet:aspect-[3/4]">
-                  {isLoading && (
+              return (
+                <div
+                  className="desktop:max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group"
+                  key={product._id}
+                >
+                  <div className="relative tablet:aspect-[3/4]">
+                    {isLoading && (
+                      <img
+                        className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
+                        src={loading}
+                        alt=""
+                      />
+                    )}
                     <img
-                      className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
-                      src={loading}
-                      alt=""
+                      className="tablet:aspect-[3/4] w-full object-cover rounded-sm"
+                      src={product.fileUrl[product.fileUrl.length - 1] || ""}
+                      alt={product.productName}
+                      loading="lazy"
+                      onLoad={handlePostImageLoad}
                     />
-                  )}
-                  <img
-                    className="tablet:aspect-[3/4] w-full object-cover rounded-sm"
-                    src={product.fileUrl[product.fileUrl.length - 1] || ""}
-                    alt={product.productName}
-                    loading="lazy"
-                    onLoad={handlePostImageLoad}
-                  />
-                </div>
-                <div className="flex flex-col flex-grow justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
-                  <div className="flex flex-col gap-1.5">
+                  </div>
+                  <div className="flex flex-col flex-grow justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
                     <div className="flex flex-col gap-1.5">
-                      <p>{product.productName}</p>
-                      <p>RM {product.productPrice}</p>
+                      <div className="flex flex-col gap-1.5">
+                        <p>{product.productName}</p>
+                        <p>RM {product.productPrice}</p>
+                      </div>
+                      <p className="text-sm">{product.productDescription}</p>
                     </div>
-                    <p className="text-sm">{product.productDescription}</p>
-                  </div>
 
-                  <div className="flex flex-col gap-2">
-                    <button
-                      className="btn-outline-small-no-hover tablet:btn-outline-small text-xs"
-                      onClick={() => {
-                        handleToggleModal(product._id);
-                      }}
-                    >
-                      Show product
-                    </button>
+                    <div className="flex flex-col gap-2">
+                      <button
+                        className="btn-outline-small-no-hover tablet:btn-outline-small text-xs"
+                        onClick={() => {
+                          handleToggleModal(product._id);
+                        }}
+                      >
+                        Show product
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </>
-      ) : (
-        <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
-          No products.
-        </p>
-      )}
-      {isProductModalVisible && (
-        <ProductModal productId={productId} onToggleModal={handleToggleModal} />
-      )}
+              );
+            })}
+          </>
+        ) : (
+          <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
+            No products.
+          </p>
+        )}
+        {isProductModalVisible && (
+          <ProductModal
+            productId={productId}
+            onToggleModal={handleToggleModal}
+          />
+        )}
+      </div>
     </section>
   );
 };

@@ -112,27 +112,32 @@ const PostListView = () => {
   return (
     <>
       <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4 min-h-[100vh]">
-        <header className="hidden tablet:flex justify-end items-center gap-2">
-          <button>
-            <img
-              className={`w-7 h-7 p-1.5 rounded-full ${
-                state.postsView === "list" ? "bg-dark/10" : ""
-              }`}
-              src={iconList}
-              onClick={handlePostsListView}
-              alt=""
-            />
-          </button>
-          <button>
-            <img
-              className={`w-7 h-7 p-1.5 rounded-full ${
-                state.postsView === "grid" ? "bg-dark/10" : ""
-              }`}
-              src={iconGrid}
-              onClick={handlePostsGridView}
-              alt=""
-            />
-          </button>
+        <header className="hidden tablet:flex justify-between items-center gap-2">
+          <>
+            <h1>All posts</h1>
+          </>
+          <div className="flex justify-end">
+            <button>
+              <img
+                className={`w-7 h-7 p-1.5 rounded-full ${
+                  state.postsView === "list" ? "bg-dark/10" : ""
+                }`}
+                src={iconList}
+                onClick={handlePostsListView}
+                alt=""
+              />
+            </button>
+            <button>
+              <img
+                className={`w-7 h-7 p-1.5 rounded-full ${
+                  state.postsView === "grid" ? "bg-dark/10" : ""
+                }`}
+                src={iconGrid}
+                onClick={handlePostsGridView}
+                alt=""
+              />
+            </button>
+          </div>
         </header>
         <div
           className={`grid gap-1 ${
