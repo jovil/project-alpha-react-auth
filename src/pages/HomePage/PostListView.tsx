@@ -98,7 +98,7 @@ const PostListView = () => {
 
   return (
     <>
-      <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4">
+      <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4 min-h-[100vh]">
         <header className="hidden tablet:flex justify-end items-center gap-2">
           <button>
             <img
@@ -130,7 +130,7 @@ const PostListView = () => {
         >
           {allPosts?.length ? (
             <>
-              {allPosts?.toReversed().map((post: any) => {
+              {allPosts?.map((post: any) => {
                 return (
                   <div
                     className={`w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group ${
