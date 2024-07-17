@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
-import HiringModal from "./HiringModal";
+import HiringModal from "../../components/HiringModal";
 import { AnimatePresence } from "framer-motion";
 
 const HeaderSection = ({

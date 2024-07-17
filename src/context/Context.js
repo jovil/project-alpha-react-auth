@@ -14,6 +14,7 @@ export const GlobalStateProvider = ({ children }) => {
           postsView: "grid",
           productsView: "grid",
           seriesView: "grid",
+          hiringView: "grid",
         };
   });
 

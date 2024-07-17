@@ -1,6 +1,6 @@
 import React from "react";
-import loading from "../../assets/images/loading.gif";
-import Backdrop from "../../components/Backdrop";
+import loading from "../assets/images/loading.gif";
+import Backdrop from "./Backdrop";
 import { motion } from "framer-motion";
 
 const HiringModal = ({

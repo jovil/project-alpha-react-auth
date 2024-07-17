@@ -30,8 +30,7 @@ const PostListView = () => {
     try {
       const response = await fetch(url, getFetchConfig);
       const result = await response.json();
-      await setAllPosts((prevPosts: any) => [...prevPosts, ...result]);
-      console.log("result", result);
+      setAllPosts((prevPosts: any) => [...prevPosts, ...result]);
       postsRef.current = result.length;
       // Show no posts when no posts on initial load
       if (result.length === 0) setNoPosts(true);

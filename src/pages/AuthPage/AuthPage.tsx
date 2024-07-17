@@ -320,6 +320,7 @@ const AuthComponent = () => {
         type: "weekdays",
       },
       travelAvailability: hiringDetails.travelAvailability || { type: "local" },
+      hasHiringDetails: true,
     };
 
     const url = `${process.env.REACT_APP_API_URL}/user/update/hiringDetails/${userState._id}`;

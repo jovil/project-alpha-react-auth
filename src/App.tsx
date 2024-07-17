@@ -11,6 +11,7 @@ import UserShopPage from "./pages/UserShopPage/UserShopPage";
 import ShopPage from "./pages/ShopPage/ShopPage";
 import UserPage from "./pages/UserPage/UserPage";
 import SeriesPage from "./pages/SeriesPage/SeriesPage";
+import HiringPage from "./pages/HiringPage/HiringPage";
 const cookies = new Cookies();
 
 function App() {
@@ -44,6 +45,17 @@ function App() {
                 }
               >
                 Shop
+              </NavLink>
+              <NavLink
+                end
+                to="/hirecosplayer"
+                className={({ isActive }: { isActive: any }) =>
+                  isActive
+                    ? "nav-button bg-neutral-300 rounded-full text-sm"
+                    : "text-sm px-5 py-1.5"
+                }
+              >
+                Hire cosplayer
               </NavLink>
               {token && (
                 <NavLink
@@ -102,6 +114,7 @@ function App() {
           <Route path={`/user/:userId`} element={<UserPage />} />
           <Route path={`/series/:seriesTitle`} element={<SeriesPage />} />
           <Route path={`/shop`} element={<ShopPage />} />
+          <Route path={`/hirecosplayer`} element={<HiringPage />} />
         </Routes>
       </main>
     </div>
