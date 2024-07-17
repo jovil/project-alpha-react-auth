@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useUser } from "../context/UserContext";
+import Notify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
 import Cookies from "universal-cookie";
-
 import loading from "../assets/images/loading.gif";
-const cookies = new Cookies();
+import { usePosts } from "../context/PostsContext";
 
 const CreatePostModal = ({
   isImageBase64,
@@ -16,6 +17,9 @@ const CreatePostModal = ({
   isShowModal: boolean;
   onToggleModal: (value: boolean) => void;
 }) => {
+  const cookies = new Cookies();
+  const { userState, setUserState } = useUser();
+  const { allPosts, setAllPosts } = usePosts();
   const [post, setPost] = useState<{
     email: string;
     image: any;
@@ -29,12 +33,10 @@ const CreatePostModal = ({
     seriesTitle: "",
     _id: "",
   });
-
   const [isLoading, setIsLoading] = useState(false);
   const [isCharacterNameInputEmpty, setIsCharacterNameInputEmpty] =
     useState(false);
   const [isSeriesTitleInputEmpty, setIsSeriesTitleInputEmpty] = useState(false);
-  const { userState, setUserState } = useUser();
   const token = cookies.get("TOKEN");
   const url = `${process.env.REACT_APP_API_URL}/create`;
 
@@ -123,11 +125,17 @@ const CreatePostModal = ({
     };
 
     try {
-      await fetch(url, configuration);
+      const response = await fetch(url, configuration);
+      const result = await response.json();
       !userState.hasPosted && (await updateHasPosted());
+      // Add new post to the start of the array
+      setAllPosts((prevPosts: any) => [result.post, ...prevPosts]);
       onToggleModal(false);
       setIsLoading(false);
-      window.location.reload();
+      new Notify({
+        title: "Post created successfully",
+        text: "Your new post is now live.",
+      });
     } catch (error) {
       console.log("error", error);
     }

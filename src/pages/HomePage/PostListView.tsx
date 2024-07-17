@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState, useContext, useRef } from "react";
 import { GlobalStateContext } from "../../context/Context";
+import { usePosts } from "../../context/PostsContext";
 import { NavLink } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
@@ -10,7 +11,7 @@ import { getFetchConfig } from "../../utils/fetchConfig";
 
 const PostListView = () => {
   const { state, setState } = useContext(GlobalStateContext);
-  const [allPosts, setAllPosts] = useState<any>([]);
+  const { allPosts, setAllPosts } = usePosts();
   const [noPosts, setNoPosts] = useState(false);
   const [postImageIsLoading, setPostImageLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -30,16 +31,28 @@ const PostListView = () => {
     try {
       const response = await fetch(url, getFetchConfig);
       const result = await response.json();
-      setAllPosts((prevPosts: any) => [...prevPosts, ...result]);
       postsRef.current = result.length;
       // Show no posts when no posts on initial load
       if (result.length === 0) setNoPosts(true);
+
+      setAllPosts((prevPosts: any) => {
+        // Filter out any posts that already exist in the state
+        const uniquePosts = result.filter(
+          (fetchedPost: any) =>
+            !prevPosts.some((prevPost: any) => prevPost._id === fetchedPost._id)
+        );
+        return [...prevPosts, ...uniquePosts];
+      });
     } catch (error) {
       console.log("error creating post", error);
     } finally {
       isFetchingRef.current = false; // Reset fetching state after fetch is completed
     }
   }, [url, setAllPosts]);
+
+  useEffect(() => {
+    console.log("allPosts", allPosts);
+  }, [allPosts]);
 
   useEffect(() => {
     fetchPosts();
