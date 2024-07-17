@@ -37,7 +37,7 @@ const UserPostListPage = () => {
   return (
     <>
       <HeaderSection isUser={user} isLoadingAvatar={isLoadingAvatar} />
-      <PostListComponent />
+      <PostListComponent isUser={user} />
     </>
   );
 };

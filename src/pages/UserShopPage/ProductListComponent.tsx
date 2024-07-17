@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { useUser } from "../../context/UserContext";
 import loading from "../../assets/images/loading.gif";
 import ProductModal from "../../components/ProductModalComponent";
 import { getFetchConfig } from "../../utils/fetchConfig";
@@ -15,9 +14,8 @@ interface Product {
   paymentLink: string;
 }
 
-const ProductListComponent = () => {
+const ProductListComponent = ({ isUser }: { isUser: any }) => {
   const { profileId } = useParams();
-  const { userState } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
@@ -66,7 +64,7 @@ const ProductListComponent = () => {
     <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4 py-16">
       <header className="hidden tablet:flex justify-between items-center gap-2">
         <h1>
-          <span className="capitalize">{userState.userName}</span>'s shop
+          <span className="capitalize">{isUser.userName}</span>'s shop
         </h1>
       </header>
       <div className="grid tablet:grid-cols-2 desktop:grid-cols-3 gap-1 max-w-[908px] w-full mx-auto">

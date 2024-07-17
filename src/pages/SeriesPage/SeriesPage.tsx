@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useContext, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import { useParams } from "react-router-dom";
 import iconGrid from "../../assets/images/icon-grid.svg";
 import iconList from "../../assets/images/icon-list.svg";
 import loading from "../../assets/images/loading.gif";
+import defaultAvatar from "../../assets/images/toon_6.png";
 import { getFetchConfig } from "../../utils/fetchConfig";
 
 const SeriesPage = () => {
@@ -106,8 +108,30 @@ const SeriesPage = () => {
                         onLoad={handlePostImageLoad}
                       />
                     </div>
-                    <div className="flex flex-col flex-grow justify-between gap-6 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
+                    <div className="flex flex-col flex-grow justify-between gap-2 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
                       <p>{post.characterName}</p>
+
+                      <NavLink
+                        className="flex gap-1.5 items-center"
+                        to={`/user/${post.user._id}`}
+                      >
+                        {post.user.avatar.length > 0 ? (
+                          <img
+                            className="rounded-full w-6 h-6 border border-dark/10"
+                            src={post.user.avatar}
+                            alt=""
+                          />
+                        ) : (
+                          <img
+                            className="rounded-full w-6 h-6 border border-dark/10"
+                            src={defaultAvatar}
+                            alt=""
+                          />
+                        )}
+                        <p className="text-xs underline">
+                          @{post.user.userName}
+                        </p>
+                      </NavLink>
                     </div>
                   </div>
                 );

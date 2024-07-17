@@ -14,6 +14,7 @@ const HiringPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [noUsers, setNoUsers] = useState(false);
   const [showHiringModal, setShowHiringModal] = useState<boolean>(false);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   const fetchUsersForHire = async () => {
     try {
@@ -31,8 +32,9 @@ const HiringPage = () => {
     fetchUsersForHire();
   }, []);
 
-  const handleToggleModal = () => {
+  const handleToggleModal = (id: any) => {
     setShowHiringModal((prevState) => !prevState);
+    setCurrentUserId(id);
   };
 
   const handlePostsGridView = () => {
@@ -95,7 +97,7 @@ const HiringPage = () => {
                           ? "desktop:max-w-[300px] tablet:aspect-[3/4]"
                           : ""
                       }`}
-                      onClick={handleToggleModal}
+                      onClick={() => handleToggleModal(user._id)}
                     >
                       <div className="h-full w-full">
                         <img
@@ -124,7 +126,7 @@ const HiringPage = () => {
                       mode="wait"
                       onExitComplete={() => null}
                     >
-                      {showHiringModal && (
+                      {showHiringModal && currentUserId === user._id && (
                         <HiringModal
                           isUser={user}
                           onToggleModal={handleToggleModal}

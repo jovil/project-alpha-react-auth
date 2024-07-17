@@ -44,7 +44,7 @@ const UserShopPage = () => {
         profileLoadingAvatar={isLoadingAvatar}
       />
       {profileId === userState._id && <CreateProductComponent />}
-      <ProductListComponent />
+      <ProductListComponent isUser={profile} />
     </>
   );
 };
