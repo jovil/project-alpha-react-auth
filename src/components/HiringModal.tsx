@@ -124,24 +124,28 @@ const HiringModal = ({
                             }
                           )}
 
-                          {otherAvailabilityArr?.map(
-                            (item: any, index: any) => {
-                              return (
-                                <label
-                                  className="flex items-center gap-2"
-                                  key={index}
-                                >
-                                  <input
-                                    className="border border-dark/40 p-3 rounded"
-                                    type="checkbox"
-                                    name={item}
-                                    checked={true}
-                                    disabled={true}
-                                  />
-                                  {item}
-                                </label>
-                              );
-                            }
+                          {otherAvailability.length > 0 && (
+                            <>
+                              {otherAvailabilityArr?.map(
+                                (item: any, index: any) => {
+                                  return (
+                                    <label
+                                      className="flex items-center gap-2"
+                                      key={index}
+                                    >
+                                      <input
+                                        className="border border-dark/40 p-3 rounded"
+                                        type="checkbox"
+                                        name={item}
+                                        checked={true}
+                                        disabled={true}
+                                      />
+                                      {item}
+                                    </label>
+                                  );
+                                }
+                              )}
+                            </>
                           )}
                         </div>
                       </div>
@@ -172,23 +176,29 @@ const HiringModal = ({
                             }
                           )}
 
-                          {otherServicesArr?.map((item: any, index: any) => {
-                            return (
-                              <label
-                                className="flex items-center gap-2"
-                                key={index}
-                              >
-                                <input
-                                  className="border border-dark/40 p-3 rounded"
-                                  type="checkbox"
-                                  name={item}
-                                  checked={true}
-                                  disabled={true}
-                                />
-                                {item}
-                              </label>
-                            );
-                          })}
+                          {otherServices.length > 0 && (
+                            <>
+                              {otherServicesArr?.map(
+                                (item: any, index: any) => {
+                                  return (
+                                    <label
+                                      className="flex items-center gap-2"
+                                      key={index}
+                                    >
+                                      <input
+                                        className="border border-dark/40 p-3 rounded"
+                                        type="checkbox"
+                                        name={item}
+                                        checked={true}
+                                        disabled={true}
+                                      />
+                                      {item}
+                                    </label>
+                                  );
+                                }
+                              )}
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
