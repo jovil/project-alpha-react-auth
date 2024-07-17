@@ -5,6 +5,7 @@ import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
 import iconGrid from "../../assets/images/icon-grid.svg";
 import iconList from "../../assets/images/icon-list.svg";
+import end from "../../assets/images/end.png";
 
 const PostListView = () => {
   const { state, setState } = useContext(GlobalStateContext);
@@ -16,11 +17,14 @@ const PostListView = () => {
   const url = `${process.env.REACT_APP_API_URL}/posts?page=${page}&limit=${limit}`;
   const isFetchingRef = useRef(false); // To keep track of fetching state
   const observerRef = useRef<IntersectionObserver | null>(null); // To store the observer instance
+  const postsRef = useRef(limit);
 
   const fetchPosts = useCallback(async () => {
     if (isFetchingRef.current) return; // Prevent fetching if already in progress
-
     isFetchingRef.current = true; // Set fetching state to true
+
+    // Return if there are no more posts to fetch
+    if (postsRef.current < limit) return;
 
     const configuration = {
       method: "GET",
@@ -34,6 +38,8 @@ const PostListView = () => {
       const result = await response.json();
       await setAllPosts((prevPosts: any) => [...prevPosts, ...result]);
       console.log("result", result);
+      postsRef.current = result.length;
+      // Show no posts when no posts on initial load
       if (result.length === 0) setNoPosts(true);
     } catch (error) {
       console.log("error creating post", error);
@@ -248,7 +254,13 @@ const PostListView = () => {
         </div>
       </section>
       <footer className="flex justify-center p-8 text-dark/80" data-site-footer>
-        <button onClick={loadMorePosts}>Load more posts</button>
+        {postsRef.current >= limit ? (
+          <button onClick={loadMorePosts}>Load more posts</button>
+        ) : (
+          <>
+            <img className="w-10 h-10" src={end} alt="" />
+          </>
+        )}
       </footer>
     </>
   );
