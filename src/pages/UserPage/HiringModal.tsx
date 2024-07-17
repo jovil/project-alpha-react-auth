@@ -12,11 +12,11 @@ const HiringModal = ({
 }) => {
   const { hiringDetails } = isUser;
   const { favoriteCharacters } = hiringDetails;
-  const favCharactersArr = favoriteCharacters.split(",");
+  const favCharactersArr = favoriteCharacters?.split(",");
   const { otherServices } = hiringDetails;
-  const otherServicesArr = otherServices.split(",");
+  const otherServicesArr = otherServices?.split(",");
   const { otherAvailability } = hiringDetails;
-  const otherAvailabilityArr = otherAvailability.split(",");
+  const otherAvailabilityArr = otherAvailability?.split(",");
 
   const slideIn = {
     hidden: {
@@ -83,7 +83,7 @@ const HiringModal = ({
                       <div className="flex flex-col gap-1">
                         <h4 className="font-medium">Favorite characters</h4>
                         <div className="flex gap-1">
-                          {favCharactersArr.map((favChar: any, index: any) => {
+                          {favCharactersArr?.map((favChar: any, index: any) => {
                             return (
                               <p key={index}>
                                 {favChar}
@@ -103,7 +103,7 @@ const HiringModal = ({
                       <div className="flex flex-col gap-1">
                         <h4 className="font-medium">Skills and services</h4>
                         <div className="grid grid-cols-2 gap-1">
-                          {hiringDetails.services.map(
+                          {hiringDetails?.services.map(
                             (service: any, index: any) => {
                               return (
                                 <React.Fragment key={index}>
@@ -124,23 +124,25 @@ const HiringModal = ({
                             }
                           )}
 
-                          {otherAvailabilityArr.map((item: any, index: any) => {
-                            return (
-                              <label
-                                className="flex items-center gap-2"
-                                key={index}
-                              >
-                                <input
-                                  className="border border-dark/40 p-3 rounded"
-                                  type="checkbox"
-                                  name={item}
-                                  checked={true}
-                                  disabled={true}
-                                />
-                                {item}
-                              </label>
-                            );
-                          })}
+                          {otherAvailabilityArr?.map(
+                            (item: any, index: any) => {
+                              return (
+                                <label
+                                  className="flex items-center gap-2"
+                                  key={index}
+                                >
+                                  <input
+                                    className="border border-dark/40 p-3 rounded"
+                                    type="checkbox"
+                                    name={item}
+                                    checked={true}
+                                    disabled={true}
+                                  />
+                                  {item}
+                                </label>
+                              );
+                            }
+                          )}
                         </div>
                       </div>
                     </div>
@@ -149,7 +151,7 @@ const HiringModal = ({
                       <div className="flex flex-col gap-1">
                         <h4 className="font-medium">Event availability</h4>
                         <div className="grid grid-cols-2 gap-1">
-                          {hiringDetails.availability.map(
+                          {hiringDetails.availability?.map(
                             (available: any, index: any) => {
                               return (
                                 <React.Fragment key={index}>
@@ -170,7 +172,7 @@ const HiringModal = ({
                             }
                           )}
 
-                          {otherServicesArr.map((item: any, index: any) => {
+                          {otherServicesArr?.map((item: any, index: any) => {
                             return (
                               <label
                                 className="flex items-center gap-2"
@@ -196,11 +198,11 @@ const HiringModal = ({
                         <h4 className="font-medium">Schedule and travel</h4>
                         <p>
                           <span className="capitalize">
-                            {hiringDetails.preferredSchedule.type}
+                            {hiringDetails.preferredSchedule?.type}
                           </span>
                           {" & "}
                           <span className="capitalize">
-                            {hiringDetails.travelAvailability.type}
+                            {hiringDetails.travelAvailability?.type}
                           </span>
                         </p>
                       </div>
