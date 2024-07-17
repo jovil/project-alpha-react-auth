@@ -3,7 +3,7 @@ import { useUser } from "../../context/UserContext";
 import HeaderSection from "./HeaderSection";
 import CreatePost from "./CreatePost";
 import CreateProduct from "./CreateProduct";
-import Accordion from "../../components/Accordion";
+import Accordion from "./Accordion";
 import loading from "../../assets/images/loading.gif";
 import { getFetchConfig } from "../../utils/fetchConfig";
 
@@ -89,6 +89,10 @@ const AuthComponent = () => {
   const [isSavingHiringDetails, setIsSavingHiringDetails] = useState(false);
   const [showSavedHiringDetailsMessage, setShowSavedHiringDetailsMessage] =
     useState(false);
+  const [showSavedMessageBankDetails, setShowSavedMessageBankDetails] =
+    useState(false);
+  const [showSavedMessageHiringDetails, setShowSavedMessageHiringDetails] =
+    useState(false);
 
   const fetchUser = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/user/${userState._id}`;
@@ -96,7 +100,7 @@ const AuthComponent = () => {
     try {
       const response = await fetch(url, getFetchConfig);
       const result = await response.json();
-      console.log("result.hiringDetails", result.hiringDetails);
+      console.log("result", result);
       setUserState((prev: any) => {
         return {
           ...prev,
@@ -104,11 +108,11 @@ const AuthComponent = () => {
           bankAccountDetails: result.bankAccountDetails
             ? {
                 accountHoldersName:
-                  result.bankAccountDetails.accountHoldersName,
-                accountNumber: result.bankAccountDetails.accountNumber,
-                bankName: result.bankAccountDetails.bankName,
+                  result.bankAccountDetails?.accountHoldersName,
+                accountNumber: result.bankAccountDetails?.accountNumber,
+                bankName: result.bankAccountDetails?.bankName,
               }
-            : prev.bankAccountDetails, // Preserve previous state if bankAccountDetails is undefined
+            : null,
         };
       });
 
@@ -134,6 +138,9 @@ const AuthComponent = () => {
         setHiringDetails(initialHiringDetails);
         setIsEditing(true);
       }
+
+      setShowSavedMessageBankDetails(result.bankAccountDetails ? true : false);
+      setShowSavedMessageHiringDetails(result.hasHiringDetails ? true : false);
     } catch (error) {
       console.log("error", error);
     }
@@ -152,9 +159,9 @@ const AuthComponent = () => {
     e.preventDefault();
     setIsSavingBankDetails(true);
     const postData = {
-      name: bankDetails.accountHoldersName,
-      bank: bankDetails.bankName,
-      account: bankDetails.accountNumber,
+      name: bankDetails?.accountHoldersName,
+      bank: bankDetails?.bankName,
+      account: bankDetails?.accountNumber,
     };
     const url = `${process.env.REACT_APP_API_URL}/user/update/bankDetails/${userState._id}`;
     const configuration = {
@@ -183,9 +190,9 @@ const AuthComponent = () => {
     setBankDetails((prev: any) => {
       return {
         ...prev,
-        accountHoldersName: userState.bankAccountDetails.accountHoldersName,
-        bankName: userState.bankAccountDetails.bankName,
-        accountNumber: userState.bankAccountDetails.accountNumber,
+        accountHoldersName: userState.bankAccountDetails?.accountHoldersName,
+        bankName: userState.bankAccountDetails?.bankName,
+        accountNumber: userState.bankAccountDetails?.accountNumber,
       };
     });
 
@@ -355,7 +362,10 @@ const AuthComponent = () => {
         <CreateProduct />
       </section>
       <section className="max-w-[580px] mx-auto">
-        <Accordion title="Add your bank account details for payouts">
+        <Accordion
+          title="Add your bank account details for payouts"
+          isDetailsSaved={showSavedMessageBankDetails}
+        >
           <form className="flex flex-col gap-4" onSubmit={submitBankDetails}>
             <div className="flex flex-col gap-2">
               <label>Account holder's name:</label>
@@ -365,15 +375,17 @@ const AuthComponent = () => {
                 placeholder="Account holder's name"
                 name="accountHoldersName"
                 value={
-                  userState.bankAccountDetails.accountHoldersName
-                    ? userState.bankAccountDetails.accountHoldersName
-                    : bankDetails.accountHoldersName
+                  userState.bankAccountDetails?.accountHoldersName
+                    ? userState.bankAccountDetails?.accountHoldersName
+                    : bankDetails?.accountHoldersName
                 }
                 onChange={handleChangeBankDetailsInput}
                 required
                 autoFocus
                 disabled={
-                  userState.bankAccountDetails.accountHoldersName ? true : false
+                  userState.bankAccountDetails?.accountHoldersName
+                    ? true
+                    : false
                 }
               />
             </div>
@@ -385,13 +397,13 @@ const AuthComponent = () => {
                 placeholder="Bank name"
                 name="bankName"
                 value={
-                  userState.bankAccountDetails.bankName
-                    ? userState.bankAccountDetails.bankName
+                  userState.bankAccountDetails?.bankName
+                    ? userState.bankAccountDetails?.bankName
                     : bankDetails.bankName
                 }
                 onChange={handleChangeBankDetailsInput}
                 required
-                disabled={userState.bankAccountDetails.bankName ? true : false}
+                disabled={userState.bankAccountDetails?.bankName ? true : false}
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -402,20 +414,20 @@ const AuthComponent = () => {
                 placeholder="Account number"
                 name="accountNumber"
                 value={
-                  userState.bankAccountDetails.accountNumber
-                    ? userState.bankAccountDetails.accountNumber
+                  userState.bankAccountDetails?.accountNumber
+                    ? userState.bankAccountDetails?.accountNumber
                     : bankDetails.accountNumber
                 }
                 onChange={handleChangeBankDetailsInput}
                 required
                 disabled={
-                  userState.bankAccountDetails.accountNumber ? true : false
+                  userState.bankAccountDetails?.accountNumber ? true : false
                 }
               />
             </div>
-            {userState.bankAccountDetails.accountHoldersName &&
-            userState.bankAccountDetails.bankName &&
-            userState.bankAccountDetails.accountNumber ? (
+            {userState.bankAccountDetails?.accountHoldersName &&
+            userState.bankAccountDetails?.bankName &&
+            userState.bankAccountDetails?.accountNumber ? (
               <>
                 <button
                   onClick={editBankDetails}
@@ -447,7 +459,10 @@ const AuthComponent = () => {
             )}
           </form>
         </Accordion>
-        <Accordion title="Add a “Hire Me” button to your profile">
+        <Accordion
+          title="Add a “Hire Me” button to your profile"
+          isDetailsSaved={showSavedMessageHiringDetails}
+        >
           <p className="text-dark/80 mb-8 max-w-[480px]">
             Let fans and potential clients know you're available for gigs,
             events, and photoshoots!
