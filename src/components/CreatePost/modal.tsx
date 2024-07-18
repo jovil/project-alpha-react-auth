@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { useUser } from "../context/UserContext";
+import { useUser } from "../../context/UserContext";
 import Notify from "simple-notify";
 import "simple-notify/dist/simple-notify.css";
 import Cookies from "universal-cookie";
-import loading from "../assets/images/loading.gif";
-import { usePosts } from "../context/PostsContext";
+import loading from "../../assets/images/loading.gif";
+import { usePosts } from "../../context/PostsContext";
 
 const CreatePostModal = ({
   isImageBase64,
