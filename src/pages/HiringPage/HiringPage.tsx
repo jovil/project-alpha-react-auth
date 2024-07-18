@@ -16,6 +16,7 @@ const HiringPage = () => {
   const [noUsers, setNoUsers] = useState(false);
   const [showHiringModal, setShowHiringModal] = useState<boolean>(false);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
 
   const fetchUsersForHire = async () => {
     try {
@@ -48,6 +49,7 @@ const HiringPage = () => {
 
   const handleLoading = () => {
     setIsLoading(false);
+    setRunShimmerAnimation(true);
   };
 
   return (
@@ -99,7 +101,10 @@ const HiringPage = () => {
                           : ""
                       }`}
                     >
-                      <div className="h-full w-full">
+                      <div className="h-full w-full relative overflow-hidden">
+                        {runShimmerAnimation && (
+                          <div className="shimmer-overlay"></div>
+                        )}
                         <img
                           className={
                             isLoading

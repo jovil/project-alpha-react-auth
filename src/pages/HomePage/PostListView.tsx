@@ -15,6 +15,7 @@ const PostListView = () => {
   const [noPosts, setNoPosts] = useState(false);
   const [postImageIsLoading, setPostImageLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
   const limit = 9;
   const url = `${process.env.REACT_APP_API_URL}/posts?page=${page}&limit=${limit}`;
   const isFetchingRef = useRef(false); // To keep track of fetching state
@@ -51,16 +52,8 @@ const PostListView = () => {
   }, [url, setAllPosts]);
 
   useEffect(() => {
-    console.log("allPosts", allPosts);
-  }, [allPosts]);
-
-  useEffect(() => {
     fetchPosts();
   }, [fetchPosts]);
-
-  useEffect(() => {
-    fetchPosts();
-  }, [page, fetchPosts]);
 
   useEffect(() => {
     const handleIntersect = (entries: any) => {
@@ -99,6 +92,7 @@ const PostListView = () => {
 
   const handlePostImageLoad = () => {
     setPostImageLoading(false);
+    setRunShimmerAnimation(true);
   };
 
   const handlePostsGridView = () => {
@@ -158,7 +152,10 @@ const PostListView = () => {
                     }`}
                     key={post._id}
                   >
-                    <div className="h-full">
+                    <div className="h-full relative overflow-hidden">
+                      {runShimmerAnimation && (
+                        <div className="shimmer-overlay"></div>
+                      )}
                       <img
                         className={
                           postImageIsLoading

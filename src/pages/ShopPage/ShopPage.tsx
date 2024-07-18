@@ -19,6 +19,7 @@ const ShopPage = () => {
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
   const [productId, setProductId] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
 
   const fetchProducts = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/products`;
@@ -42,6 +43,7 @@ const ShopPage = () => {
 
   const handleProductImageLoad = () => {
     setIsLoading(false);
+    setRunShimmerAnimation(true);
   };
 
   const handleToggleModal = (productItemId: any) => {
@@ -117,10 +119,13 @@ const ShopPage = () => {
                     <div
                       className={`relative aspect-square ${
                         state.productsView === "grid"
-                          ? "tablet:aspect-[3/4] h-full"
+                          ? "tablet:aspect-[3/4] h-full overflow-hidden"
                           : "tablet:col-span-4"
                       }`}
                     >
+                      {runShimmerAnimation && (
+                        <div className="shimmer-overlay"></div>
+                      )}
                       {isLoading && (
                         <img
                           className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"

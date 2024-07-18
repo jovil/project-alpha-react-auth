@@ -23,6 +23,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
   const { allPosts } = usePosts();
   const [posts, setPosts] = useState<Posts[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
 
   const fetchPosts = useCallback(async () => {
     const url = `${apiUrl}/posts/${userId}`;
@@ -41,6 +42,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
 
   const handlePostImageLoad = () => {
     setIsLoading(false);
+    setRunShimmerAnimation(true);
   };
 
   return (
@@ -62,7 +64,10 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
                   className="desktop:max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group tablet:aspect-[3/4]"
                   key={post._id}
                 >
-                  <div className="h-full">
+                  <div className="h-full relative overflow-hidden">
+                    {runShimmerAnimation && (
+                      <div className="shimmer-overlay"></div>
+                    )}
                     {isLoading && (
                       <img
                         className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"

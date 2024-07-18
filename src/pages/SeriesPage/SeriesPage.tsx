@@ -13,6 +13,7 @@ const SeriesPage = () => {
   const { state, setState } = useContext(GlobalStateContext);
   const [seriesPosts, setSeriesPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
 
   const fetchSeries = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/series/${seriesTitle}`;
@@ -33,6 +34,7 @@ const SeriesPage = () => {
 
   const handlePostImageLoad = () => {
     setIsLoading(false);
+    setRunShimmerAnimation(true);
   };
 
   const handleGridView = () => {
@@ -90,7 +92,10 @@ const SeriesPage = () => {
                     }`}
                     key={post._id}
                   >
-                    <div className="h-full">
+                    <div className="h-full relative overflow-hidden">
+                      {runShimmerAnimation && (
+                        <div className="shimmer-overlay"></div>
+                      )}
                       <img
                         className={
                           isLoading

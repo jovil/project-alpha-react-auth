@@ -21,6 +21,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
   const [productId, setProductId] = useState();
+  const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
 
   const fetchProducts = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/products/${profileId}`;
@@ -54,6 +55,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
 
   const handlePostImageLoad = () => {
     setIsLoading(false);
+    setRunShimmerAnimation(true);
   };
 
   const handleToggleModal = (productItemId: any) => {
@@ -90,7 +92,10 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
                     className="desktop:max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group"
                     key={product._id}
                   >
-                    <div className="relative tablet:aspect-[3/4]">
+                    <div className="relative tablet:aspect-[3/4] overflow-hidden">
+                      {runShimmerAnimation && (
+                        <div className="shimmer-overlay"></div>
+                      )}
                       {isLoading && (
                         <img
                           className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
