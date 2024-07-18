@@ -2,6 +2,7 @@ import React from "react";
 import loading from "../assets/images/loading.gif";
 import Backdrop from "./Backdrop";
 import { motion } from "framer-motion";
+import { slideInFromBottom } from "../utils/animations";
 
 const HiringModal = ({
   isUser,
@@ -18,29 +19,11 @@ const HiringModal = ({
   const { otherAvailability } = hiringDetails;
   const otherAvailabilityArr = otherAvailability?.split(",");
 
-  const slideIn = {
-    hidden: {
-      opacity: 0,
-      y: "50px",
-    },
-    visible: {
-      opacity: 1,
-      y: "0",
-      transition: {
-        duration: 0.2,
-      },
-    },
-    exit: {
-      opacity: 0,
-      y: "50px",
-    },
-  };
-
   return (
     <>
       <Backdrop onClick={onToggleModal} showCloseButton={true}>
         <motion.div
-          variants={slideIn}
+          variants={slideInFromBottom}
           initial="hidden"
           animate="visible"
           exit="exit"

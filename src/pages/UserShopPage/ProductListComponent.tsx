@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import ProductModal from "../../components/ProductModalComponent";
 import { getFetchConfig } from "../../utils/fetchConfig";
@@ -65,7 +65,11 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
     <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4 py-16">
       <header className="hidden tablet:flex justify-between items-center gap-2">
         <h1>
-          <span className="capitalize">{isUser.userName}</span>'s shop
+          <NavLink className="capitalize underline" to={`/user/${isUser._id}`}>
+            {isUser.userName}
+          </NavLink>
+          {" > "}
+          <span>Shop</span>
         </h1>
       </header>
       <div className="grid tablet:grid-cols-2 desktop:grid-cols-3 gap-1 max-w-[908px] w-full mx-auto">

@@ -7,6 +7,7 @@ import Backdrop from "./Backdrop";
 import { motion } from "framer-motion";
 import loading from "../assets/images/loading.gif";
 import { getFetchConfig } from "../utils/fetchConfig";
+import { slideInFromRight } from "../utils/animations";
 
 interface Product {
   productName: string;
@@ -15,24 +16,6 @@ interface Product {
   fileUrl: string[];
   paymentLink: string;
 }
-
-const slideIn = {
-  hidden: {
-    opacity: 0,
-    x: "50px",
-  },
-  visible: {
-    opacity: 1,
-    x: "0",
-    transition: {
-      duration: 0.2,
-    },
-  },
-  exit: {
-    opacity: 0,
-    x: "50px",
-  },
-};
 
 const ProductModal = ({
   productId,
@@ -104,7 +87,7 @@ const ProductModal = ({
       <Backdrop onClick={onToggleModal} showCloseButton={false}>
         <motion.div
           className="h-full w-2/5 overflow-scroll ml-auto"
-          variants={slideIn}
+          variants={slideInFromRight}
           initial="hidden"
           animate="visible"
           exit="exit"
