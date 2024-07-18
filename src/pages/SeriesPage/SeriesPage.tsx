@@ -49,7 +49,13 @@ const SeriesPage = () => {
     <>
       <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4">
         <header className="hidden tablet:flex justify-between items-center gap-2">
-          <h1>{seriesTitle} series</h1>
+          <h1>
+            <NavLink className="underline" to="/series">
+              All series
+            </NavLink>
+            {" > "}
+            <span className="capitalize">{seriesTitle}</span> series
+          </h1>
           <div className="flex justify-end">
             <button>
               <img

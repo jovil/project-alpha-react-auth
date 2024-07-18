@@ -13,6 +13,7 @@ import ShopPage from "./pages/ShopPage/ShopPage";
 import UserPage from "./pages/UserPage/UserPage";
 import SeriesPage from "./pages/SeriesPage/SeriesPage";
 import HiringPage from "./pages/HiringPage/HiringPage";
+import SeriesListPage from "./pages/SeriesListPage";
 
 function App() {
   const cookies = new Cookies();
@@ -127,6 +128,7 @@ function App() {
           <Route path={`/series/:seriesTitle`} element={<SeriesPage />} />
           <Route path={`/shop`} element={<ShopPage />} />
           <Route path={`/hirecosplayer`} element={<HiringPage />} />
+          <Route path={`/series`} element={<SeriesListPage />} />
         </Routes>
       </main>
     </div>
