@@ -79,6 +79,7 @@ const CreatePostModal = ({
       "post",
       JSON.stringify({
         _id: userState._id,
+        userName: userState.userName,
         email: userState.email,
         characterName: post.characterName,
         seriesTitle: post.seriesTitle,

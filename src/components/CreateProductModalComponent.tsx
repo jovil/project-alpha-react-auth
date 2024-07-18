@@ -21,11 +21,13 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     productDescription: string;
     price: string;
     _id: string;
+    userName: string;
   }>({
     productName: "",
     productDescription: "",
     price: "",
     _id: userState._id,
+    userName: userState.userName,
   });
   const location = useLocation();
   const url = `${process.env.REACT_APP_API_URL}/create/product`;
