@@ -106,7 +106,7 @@ const AuthComponent = () => {
       setUserState((prev: any) => {
         return {
           ...prev,
-          avatar64: result.avatar,
+          avatar: result.avatar,
           bankAccountDetails: result.bankAccountDetails
             ? {
                 accountHoldersName:

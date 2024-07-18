@@ -57,7 +57,7 @@ const CreatePost = () => {
             <div className="max-w-[908px] flex flex-col justify-center items-center gap-3.5 mx-auto">
               <img
                 className="rounded-full w-10 h-10 object-cover border border-dark/30 shadow-md"
-                src={userState.avatar64 ? userState.avatar64 : defaultAvatar}
+                src={userState.avatar ? userState.avatar : defaultAvatar}
                 alt=""
               />
               <Form className="flex flex-col pointer-events-auto">
