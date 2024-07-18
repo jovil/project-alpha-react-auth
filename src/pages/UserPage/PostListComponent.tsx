@@ -1,7 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import { usePosts } from "../../context/PostsContext";
 import loading from "../../assets/images/loading.gif";
 import { getFetchConfig } from "../../utils/fetchConfig";
+import { apiUrl } from "../../utils/fetchConfig";
 
 interface User {
   _id: string;
@@ -18,12 +20,12 @@ interface Posts {
 
 const ProductListComponent = ({ isUser }: { isUser: any }) => {
   const { userId } = useParams();
+  const { allPosts } = usePosts();
   const [posts, setPosts] = useState<Posts[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchPosts = useCallback(async () => {
-    const url = `${process.env.REACT_APP_API_URL}/posts/${userId}`;
-
+    const url = `${apiUrl}/posts/${userId}`;
     try {
       const response = await fetch(url, getFetchConfig);
       const result: Posts[] = await response.json();
@@ -35,7 +37,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
 
   useEffect(() => {
     fetchPosts();
-  }, [fetchPosts]);
+  }, [fetchPosts, allPosts]);
 
   const handlePostImageLoad = () => {
     setIsLoading(false);

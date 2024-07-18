@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import HeaderSection from "./HeaderSection";
 import PostListComponent from "./PostListComponent";
+import CreatePost from "../../components/CreatePost";
 import { getFetchConfig } from "../../utils/fetchConfig";
 
 const UserPostListPage = () => {
@@ -38,6 +39,7 @@ const UserPostListPage = () => {
     <>
       <HeaderSection isUser={user} isLoadingAvatar={isLoadingAvatar} />
       <PostListComponent isUser={user} />
+      <CreatePost />
     </>
   );
 };
