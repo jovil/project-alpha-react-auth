@@ -1,9 +1,11 @@
 import { useEffect, useCallback, useState, useContext } from "react";
+import { NavLink } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import { useUser } from "../../context/UserContext";
 import { useProducts } from "../../context/ProductsContext";
 import ProductModal from "../../components/ProductModalComponent";
 import CreateProductComponent from "../../components/CreateProductComponent";
+import defaultAvatar from "../../assets/images/toon_6.png";
 import loading from "../../assets/images/loading.gif";
 import iconGrid from "../../assets/images/icon-grid.svg";
 import iconList from "../../assets/images/icon-list.svg";
@@ -33,21 +35,6 @@ const ShopPage = () => {
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const url = `${process.env.REACT_APP_API_URL}/products`;
-
-      try {
-        const response = await fetch(url, getFetchConfig);
-        const result = await response.json();
-        setAllProducts(result);
-      } catch (error) {
-        console.log("error creating post", error);
-      }
-    };
-    fetchProducts();
-  }, [setAllProducts]);
 
   useEffect(() => {
     document.body.style.overflow = isProductModalVisible ? "hidden" : "auto";
@@ -154,7 +141,7 @@ const ShopPage = () => {
                       />
                     </div>
                     <div
-                      className={`flex flex-col justify-between gap-4 p-4 w-full ${
+                      className={`flex flex-col justify-between gap-5 p-4 w-full ${
                         state.productsView === "grid"
                           ? "tablet:absolute tablet:p-3 tablet:pt-12 tablet:bottom-0 tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition"
                           : "tablet:col-span-8"
@@ -164,20 +151,47 @@ const ShopPage = () => {
                         <p>{product.productName}</p>
                         <p className="text-sm">{product.productDescription}</p>
                       </div>
-                      <div className="flex justify-between items-center">
-                        <button
-                          className={`text-xs ${
-                            state.productsView === "grid"
-                              ? "btn-outline-overlay"
-                              : "btn-outline-dark"
-                          }`}
-                          onClick={() => {
-                            handleToggleModal(product._id);
-                          }}
-                        >
-                          Show product
-                        </button>
-                        <p className="ml-auto">RM {product.productPrice}</p>
+
+                      <div className="flex flex-col gap-4">
+                        <div>
+                          <NavLink
+                            className="flex gap-1.5 items-center"
+                            to={`/user/${product.user._id}`}
+                          >
+                            {product.user.avatar.length > 0 ? (
+                              <img
+                                className="rounded-full w-6 h-6 border border-dark/10"
+                                src={product.user.avatar}
+                                alt=""
+                              />
+                            ) : (
+                              <img
+                                className="rounded-full w-6 h-6 border border-dark/10"
+                                src={defaultAvatar}
+                                alt=""
+                              />
+                            )}
+                            <p className="text-xs underline">
+                              @{product.user.userName}
+                            </p>
+                          </NavLink>
+                        </div>
+
+                        <div className="flex justify-between items-center">
+                          <button
+                            className={`text-xs ${
+                              state.productsView === "grid"
+                                ? "btn-outline-small-no-hover tablet:btn-outline-small"
+                                : "btn-outline-dark"
+                            }`}
+                            onClick={() => {
+                              handleToggleModal(product._id);
+                            }}
+                          >
+                            Show product
+                          </button>
+                          <p className="ml-auto">RM {product.productPrice}</p>
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -26,9 +26,11 @@ const HeaderSection = ({
 
   return (
     <>
-      <header className="flex justify-center relative">
-        <div className="text-xs font-medium flex flex-col gap-4 items-center">
+      <header className="max-w-[908px] grid grid-cols-12 justify-center mx-auto relative">
+        <div className="col-span-1"></div>
+        <div className="col-span-10 text-xs  flex flex-col gap-4 items-center">
           <div className="flex flex-col gap-3 items-center">
+            <p className="text-dark">Profile</p>
             <div className="w-16 h-16 border border-dark/60 rounded shadow-md relative overflow-hidden">
               {isLoadingAvatar && (
                 <img
@@ -49,9 +51,9 @@ const HeaderSection = ({
                 alt=""
               />
             </div>
-            <p>{isUser.userName}</p>
+            <p className="font-medium">{isUser.userName}</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="font-medium flex items-center gap-4">
             {isUser?.hasHiringDetails && (
               <button className="btn-outline-dark" onClick={handleToggleModal}>
                 Hire @{isUser.userName}
@@ -64,6 +66,7 @@ const HeaderSection = ({
             )}
           </div>
         </div>
+        <div className="col-span-1"></div>
       </header>
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
         {showHiringModal && (

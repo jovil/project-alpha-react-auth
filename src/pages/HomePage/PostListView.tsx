@@ -216,6 +216,7 @@ const PostListView = () => {
                                 className="btn-outline-small-no-hover tablet:btn-outline-small text-center group flex items-center gap-1.5"
                                 to={`/shop/${post.user._id}`}
                               >
+                                <p>Shop</p>
                                 <svg
                                   className="w-4 h-4"
                                   width="24"

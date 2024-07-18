@@ -44,9 +44,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
   return (
     <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4 py-16">
       <header className="hidden tablet:flex justify-between items-center gap-2">
-        <h1>
-          <span className="capitalize">{isUser.userName}</span>'s posts
-        </h1>
+        <h2>All posts</h2>
       </header>
       <div className="grid tablet:grid-cols-2 desktop:grid-cols-3 gap-1 max-w-[908px] w-full mx-auto">
         {posts?.length ? (

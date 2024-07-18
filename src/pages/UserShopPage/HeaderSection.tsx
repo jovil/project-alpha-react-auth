@@ -11,7 +11,8 @@ const HeaderSection = ({
   return (
     <>
       <header className="flex justify-center relative">
-        <div className="text-xs font-medium flex flex-col gap-3 items-center">
+        <div className="text-xs flex flex-col gap-4 items-center">
+          <p className="text-dark">Shop</p>
           <div className="w-16 h-16 border border-dark/60 rounded shadow-md relative overflow-hidden">
             {profileLoadingAvatar && (
               <img
@@ -32,7 +33,7 @@ const HeaderSection = ({
               alt=""
             />
           </div>
-          <p>{profileHeader.userName}</p>
+          <p className="font-medium">{profileHeader.userName}</p>
         </div>
       </header>
     </>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { NavLink } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import HiringModal from "../../components/HiringModal";
 import { apiUrl, getFetchConfig } from "../../utils/fetchConfig";
@@ -91,13 +92,12 @@ const HiringPage = () => {
               {users?.toReversed().map((user: any, index: number) => {
                 return (
                   <React.Fragment key={index}>
-                    <button
+                    <div
                       className={`w-full h-auto text-left border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group ${
                         state.hiringView === "grid"
                           ? "desktop:max-w-[300px] tablet:aspect-[3/4]"
                           : ""
                       }`}
-                      onClick={() => handleToggleModal(user._id)}
                     >
                       <div className="h-full w-full">
                         <img
@@ -119,8 +119,38 @@ const HiringPage = () => {
                       </div>
                       <div className="flex flex-col justify-between gap-6 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
                         <p>{user.userName}</p>
+                        <div className="flex justify-between items-center">
+                          <NavLink
+                            className="flex gap-1.5 items-center"
+                            to={`/user/${user._id}`}
+                          >
+                            {user.avatar.length > 0 ? (
+                              <img
+                                className="rounded-full w-6 h-6 border border-dark/10"
+                                src={user.avatar}
+                                alt=""
+                              />
+                            ) : (
+                              <img
+                                className="rounded-full w-6 h-6 border border-dark/10"
+                                src={defaultAvatar}
+                                alt=""
+                              />
+                            )}
+                            <p className="text-xs underline">
+                              @{user.userName}
+                            </p>
+                          </NavLink>
+
+                          <button
+                            className="btn-outline-small-no-hover tablet:btn-outline-small text-center group flex items-center gap-1.5"
+                            onClick={() => handleToggleModal(user._id)}
+                          >
+                            Hire {user.userName}
+                          </button>
+                        </div>
                       </div>
-                    </button>
+                    </div>
                     <AnimatePresence
                       initial={false}
                       mode="wait"
