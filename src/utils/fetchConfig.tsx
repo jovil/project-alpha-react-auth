@@ -6,3 +6,13 @@ export const getFetchConfig = {
     "Content-Type": "application/json",
   },
 };
+
+export const postFetchConfig = (data: any) => {
+  return {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+};

@@ -33,7 +33,7 @@ const UserPostListPage = () => {
     };
 
     fetchUser();
-  }, [userId, setUser]);
+  }, [userId, setUser, user]);
 
   return (
     <>
