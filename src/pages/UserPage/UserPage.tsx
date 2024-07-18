@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import HeaderSection from "./HeaderSection";
 import PostListComponent from "./PostListComponent";
@@ -18,22 +18,21 @@ const UserPostListPage = () => {
   });
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
 
-  useEffect(() => {
+  const fetchUser = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/user/${userId}`;
+    try {
+      const response = await fetch(url, getFetchConfig);
+      const result = await response.json();
+      setUser(result);
+      setIsLoadingAvatar(false);
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    }
+  }, [userId, setUser]);
 
-    const fetchUser = async () => {
-      try {
-        const response = await fetch(url, getFetchConfig);
-        const result = await response.json();
-        setUser(result);
-        setIsLoadingAvatar(false);
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      }
-    };
-
+  useEffect(() => {
     fetchUser();
-  }, [userId, setUser, user]);
+  }, [fetchUser]);
 
   return (
     <>

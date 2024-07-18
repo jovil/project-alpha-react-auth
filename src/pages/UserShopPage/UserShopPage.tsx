@@ -35,12 +35,10 @@ const UserShopPage = () => {
     fetchProfile();
   }, [profileId, setProfile]);
 
-  useEffect(() => {}, [profile]);
-
   return (
     <>
       <HeaderSection
-        profileHeader={profile}
+        isProfile={profile}
         profileLoadingAvatar={isLoadingAvatar}
       />
       {profileId === userState._id && <CreateProductComponent />}

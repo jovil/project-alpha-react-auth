@@ -26,10 +26,6 @@ const HeaderSection = ({
     document.body.style.overflow = showHiringModal ? "hidden" : "auto";
   }, [showHiringModal]);
 
-  // useEffect(() => {
-  //   setProfileDescriptionText(isUser.profileDescription);
-  // }, [profileDescriptionText, isUser.profileDescription]);
-
   const handleToggleModal = () => {
     setShowHiringModal((prevState) => !prevState);
   };
@@ -44,11 +40,11 @@ const HeaderSection = ({
     setShowDescriptionForm(true);
   };
 
-  const postProfileDescription = async (description: any) => {
-    const url = `${apiUrl}/user/profileDescription`;
+  const submitProfileDescription = async (e: any) => {
+    e.preventDefault();
+    const url = `${apiUrl}/user/profileDescription/${userState._id}`;
 
     const data = {
-      userId: userState._id,
       profileDescription: profileDescriptionText,
     };
 
@@ -68,16 +64,10 @@ const HeaderSection = ({
     }
   };
 
-  const submitProfileDescription = (e: any) => {
-    e.preventDefault();
-    postProfileDescription(profileDescriptionText);
-  };
-
   return (
     <>
-      <header className="max-w-[908px] grid grid-cols-12 justify-center mx-auto relative">
-        <div className="col-span-1"></div>
-        <div className="col-span-10 text-xs  flex flex-col gap-4 items-center">
+      <header className="max-w-[908px] justify-center mx-auto relative">
+        <div className="text-xs flex flex-col gap-4 items-center">
           <div className="flex flex-col gap-3 items-center">
             <p className="text-dark">Profile</p>
             <div className="w-16 h-16 border border-dark/60 rounded shadow-md relative overflow-hidden">
@@ -114,6 +104,7 @@ const HeaderSection = ({
                   </button>
                 </div>
               )}
+
               {showDescriptionForm && (
                 <form
                   className="flex flex-col gap-2"
@@ -140,7 +131,9 @@ const HeaderSection = ({
           )}
           {isUser.profileDescription && (
             <div className="flex flex-col items-center gap-2 pb-3">
-              <p className="text-sm">{isUser.profileDescription}</p>
+              <p className="text-sm">
+                {userState.profileDescription || isUser.profileDescription}
+              </p>
               {userState._id === userId && !showDescriptionForm && (
                 <button
                   className="text-black-100/60 underline"
@@ -164,7 +157,6 @@ const HeaderSection = ({
             )}
           </div>
         </div>
-        <div className="col-span-1"></div>
       </header>
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
         {showHiringModal && (

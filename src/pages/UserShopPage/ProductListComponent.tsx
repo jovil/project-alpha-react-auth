@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import ProductModal from "../../components/ProductModalComponent";
@@ -77,7 +77,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
       <div className="grid tablet:grid-cols-2 desktop:grid-cols-3 gap-1 max-w-[908px] w-full mx-auto">
         {products.length ? (
           <>
-            {products?.toReversed().map((product: any) => {
+            {products?.toReversed().map((product: any, index: number) => {
               if (!product || !product.fileUrl || !product.fileUrl.length) {
                 console.warn(
                   "Product or fileUrl is undefined or empty",
@@ -87,11 +87,8 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
               }
 
               return (
-                <>
-                  <div
-                    className="desktop:max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group"
-                    key={product._id}
-                  >
+                <React.Fragment key={index}>
+                  <div className="desktop:max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group">
                     <div className="relative tablet:aspect-[3/4] overflow-hidden">
                       {runShimmerAnimation && (
                         <div className="shimmer-overlay"></div>
@@ -144,7 +141,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
                       />
                     )}
                   </AnimatePresence>
-                </>
+                </React.Fragment>
               );
             })}
           </>
