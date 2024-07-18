@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
+import Notify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
 import HeaderSection from "./HeaderSection";
 import CreatePost from "./CreatePost";
 import CreateProduct from "./CreateProduct";
@@ -178,8 +180,12 @@ const AuthComponent = () => {
       setShowSavedBankDetailsMessage(true);
       setTimeout(() => {
         setShowSavedBankDetailsMessage(false);
-        window.location.reload();
       }, 800);
+
+      new Notify({
+        title: "Details saved successfully",
+        text: "Future payouts will be processed using the new details.",
+      });
     } catch (error) {
       console.log("error", error);
     }
@@ -346,8 +352,12 @@ const AuthComponent = () => {
       setShowSavedHiringDetailsMessage(true);
       setTimeout(() => {
         setShowSavedHiringDetailsMessage(false);
-        window.location.reload();
       }, 800);
+
+      new Notify({
+        title: "Profile created successfully",
+        text: "Your hiring profile is now live.",
+      });
     } catch (error) {
       console.log("error", error);
       setIsSavingHiringDetails(false);

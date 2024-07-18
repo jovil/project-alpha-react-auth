@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
-import { useUser } from "../context/UserContext";
-import loading from "../assets/images/loading.gif";
 import { useLocation } from "react-router-dom";
+import { useUser } from "../context/UserContext";
+import { useProducts } from "../context/ProductsContext";
+import Notify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
+import loading from "../assets/images/loading.gif";
 
 const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
   const { userState, setUserState } = useUser();
+  const { setAllProducts } = useProducts();
   const [productImages, setProductImages] = useState<string[]>([]);
   const [imageBase64Array, setImageBase64Array] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -67,7 +71,7 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     if (!handlePriceInput()) return;
     setIsLoading(true);
 
-    setProduct((prev) => {
+    setProduct((prev: any) => {
       return {
         ...prev,
         productName: product.productName,
@@ -93,17 +97,26 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
       await createStripeProduct(
         data._id,
         data.productName,
-        data.productDescription,
+        data.productDescription.length > 0 ? data.productDescription : " ",
         data.productPrice,
         data.fileUrl
       );
+      // Add new product to the start of the array
+      setAllProducts((prev: any) => [data, ...prev]);
       if (location.pathname === "/auth")
         !userState.hasProducts && (await updateHasProducts());
       onToggleModal(false);
       setIsLoading(false);
-      window.location.reload();
+      new Notify({
+        title: "Product created successfully",
+        text: "Your new product is now live.",
+      });
     } catch (error) {
       console.log("error", error);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+      document.body.style.pointerEvents = "auto";
     }
   };
 

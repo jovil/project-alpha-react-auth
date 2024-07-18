@@ -1,6 +1,7 @@
 import { useEffect, useCallback, useState, useContext } from "react";
 import { GlobalStateContext } from "../../context/Context";
 import { useUser } from "../../context/UserContext";
+import { useProducts } from "../../context/ProductsContext";
 import ProductModal from "../../components/ProductModalComponent";
 import CreateProductComponent from "../../components/CreateProductComponent";
 import loading from "../../assets/images/loading.gif";
@@ -11,7 +12,7 @@ import { getFetchConfig } from "../../utils/fetchConfig";
 const ShopPage = () => {
   const { state, setState } = useContext(GlobalStateContext);
   const { userState } = useUser();
-  const [allProducts, setAllProducts] = useState<any>();
+  const { allProducts, setAllProducts } = useProducts();
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
   const [productId, setProductId] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -26,11 +27,26 @@ const ShopPage = () => {
     } catch (error) {
       console.log("error creating post", error);
     }
-  }, []);
+  }, [setAllProducts]);
 
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const url = `${process.env.REACT_APP_API_URL}/products`;
+
+      try {
+        const response = await fetch(url, getFetchConfig);
+        const result = await response.json();
+        setAllProducts(result);
+      } catch (error) {
+        console.log("error creating post", error);
+      }
+    };
+    fetchProducts();
+  }, [setAllProducts]);
 
   const handleProductImageLoad = () => {
     setIsLoading(false);
@@ -88,7 +104,7 @@ const ShopPage = () => {
         >
           {allProducts?.length ? (
             <>
-              {allProducts?.toReversed().map((product: any) => {
+              {allProducts?.map((product: any) => {
                 if (!product || !product.fileUrl || !product.fileUrl.length) {
                   console.warn(
                     "Product or fileUrl is undefined or empty",

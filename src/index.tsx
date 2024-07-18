@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { GlobalStateProvider } from "./context/Context";
 import { UserProvider } from "./context/UserContext";
 import { PostsProvider } from "./context/PostsContext";
+import { ProductsProvider } from "./context/ProductsContext";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
@@ -16,9 +17,11 @@ root.render(
     <GlobalStateProvider>
       <UserProvider>
         <PostsProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <ProductsProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </ProductsProvider>
         </PostsProvider>
       </UserProvider>
     </GlobalStateProvider>
