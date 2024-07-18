@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import Swiper from "swiper";
 import "swiper/css";
 import { Thumbs } from "swiper/modules";
+import Backdrop from "./Backdrop";
+import { motion } from "framer-motion";
 import loading from "../assets/images/loading.gif";
 import { getFetchConfig } from "../utils/fetchConfig";
 
@@ -13,6 +15,24 @@ interface Product {
   fileUrl: string[];
   paymentLink: string;
 }
+
+const slideIn = {
+  hidden: {
+    opacity: 0,
+    x: "50px",
+  },
+  visible: {
+    opacity: 1,
+    x: "0",
+    transition: {
+      duration: 0.2,
+    },
+  },
+  exit: {
+    opacity: 0,
+    x: "50px",
+  },
+};
 
 const ProductModal = ({
   productId,
@@ -73,7 +93,7 @@ const ProductModal = ({
     };
 
     fetchProduct();
-  }, [productId, onToggleModal]);
+  }, [productId]);
 
   useEffect(() => {
     console.log("product", product);
@@ -81,12 +101,13 @@ const ProductModal = ({
 
   return (
     <>
-      <div
-        className="fixed inset-0 bg-dark/60 backdrop-blur z-20"
-        onClick={onToggleModal}
-      >
-        <div
+      <Backdrop onClick={onToggleModal} showCloseButton={false}>
+        <motion.div
           className="h-full w-2/5 overflow-scroll ml-auto"
+          variants={slideIn}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="min-h-[calc(100vh-16px)] m-2 bg-white rounded p-3 pb-16 flex flex-col gap-3 relative">
@@ -168,8 +189,8 @@ const ProductModal = ({
               />
             )}
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </Backdrop>
     </>
   );
 };

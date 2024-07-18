@@ -38,7 +38,7 @@ const HiringModal = ({
 
   return (
     <>
-      <Backdrop onClick={onToggleModal}>
+      <Backdrop onClick={onToggleModal} showCloseButton={true}>
         <motion.div
           variants={slideIn}
           initial="hidden"

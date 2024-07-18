@@ -8,6 +8,7 @@ import loading from "../../assets/images/loading.gif";
 import iconGrid from "../../assets/images/icon-grid.svg";
 import iconList from "../../assets/images/icon-list.svg";
 import { getFetchConfig } from "../../utils/fetchConfig";
+import { AnimatePresence } from "framer-motion";
 
 const ShopPage = () => {
   const { state, setState } = useContext(GlobalStateContext);
@@ -47,6 +48,10 @@ const ShopPage = () => {
     };
     fetchProducts();
   }, [setAllProducts]);
+
+  useEffect(() => {
+    document.body.style.overflow = isProductModalVisible ? "hidden" : "auto";
+  }, [isProductModalVisible]);
 
   const handleProductImageLoad = () => {
     setIsLoading(false);
@@ -186,12 +191,18 @@ const ShopPage = () => {
               </p>
             </>
           )}
-          {isProductModalVisible && (
-            <ProductModal
-              productId={productId}
-              onToggleModal={handleToggleModal}
-            />
-          )}
+          <AnimatePresence
+            initial={false}
+            mode="wait"
+            onExitComplete={() => null}
+          >
+            {isProductModalVisible && (
+              <ProductModal
+                productId={productId}
+                onToggleModal={handleToggleModal}
+              />
+            )}
+          </AnimatePresence>
         </div>
       </section>
       {userState._id && <CreateProductComponent />}

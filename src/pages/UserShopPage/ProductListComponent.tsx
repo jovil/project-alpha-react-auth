@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import ProductModal from "../../components/ProductModalComponent";
 import { getFetchConfig } from "../../utils/fetchConfig";
+import { AnimatePresence } from "framer-motion";
 
 interface Product {
   _id: string;
@@ -80,47 +81,61 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
               }
 
               return (
-                <div
-                  className="desktop:max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group"
-                  key={product._id}
-                >
-                  <div className="relative tablet:aspect-[3/4]">
-                    {isLoading && (
+                <>
+                  <div
+                    className="desktop:max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group"
+                    key={product._id}
+                  >
+                    <div className="relative tablet:aspect-[3/4]">
+                      {isLoading && (
+                        <img
+                          className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
+                          src={loading}
+                          alt=""
+                        />
+                      )}
                       <img
-                        className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
-                        src={loading}
-                        alt=""
+                        className="tablet:aspect-[3/4] w-full object-cover rounded-sm"
+                        src={product.fileUrl[product.fileUrl.length - 1] || ""}
+                        alt={product.productName}
+                        loading="lazy"
+                        onLoad={handlePostImageLoad}
+                      />
+                    </div>
+                    <div className="flex flex-col flex-grow justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
+                      <div className="flex flex-col gap-1.5">
+                        <div className="flex flex-col gap-1.5">
+                          <p>{product.productName}</p>
+                          <p>RM {product.productPrice}</p>
+                        </div>
+                        <p className="text-sm">{product.productDescription}</p>
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <button
+                          className="btn-outline-small-no-hover tablet:btn-outline-small text-xs"
+                          onClick={() => {
+                            handleToggleModal(product._id);
+                          }}
+                        >
+                          Show product
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <AnimatePresence
+                    initial={false}
+                    mode="wait"
+                    onExitComplete={() => null}
+                  >
+                    {isProductModalVisible && productId === product._id && (
+                      <ProductModal
+                        productId={productId}
+                        onToggleModal={handleToggleModal}
                       />
                     )}
-                    <img
-                      className="tablet:aspect-[3/4] w-full object-cover rounded-sm"
-                      src={product.fileUrl[product.fileUrl.length - 1] || ""}
-                      alt={product.productName}
-                      loading="lazy"
-                      onLoad={handlePostImageLoad}
-                    />
-                  </div>
-                  <div className="flex flex-col flex-grow justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
-                    <div className="flex flex-col gap-1.5">
-                      <div className="flex flex-col gap-1.5">
-                        <p>{product.productName}</p>
-                        <p>RM {product.productPrice}</p>
-                      </div>
-                      <p className="text-sm">{product.productDescription}</p>
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                      <button
-                        className="btn-outline-small-no-hover tablet:btn-outline-small text-xs"
-                        onClick={() => {
-                          handleToggleModal(product._id);
-                        }}
-                      >
-                        Show product
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                  </AnimatePresence>
+                </>
               );
             })}
           </>
@@ -128,12 +143,6 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
           <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
             No products.
           </p>
-        )}
-        {isProductModalVisible && (
-          <ProductModal
-            productId={productId}
-            onToggleModal={handleToggleModal}
-          />
         )}
       </div>
     </section>
