@@ -86,7 +86,7 @@ const ProductModal = ({
     <>
       <Backdrop onClick={onToggleModal} showCloseButton={false}>
         <motion.div
-          className="h-full w-2/5 overflow-scroll ml-auto"
+          className="h-full w-2/5 overflow-scroll ml-auto cursor-default"
           variants={slideInFromRight}
           initial="hidden"
           animate="visible"
@@ -108,7 +108,7 @@ const ProductModal = ({
                             <img className="w-6 h-6" src={loading} alt="" />
                           ) : (
                             <img
-                              className="rounded object-cover w-full"
+                              className="rounded object-cover w-full max-h-[80vh]"
                               key={urlIndex}
                               src={url}
                               alt=""
@@ -129,7 +129,7 @@ const ProductModal = ({
                             <img className="w-6 h-6" src={loading} alt="" />
                           ) : (
                             <img
-                              className="rounded object-cover w-full"
+                              className="rounded object-cover w-full aspect-square"
                               key={urlIndex}
                               src={url}
                               alt=""
