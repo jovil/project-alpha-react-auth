@@ -24,9 +24,9 @@ const HeaderSection = ({
     userState.profileDescription || null
   );
 
-  useEffect(() => {
-    document.body.style.overflow = showHiringModal ? "hidden" : "auto";
-  }, [showHiringModal]);
+  // useEffect(() => {
+  //   document.body.style.overflow = showHiringModal ? "hidden" : "auto";
+  // }, [showHiringModal]);
 
   useEffect(() => {
     setProfileDescriptionText(userState.profileDescription);
@@ -34,6 +34,7 @@ const HeaderSection = ({
 
   const handleToggleModal = () => {
     setShowHiringModal((prevState) => !prevState);
+    document.body.style.overflow = !showHiringModal ? "hidden" : "auto";
   };
 
   const profileDescriptionInput = (e: any) => {
