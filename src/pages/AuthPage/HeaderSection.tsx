@@ -31,6 +31,7 @@ const HeaderSection = () => {
       "user",
       JSON.stringify({
         _id: userState._id,
+        userName: userState.userName,
       })
     );
 
