@@ -3,7 +3,7 @@ import { useUser } from "../../context/UserContext";
 import HeaderSection from "./HeaderSection";
 import CreatePost from "./CreatePost";
 import CreateProduct from "./CreateProduct";
-import Accordion from "./Accordion";
+import HiringDetailsComponent from "./HiringDetails";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import BankDetails from "./BankDetails";
 
@@ -100,26 +100,9 @@ const AuthComponent = () => {
         };
       });
 
-      const isHiringDetailsEmpty =
-        !result.hiringDetails ||
-        (!result.hiringDetails.email &&
-          !result.hiringDetails.whatsApp &&
-          !result.hiringDetails.location &&
-          !result.hiringDetails.favoriteCharacters &&
-          (!result.hiringDetails.services ||
-            result.hiringDetails.services.length === 0) &&
-          !result.hiringDetails.otherServices &&
-          (!result.hiringDetails.availability ||
-            result.hiringDetails.availability.length === 0) &&
-          !result.hiringDetails.otherAvailability &&
-          !result.hiringDetails.preferredSchedule &&
-          !result.hiringDetails.travelAvailability);
-
-      if (!isHiringDetailsEmpty) {
+      if (result.hasHiringDetails) {
         setHiringDetails(result.hiringDetails);
         setIsEditing(false);
-      } else {
-        setIsEditing(true);
       }
     } catch (error) {
       console.log("error", error);
@@ -143,7 +126,7 @@ const AuthComponent = () => {
       </section>
       <section className="max-w-[580px] mx-auto">
         <BankDetails />
-        <Accordion
+        <HiringDetailsComponent
           isEditing={isEditing}
           onHandleEditingMode={handleEditingMode}
           isHiringDetails={hiringDetails}
