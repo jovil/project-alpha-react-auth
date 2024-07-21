@@ -112,3 +112,39 @@ input::-webkit-inner-spin-button {
     transform: translateX(50%);
   }
 }
+
+.toggle-btn {
+  background-color: #b7b9ba;
+  border: 1px solid #aaa;
+  border-radius: 99px;
+  width: 44px;
+  height: 24px;
+  transition: background-color 0.1s ease, border-color 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.toggle-btn .thumb {
+  height: 17px;
+  width: 17px;
+  background-color: #fff;
+  border-radius: 99px;
+  transform: translateX(0);
+  transition: left 0.15s ease;
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.toggle-btn.toggled {
+  background-color: #15b58e;
+}
+
+.toggle-btn:hover {
+  border-color: #6f6f6f;
+}
+
+.toggle-btn.toggled .thumb {
+  left: calc(50px - 28px);
+}

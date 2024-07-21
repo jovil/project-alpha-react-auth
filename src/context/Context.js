@@ -12,6 +12,7 @@ export const GlobalStateProvider = ({ children }) => {
       : {
           isLoggedIn: false,
           postsView: "grid",
+          showPostsCaption: false,
           productsView: "grid",
           seriesView: "grid",
           hiringView: "grid",

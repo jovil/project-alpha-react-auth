@@ -103,6 +103,10 @@ const PostListView = () => {
     setState({ ...state, postsView: "list" });
   };
 
+  const handlePostsCaption = () => {
+    setState({ ...state, showPostsCaption: !state.showPostsCaption });
+  };
+
   return (
     <>
       <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4 min-h-[100vh]">
@@ -110,27 +114,40 @@ const PostListView = () => {
           <>
             <h1>All posts</h1>
           </>
-          <div className="flex justify-end">
-            <button>
-              <img
-                className={`w-7 h-7 p-1.5 rounded-full ${
-                  state.postsView === "list" ? "bg-dark/10" : ""
+          <div className="flex justify-end items-center gap-4">
+            <div className="flex items-center gap-2">
+              <p className="text-xs">Show caption</p>
+              <button
+                className={`toggle-btn ${
+                  state.showPostsCaption ? "toggled" : ""
                 }`}
-                src={iconList}
-                onClick={handlePostsListView}
-                alt=""
-              />
-            </button>
-            <button>
-              <img
-                className={`w-7 h-7 p-1.5 rounded-full ${
-                  state.postsView === "grid" ? "bg-dark/10" : ""
-                }`}
-                src={iconGrid}
-                onClick={handlePostsGridView}
-                alt=""
-              />
-            </button>
+                onClick={handlePostsCaption}
+              >
+                <div className="thumb"></div>
+              </button>
+            </div>
+            <div className="flex">
+              <button>
+                <img
+                  className={`w-7 h-7 p-1.5 rounded-full ${
+                    state.postsView === "list" ? "bg-dark/10" : ""
+                  }`}
+                  src={iconList}
+                  onClick={handlePostsListView}
+                  alt=""
+                />
+              </button>
+              <button>
+                <img
+                  className={`w-7 h-7 p-1.5 rounded-full ${
+                    state.postsView === "grid" ? "bg-dark/10" : ""
+                  }`}
+                  src={iconGrid}
+                  onClick={handlePostsGridView}
+                  alt=""
+                />
+              </button>
+            </div>
           </div>
         </header>
         <div
@@ -145,10 +162,12 @@ const PostListView = () => {
               {allPosts?.map((post: any) => {
                 return (
                   <div
-                    className={`w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group ${
-                      state.postsView === "grid"
+                    className={`w-full h-auto rounded-3xl flex flex-col gap-3 relative overflow-hidden group ${
+                      state.postsView === "grid" && !state.showPostsCaption
                         ? "desktop:max-w-[300px] tablet:aspect-[3/4]"
-                        : ""
+                        : state.showPostsCaption
+                        ? ""
+                        : "border border-dark/20 shadow-md"
                     }`}
                     key={post._id}
                   >
@@ -166,85 +185,166 @@ const PostListView = () => {
                         alt=""
                       />
                       <img
-                        className="object-cover w-full h-full rounded-sm"
+                        className={`object-cover w-full h-full rounded-3xl ${
+                          state.postsView === "grid" && state.showPostsCaption
+                            ? "aspect-[3/4]"
+                            : ""
+                        }`}
                         src={post.fileUrl}
                         alt=""
                         loading="lazy"
                         onLoad={handlePostImageLoad}
                       />
                     </div>
-                    <div className="flex flex-col justify-between gap-6 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
-                      <p>{post.characterName}</p>
-                      <footer className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2">
-                          <p className="text-xs">from</p>
-                          <NavLink
-                            className="tag-no-hover tablet:tag"
-                            to={`/series/${post.seriesTitle}`}
-                          >
-                            {post.seriesTitle}
-                          </NavLink>
-                        </div>
-                        <div className="flex-grow flex justify-between items-center">
-                          <NavLink
-                            className="flex gap-1.5 items-center"
-                            to={`/user/${post.user._id}`}
-                          >
-                            {post.user.avatar.length > 0 ? (
-                              <img
-                                className="rounded-full w-6 h-6 border border-dark/10"
-                                src={post.user.avatar}
-                                alt=""
-                              />
-                            ) : (
-                              <img
-                                className="rounded-full w-6 h-6 border border-dark/10"
-                                src={defaultAvatar}
-                                alt=""
-                              />
-                            )}
-                            <p className="text-xs underline">
-                              @{post.user.userName}
-                            </p>
-                          </NavLink>
-                          {post.user?.hasProducts && (
-                            <div className="ml-auto">
-                              <NavLink
-                                className="btn-outline-small-no-hover tablet:btn-outline-small text-center group flex items-center gap-1.5"
-                                to={`/shop/${post.user._id}`}
-                              >
-                                <p>Shop</p>
-                                <svg
-                                  className="w-4 h-4"
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
+                    {!state.showPostsCaption && (
+                      <div className="flex flex-col justify-between gap-6 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
+                        <p>{post.characterName}</p>
+                        <footer className="flex flex-col gap-2">
+                          <div className="flex items-center gap-2">
+                            <p className="text-xs">from</p>
+                            <NavLink
+                              className="tag-no-hover tablet:tag"
+                              to={`/series/${post.seriesTitle}`}
+                            >
+                              {post.seriesTitle}
+                            </NavLink>
+                          </div>
+                          <div className="flex-grow flex justify-between items-center">
+                            <NavLink
+                              className="flex gap-1.5 items-center"
+                              to={`/user/${post.user._id}`}
+                            >
+                              {post.user.avatar.length > 0 ? (
+                                <img
+                                  className="rounded-full w-6 h-6 border border-dark/10"
+                                  src={post.user.avatar}
+                                  alt=""
+                                />
+                              ) : (
+                                <img
+                                  className="rounded-full w-6 h-6 border border-dark/10"
+                                  src={defaultAvatar}
+                                  alt=""
+                                />
+                              )}
+                              <p className="text-xs underline">
+                                @{post.user.userName}
+                              </p>
+                            </NavLink>
+                            {post.user?.hasProducts && (
+                              <div className="ml-auto">
+                                <NavLink
+                                  className="btn-outline-small-no-hover tablet:btn-outline-small text-center group flex items-center gap-1.5"
+                                  to={`/shop/${post.user._id}`}
                                 >
-                                  <path
-                                    className="tablet:group-hover:stroke-white stroke-dark tablet:stroke-white"
-                                    d="M20.25 6.75H3.75C3.33579 6.75 3 7.08579 3 7.5V19.5C3 19.9142 3.33579 20.25 3.75 20.25H20.25C20.6642 20.25 21 19.9142 21 19.5V7.5C21 7.08579 20.6642 6.75 20.25 6.75Z"
-                                    stroke="#fff"
-                                    strokeWidth="1.5"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  ></path>
-                                  <path
-                                    className="tablet:group-hover:stroke-white stroke-dark tablet:stroke-white"
-                                    d="M8.25 6.75C8.25 5.75544 8.64509 4.80161 9.34835 4.09835C10.0516 3.39509 11.0054 3 12 3C12.9946 3 13.9484 3.39509 14.6517 4.09835C15.3549 4.80161 15.75 5.75544 15.75 6.75"
-                                    stroke="#fff"
-                                    strokeWidth="1.5"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  ></path>
-                                </svg>
-                              </NavLink>
-                            </div>
-                          )}
-                        </div>
-                      </footer>
-                    </div>
+                                  <p>Shop</p>
+                                  <svg
+                                    className="w-4 h-4"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      className="tablet:group-hover:stroke-white stroke-dark tablet:stroke-white"
+                                      d="M20.25 6.75H3.75C3.33579 6.75 3 7.08579 3 7.5V19.5C3 19.9142 3.33579 20.25 3.75 20.25H20.25C20.6642 20.25 21 19.9142 21 19.5V7.5C21 7.08579 20.6642 6.75 20.25 6.75Z"
+                                      stroke="#fff"
+                                      strokeWidth="1.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    ></path>
+                                    <path
+                                      className="tablet:group-hover:stroke-white stroke-dark tablet:stroke-white"
+                                      d="M8.25 6.75C8.25 5.75544 8.64509 4.80161 9.34835 4.09835C10.0516 3.39509 11.0054 3 12 3C12.9946 3 13.9484 3.39509 14.6517 4.09835C15.3549 4.80161 15.75 5.75544 15.75 6.75"
+                                      stroke="#fff"
+                                      strokeWidth="1.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    ></path>
+                                  </svg>
+                                </NavLink>
+                              </div>
+                            )}
+                          </div>
+                        </footer>
+                      </div>
+                    )}
+
+                    {state.showPostsCaption && (
+                      <div className="flex flex-col justify-between gap-6 px-3 pb-3 tablet:py-3 w-full">
+                        <p>{post.characterName}</p>
+                        <footer className="flex flex-col gap-2">
+                          <div className="flex items-center gap-2">
+                            <p className="text-xs">from</p>
+                            <NavLink
+                              className="tag-no-hover"
+                              to={`/series/${post.seriesTitle}`}
+                            >
+                              {post.seriesTitle}
+                            </NavLink>
+                          </div>
+                          <div className="flex-grow flex justify-between items-center">
+                            <NavLink
+                              className="flex gap-1.5 items-center"
+                              to={`/user/${post.user._id}`}
+                            >
+                              {post.user.avatar.length > 0 ? (
+                                <img
+                                  className="rounded-full w-6 h-6 border border-dark/10"
+                                  src={post.user.avatar}
+                                  alt=""
+                                />
+                              ) : (
+                                <img
+                                  className="rounded-full w-6 h-6 border border-dark/10"
+                                  src={defaultAvatar}
+                                  alt=""
+                                />
+                              )}
+                              <p className="text-xs underline">
+                                @{post.user.userName}
+                              </p>
+                            </NavLink>
+                            {post.user?.hasProducts && (
+                              <div className="ml-auto">
+                                <NavLink
+                                  className="btn-outline-small-no-hover text-center group flex items-center gap-1.5"
+                                  to={`/shop/${post.user._id}`}
+                                >
+                                  <p>Shop</p>
+                                  <svg
+                                    className="w-4 h-4"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      className="stroke-dark"
+                                      d="M20.25 6.75H3.75C3.33579 6.75 3 7.08579 3 7.5V19.5C3 19.9142 3.33579 20.25 3.75 20.25H20.25C20.6642 20.25 21 19.9142 21 19.5V7.5C21 7.08579 20.6642 6.75 20.25 6.75Z"
+                                      stroke="#fff"
+                                      strokeWidth="1.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    ></path>
+                                    <path
+                                      className="stroke-dark"
+                                      d="M8.25 6.75C8.25 5.75544 8.64509 4.80161 9.34835 4.09835C10.0516 3.39509 11.0054 3 12 3C12.9946 3 13.9484 3.39509 14.6517 4.09835C15.3549 4.80161 15.75 5.75544 15.75 6.75"
+                                      stroke="#fff"
+                                      strokeWidth="1.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    ></path>
+                                  </svg>
+                                </NavLink>
+                              </div>
+                            )}
+                          </div>
+                        </footer>
+                      </div>
+                    )}
                   </div>
                 );
               })}

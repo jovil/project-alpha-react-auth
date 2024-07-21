@@ -108,7 +108,7 @@ const ProductModal = ({
                             <img className="w-6 h-6" src={loading} alt="" />
                           ) : (
                             <img
-                              className="rounded object-cover w-full max-h-[80vh]"
+                              className="rounded object-cover w-full max-h-[80vh] min-h-full"
                               key={urlIndex}
                               src={url}
                               alt=""
