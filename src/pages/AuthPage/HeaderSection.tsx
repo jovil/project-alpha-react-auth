@@ -19,21 +19,7 @@ const HeaderSection = () => {
   const logout = () => {
     cookies.remove("TOKEN", { path: "/" });
     setState({ ...state, isLoggedIn: false });
-    setUserState({
-      _id: undefined,
-      user: undefined,
-      email: undefined,
-      userName: undefined,
-      avatar: undefined,
-      avatar64: undefined,
-      hasPosted: undefined,
-      hasProducts: undefined,
-      bankAccountDetails: {
-        accountHoldersName: undefined,
-        accountNumber: undefined,
-        bankName: undefined,
-      },
-    });
+    setUserState(null);
     window.location.href = "/";
   };
 

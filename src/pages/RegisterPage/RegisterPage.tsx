@@ -4,6 +4,7 @@ import { GlobalStateContext } from "../../context/Context";
 import { useUser } from "../../context/UserContext";
 import { Form, Button } from "react-bootstrap";
 import Cookies from "universal-cookie";
+import { apiUrl } from "../../utils/fetchConfig";
 
 export default function Register() {
   const cookies = new Cookies();
@@ -13,6 +14,7 @@ export default function Register() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [register, setRegister] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
   const navigate = useNavigate();
 
   const handleLoginState = () => {
@@ -21,8 +23,7 @@ export default function Register() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const apiUrl = process.env.REACT_APP_API_URL;
-    const dbUrl = `${apiUrl}/register`;
+    const url = `${apiUrl}/register`;
 
     const postData = {
       email: email,
@@ -39,8 +40,10 @@ export default function Register() {
     };
 
     try {
-      const response = await fetch(dbUrl, configuration);
+      const response = await fetch(url, configuration);
       const result = await response.json();
+
+      if (result.error) return setErrorMessage(true);
 
       await setUserState((prev: any) => {
         return {
@@ -131,10 +134,13 @@ export default function Register() {
           >
             Submit
           </Button>
+        </div>
+        <div>
+          {errorMessage && <p className="text-error">Email already exist</p>}
 
           {/* display success message */}
           {register && (
-            <p className="text-success">You Are Registered Successfully</p>
+            <p className="text-success">You are registered successfully</p>
           )}
         </div>
       </Form>

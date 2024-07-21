@@ -8,12 +8,7 @@ import CreateProduct from "./CreateProduct";
 import Accordion from "./Accordion";
 import loading from "../../assets/images/loading.gif";
 import { getFetchConfig } from "../../utils/fetchConfig";
-
-interface BankDetails {
-  accountHoldersName: string;
-  bankName: string;
-  accountNumber: number | string;
-}
+import BankDetails from "./BankDetails";
 
 interface PreferredSchedule {
   type: "weekdays" | "weekends" | "flexible";
@@ -77,14 +72,6 @@ const initialHiringDetails: HiringDetails = {
 const AuthComponent = () => {
   const { userState, setUserState } = useUser();
   const [isEditing, setIsEditing] = useState<boolean>(true);
-  const [bankDetails, setBankDetails] = useState<BankDetails>({
-    accountHoldersName: "",
-    bankName: "",
-    accountNumber: "",
-  });
-  const [isSavingBankDetails, setIsSavingBankDetails] = useState(false);
-  const [showSavedBankDetailsMessage, setShowSavedBankDetailsMessage] =
-    useState(false);
   const [hiringDetails, setHiringDetails] = useState<HiringDetails | null>(
     initialHiringDetails
   );
@@ -156,74 +143,6 @@ const AuthComponent = () => {
     setHiringDetails(initialHiringDetails);
     setIsEditing(true);
   }, []);
-
-  const submitBankDetails = async (e: any) => {
-    e.preventDefault();
-    setIsSavingBankDetails(true);
-    const postData = {
-      name: bankDetails?.accountHoldersName,
-      bank: bankDetails?.bankName,
-      account: bankDetails?.accountNumber,
-    };
-    const url = `${process.env.REACT_APP_API_URL}/user/update/bankDetails/${userState._id}`;
-    const configuration = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(postData),
-    };
-
-    try {
-      await fetch(url, configuration);
-      setIsSavingBankDetails(false);
-      setShowSavedBankDetailsMessage(true);
-      setTimeout(() => {
-        setShowSavedBankDetailsMessage(false);
-      }, 800);
-
-      new Notify({
-        title: "Details saved successfully",
-        text: "Future payouts will be processed using the new details.",
-      });
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
-  const editBankDetails = (e: any) => {
-    e.preventDefault();
-    setBankDetails((prev: any) => {
-      return {
-        ...prev,
-        accountHoldersName: userState.bankAccountDetails?.accountHoldersName,
-        bankName: userState.bankAccountDetails?.bankName,
-        accountNumber: userState.bankAccountDetails?.accountNumber,
-      };
-    });
-
-    setUserState((prev: any) => {
-      return {
-        ...prev,
-        bankAccountDetails: {
-          accountHoldersName: undefined,
-          accountNumber: undefined,
-          bankName: undefined,
-        },
-      };
-    });
-  };
-
-  const handleChangeBankDetailsInput = (e: any) => {
-    const { name, value } = e.target;
-
-    setBankDetails((prev: any) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
 
   const editHiringDetails = (e: any) => {
     e.preventDefault();
@@ -372,103 +291,7 @@ const AuthComponent = () => {
         <CreateProduct />
       </section>
       <section className="max-w-[580px] mx-auto">
-        <Accordion
-          title="Add your bank account details for payouts"
-          isDetailsSaved={showSavedMessageBankDetails}
-        >
-          <form className="flex flex-col gap-4" onSubmit={submitBankDetails}>
-            <div className="flex flex-col gap-2">
-              <label>Account holder's name:</label>
-              <input
-                className="border border-dark/40 p-3 rounded"
-                type="text"
-                placeholder="Account holder's name"
-                name="accountHoldersName"
-                value={
-                  userState.bankAccountDetails?.accountHoldersName
-                    ? userState.bankAccountDetails?.accountHoldersName
-                    : bankDetails?.accountHoldersName
-                }
-                onChange={handleChangeBankDetailsInput}
-                required
-                autoFocus
-                disabled={
-                  userState.bankAccountDetails?.accountHoldersName
-                    ? true
-                    : false
-                }
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label>Bank name:</label>
-              <input
-                className="border border-dark/40 p-3 rounded"
-                type="text"
-                placeholder="Bank name"
-                name="bankName"
-                value={
-                  userState.bankAccountDetails?.bankName
-                    ? userState.bankAccountDetails?.bankName
-                    : bankDetails.bankName
-                }
-                onChange={handleChangeBankDetailsInput}
-                required
-                disabled={userState.bankAccountDetails?.bankName ? true : false}
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label>Account number:</label>
-              <input
-                className="border border-dark/40 p-3 rounded"
-                type="number"
-                placeholder="Account number"
-                name="accountNumber"
-                value={
-                  userState.bankAccountDetails?.accountNumber
-                    ? userState.bankAccountDetails?.accountNumber
-                    : bankDetails.accountNumber
-                }
-                onChange={handleChangeBankDetailsInput}
-                required
-                disabled={
-                  userState.bankAccountDetails?.accountNumber ? true : false
-                }
-              />
-            </div>
-            {userState.bankAccountDetails?.accountHoldersName &&
-            userState.bankAccountDetails?.bankName &&
-            userState.bankAccountDetails?.accountNumber ? (
-              <>
-                <button
-                  onClick={editBankDetails}
-                  className="btn-primary flex justify-center items-center"
-                >
-                  Edit
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  onSubmit={submitBankDetails}
-                  className="btn-primary flex justify-center items-center"
-                  type="submit"
-                >
-                  {showSavedBankDetailsMessage ? (
-                    "Saved!"
-                  ) : (
-                    <>
-                      {isSavingBankDetails ? (
-                        <img className="w-6 h-6" src={loading} alt="" />
-                      ) : (
-                        "Save"
-                      )}
-                    </>
-                  )}
-                </button>
-              </>
-            )}
-          </form>
-        </Accordion>
+        <BankDetails />
         <Accordion
           title="Add a “Hire Me” button to your profile"
           isDetailsSaved={showSavedMessageHiringDetails}
