@@ -4,7 +4,7 @@ import Notify from "simple-notify";
 import "simple-notify/dist/simple-notify.css";
 import loading from "../../assets/images/loading.gif";
 
-interface BankDetails {
+interface PayoutDetails {
   accountHoldersName: string;
   bankName: string;
   accountNumber: number | string;
@@ -14,14 +14,12 @@ const BankDetails = () => {
   const { userState, setUserState } = useUser();
   const [isActive, setIsActive] = useState(false);
   const [hasDetailsSaved, setHasDetailsSaved] = useState(false);
-  const [bankDetails, setBankDetails] = useState<BankDetails>({
+  const [bankDetails, setBankDetails] = useState<PayoutDetails>({
     accountHoldersName: "",
     bankName: "",
     accountNumber: "",
   });
   const [isSavingBankDetails, setIsSavingBankDetails] = useState(false);
-  const [showSavedBankDetailsMessage, setShowSavedBankDetailsMessage] =
-    useState(false);
 
   useEffect(() => {
     if (userState.bankAccountDetails) setHasDetailsSaved(true);
@@ -48,11 +46,7 @@ const BankDetails = () => {
       const response = await fetch(url, configuration);
       const result = await response.json();
       setIsSavingBankDetails(false);
-      setShowSavedBankDetailsMessage(true);
       setHasDetailsSaved(true);
-      setTimeout(() => {
-        setShowSavedBankDetailsMessage(false);
-      }, 800);
       setIsActive(false);
 
       console.log("result", result);
@@ -205,16 +199,10 @@ const BankDetails = () => {
                     className="btn-primary flex justify-center items-center"
                     type="submit"
                   >
-                    {showSavedBankDetailsMessage ? (
-                      "Saved!"
+                    {isSavingBankDetails ? (
+                      <img className="w-6 h-6" src={loading} alt="" />
                     ) : (
-                      <>
-                        {isSavingBankDetails ? (
-                          <img className="w-6 h-6" src={loading} alt="" />
-                        ) : (
-                          "Save"
-                        )}
-                      </>
+                      "Save"
                     )}
                   </button>
                 </>
