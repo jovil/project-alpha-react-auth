@@ -88,7 +88,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
 
               return (
                 <React.Fragment key={index}>
-                  <div className="desktop:max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group">
+                  <div className="desktop:max-w-[300px] w-full h-auto rounded-3xl flex flex-col gap-3 relative overflow-hidden group">
                     <div className="relative tablet:aspect-[3/4] overflow-hidden">
                       {runShimmerAnimation && (
                         <div className="shimmer-overlay"></div>
@@ -101,7 +101,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
                         />
                       )}
                       <img
-                        className="tablet:aspect-[3/4] w-full object-cover rounded-sm"
+                        className="tablet:aspect-[3/4] w-full object-cover rounded-3xl"
                         src={product.fileUrl[product.fileUrl.length - 1] || ""}
                         alt={product.productName}
                         loading="lazy"

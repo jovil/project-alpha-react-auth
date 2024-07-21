@@ -109,10 +109,10 @@ const ShopPage = () => {
 
                 return (
                   <div
-                    className={`w-full h-auto border border-dark/80 shadow-md rounded ${
+                    className={`w-full h-auto ${
                       state.productsView === "grid"
-                        ? "desktop:max-w-[300px] flex-col tablet:aspect-[3/4] flex tablet:gap-3 relative overflow-hidden group"
-                        : "tablet:grid tablet:grid-cols-12"
+                        ? "desktop:max-w-[300px] flex-col tablet:aspect-[3/4] flex tablet:gap-3 relative overflow-hidden group rounded-3xl"
+                        : "tablet:grid tablet:grid-cols-12 rounded border border-dark/80 shadow-md"
                     }`}
                     key={product._id}
                   >

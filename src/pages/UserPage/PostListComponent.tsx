@@ -61,7 +61,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
 
               return (
                 <div
-                  className="desktop:max-w-[300px] w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group tablet:aspect-[3/4]"
+                  className="desktop:max-w-[300px] w-full h-auto rounded-3xl flex flex-col gap-3 relative overflow-hidden group tablet:aspect-[3/4]"
                   key={post._id}
                 >
                   <div className="h-full relative overflow-hidden">
@@ -76,7 +76,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
                       />
                     )}
                     <img
-                      className="w-full h-full object-cover rounded-sm"
+                      className="w-full h-full object-cover rounded-3xl"
                       src={post.fileUrl}
                       alt=""
                       loading="lazy"

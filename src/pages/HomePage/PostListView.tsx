@@ -165,9 +165,7 @@ const PostListView = () => {
                     className={`w-full h-auto rounded-3xl flex flex-col gap-3 relative overflow-hidden group ${
                       state.postsView === "grid" && !state.showPostsCaption
                         ? "desktop:max-w-[300px] tablet:aspect-[3/4]"
-                        : state.showPostsCaption
-                        ? ""
-                        : "border border-dark/20 shadow-md"
+                        : ""
                     }`}
                     key={post._id}
                   >
