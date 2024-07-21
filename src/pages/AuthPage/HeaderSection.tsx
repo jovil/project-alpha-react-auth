@@ -91,7 +91,11 @@ const HeaderSection = () => {
             <div className="text-xs font-medium flex flex-col gap-3 items-center">
               <img
                 className="w-16 h-16 border border-dark/60 object-cover rounded shadow-md"
-                src={userState.avatar64 ? userState.avatar64 : defaultAvatar}
+                src={
+                  userState.avatar64
+                    ? userState.avatar64
+                    : userState.avatar ?? defaultAvatar
+                }
                 alt=""
               />
               <p>{userState.userName}</p>
