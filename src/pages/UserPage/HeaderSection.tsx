@@ -20,11 +20,17 @@ const HeaderSection = ({
   const { userState, setUserState } = useUser();
   const [showHiringModal, setShowHiringModal] = useState<boolean>(false);
   const [showDescriptionForm, setShowDescriptionForm] = useState(false);
-  const [profileDescriptionText, setProfileDescriptionText] = useState("");
+  const [profileDescriptionText, setProfileDescriptionText] = useState(
+    userState.profileDescription || null
+  );
 
   useEffect(() => {
     document.body.style.overflow = showHiringModal ? "hidden" : "auto";
   }, [showHiringModal]);
+
+  useEffect(() => {
+    setProfileDescriptionText(userState.profileDescription);
+  }, [userState]);
 
   const handleToggleModal = () => {
     setShowHiringModal((prevState) => !prevState);
@@ -58,7 +64,7 @@ const HeaderSection = ({
         };
       });
       setShowDescriptionForm(false);
-      console.log("result", result);
+      setProfileDescriptionText(result.profileDescription);
     } catch (error) {
       console.log("error", error);
     }
@@ -129,18 +135,26 @@ const HeaderSection = ({
               )}
             </>
           )}
-          {isUser.profileDescription && (
+          {isUser && (
             <div className="flex flex-col items-center gap-2 pb-3">
               <p className="text-sm">
-                {userState.profileDescription || isUser.profileDescription}
+                {userState._id === userId ? (
+                  <>{userState.profileDescription}</>
+                ) : (
+                  <>{isUser.profileDescription}</>
+                )}
               </p>
-              {userState._id === userId && !showDescriptionForm && (
-                <button
-                  className="text-black-100/60 underline"
-                  onClick={addProfileDescription}
-                >
-                  Edit description
-                </button>
+              {userState.profileDescription && (
+                <>
+                  {userState._id === userId && !showDescriptionForm && (
+                    <button
+                      className="text-black-100/60 underline"
+                      onClick={addProfileDescription}
+                    >
+                      Edit description
+                    </button>
+                  )}
+                </>
               )}
             </div>
           )}
