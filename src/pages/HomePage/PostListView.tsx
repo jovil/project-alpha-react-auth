@@ -8,14 +8,13 @@ import { getFetchConfig } from "../../utils/fetchConfig";
 import GridHeader from "../../components/Grid/header";
 import GridViewContainer from "../../components/Grid/gridViewContainer";
 import UserAvatar from "../../components/Card/userAvatar";
+import Card from "../../components/Card";
 
 const PostListView = () => {
   const { state } = useContext(GlobalStateContext);
   const { allPosts, setAllPosts } = usePosts();
   const [noPosts, setNoPosts] = useState(false);
-  const [postImageIsLoading, setPostImageLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
   const limit = 9;
   const url = `${process.env.REACT_APP_API_URL}/posts?page=${page}&limit=${limit}`;
   const isFetchingRef = useRef(false); // To keep track of fetching state
@@ -90,11 +89,6 @@ const PostListView = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
-  const handlePostImageLoad = () => {
-    setPostImageLoading(false);
-    setRunShimmerAnimation(true);
-  };
-
   return (
     <>
       <section className="max-w-[948px] w-full mx-auto flex flex-col gap-4 min-h-[100vh]">
@@ -107,41 +101,17 @@ const PostListView = () => {
         >
           {allPosts?.length ? (
             <>
-              {allPosts?.map((post: any) => {
+              {allPosts?.map((post: any, index: number) => {
                 return (
                   <div
-                    className={`w-full h-auto rounded-3xl flex flex-col relative overflow-hidden group ${
-                      state.postsView === "grid" && !state.showPostsCaption
-                        ? "tablet:aspect-[4/6]"
-                        : ""
-                    }`}
-                    key={post._id}
+                    className="flex flex-col relative group overflow-hidden rounded-3xl"
+                    key={index}
                   >
-                    <div className="h-full relative overflow-hidden rounded-3xl">
-                      {runShimmerAnimation && (
-                        <div className="shimmer-overlay"></div>
-                      )}
-                      <img
-                        className={
-                          postImageIsLoading
-                            ? `w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0`
-                            : "hidden"
-                        }
-                        src={postImageIsLoading ? loading : ""}
-                        alt=""
-                      />
-                      <img
-                        className={`object-cover w-full h-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
-                          state.postsView === "grid" && state.showPostsCaption
-                            ? "aspect-[4/6]"
-                            : ""
-                        }`}
-                        src={post.fileUrl}
-                        alt=""
-                        loading="lazy"
-                        onLoad={handlePostImageLoad}
-                      />
-                    </div>
+                    <Card
+                      gridComponent={"postsView"}
+                      captionComponent={"showPostsCaption"}
+                      data={post}
+                    />
                     {!state.showPostsCaption && (
                       <div className="flex flex-col justify-between gap-6 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
                         <p>{post.characterName}</p>

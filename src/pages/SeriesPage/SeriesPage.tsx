@@ -2,18 +2,16 @@ import { useCallback, useEffect, useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import { useParams } from "react-router-dom";
-import loading from "../../assets/images/loading.gif";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import GridHeader from "../../components/Grid/header";
 import GridViewContainer from "../../components/Grid/gridViewContainer";
 import UserAvatar from "../../components/Card/userAvatar";
+import Card from "../../components/Card";
 
 const SeriesPage = () => {
   const { seriesTitle } = useParams();
   const { state } = useContext(GlobalStateContext);
   const [seriesPosts, setSeriesPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
 
   const fetchSeries = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/series/${seriesTitle}`;
@@ -30,11 +28,6 @@ const SeriesPage = () => {
   useEffect(() => {
     fetchSeries();
   }, [fetchSeries]);
-
-  const handlePostImageLoad = () => {
-    setIsLoading(false);
-    setRunShimmerAnimation(true);
-  };
 
   return (
     <>
@@ -57,46 +50,17 @@ const SeriesPage = () => {
         >
           {seriesPosts?.length ? (
             <>
-              {seriesPosts?.toReversed().map((post: any) => {
+              {seriesPosts?.toReversed().map((post: any, index: number) => {
                 return (
                   <div
-                    className={`w-full h-auto rounded-3xl flex flex-col relative group ${
-                      state.seriesView === "grid" && state.showSeriesCaption
-                        ? "tablet:aspect-[4/6]"
-                        : state.seriesView === "grid" &&
-                          !state.showSeriesCaption
-                        ? "tablet:aspect-[4/6] overflow-hidden"
-                        : state.seriesView === "list" && state.showSeriesCaption
-                        ? ""
-                        : "overflow-hidden"
-                    }`}
-                    key={post._id}
+                    className="flex flex-col relative group overflow-hidden rounded-3xl"
+                    key={index}
                   >
-                    <div className="h-full relative overflow-hidden rounded-3xl">
-                      {runShimmerAnimation && (
-                        <div className="shimmer-overlay"></div>
-                      )}
-                      <img
-                        className={
-                          isLoading
-                            ? `w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0`
-                            : "hidden"
-                        }
-                        src={isLoading ? loading : ""}
-                        alt=""
-                      />
-                      <img
-                        className={`object-cover w-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
-                          state.seriesView === "grid" && state.showSeriesCaption
-                            ? "aspect-[4/6]"
-                            : "aspect-[4/6]"
-                        }`}
-                        src={post.fileUrl}
-                        alt=""
-                        loading="lazy"
-                        onLoad={handlePostImageLoad}
-                      />
-                    </div>
+                    <Card
+                      gridComponent={"seriesView"}
+                      captionComponent={"showSeriesCaption"}
+                      data={post}
+                    />
                     {!state.showSeriesCaption && (
                       <div className="flex flex-col flex-grow justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
                         <p>{post.characterName}</p>

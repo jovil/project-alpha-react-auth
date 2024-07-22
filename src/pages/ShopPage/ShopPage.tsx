@@ -4,12 +4,12 @@ import { useUser } from "../../context/UserContext";
 import { useProducts } from "../../context/ProductsContext";
 import ProductModal from "../../components/ProductModalComponent";
 import CreateProductComponent from "../../components/CreateProductComponent";
-import loading from "../../assets/images/loading.gif";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import { AnimatePresence } from "framer-motion";
 import GridHeader from "../../components/Grid/header";
 import GridViewContainer from "../../components/Grid/gridViewContainer";
 import UserAvatar from "../../components/Card/userAvatar";
+import Card from "../../components/Card";
 
 const ShopPage = () => {
   const { state } = useContext(GlobalStateContext);
@@ -17,8 +17,6 @@ const ShopPage = () => {
   const { allProducts, setAllProducts } = useProducts();
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
   const [productId, setProductId] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
 
   const fetchProducts = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/products`;
@@ -40,11 +38,6 @@ const ShopPage = () => {
     document.body.style.overflow = isProductModalVisible ? "hidden" : "auto";
   }, [isProductModalVisible]);
 
-  const handleProductImageLoad = () => {
-    setIsLoading(false);
-    setRunShimmerAnimation(true);
-  };
-
   const handleToggleModal = (productItemId: any) => {
     setProductId(productItemId);
     setIsProductModalVisible((prevState) => !prevState);
@@ -65,7 +58,7 @@ const ShopPage = () => {
         >
           {allProducts?.length ? (
             <>
-              {allProducts?.map((product: any) => {
+              {allProducts?.map((product: any, index: number) => {
                 if (!product || !product.fileUrl || !product.fileUrl.length) {
                   console.warn(
                     "Product or fileUrl is undefined or empty",
@@ -76,38 +69,14 @@ const ShopPage = () => {
 
                 return (
                   <div
-                    className={`w-full h-auto rounded-3xl flex flex-col relative overflow-hidden group ${
-                      state.productsView === "grid" &&
-                      !state.showProductsCaption
-                        ? "tablet:aspect-[4/6]"
-                        : ""
-                    }`}
-                    key={product._id}
+                    className="flex flex-col relative group overflow-hidden rounded-3xl"
+                    key={index}
                   >
-                    <div className="overflow-hidden relative rounded-3xl">
-                      {runShimmerAnimation && (
-                        <div className="shimmer-overlay"></div>
-                      )}
-                      {isLoading && (
-                        <img
-                          className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
-                          src={loading}
-                          alt=""
-                        />
-                      )}
-                      <img
-                        className={`object-cover w-full h-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
-                          state.productsView === "grid" &&
-                          state.showProductsCaption
-                            ? "aspect-[4/6]"
-                            : "aspect-[4/6]"
-                        }`}
-                        src={product.fileUrl[product.fileUrl.length - 1] || ""}
-                        alt={product.productName}
-                        loading="lazy"
-                        onLoad={handleProductImageLoad}
-                      />
-                    </div>
+                    <Card
+                      gridComponent={"productsView"}
+                      captionComponent={"showProductsCaption"}
+                      data={product}
+                    />
                     {!state.showProductsCaption && (
                       <div className="flex flex-col justify-between gap-6 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
                         <div className="flex flex-col gap-1.5">

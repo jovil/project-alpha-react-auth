@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useCallback, useContext } from "react";
+import { useEffect, useState, useCallback, useContext } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
-import loading from "../../assets/images/loading.gif";
 import ProductModal from "../../components/ProductModalComponent";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import { AnimatePresence } from "framer-motion";
 import GridHeader from "../../components/Grid/header";
 import GridViewContainer from "../../components/Grid/gridViewContainer";
+import Card from "../../components/Card";
 
 interface Product {
   _id: string;
@@ -22,10 +22,8 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
   const { profileId } = useParams();
   const { state } = useContext(GlobalStateContext);
   const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
   const [productId, setProductId] = useState();
-  const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
 
   const fetchProducts = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/products/${profileId}`;
@@ -56,11 +54,6 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
   useEffect(() => {
     document.body.style.overflow = isProductModalVisible ? "hidden" : "auto";
   }, [isProductModalVisible]);
-
-  const handlePostImageLoad = () => {
-    setIsLoading(false);
-    setRunShimmerAnimation(true);
-  };
 
   const handleToggleModal = (productItemId: any) => {
     setProductId(productItemId);
@@ -97,88 +90,60 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
               }
 
               return (
-                <React.Fragment key={index}>
-                  <div
-                    className={`w-full h-auto rounded-3xl flex flex-col relative overflow-hidden group ${
-                      state.userProductsView === "grid" &&
-                      !state.showUserProductsCaption
-                        ? "tablet:aspect-[4/6]"
-                        : ""
-                    }`}
-                  >
-                    <div className="relative overflow-hidden rounded-3xl">
-                      {runShimmerAnimation && (
-                        <div className="shimmer-overlay"></div>
-                      )}
-                      {isLoading && (
-                        <img
-                          className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
-                          src={loading}
-                          alt=""
-                        />
-                      )}
-                      <img
-                        className={`object-cover w-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
-                          state.userProductsView === "grid"
-                            ? "aspect-[4/6]"
-                            : ""
-                        }`}
-                        src={product.fileUrl[product.fileUrl.length - 1] || ""}
-                        alt={product.productName}
-                        loading="lazy"
-                        onLoad={handlePostImageLoad}
-                      />
+                <div
+                  className="flex flex-col relative group overflow-hidden rounded-3xl"
+                  key={index}
+                >
+                  <Card
+                    gridComponent={"userProductsView"}
+                    captionComponent={"showUserProductsCaption"}
+                    data={product}
+                  />
+                  {!state.showUserProductsCaption && (
+                    <div className="flex flex-col flex-grow justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
+                      <div className="flex flex-col gap-1.5">
+                        <div className="flex flex-col gap-1.5">
+                          <p>{product.productName}</p>
+                          <p>RM {product.productPrice}</p>
+                        </div>
+                        <p className="text-sm">{product.productDescription}</p>
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <button
+                          className="btn-primary-layered"
+                          onClick={() => {
+                            handleToggleModal(product._id);
+                          }}
+                        >
+                          Show product
+                        </button>
+                      </div>
                     </div>
-                    {!state.showUserProductsCaption && (
-                      <div className="flex flex-col flex-grow justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
+                  )}
+
+                  {state.showUserProductsCaption && (
+                    <div className="flex flex-col flex-grow justify-between gap-4 px-3 pb-3 tablet:py-6 w-full">
+                      <div className="flex flex-col gap-1.5">
                         <div className="flex flex-col gap-1.5">
-                          <div className="flex flex-col gap-1.5">
-                            <p>{product.productName}</p>
-                            <p>RM {product.productPrice}</p>
-                          </div>
-                          <p className="text-sm">
-                            {product.productDescription}
-                          </p>
+                          <p>{product.productName}</p>
+                          <p>RM {product.productPrice}</p>
                         </div>
-
-                        <div className="flex flex-col gap-2">
-                          <button
-                            className="btn-primary-layered"
-                            onClick={() => {
-                              handleToggleModal(product._id);
-                            }}
-                          >
-                            Show product
-                          </button>
-                        </div>
+                        <p className="text-sm">{product.productDescription}</p>
                       </div>
-                    )}
 
-                    {state.showUserProductsCaption && (
-                      <div className="flex flex-col flex-grow justify-between gap-4 px-3 pb-3 tablet:py-6 w-full">
-                        <div className="flex flex-col gap-1.5">
-                          <div className="flex flex-col gap-1.5">
-                            <p>{product.productName}</p>
-                            <p>RM {product.productPrice}</p>
-                          </div>
-                          <p className="text-sm">
-                            {product.productDescription}
-                          </p>
-                        </div>
-
-                        <div className="flex flex-col gap-2">
-                          <button
-                            className="btn-primary-small"
-                            onClick={() => {
-                              handleToggleModal(product._id);
-                            }}
-                          >
-                            Show product
-                          </button>
-                        </div>
+                      <div className="flex flex-col gap-2">
+                        <button
+                          className="btn-primary-small"
+                          onClick={() => {
+                            handleToggleModal(product._id);
+                          }}
+                        >
+                          Show product
+                        </button>
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                   <AnimatePresence
                     initial={false}
                     mode="wait"
@@ -191,7 +156,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
                       />
                     )}
                   </AnimatePresence>
-                </React.Fragment>
+                </div>
               );
             })}
           </>
