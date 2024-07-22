@@ -31,8 +31,8 @@ function App() {
               to="/auth"
               className={({ isActive }: { isActive: any }) =>
                 isActive
-                  ? "btn-outline-dark text-xs font-semibold border-[#dadce0] text-[#1a73e8] hover:text-[#1a73e8] hover:bg-[#f2f7fe] shadow-none"
-                  : "btn-outline-dark text-xs font-semibold border-[#dadce0] text-[#1a73e8] hover:text-[#1a73e8] hover:bg-[#f2f7fe] shadow-none"
+                  ? "btn-outline-dark text-xs font-semibold border-[#dadce0] text-blue-100 hover:text-blue-100 hover:bg-blue-900 shadow-none"
+                  : "btn-outline-dark text-xs font-semibold border-[#dadce0] text-blue-100 hover:text-blue-100 hover:bg-blue-900 shadow-none"
               }
             >
               Account
@@ -41,8 +41,8 @@ function App() {
               to={`/user/${userState._id}`}
               className={({ isActive }: { isActive: any }) =>
                 isActive
-                  ? "btn-primary bg-[#1a73e8] border-[#1a73e8] text-white shadow-none hover:bg-[#185abc] hover:border-[#185abc] text-xs font-semibold"
-                  : "btn-primary bg-[#1a73e8] border-[#1a73e8] text-white shadow-none hover:bg-[#185abc] hover:border-[#185abc] text-xs font-semibold"
+                  ? "btn-primary bg-blue-100 border-blue-100 text-white shadow-none hover:bg-blue-300 hover:border-blue-300 text-xs font-semibold"
+                  : "btn-primary bg-blue-100 border-blue-100 text-white shadow-none hover:bg-blue-300 hover:border-blue-300 text-xs font-semibold"
               }
             >
               @{userState.userName}
@@ -60,8 +60,8 @@ function App() {
                       to="/login"
                       className={({ isActive }: { isActive: any }) =>
                         isActive
-                          ? "btn-outline-dark text-xs font-semibold border-[#dadce0] text-[#1a73e8] hover:text-[#1a73e8] hover:bg-[#f2f7fe] shadow-none"
-                          : "btn-outline-dark text-xs font-semibold border-[#dadce0] text-[#1a73e8] hover:text-[#1a73e8] hover:bg-[#f2f7fe] shadow-none"
+                          ? "btn-outline-dark text-xs font-semibold border-[#dadce0] text-blue-100 hover:text-blue-100 hover:bg-blue-900 shadow-none"
+                          : "btn-outline-dark text-xs font-semibold border-[#dadce0] text-blue-100 hover:text-blue-100 hover:bg-blue-900 shadow-none"
                       }
                     >
                       Login
@@ -73,8 +73,8 @@ function App() {
                     to="/register"
                     className={({ isActive }: { isActive: any }) =>
                       isActive
-                        ? "btn-primary bg-[#1a73e8] border-[#1a73e8] text-white shadow-none hover:bg-[#185abc] hover:border-[#185abc] text-xs font-semibold"
-                        : "btn-primary bg-[#1a73e8] border-[#1a73e8] text-white shadow-none hover:bg-[#185abc] hover:border-[#185abc] text-xs font-semibold"
+                        ? "btn-primary text-xs font-semibold"
+                        : "btn-primary bg-blue-100 border-blue-100 text-white shadow-none hover:bg-blue-300 hover:border-blue-300 text-xs font-semibold"
                     }
                   >
                     Register

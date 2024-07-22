@@ -102,7 +102,7 @@ const HiringPage = () => {
                           <div className="flex justify-between items-center">
                             <UserAvatar data={user} />
                             <button
-                              className="btn-outline-small-no-hover tablet:btn-outline-small text-center group flex items-center gap-1.5"
+                              className="btn-primary-layered text-center group flex items-center gap-1.5"
                               onClick={() => handleToggleModal(user._id)}
                             >
                               Hire {user.userName}
@@ -118,7 +118,7 @@ const HiringPage = () => {
                             <UserAvatar data={user} />
 
                             <button
-                              className="btn-outline-small-no-hover text-center group flex items-center gap-1.5"
+                              className="btn-primary-small text-center group flex items-center gap-1.5"
                               onClick={() => handleToggleModal(user._id)}
                             >
                               Hire {user.userName}

@@ -11,7 +11,12 @@ module.exports = {
       white: "#fff",
       blue: {
         DEFAULT: "#0d6efd",
-        100: "#1fb6ff",
+        100: "#1a73e8",
+        200: "#1967d2",
+        300: "#185abc",
+        700: "#d2e3fc",
+        800: "#e8f0fe",
+        900: "#f2f7fe",
       },
       red: {
         DEFAULT: "#fee2e2",

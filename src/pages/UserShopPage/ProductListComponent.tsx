@@ -143,7 +143,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
 
                         <div className="flex flex-col gap-2">
                           <button
-                            className="btn-outline-small-no-hover tablet:btn-outline-small text-xs"
+                            className="btn-primary-layered"
                             onClick={() => {
                               handleToggleModal(product._id);
                             }}
@@ -168,7 +168,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
 
                         <div className="flex flex-col gap-2">
                           <button
-                            className="btn-outline-small-no-hover text-xs"
+                            className="btn-primary-small"
                             onClick={() => {
                               handleToggleModal(product._id);
                             }}

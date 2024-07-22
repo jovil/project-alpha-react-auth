@@ -122,7 +122,7 @@ const ShopPage = () => {
 
                           <div className="flex justify-between items-center">
                             <button
-                              className="text-xs btn-outline-small-no-hover tablet:btn-outline-small"
+                              className="btn-primary-layered"
                               onClick={() => {
                                 handleToggleModal(product._id);
                               }}
@@ -149,7 +149,7 @@ const ShopPage = () => {
 
                           <div className="flex justify-between items-center">
                             <button
-                              className="text-xs btn-outline-small-no-hover"
+                              className="btn-primary-small"
                               onClick={() => {
                                 handleToggleModal(product._id);
                               }}
