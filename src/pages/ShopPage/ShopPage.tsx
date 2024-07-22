@@ -9,7 +9,8 @@ import defaultAvatar from "../../assets/images/toon_6.png";
 import loading from "../../assets/images/loading.gif";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import { AnimatePresence } from "framer-motion";
-import GridHeader from "../../components/GridHeader";
+import GridHeader from "../../components/Grid/header";
+import GridViewContainer from "../../components/Grid/gridViewContainer";
 
 const ShopPage = () => {
   const { state } = useContext(GlobalStateContext);
@@ -52,19 +53,16 @@ const ShopPage = () => {
 
   return (
     <>
-      <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4">
+      <section className="max-w-[948px] w-full mx-auto flex flex-col gap-4">
         <GridHeader
           gridViewProp={"productsView"}
           captionProp={"showProductsCaption"}
         >
           <h1>All products</h1>
         </GridHeader>
-        <div
-          className={`grid gap-1 ${
-            state.productsView === "grid"
-              ? "tablet:grid-cols-2 desktop:grid-cols-3"
-              : ""
-          }`}
+        <GridViewContainer
+          gridComponent={"productsView"}
+          captionComponent={"showProductsCaption"}
         >
           {allProducts?.length ? (
             <>
@@ -79,10 +77,10 @@ const ShopPage = () => {
 
                 return (
                   <div
-                    className={`w-full h-auto rounded-3xl flex flex-col gap-3 relative overflow-hidden group ${
+                    className={`w-full h-auto rounded-3xl flex flex-col relative overflow-hidden group ${
                       state.productsView === "grid" &&
                       !state.showProductsCaption
-                        ? "desktop:max-w-[300px] tablet:aspect-[3/4]"
+                        ? "tablet:aspect-[3/4]"
                         : ""
                     }`}
                     key={product._id}
@@ -161,7 +159,7 @@ const ShopPage = () => {
                     )}
 
                     {state.showProductsCaption && (
-                      <div className="flex flex-col justify-between gap-6 px-3 pb-3 tablet:py-3 w-full h-full">
+                      <div className="flex flex-col justify-between gap-6 px-3 pb-3 tablet:py-6 w-full h-full">
                         <div className="flex flex-col gap-1.5">
                           <p>{product.productName}</p>
                           <p className="text-sm">
@@ -231,9 +229,9 @@ const ShopPage = () => {
               />
             )}
           </AnimatePresence>
-        </div>
+        </GridViewContainer>
       </section>
-      {userState._id && <CreateProductComponent />}
+      {userState && userState._id && <CreateProductComponent />}
     </>
   );
 };

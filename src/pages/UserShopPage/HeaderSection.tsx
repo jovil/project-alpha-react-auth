@@ -29,7 +29,7 @@ const HeaderSection = ({
 
   const submitShopDescription = async (e: any) => {
     e.preventDefault();
-    const url = `${apiUrl}/user/shopDescription/${userState._id}`;
+    const url = `${apiUrl}/user/shopDescription/${userState && userState._id}`;
 
     const data = {
       shopDescription: shopDescriptionText,
@@ -84,7 +84,7 @@ const HeaderSection = ({
               <p className="font-medium">{isProfile.userName}</p>
             </NavLink>
           </div>
-          {userState._id === isProfile._id && (
+          {userState && userState._id === isProfile._id && (
             <>
               {userState.shopDescription?.length === 0 && (
                 <div className="py-3">
@@ -123,16 +123,18 @@ const HeaderSection = ({
           {isProfile.shopDescription && (
             <div className="flex flex-col items-center gap-2 pb-3">
               <p className="text-sm">
-                {userState.shopDescription || isProfile.shopDescription}
+                {userState?.shopDescription || isProfile.shopDescription}
               </p>
-              {userState._id === isProfile._id && !showDescriptionForm && (
-                <button
-                  className="text-black-100/60 underline"
-                  onClick={addShopDescription}
-                >
-                  Edit description
-                </button>
-              )}
+              {userState &&
+                userState?._id === isProfile._id &&
+                !showDescriptionForm && (
+                  <button
+                    className="text-black-100/60 underline"
+                    onClick={addShopDescription}
+                  >
+                    Edit description
+                  </button>
+                )}
             </div>
           )}
         </div>

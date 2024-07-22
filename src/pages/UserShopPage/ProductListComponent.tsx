@@ -5,7 +5,8 @@ import loading from "../../assets/images/loading.gif";
 import ProductModal from "../../components/ProductModalComponent";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import { AnimatePresence } from "framer-motion";
-import GridHeader from "../../components/GridHeader";
+import GridHeader from "../../components/Grid/header";
+import GridViewContainer from "../../components/Grid/gridViewContainer";
 
 interface Product {
   _id: string;
@@ -67,7 +68,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
   };
 
   return (
-    <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4 py-16">
+    <section className="max-w-[948px] w-full mx-auto flex flex-col gap-4 py-16">
       <GridHeader
         gridViewProp={"userProductsView"}
         captionProp={"showUserProductsCaption"}
@@ -80,12 +81,9 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
           <span>Shop</span>
         </h1>
       </GridHeader>
-      <div
-        className={`grid gap-1 ${
-          state.userProductsView === "grid"
-            ? "tablet:grid-cols-2 desktop:grid-cols-3"
-            : ""
-        }`}
+      <GridViewContainer
+        gridComponent={"userProductsView"}
+        captionComponent={"showUserProductsCaption"}
       >
         {products.length ? (
           <>
@@ -101,10 +99,10 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
               return (
                 <React.Fragment key={index}>
                   <div
-                    className={`w-full h-auto rounded-3xl flex flex-col gap-3 relative overflow-hidden group ${
+                    className={`w-full h-auto rounded-3xl flex flex-col relative overflow-hidden group ${
                       state.userProductsView === "grid" &&
                       !state.showUserProductsCaption
-                        ? "desktop:max-w-[300px] tablet:aspect-[3/4]"
+                        ? "tablet:aspect-[3/4]"
                         : ""
                     }`}
                   >
@@ -157,7 +155,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
                     )}
 
                     {state.showUserProductsCaption && (
-                      <div className="flex flex-col flex-grow justify-between gap-4 px-3 pb-3 tablet:py-3 w-full">
+                      <div className="flex flex-col flex-grow justify-between gap-4 px-3 pb-3 tablet:py-6 w-full">
                         <div className="flex flex-col gap-1.5">
                           <div className="flex flex-col gap-1.5">
                             <p>{product.productName}</p>
@@ -202,7 +200,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
             No products.
           </p>
         )}
-      </div>
+      </GridViewContainer>
     </section>
   );
 };

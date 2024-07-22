@@ -21,11 +21,11 @@ const HeaderSection = ({
   const [showHiringModal, setShowHiringModal] = useState<boolean>(false);
   const [showDescriptionForm, setShowDescriptionForm] = useState(false);
   const [profileDescriptionText, setProfileDescriptionText] = useState(
-    userState.profileDescription || null
+    (userState && userState.profileDescription) || null
   );
 
   useEffect(() => {
-    setProfileDescriptionText(userState.profileDescription);
+    setProfileDescriptionText(userState && userState.profileDescription);
   }, [userState]);
 
   const handleToggleModal = () => {
@@ -45,7 +45,9 @@ const HeaderSection = ({
 
   const submitProfileDescription = async (e: any) => {
     e.preventDefault();
-    const url = `${apiUrl}/user/profileDescription/${userState._id}`;
+    const url = `${apiUrl}/user/profileDescription/${
+      userState && userState._id
+    }`;
 
     const data = {
       profileDescription: profileDescriptionText,
@@ -95,7 +97,7 @@ const HeaderSection = ({
             </div>
             <p className="font-medium">{isUser.userName}</p>
           </div>
-          {userState._id === userId && (
+          {userState && userState._id === userId && (
             <>
               {userState.profileDescription.length === 0 && (
                 <div className="py-3">
@@ -135,22 +137,24 @@ const HeaderSection = ({
           {isUser && (
             <div className="flex flex-col items-center gap-2 pb-3">
               <p className="text-sm">
-                {userState._id === userId ? (
-                  <>{userState.profileDescription}</>
+                {userState && userState._id === userId ? (
+                  <>{userState && userState.profileDescription}</>
                 ) : (
-                  <>{isUser.profileDescription}</>
+                  <>{isUser && isUser.profileDescription}</>
                 )}
               </p>
-              {userState.profileDescription && (
+              {userState && userState.profileDescription && (
                 <>
-                  {userState._id === userId && !showDescriptionForm && (
-                    <button
-                      className="text-black-100/60 underline"
-                      onClick={addProfileDescription}
-                    >
-                      Edit description
-                    </button>
-                  )}
+                  {userState &&
+                    userState._id === userId &&
+                    !showDescriptionForm && (
+                      <button
+                        className="text-black-100/60 underline"
+                        onClick={addProfileDescription}
+                      >
+                        Edit description
+                      </button>
+                    )}
                 </>
               )}
             </div>

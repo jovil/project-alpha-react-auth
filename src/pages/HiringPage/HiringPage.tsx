@@ -6,7 +6,8 @@ import { apiUrl, getFetchConfig } from "../../utils/fetchConfig";
 import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
 import { AnimatePresence } from "framer-motion";
-import GridHeader from "../../components/GridHeader";
+import GridHeader from "../../components/Grid/header";
+import GridViewContainer from "../../components/Grid/gridViewContainer";
 
 const HiringPage = () => {
   const { state } = useContext(GlobalStateContext);
@@ -36,6 +37,7 @@ const HiringPage = () => {
   const handleToggleModal = (id: any) => {
     setShowHiringModal((prevState) => !prevState);
     setCurrentUserId(id);
+    document.body.style.overflow = !showHiringModal ? "hidden" : "auto";
   };
 
   const handleLoading = () => {
@@ -45,19 +47,16 @@ const HiringPage = () => {
 
   return (
     <>
-      <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4">
+      <section className="max-w-[948px] w-full mx-auto flex flex-col gap-4">
         <GridHeader
           gridViewProp={"hiringView"}
           captionProp={"showHiringCaption"}
         >
           <h1>All cosplayers</h1>
         </GridHeader>
-        <div
-          className={`grid gap-1 ${
-            state.hiringView === "grid"
-              ? "tablet:grid-cols-2 desktop:grid-cols-3"
-              : ""
-          }`}
+        <GridViewContainer
+          gridComponent={"hiringView"}
+          captionComponent={"showHiringCaption"}
         >
           {users?.length ? (
             <>
@@ -65,9 +64,9 @@ const HiringPage = () => {
                 return (
                   <React.Fragment key={index}>
                     <div
-                      className={`w-full h-auto text-left rounded-3xl flex flex-col gap-3 relative overflow-hidden group ${
+                      className={`w-full h-auto text-left rounded-3xl flex flex-col relative overflow-hidden group ${
                         state.hiringView === "grid" && !state.showHiringCaption
-                          ? "desktop:max-w-[300px] tablet:aspect-[3/4]"
+                          ? "tablet:aspect-[3/4]"
                           : ""
                       }`}
                     >
@@ -134,7 +133,7 @@ const HiringPage = () => {
                       )}
 
                       {state.showHiringCaption && (
-                        <div className="flex flex-col justify-between gap-6 px-3 pb-3 tablet:p-3 tablet:py-3 w-full">
+                        <div className="flex flex-col justify-between gap-6 px-3 pb-3 tablet:p-3 tablet:py-6 w-full">
                           <p>{user.userName}</p>
                           <div className="flex justify-between items-center">
                             <NavLink
@@ -196,7 +195,7 @@ const HiringPage = () => {
               alt=""
             />
           )}
-        </div>
+        </GridViewContainer>
       </section>
     </>
   );

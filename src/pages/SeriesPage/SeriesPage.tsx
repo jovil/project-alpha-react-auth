@@ -5,7 +5,8 @@ import { useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
 import { getFetchConfig } from "../../utils/fetchConfig";
-import GridHeader from "../../components/GridHeader";
+import GridHeader from "../../components/Grid/header";
+import GridViewContainer from "../../components/Grid/gridViewContainer";
 
 const SeriesPage = () => {
   const { seriesTitle } = useParams();
@@ -38,7 +39,7 @@ const SeriesPage = () => {
 
   return (
     <>
-      <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4">
+      <section className="max-w-[948px] w-full mx-auto flex flex-col gap-4">
         <GridHeader
           gridViewProp={"seriesView"}
           captionProp={"showSeriesCaption"}
@@ -51,24 +52,21 @@ const SeriesPage = () => {
             <span className="capitalize">{seriesTitle}</span> series
           </h1>
         </GridHeader>
-        <div
-          className={`grid gap-1 ${
-            state.seriesView === "grid"
-              ? "tablet:grid-cols-2 desktop:grid-cols-3"
-              : ""
-          }`}
+        <GridViewContainer
+          gridComponent={"seriesView"}
+          captionComponent={"showSeriesCaption"}
         >
           {seriesPosts?.length ? (
             <>
               {seriesPosts?.toReversed().map((post: any) => {
                 return (
                   <div
-                    className={`w-full h-auto rounded-3xl flex flex-col gap-3 relative group ${
+                    className={`w-full h-auto rounded-3xl flex flex-col relative group ${
                       state.seriesView === "grid" && state.showSeriesCaption
-                        ? "desktop:max-w-[300px] tablet:aspect-[3/4]"
+                        ? "tablet:aspect-[3/4]"
                         : state.seriesView === "grid" &&
                           !state.showSeriesCaption
-                        ? "desktop:max-w-[300px] tablet:aspect-[3/4] overflow-hidden"
+                        ? "tablet:aspect-[3/4] overflow-hidden"
                         : state.seriesView === "list" && state.showSeriesCaption
                         ? ""
                         : "overflow-hidden"
@@ -131,7 +129,7 @@ const SeriesPage = () => {
                     )}
 
                     {state.showSeriesCaption && (
-                      <div className="flex flex-col flex-grow justify-between gap-2 px-3 pb-3 tablet:py-3 w-full">
+                      <div className="flex flex-col flex-grow justify-between gap-2 px-3 pb-3 tablet:py-6 w-full">
                         <p>{post.characterName}</p>
 
                         <div className="flex">
@@ -166,7 +164,7 @@ const SeriesPage = () => {
           ) : (
             <></>
           )}
-        </div>
+        </GridViewContainer>
       </section>
     </>
   );

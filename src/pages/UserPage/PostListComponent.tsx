@@ -5,7 +5,8 @@ import { usePosts } from "../../context/PostsContext";
 import loading from "../../assets/images/loading.gif";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import { apiUrl } from "../../utils/fetchConfig";
-import GridHeader from "../../components/GridHeader";
+import GridHeader from "../../components/Grid/header";
+import GridViewContainer from "../../components/Grid/gridViewContainer";
 
 interface User {
   _id: string;
@@ -49,19 +50,16 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
   };
 
   return (
-    <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4 py-16">
+    <section className="max-w-[948px] w-full mx-auto flex flex-col gap-4 py-16">
       <GridHeader
         gridViewProp={"userPostsView"}
         captionProp={"showUserPostsCaption"}
       >
         <h2>{posts.length ? "All posts" : "No posts"}</h2>
       </GridHeader>
-      <div
-        className={`grid gap-1 ${
-          state.userPostsView === "grid"
-            ? "tablet:grid-cols-2 desktop:grid-cols-3"
-            : ""
-        }`}
+      <GridViewContainer
+        gridComponent={"userPostsView"}
+        captionComponent={"showUserPostsCaption"}
       >
         {posts?.length ? (
           <>
@@ -73,10 +71,10 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
 
               return (
                 <div
-                  className={`w-full h-auto rounded-3xl flex flex-col gap-3 relative overflow-hidden group ${
+                  className={`w-full h-auto rounded-3xl flex flex-col relative overflow-hidden group ${
                     state.userPostsView === "grid" &&
                     !state.showUserPostsCaption
-                      ? "desktop:max-w-[300px] tablet:aspect-[3/4]"
+                      ? "tablet:aspect-[3/4]"
                       : ""
                   }`}
                   key={post._id}
@@ -110,7 +108,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
                   )}
 
                   {state.showUserPostsCaption && (
-                    <div className="flex flex-col justify-between gap-4 px-3 pb-3 tablet:py-3 w-full">
+                    <div className="flex flex-col justify-between gap-4 px-3 pb-3 tablet:py-6 w-full">
                       <p>{post.characterName}</p>
                       <p className="text-xs">from {post.seriesTitle}</p>
                     </div>
@@ -122,7 +120,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
         ) : (
           ""
         )}
-      </div>
+      </GridViewContainer>
     </section>
   );
 };

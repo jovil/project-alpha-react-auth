@@ -6,7 +6,8 @@ import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
 import end from "../../assets/images/end.png";
 import { getFetchConfig } from "../../utils/fetchConfig";
-import GridHeader from "../../components/GridHeader";
+import GridHeader from "../../components/Grid/header";
+import GridViewContainer from "../../components/Grid/gridViewContainer";
 
 const PostListView = () => {
   const { state } = useContext(GlobalStateContext);
@@ -96,25 +97,22 @@ const PostListView = () => {
 
   return (
     <>
-      <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4 min-h-[100vh]">
+      <section className="max-w-[948px] w-full mx-auto flex flex-col gap-4 min-h-[100vh]">
         <GridHeader gridViewProp={"postsView"} captionProp={"showPostsCaption"}>
           <h1>All posts</h1>
         </GridHeader>
-        <div
-          className={`grid gap-1 ${
-            state.postsView === "grid"
-              ? "tablet:grid-cols-2 desktop:grid-cols-3"
-              : ""
-          }`}
+        <GridViewContainer
+          gridComponent={"postsView"}
+          captionComponent={"showPostsCaption"}
         >
           {allPosts?.length ? (
             <>
               {allPosts?.map((post: any) => {
                 return (
                   <div
-                    className={`w-full h-auto rounded-3xl flex flex-col gap-3 relative overflow-hidden group ${
+                    className={`w-full h-auto rounded-3xl flex flex-col relative overflow-hidden group ${
                       state.postsView === "grid" && !state.showPostsCaption
-                        ? "desktop:max-w-[300px] tablet:aspect-[3/4]"
+                        ? "tablet:aspect-[3/4]"
                         : ""
                     }`}
                     key={post._id}
@@ -220,7 +218,7 @@ const PostListView = () => {
                     )}
 
                     {state.showPostsCaption && (
-                      <div className="flex flex-col justify-between gap-6 px-3 pb-3 tablet:py-3 w-full">
+                      <div className="flex flex-col justify-between gap-6 px-3 pb-3 tablet:py-6 w-full">
                         <p>{post.characterName}</p>
                         <footer className="flex flex-col gap-2">
                           <div className="flex items-center gap-2">
@@ -308,7 +306,7 @@ const PostListView = () => {
               alt=""
             />
           )}
-        </div>
+        </GridViewContainer>
       </section>
       <footer className="flex justify-center p-8 text-dark/80" data-site-footer>
         {postsRef.current >= limit ? (
