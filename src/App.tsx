@@ -28,24 +28,24 @@ function App() {
         {token && (
           <div className="flex justify-end gap-4">
             <NavLink
-              to={`/user/${userState._id}`}
-              className={({ isActive }: { isActive: any }) =>
-                isActive
-                  ? "btn-primary text-xs font-semibold"
-                  : "btn-primary text-xs font-semibold"
-              }
-            >
-              @{userState.userName}
-            </NavLink>
-            <NavLink
               to="/auth"
               className={({ isActive }: { isActive: any }) =>
                 isActive
-                  ? "btn-outline-dark text-xs font-semibold"
-                  : "btn-outline-dark text-xs font-semibold"
+                  ? "btn-outline-dark text-xs font-semibold border-[#dadce0] text-[#1a73e8] hover:text-[#1a73e8] hover:bg-[#f2f7fe] shadow-none"
+                  : "btn-outline-dark text-xs font-semibold border-[#dadce0] text-[#1a73e8] hover:text-[#1a73e8] hover:bg-[#f2f7fe] shadow-none"
               }
             >
               Account
+            </NavLink>
+            <NavLink
+              to={`/user/${userState._id}`}
+              className={({ isActive }: { isActive: any }) =>
+                isActive
+                  ? "btn-primary bg-[#1a73e8] border-[#1a73e8] text-white shadow-none hover:bg-[#185abc] hover:border-[#185abc] text-xs font-semibold"
+                  : "btn-primary bg-[#1a73e8] border-[#1a73e8] text-white shadow-none hover:bg-[#185abc] hover:border-[#185abc] text-xs font-semibold"
+              }
+            >
+              @{userState.userName}
             </NavLink>
           </div>
         )}
@@ -77,10 +77,10 @@ function App() {
           </div>
         )}
       </div>
-      <header className="sticky top-0 z-20">
+      <header className="sticky top-0 z-20 pointer-events-none">
         <div className="max-w-[948px] mx-auto pt-8 pb-6 flex flex-col gap-5 sm:gap-4">
           <div className="flex justify-center items-center gap-2">
-            <nav className="bg-white rounded-full shadow-nav p-2">
+            <nav className="bg-white rounded-full shadow-nav p-2 pointer-events-auto">
               <ul className="flex items-center">
                 <li>
                   <NavLink

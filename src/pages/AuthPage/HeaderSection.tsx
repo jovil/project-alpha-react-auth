@@ -87,7 +87,7 @@ const HeaderSection = () => {
       <div className="max-w-[948px] mx-auto grid grid-cols-12">
         <div className="col-span-2"></div>
         <div className="flex justify-center col-span-8">
-          <div className="flex flex-col justify-center items-center gap-4">
+          <div className="flex flex-col justify-center items-center gap-3">
             <p className="text-xs text-dark">Account</p>
             <div className="text-xs font-medium flex flex-col gap-3 items-center">
               <img
@@ -144,7 +144,7 @@ const HeaderSection = () => {
         <div className="col-span-2">
           <div className="flex justify-end items-center">
             <button
-              className="btn-outline-danger text-xs font-semibold"
+              className="btn-outline-danger bg-[#dc35451a] text-[#d50b1f] hover:text-[#d50b1f] hover:bg-[#da6c7733] border-transparent shadow-none text-xs font-semibold"
               type="submit"
               onClick={() => logout()}
             >

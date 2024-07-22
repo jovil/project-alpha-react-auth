@@ -55,7 +55,7 @@ const GridHeader = ({
               <div className="thumb"></div>
             </button>
           </div>
-          <div className="flex">
+          <div className="flex gap-1">
             <button>
               <img
                 className={`w-7 h-7 p-1.5 rounded-full ${

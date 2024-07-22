@@ -113,7 +113,7 @@ const BankDetails = () => {
         >
           Add your bank account details for payouts
           {hasDetailsSaved && (
-            <p className="bg-green/20 text-sm font-medium text-green rounded px-4 py-1.5">
+            <p className="bg-[#4fde8e33] text-xs font-medium text-[#10a854] rounded-full px-4 py-1.5">
               Saved
             </p>
           )}
