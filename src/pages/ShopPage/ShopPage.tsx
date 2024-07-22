@@ -84,7 +84,7 @@ const ShopPage = () => {
                     }`}
                     key={product._id}
                   >
-                    <div className="relative">
+                    <div className="overflow-hidden relative rounded-3xl">
                       {runShimmerAnimation && (
                         <div className="shimmer-overlay"></div>
                       )}
@@ -96,7 +96,7 @@ const ShopPage = () => {
                         />
                       )}
                       <img
-                        className={`object-cover w-full rounded-3xl ${
+                        className={`object-cover w-full h-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
                           state.productsView === "grid" &&
                           state.showProductsCaption
                             ? "aspect-[4/6]"
@@ -136,7 +136,7 @@ const ShopPage = () => {
                     )}
 
                     {state.showProductsCaption && (
-                      <div className="flex flex-col justify-between gap-6 px-3 pb-3 tablet:py-6 w-full h-full">
+                      <div className="flex flex-col justify-between gap-6 px-3 pb-3 tablet:py-6 w-full flex-grow">
                         <div className="flex flex-col gap-1.5">
                           <p>{product.productName}</p>
                           <p className="text-sm">

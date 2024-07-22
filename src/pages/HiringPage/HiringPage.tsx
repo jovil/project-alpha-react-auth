@@ -70,7 +70,7 @@ const HiringPage = () => {
                           : ""
                       }`}
                     >
-                      <div className="h-full w-full relative overflow-hidden">
+                      <div className="h-full w-full relative overflow-hidden rounded-3xl">
                         {runShimmerAnimation && (
                           <div className="shimmer-overlay"></div>
                         )}
@@ -84,7 +84,7 @@ const HiringPage = () => {
                           alt=""
                         />
                         <img
-                          className={`object-cover w-full h-full rounded-3xl ${
+                          className={`object-cover w-full h-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
                             state.hiringView === "grid" &&
                             state.showHiringCaption
                               ? "aspect-[4/6]"

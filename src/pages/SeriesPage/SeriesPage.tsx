@@ -72,7 +72,7 @@ const SeriesPage = () => {
                     }`}
                     key={post._id}
                   >
-                    <div className="h-full relative overflow-hidden">
+                    <div className="h-full relative overflow-hidden rounded-3xl">
                       {runShimmerAnimation && (
                         <div className="shimmer-overlay"></div>
                       )}
@@ -86,7 +86,7 @@ const SeriesPage = () => {
                         alt=""
                       />
                       <img
-                        className={`object-cover w-full rounded-3xl ${
+                        className={`object-cover w-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
                           state.seriesView === "grid" && state.showSeriesCaption
                             ? "aspect-[4/6]"
                             : "aspect-[4/6]"

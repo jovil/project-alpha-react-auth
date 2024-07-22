@@ -106,7 +106,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
                         : ""
                     }`}
                   >
-                    <div className="h-full relative overflow-hidden">
+                    <div className="relative overflow-hidden rounded-3xl">
                       {runShimmerAnimation && (
                         <div className="shimmer-overlay"></div>
                       )}
@@ -118,7 +118,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
                         />
                       )}
                       <img
-                        className={`object-cover w-full rounded-3xl ${
+                        className={`object-cover w-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
                           state.userProductsView === "grid"
                             ? "aspect-[4/6]"
                             : ""
