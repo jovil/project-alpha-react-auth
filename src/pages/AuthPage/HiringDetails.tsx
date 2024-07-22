@@ -3,7 +3,6 @@ import { useUser } from "../../context/UserContext";
 import "../../components/Accordion.css";
 import Notify from "simple-notify";
 import "simple-notify/dist/simple-notify.css";
-import loading from "../../assets/images/loading.gif";
 
 const Accordion = ({
   isEditing,

@@ -59,6 +59,10 @@ const ShopPage = () => {
     setState({ ...state, productsView: "list" });
   };
 
+  const handlePostsCaption = () => {
+    setState({ ...state, showProductsCaption: !state.showProductsCaption });
+  };
+
   return (
     <>
       <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4">
@@ -66,27 +70,40 @@ const ShopPage = () => {
           <>
             <h1>All products</h1>
           </>
-          <div className="flex justify-end">
-            <button>
-              <img
-                className={`w-7 h-7 p-1.5 rounded-full ${
-                  state.productsView === "list" ? "bg-dark/10" : ""
+          <div className="flex justify-end items-center gap-4">
+            <div className="flex items-center gap-2">
+              <p className="text-xs">Show caption</p>
+              <button
+                className={`toggle-btn ${
+                  state.showProductsCaption ? "toggled" : ""
                 }`}
-                src={iconList}
-                onClick={handleProductsListView}
-                alt=""
-              />
-            </button>
-            <button>
-              <img
-                className={`w-7 h-7 p-1.5 rounded-full ${
-                  state.productsView === "grid" ? "bg-dark/10" : ""
-                }`}
-                src={iconGrid}
-                onClick={handleProductsGridView}
-                alt=""
-              />
-            </button>
+                onClick={handlePostsCaption}
+              >
+                <div className="thumb"></div>
+              </button>
+            </div>
+            <div className="flex">
+              <button>
+                <img
+                  className={`w-7 h-7 p-1.5 rounded-full ${
+                    state.productsView === "list" ? "bg-dark/10" : ""
+                  }`}
+                  src={iconList}
+                  onClick={handleProductsListView}
+                  alt=""
+                />
+              </button>
+              <button>
+                <img
+                  className={`w-7 h-7 p-1.5 rounded-full ${
+                    state.productsView === "grid" ? "bg-dark/10" : ""
+                  }`}
+                  src={iconGrid}
+                  onClick={handleProductsGridView}
+                  alt=""
+                />
+              </button>
+            </div>
           </div>
         </header>
         <div
@@ -110,13 +127,14 @@ const ShopPage = () => {
                 return (
                   <div
                     className={`w-full h-auto rounded-3xl flex flex-col gap-3 relative overflow-hidden group ${
-                      state.productsView === "grid"
+                      state.productsView === "grid" &&
+                      !state.showProductsCaption
                         ? "desktop:max-w-[300px] tablet:aspect-[3/4]"
                         : ""
                     }`}
                     key={product._id}
                   >
-                    <div className="h-full relative overflow-hidden">
+                    <div className="relative">
                       {runShimmerAnimation && (
                         <div className="shimmer-overlay"></div>
                       )}
@@ -128,8 +146,11 @@ const ShopPage = () => {
                         />
                       )}
                       <img
-                        className={`object-cover w-full h-full rounded-3xl ${
-                          state.productsView === "grid" ? "aspect-3/4" : ""
+                        className={`object-cover w-full rounded-3xl ${
+                          state.productsView === "grid" &&
+                          state.showProductsCaption
+                            ? "aspect-[3/4]"
+                            : "aspect-[3/4]"
                         }`}
                         src={product.fileUrl[product.fileUrl.length - 1] || ""}
                         alt={product.productName}
@@ -137,50 +158,103 @@ const ShopPage = () => {
                         onLoad={handleProductImageLoad}
                       />
                     </div>
-                    <div className="flex flex-col justify-between gap-6 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
-                      <div className="flex flex-col gap-1.5">
-                        <p>{product.productName}</p>
-                        <p className="text-sm">{product.productDescription}</p>
-                      </div>
-
-                      <div className="flex flex-col gap-4">
-                        <div>
-                          <NavLink
-                            className="flex gap-1.5 items-center"
-                            to={`/user/${product.user._id}`}
-                          >
-                            {product.user.avatar.length > 0 ? (
-                              <img
-                                className="rounded-full w-6 h-6 border border-dark/10"
-                                src={product.user.avatar}
-                                alt=""
-                              />
-                            ) : (
-                              <img
-                                className="rounded-full w-6 h-6 border border-dark/10"
-                                src={defaultAvatar}
-                                alt=""
-                              />
-                            )}
-                            <p className="text-xs underline">
-                              @{product.user.userName}
-                            </p>
-                          </NavLink>
+                    {!state.showProductsCaption && (
+                      <div className="flex flex-col justify-between gap-6 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
+                        <div className="flex flex-col gap-1.5">
+                          <p>{product.productName}</p>
+                          <p className="text-sm">
+                            {product.productDescription}
+                          </p>
                         </div>
 
-                        <div className="flex justify-between items-center">
-                          <button
-                            className="text-xs btn-outline-small-no-hover tablet:btn-outline-small"
-                            onClick={() => {
-                              handleToggleModal(product._id);
-                            }}
-                          >
-                            Show product
-                          </button>
-                          <p className="ml-auto">RM {product.productPrice}</p>
+                        <div className="flex flex-col gap-4">
+                          <div className="flex">
+                            <NavLink
+                              className="flex gap-1.5 items-center"
+                              to={`/user/${product.user._id}`}
+                            >
+                              {product.user.avatar.length > 0 ? (
+                                <img
+                                  className="rounded-full w-6 h-6 border border-dark/10"
+                                  src={product.user.avatar}
+                                  alt=""
+                                />
+                              ) : (
+                                <img
+                                  className="rounded-full w-6 h-6 border border-dark/10"
+                                  src={defaultAvatar}
+                                  alt=""
+                                />
+                              )}
+                              <p className="text-xs underline">
+                                @{product.user.userName}
+                              </p>
+                            </NavLink>
+                          </div>
+
+                          <div className="flex justify-between items-center">
+                            <button
+                              className="text-xs btn-outline-small-no-hover tablet:btn-outline-small"
+                              onClick={() => {
+                                handleToggleModal(product._id);
+                              }}
+                            >
+                              Show product
+                            </button>
+                            <p className="ml-auto">RM {product.productPrice}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    )}
+
+                    {state.showProductsCaption && (
+                      <div className="flex flex-col justify-between gap-6 px-3 pb-3 tablet:py-3 w-full h-full">
+                        <div className="flex flex-col gap-1.5">
+                          <p>{product.productName}</p>
+                          <p className="text-sm">
+                            {product.productDescription}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-col gap-4">
+                          <div className="flex">
+                            <NavLink
+                              className="flex gap-1.5 items-center"
+                              to={`/user/${product.user._id}`}
+                            >
+                              {product.user.avatar.length > 0 ? (
+                                <img
+                                  className="rounded-full w-6 h-6 border border-dark/10"
+                                  src={product.user.avatar}
+                                  alt=""
+                                />
+                              ) : (
+                                <img
+                                  className="rounded-full w-6 h-6 border border-dark/10"
+                                  src={defaultAvatar}
+                                  alt=""
+                                />
+                              )}
+                              <p className="text-xs underline">
+                                @{product.user.userName}
+                              </p>
+                            </NavLink>
+                          </div>
+
+                          <div className="flex justify-between items-center">
+                            <button
+                              className="text-xs btn-outline-small-no-hover"
+                              onClick={() => {
+                                handleToggleModal(product._id);
+                              }}
+                            >
+                              Show product
+                            </button>
+                            <p className="ml-auto">RM {product.productPrice}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })}

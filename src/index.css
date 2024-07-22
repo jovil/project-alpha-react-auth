@@ -101,6 +101,7 @@ input::-webkit-inner-spin-button {
     animation: shimmer 550ms ease-in-out forwards;
     animation-iteration-count: 1;
     will-change: transform;
+    pointer-events: none;
   }
 }
 
