@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import HiringModal from "../../components/HiringModal";
 import { apiUrl, getFetchConfig } from "../../utils/fetchConfig";
@@ -8,6 +7,7 @@ import defaultAvatar from "../../assets/images/toon_6.png";
 import { AnimatePresence } from "framer-motion";
 import GridHeader from "../../components/Grid/header";
 import GridViewContainer from "../../components/Grid/gridViewContainer";
+import UserAvatar from "../../components/Card/userAvatar";
 
 const HiringPage = () => {
   const { state } = useContext(GlobalStateContext);
@@ -66,7 +66,7 @@ const HiringPage = () => {
                     <div
                       className={`w-full h-auto text-left rounded-3xl flex flex-col relative overflow-hidden group ${
                         state.hiringView === "grid" && !state.showHiringCaption
-                          ? "tablet:aspect-[3/4]"
+                          ? "tablet:aspect-[4/6]"
                           : ""
                       }`}
                     >
@@ -87,7 +87,7 @@ const HiringPage = () => {
                           className={`object-cover w-full h-full rounded-3xl ${
                             state.hiringView === "grid" &&
                             state.showHiringCaption
-                              ? "aspect-[3/4]"
+                              ? "aspect-[4/6]"
                               : ""
                           }`}
                           src={user.avatar ?? defaultAvatar}
@@ -100,28 +100,7 @@ const HiringPage = () => {
                         <div className="flex flex-col justify-between gap-6 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
                           <p>{user.userName}</p>
                           <div className="flex justify-between items-center">
-                            <NavLink
-                              className="flex gap-1.5 items-center"
-                              to={`/user/${user._id}`}
-                            >
-                              {user.avatar.length > 0 ? (
-                                <img
-                                  className="rounded-full w-6 h-6 border border-dark/10"
-                                  src={user.avatar}
-                                  alt=""
-                                />
-                              ) : (
-                                <img
-                                  className="rounded-full w-6 h-6 border border-dark/10"
-                                  src={defaultAvatar}
-                                  alt=""
-                                />
-                              )}
-                              <p className="text-xs underline">
-                                @{user.userName}
-                              </p>
-                            </NavLink>
-
+                            <UserAvatar data={user} />
                             <button
                               className="btn-outline-small-no-hover tablet:btn-outline-small text-center group flex items-center gap-1.5"
                               onClick={() => handleToggleModal(user._id)}
@@ -136,27 +115,7 @@ const HiringPage = () => {
                         <div className="flex flex-col justify-between gap-6 px-3 pb-3 tablet:p-3 tablet:py-6 w-full">
                           <p>{user.userName}</p>
                           <div className="flex justify-between items-center">
-                            <NavLink
-                              className="flex gap-1.5 items-center"
-                              to={`/user/${user._id}`}
-                            >
-                              {user.avatar.length > 0 ? (
-                                <img
-                                  className="rounded-full w-6 h-6 border border-dark/10"
-                                  src={user.avatar}
-                                  alt=""
-                                />
-                              ) : (
-                                <img
-                                  className="rounded-full w-6 h-6 border border-dark/10"
-                                  src={defaultAvatar}
-                                  alt=""
-                                />
-                              )}
-                              <p className="text-xs underline">
-                                @{user.userName}
-                              </p>
-                            </NavLink>
+                            <UserAvatar data={user} />
 
                             <button
                               className="btn-outline-small-no-hover text-center group flex items-center gap-1.5"

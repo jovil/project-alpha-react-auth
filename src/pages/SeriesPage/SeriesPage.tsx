@@ -3,10 +3,10 @@ import { NavLink } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import { useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
-import defaultAvatar from "../../assets/images/toon_6.png";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import GridHeader from "../../components/Grid/header";
 import GridViewContainer from "../../components/Grid/gridViewContainer";
+import UserAvatar from "../../components/Card/userAvatar";
 
 const SeriesPage = () => {
   const { seriesTitle } = useParams();
@@ -22,7 +22,6 @@ const SeriesPage = () => {
       const response = await fetch(url, getFetchConfig);
       const result = await response.json();
       setSeriesPosts(result);
-      console.log("result", result);
     } catch (error) {
       console.log("error", error);
     }
@@ -63,10 +62,10 @@ const SeriesPage = () => {
                   <div
                     className={`w-full h-auto rounded-3xl flex flex-col relative group ${
                       state.seriesView === "grid" && state.showSeriesCaption
-                        ? "tablet:aspect-[3/4]"
+                        ? "tablet:aspect-[4/6]"
                         : state.seriesView === "grid" &&
                           !state.showSeriesCaption
-                        ? "tablet:aspect-[3/4] overflow-hidden"
+                        ? "tablet:aspect-[4/6] overflow-hidden"
                         : state.seriesView === "list" && state.showSeriesCaption
                         ? ""
                         : "overflow-hidden"
@@ -89,8 +88,8 @@ const SeriesPage = () => {
                       <img
                         className={`object-cover w-full rounded-3xl ${
                           state.seriesView === "grid" && state.showSeriesCaption
-                            ? "aspect-[3/4]"
-                            : "aspect-[3/4]"
+                            ? "aspect-[4/6]"
+                            : "aspect-[4/6]"
                         }`}
                         src={post.fileUrl}
                         alt=""
@@ -99,62 +98,16 @@ const SeriesPage = () => {
                       />
                     </div>
                     {!state.showSeriesCaption && (
-                      <div className="flex flex-col flex-grow justify-between gap-2 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
+                      <div className="flex flex-col flex-grow justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
                         <p>{post.characterName}</p>
-
-                        <div className="flex">
-                          <NavLink
-                            className="flex gap-1.5 items-center"
-                            to={`/user/${post.user._id}`}
-                          >
-                            {post.user.avatar.length > 0 ? (
-                              <img
-                                className="rounded-full w-6 h-6 border border-dark/10"
-                                src={post.user.avatar}
-                                alt=""
-                              />
-                            ) : (
-                              <img
-                                className="rounded-full w-6 h-6 border border-dark/10"
-                                src={defaultAvatar}
-                                alt=""
-                              />
-                            )}
-                            <p className="text-xs underline">
-                              @{post.user.userName}
-                            </p>
-                          </NavLink>
-                        </div>
+                        <UserAvatar data={post} />
                       </div>
                     )}
 
                     {state.showSeriesCaption && (
-                      <div className="flex flex-col flex-grow justify-between gap-2 px-3 pb-3 tablet:py-6 w-full">
+                      <div className="flex flex-col flex-grow justify-between gap-4 px-3 pb-3 tablet:py-6 w-full">
                         <p>{post.characterName}</p>
-
-                        <div className="flex">
-                          <NavLink
-                            className="flex gap-1.5 items-center"
-                            to={`/user/${post.user._id}`}
-                          >
-                            {post.user.avatar.length > 0 ? (
-                              <img
-                                className="rounded-full w-6 h-6 border border-dark/10"
-                                src={post.user.avatar}
-                                alt=""
-                              />
-                            ) : (
-                              <img
-                                className="rounded-full w-6 h-6 border border-dark/10"
-                                src={defaultAvatar}
-                                alt=""
-                              />
-                            )}
-                            <p className="text-xs underline">
-                              @{post.user.userName}
-                            </p>
-                          </NavLink>
-                        </div>
+                        <UserAvatar data={post} />
                       </div>
                     )}
                   </div>

@@ -1,16 +1,15 @@
 import { useEffect, useCallback, useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import { useUser } from "../../context/UserContext";
 import { useProducts } from "../../context/ProductsContext";
 import ProductModal from "../../components/ProductModalComponent";
 import CreateProductComponent from "../../components/CreateProductComponent";
-import defaultAvatar from "../../assets/images/toon_6.png";
 import loading from "../../assets/images/loading.gif";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import { AnimatePresence } from "framer-motion";
 import GridHeader from "../../components/Grid/header";
 import GridViewContainer from "../../components/Grid/gridViewContainer";
+import UserAvatar from "../../components/Card/userAvatar";
 
 const ShopPage = () => {
   const { state } = useContext(GlobalStateContext);
@@ -80,7 +79,7 @@ const ShopPage = () => {
                     className={`w-full h-auto rounded-3xl flex flex-col relative overflow-hidden group ${
                       state.productsView === "grid" &&
                       !state.showProductsCaption
-                        ? "tablet:aspect-[3/4]"
+                        ? "tablet:aspect-[4/6]"
                         : ""
                     }`}
                     key={product._id}
@@ -100,8 +99,8 @@ const ShopPage = () => {
                         className={`object-cover w-full rounded-3xl ${
                           state.productsView === "grid" &&
                           state.showProductsCaption
-                            ? "aspect-[3/4]"
-                            : "aspect-[3/4]"
+                            ? "aspect-[4/6]"
+                            : "aspect-[4/6]"
                         }`}
                         src={product.fileUrl[product.fileUrl.length - 1] || ""}
                         alt={product.productName}
@@ -119,29 +118,7 @@ const ShopPage = () => {
                         </div>
 
                         <div className="flex flex-col gap-4">
-                          <div className="flex">
-                            <NavLink
-                              className="flex gap-1.5 items-center"
-                              to={`/user/${product.user._id}`}
-                            >
-                              {product.user.avatar.length > 0 ? (
-                                <img
-                                  className="rounded-full w-6 h-6 border border-dark/10"
-                                  src={product.user.avatar}
-                                  alt=""
-                                />
-                              ) : (
-                                <img
-                                  className="rounded-full w-6 h-6 border border-dark/10"
-                                  src={defaultAvatar}
-                                  alt=""
-                                />
-                              )}
-                              <p className="text-xs underline">
-                                @{product.user.userName}
-                              </p>
-                            </NavLink>
-                          </div>
+                          <UserAvatar data={product} />
 
                           <div className="flex justify-between items-center">
                             <button
@@ -168,29 +145,7 @@ const ShopPage = () => {
                         </div>
 
                         <div className="flex flex-col gap-4">
-                          <div className="flex">
-                            <NavLink
-                              className="flex gap-1.5 items-center"
-                              to={`/user/${product.user._id}`}
-                            >
-                              {product.user.avatar.length > 0 ? (
-                                <img
-                                  className="rounded-full w-6 h-6 border border-dark/10"
-                                  src={product.user.avatar}
-                                  alt=""
-                                />
-                              ) : (
-                                <img
-                                  className="rounded-full w-6 h-6 border border-dark/10"
-                                  src={defaultAvatar}
-                                  alt=""
-                                />
-                              )}
-                              <p className="text-xs underline">
-                                @{product.user.userName}
-                              </p>
-                            </NavLink>
-                          </div>
+                          <UserAvatar data={product} />
 
                           <div className="flex justify-between items-center">
                             <button

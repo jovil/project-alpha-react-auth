@@ -74,7 +74,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
                   className={`w-full h-auto rounded-3xl flex flex-col relative overflow-hidden group ${
                     state.userPostsView === "grid" &&
                     !state.showUserPostsCaption
-                      ? "tablet:aspect-[3/4]"
+                      ? "tablet:aspect-[4/6]"
                       : ""
                   }`}
                   key={post._id}
@@ -92,7 +92,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
                     )}
                     <img
                       className={`object-cover w-full rounded-3xl ${
-                        state.userPostsView === "grid" ? "aspect-[3/4]" : ""
+                        state.userPostsView === "grid" ? "aspect-[4/6]" : ""
                       }`}
                       src={post.fileUrl}
                       alt=""
