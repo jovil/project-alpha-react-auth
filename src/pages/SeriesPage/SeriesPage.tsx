@@ -2,8 +2,6 @@ import { useCallback, useEffect, useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import { useParams } from "react-router-dom";
-import iconGrid from "../../assets/images/icon-grid.svg";
-import iconList from "../../assets/images/icon-list.svg";
 import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
 import { getFetchConfig } from "../../utils/fetchConfig";
@@ -11,7 +9,7 @@ import GridHeader from "../../components/GridHeader";
 
 const SeriesPage = () => {
   const { seriesTitle } = useParams();
-  const { state, setState } = useContext(GlobalStateContext);
+  const { state } = useContext(GlobalStateContext);
   const [seriesPosts, setSeriesPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
@@ -36,14 +34,6 @@ const SeriesPage = () => {
   const handlePostImageLoad = () => {
     setIsLoading(false);
     setRunShimmerAnimation(true);
-  };
-
-  const handleGridView = () => {
-    setState({ ...state, seriesView: "grid" });
-  };
-
-  const handleListView = () => {
-    setState({ ...state, seriesView: "list" });
   };
 
   return (
