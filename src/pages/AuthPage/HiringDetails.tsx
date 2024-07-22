@@ -21,7 +21,9 @@ const Accordion = ({
   const [hiringDetails, setHiringDetails] = useState<any | null>(
     isHiringDetails || null
   );
-  const [isSavingHiringDetails, setIsSavingHiringDetails] = useState(false);
+  const [showErrorBlock, setShowErrorBlock] = useState(false);
+  const [noServiceChecked, setNoServiceChecked] = useState(false);
+  const [noAvailabilityChecked, setNoAvailabilityChecked] = useState(false);
 
   const onLoad = useCallback(() => {
     setHiringDetails(isHiringDetails);
@@ -108,15 +110,35 @@ const Accordion = ({
     }));
   };
 
+  const isAtLeastOneCheckedService = () => {
+    return hiringDetails.services.some((e: any) => e.serviceAvailable);
+  };
+
+  const isAtLeastOneCheckedAvailability = () => {
+    return hiringDetails.availability.some((e: any) => e.isAvailable);
+  };
+
   const submitHiringDetails = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSavingHiringDetails(true);
 
-    if (!hiringDetails) {
-      // Handle case where hiringDetails is not defined
-      setIsSavingHiringDetails(false);
-      return;
+    if (!isAtLeastOneCheckedService()) {
+      setShowErrorBlock(true);
+      setNoServiceChecked(true);
+    } else {
+      setNoServiceChecked(false);
     }
+
+    if (!isAtLeastOneCheckedAvailability()) {
+      setShowErrorBlock(true);
+      setNoAvailabilityChecked(true);
+    } else {
+      setNoAvailabilityChecked(false);
+    }
+
+    if (!isAtLeastOneCheckedService()) return;
+    if (!isAtLeastOneCheckedAvailability()) return;
+
+    setShowErrorBlock(false);
 
     const postData = {
       email: hiringDetails.email || "",
@@ -154,7 +176,6 @@ const Accordion = ({
     try {
       console.log("postData", postData);
       await fetch(url, configuration);
-      setIsSavingHiringDetails(false);
       setIsActive(false);
       onHandleEditingMode(false);
 
@@ -164,7 +185,6 @@ const Accordion = ({
       });
     } catch (error) {
       console.log("error", error);
-      setIsSavingHiringDetails(false);
     }
   };
 
@@ -255,6 +275,7 @@ const Accordion = ({
                 (service: Record<string, any>, index: number) => (
                   <label className="flex items-center gap-2" key={index}>
                     <input
+                      className="checkbox-service"
                       type="checkbox"
                       name={service.service}
                       checked={service.serviceAvailable}
@@ -285,6 +306,7 @@ const Accordion = ({
                   (available: Record<string, any>, index: number) => (
                     <label className="flex items-center gap-2" key={index}>
                       <input
+                        className="checkbox-availability"
                         type="checkbox"
                         name={available.availabilityName}
                         checked={available.isAvailable}
@@ -426,16 +448,27 @@ const Accordion = ({
               </button>
             ) : (
               <button
-                onClick={submitHiringDetails}
+                onSubmit={submitHiringDetails}
                 className="btn-primary flex justify-center items-center"
                 type="submit"
               >
-                {isSavingHiringDetails ? (
-                  <img className="w-6 h-6" src={loading} alt="" />
-                ) : (
-                  "Save"
-                )}
+                Save
               </button>
+            )}
+
+            {showErrorBlock && (
+              <ul className="bg-red text-sm rounded-2xl px-6 py-6 list-disc list-inside flex flex-col gap-2">
+                {noServiceChecked && (
+                  <li className="text-red-900">
+                    At least one service needs to be checked.
+                  </li>
+                )}
+                {noAvailabilityChecked && (
+                  <li className="text-red-900">
+                    At least one availability needs to be checked.
+                  </li>
+                )}
+              </ul>
             )}
           </form>
         </div>

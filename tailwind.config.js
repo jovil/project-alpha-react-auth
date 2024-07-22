@@ -8,8 +8,14 @@ module.exports = {
         100: "#212529",
       },
       white: "#fff",
-      blue: "#0d6efd",
-      "blue-100": "#1fb6ff",
+      blue: {
+        DEFAULT: "#0d6efd",
+        100: "#1fb6ff",
+      },
+      red: {
+        DEFAULT: "#fee2e2",
+        900: "#450a0a",
+      },
       dark: "#212529",
       danger: "#dc3545",
       purple: "#7e5bef",
