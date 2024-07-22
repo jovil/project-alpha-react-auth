@@ -39,7 +39,7 @@ const SeriesListPage = () => {
 
   return (
     <>
-      <div className="max-w-[908px] w-full mx-auto flex flex-col gap-4 min-h-[100vh] pb-16">
+      <div className="max-w-[948px] w-full mx-auto flex flex-col gap-4 min-h-[100vh] pb-16">
         <header className="h-[28px] flex items-center">
           <h1>All series</h1>
         </header>

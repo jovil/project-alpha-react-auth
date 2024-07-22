@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useLocation, Routes, Route, Link, NavLink } from "react-router-dom";
+import { useLocation, Routes, Route, NavLink } from "react-router-dom";
 import { GlobalStateContext } from "./context/Context";
 import { useUser } from "./context/UserContext";
 import Home from "./pages/HomePage/Home";
@@ -56,19 +56,29 @@ function App() {
               <>
                 <>
                   {location.pathname !== "/login" && (
-                    <Link to="/login">
-                      <button className="btn-primary text-xs font-semibold">
-                        Login
-                      </button>
-                    </Link>
+                    <NavLink
+                      to="/login"
+                      className={({ isActive }: { isActive: any }) =>
+                        isActive
+                          ? "btn-outline-dark text-xs font-semibold border-[#dadce0] text-[#1a73e8] hover:text-[#1a73e8] hover:bg-[#f2f7fe] shadow-none"
+                          : "btn-outline-dark text-xs font-semibold border-[#dadce0] text-[#1a73e8] hover:text-[#1a73e8] hover:bg-[#f2f7fe] shadow-none"
+                      }
+                    >
+                      Login
+                    </NavLink>
                   )}
                 </>
                 {location.pathname !== "/register" && (
-                  <Link to="/register">
-                    <button className="btn-outline-dark text-xs font-semibold">
-                      Register
-                    </button>
-                  </Link>
+                  <NavLink
+                    to="/register"
+                    className={({ isActive }: { isActive: any }) =>
+                      isActive
+                        ? "btn-primary bg-[#1a73e8] border-[#1a73e8] text-white shadow-none hover:bg-[#185abc] hover:border-[#185abc] text-xs font-semibold"
+                        : "btn-primary bg-[#1a73e8] border-[#1a73e8] text-white shadow-none hover:bg-[#185abc] hover:border-[#185abc] text-xs font-semibold"
+                    }
+                  >
+                    Register
+                  </NavLink>
                 )}
               </>
             ) : (

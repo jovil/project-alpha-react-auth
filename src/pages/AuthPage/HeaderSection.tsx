@@ -91,7 +91,7 @@ const HeaderSection = () => {
             <p className="text-xs text-dark">Account</p>
             <div className="text-xs font-medium flex flex-col gap-3 items-center">
               <img
-                className="w-16 h-16 border border-dark/60 object-cover rounded shadow-md"
+                className="w-16 h-16 object-cover rounded shadow-md"
                 src={
                   userState.avatar64
                     ? userState.avatar64

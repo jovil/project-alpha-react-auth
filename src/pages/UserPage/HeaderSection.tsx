@@ -71,11 +71,11 @@ const HeaderSection = ({
 
   return (
     <>
-      <header className="max-w-[908px] justify-center mx-auto relative">
+      <header className="max-w-[948px] justify-center mx-auto relative">
         <div className="text-xs flex flex-col gap-4 items-center">
           <div className="flex flex-col gap-3 items-center">
             <p className="text-dark">Profile</p>
-            <div className="w-16 h-16 border border-dark/60 rounded shadow-md relative overflow-hidden">
+            <div className="w-16 h-16 rounded shadow-md relative overflow-hidden">
               {isLoadingAvatar && (
                 <img
                   className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
@@ -136,7 +136,7 @@ const HeaderSection = ({
           )}
           {isUser && (
             <div className="flex flex-col items-center gap-2 pb-3">
-              <p className="text-sm">
+              <p className="text-sm text-center max-w-[400px]">
                 {userState && userState._id === userId ? (
                   <>{userState && userState.profileDescription}</>
                 ) : (
