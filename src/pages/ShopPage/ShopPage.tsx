@@ -7,13 +7,12 @@ import ProductModal from "../../components/ProductModalComponent";
 import CreateProductComponent from "../../components/CreateProductComponent";
 import defaultAvatar from "../../assets/images/toon_6.png";
 import loading from "../../assets/images/loading.gif";
-import iconGrid from "../../assets/images/icon-grid.svg";
-import iconList from "../../assets/images/icon-list.svg";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import { AnimatePresence } from "framer-motion";
+import GridHeader from "../../components/GridHeader";
 
 const ShopPage = () => {
-  const { state, setState } = useContext(GlobalStateContext);
+  const { state } = useContext(GlobalStateContext);
   const { userState } = useUser();
   const { allProducts, setAllProducts } = useProducts();
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
@@ -51,61 +50,15 @@ const ShopPage = () => {
     setIsProductModalVisible((prevState) => !prevState);
   };
 
-  const handleProductsGridView = () => {
-    setState({ ...state, productsView: "grid" });
-  };
-
-  const handleProductsListView = () => {
-    setState({ ...state, productsView: "list" });
-  };
-
-  const handlePostsCaption = () => {
-    setState({ ...state, showProductsCaption: !state.showProductsCaption });
-  };
-
   return (
     <>
       <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4">
-        <header className="hidden tablet:flex justify-between items-center gap-2">
-          <>
-            <h1>All products</h1>
-          </>
-          <div className="flex justify-end items-center gap-4">
-            <div className="flex items-center gap-2">
-              <p className="text-xs">Show caption</p>
-              <button
-                className={`toggle-btn ${
-                  state.showProductsCaption ? "toggled" : ""
-                }`}
-                onClick={handlePostsCaption}
-              >
-                <div className="thumb"></div>
-              </button>
-            </div>
-            <div className="flex">
-              <button>
-                <img
-                  className={`w-7 h-7 p-1.5 rounded-full ${
-                    state.productsView === "list" ? "bg-dark/10" : ""
-                  }`}
-                  src={iconList}
-                  onClick={handleProductsListView}
-                  alt=""
-                />
-              </button>
-              <button>
-                <img
-                  className={`w-7 h-7 p-1.5 rounded-full ${
-                    state.productsView === "grid" ? "bg-dark/10" : ""
-                  }`}
-                  src={iconGrid}
-                  onClick={handleProductsGridView}
-                  alt=""
-                />
-              </button>
-            </div>
-          </div>
-        </header>
+        <GridHeader
+          gridViewProp={"productsView"}
+          captionProp={"showProductsCaption"}
+        >
+          <h1>All products</h1>
+        </GridHeader>
         <div
           className={`grid gap-1 ${
             state.productsView === "grid"

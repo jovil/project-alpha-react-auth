@@ -5,12 +5,11 @@ import HiringModal from "../../components/HiringModal";
 import { apiUrl, getFetchConfig } from "../../utils/fetchConfig";
 import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
-import iconGrid from "../../assets/images/icon-grid.svg";
-import iconList from "../../assets/images/icon-list.svg";
 import { AnimatePresence } from "framer-motion";
+import GridHeader from "../../components/GridHeader";
 
 const HiringPage = () => {
-  const { state, setState } = useContext(GlobalStateContext);
+  const { state } = useContext(GlobalStateContext);
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [noUsers, setNoUsers] = useState(false);
@@ -39,66 +38,20 @@ const HiringPage = () => {
     setCurrentUserId(id);
   };
 
-  const handlePostsGridView = () => {
-    setState({ ...state, hiringView: "grid" });
-  };
-
-  const handlePostsListView = () => {
-    setState({ ...state, hiringView: "list" });
-  };
-
   const handleLoading = () => {
     setIsLoading(false);
     setRunShimmerAnimation(true);
   };
 
-  const handleHiringCaption = () => {
-    setState({ ...state, showHiringCaption: !state.showHiringCaption });
-  };
-
   return (
     <>
       <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4">
-        <header className="hidden tablet:flex justify-between items-center gap-2">
-          <>
-            <h1>All cosplayers</h1>
-          </>
-          <div className="flex justify-end items-center gap-4">
-            <div className="flex items-center gap-2">
-              <p className="text-xs">Show caption</p>
-              <button
-                className={`toggle-btn ${
-                  state.showHiringCaption ? "toggled" : ""
-                }`}
-                onClick={handleHiringCaption}
-              >
-                <div className="thumb"></div>
-              </button>
-            </div>
-            <div className="flex">
-              <button>
-                <img
-                  className={`w-7 h-7 p-1.5 rounded-full ${
-                    state.hiringView === "list" ? "bg-dark/10" : ""
-                  }`}
-                  src={iconList}
-                  onClick={handlePostsListView}
-                  alt=""
-                />
-              </button>
-              <button>
-                <img
-                  className={`w-7 h-7 p-1.5 rounded-full ${
-                    state.hiringView === "grid" ? "bg-dark/10" : ""
-                  }`}
-                  src={iconGrid}
-                  onClick={handlePostsGridView}
-                  alt=""
-                />
-              </button>
-            </div>
-          </div>
-        </header>
+        <GridHeader
+          gridViewProp={"hiringView"}
+          captionProp={"showHiringCaption"}
+        >
+          <h1>All cosplayers</h1>
+        </GridHeader>
         <div
           className={`grid gap-1 ${
             state.hiringView === "grid"

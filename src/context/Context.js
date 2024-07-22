@@ -16,8 +16,13 @@ export const GlobalStateProvider = ({ children }) => {
           productsView: "grid",
           showProductsCaption: false,
           seriesView: "grid",
+          showSeriesCaption: false,
           hiringView: "grid",
           showHiringCaption: false,
+          userPostsView: "grid",
+          showUserPostsCaption: false,
+          userProductsView: "grid",
+          showUserProductsCaption: false,
         };
   });
 

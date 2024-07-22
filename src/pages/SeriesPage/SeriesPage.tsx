@@ -7,6 +7,7 @@ import iconList from "../../assets/images/icon-list.svg";
 import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
 import { getFetchConfig } from "../../utils/fetchConfig";
+import GridHeader from "../../components/GridHeader";
 
 const SeriesPage = () => {
   const { seriesTitle } = useParams();
@@ -48,7 +49,10 @@ const SeriesPage = () => {
   return (
     <>
       <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4">
-        <header className="hidden tablet:flex justify-between items-center gap-2">
+        <GridHeader
+          gridViewProp={"seriesView"}
+          captionProp={"showSeriesCaption"}
+        >
           <h1>
             <NavLink className="underline" to="/series">
               All series
@@ -56,29 +60,7 @@ const SeriesPage = () => {
             {" > "}
             <span className="capitalize">{seriesTitle}</span> series
           </h1>
-          <div className="flex justify-end">
-            <button>
-              <img
-                className={`w-7 h-7 p-1.5 rounded-full ${
-                  state.seriesView === "list" ? "bg-dark/10" : ""
-                }`}
-                src={iconList}
-                onClick={handleListView}
-                alt=""
-              />
-            </button>
-            <button>
-              <img
-                className={`w-7 h-7 p-1.5 rounded-full ${
-                  state.seriesView === "grid" ? "bg-dark/10" : ""
-                }`}
-                src={iconGrid}
-                onClick={handleGridView}
-                alt=""
-              />
-            </button>
-          </div>
-        </header>
+        </GridHeader>
         <div
           className={`grid gap-1 ${
             state.seriesView === "grid"
@@ -91,10 +73,15 @@ const SeriesPage = () => {
               {seriesPosts?.toReversed().map((post: any) => {
                 return (
                   <div
-                    className={`w-full h-auto border border-dark/80 shadow-md rounded flex flex-col gap-3 relative overflow-hidden group ${
-                      state.seriesView === "grid"
+                    className={`w-full h-auto rounded-3xl flex flex-col gap-3 relative group ${
+                      state.seriesView === "grid" && state.showSeriesCaption
                         ? "desktop:max-w-[300px] tablet:aspect-[3/4]"
-                        : ""
+                        : state.seriesView === "grid" &&
+                          !state.showSeriesCaption
+                        ? "desktop:max-w-[300px] tablet:aspect-[3/4] overflow-hidden"
+                        : state.seriesView === "list" && state.showSeriesCaption
+                        ? ""
+                        : "overflow-hidden"
                     }`}
                     key={post._id}
                   >
@@ -112,38 +99,76 @@ const SeriesPage = () => {
                         alt=""
                       />
                       <img
-                        className="object-cover w-full h-full rounded-sm"
+                        className={`object-cover w-full rounded-3xl ${
+                          state.seriesView === "grid" && state.showSeriesCaption
+                            ? "aspect-[3/4]"
+                            : "aspect-[3/4]"
+                        }`}
                         src={post.fileUrl}
                         alt=""
                         loading="lazy"
                         onLoad={handlePostImageLoad}
                       />
                     </div>
-                    <div className="flex flex-col flex-grow justify-between gap-2 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
-                      <p>{post.characterName}</p>
+                    {!state.showSeriesCaption && (
+                      <div className="flex flex-col flex-grow justify-between gap-2 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
+                        <p>{post.characterName}</p>
 
-                      <NavLink
-                        className="flex gap-1.5 items-center"
-                        to={`/user/${post.user._id}`}
-                      >
-                        {post.user.avatar.length > 0 ? (
-                          <img
-                            className="rounded-full w-6 h-6 border border-dark/10"
-                            src={post.user.avatar}
-                            alt=""
-                          />
-                        ) : (
-                          <img
-                            className="rounded-full w-6 h-6 border border-dark/10"
-                            src={defaultAvatar}
-                            alt=""
-                          />
-                        )}
-                        <p className="text-xs underline">
-                          @{post.user.userName}
-                        </p>
-                      </NavLink>
-                    </div>
+                        <div className="flex">
+                          <NavLink
+                            className="flex gap-1.5 items-center"
+                            to={`/user/${post.user._id}`}
+                          >
+                            {post.user.avatar.length > 0 ? (
+                              <img
+                                className="rounded-full w-6 h-6 border border-dark/10"
+                                src={post.user.avatar}
+                                alt=""
+                              />
+                            ) : (
+                              <img
+                                className="rounded-full w-6 h-6 border border-dark/10"
+                                src={defaultAvatar}
+                                alt=""
+                              />
+                            )}
+                            <p className="text-xs underline">
+                              @{post.user.userName}
+                            </p>
+                          </NavLink>
+                        </div>
+                      </div>
+                    )}
+
+                    {state.showSeriesCaption && (
+                      <div className="flex flex-col flex-grow justify-between gap-2 px-3 pb-3 tablet:py-3 w-full">
+                        <p>{post.characterName}</p>
+
+                        <div className="flex">
+                          <NavLink
+                            className="flex gap-1.5 items-center"
+                            to={`/user/${post.user._id}`}
+                          >
+                            {post.user.avatar.length > 0 ? (
+                              <img
+                                className="rounded-full w-6 h-6 border border-dark/10"
+                                src={post.user.avatar}
+                                alt=""
+                              />
+                            ) : (
+                              <img
+                                className="rounded-full w-6 h-6 border border-dark/10"
+                                src={defaultAvatar}
+                                alt=""
+                              />
+                            )}
+                            <p className="text-xs underline">
+                              @{post.user.userName}
+                            </p>
+                          </NavLink>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })}
