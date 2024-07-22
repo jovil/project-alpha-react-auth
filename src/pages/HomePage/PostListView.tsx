@@ -4,13 +4,12 @@ import { usePosts } from "../../context/PostsContext";
 import { NavLink } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
-import iconGrid from "../../assets/images/icon-grid.svg";
-import iconList from "../../assets/images/icon-list.svg";
 import end from "../../assets/images/end.png";
 import { getFetchConfig } from "../../utils/fetchConfig";
+import GridHeader from "../../components/GridHeader";
 
 const PostListView = () => {
-  const { state, setState } = useContext(GlobalStateContext);
+  const { state } = useContext(GlobalStateContext);
   const { allPosts, setAllPosts } = usePosts();
   const [noPosts, setNoPosts] = useState(false);
   const [postImageIsLoading, setPostImageLoading] = useState(true);
@@ -95,61 +94,12 @@ const PostListView = () => {
     setRunShimmerAnimation(true);
   };
 
-  const handlePostsGridView = () => {
-    setState({ ...state, postsView: "grid" });
-  };
-
-  const handlePostsListView = () => {
-    setState({ ...state, postsView: "list" });
-  };
-
-  const handlePostsCaption = () => {
-    setState({ ...state, showPostsCaption: !state.showPostsCaption });
-  };
-
   return (
     <>
       <section className="max-w-[908px] w-full mx-auto flex flex-col gap-4 min-h-[100vh]">
-        <header className="hidden tablet:flex justify-between items-center gap-2">
-          <>
-            <h1>All posts</h1>
-          </>
-          <div className="flex justify-end items-center gap-4">
-            <div className="flex items-center gap-2">
-              <p className="text-xs">Show caption</p>
-              <button
-                className={`toggle-btn ${
-                  state.showPostsCaption ? "toggled" : ""
-                }`}
-                onClick={handlePostsCaption}
-              >
-                <div className="thumb"></div>
-              </button>
-            </div>
-            <div className="flex">
-              <button>
-                <img
-                  className={`w-7 h-7 p-1.5 rounded-full ${
-                    state.postsView === "list" ? "bg-dark/10" : ""
-                  }`}
-                  src={iconList}
-                  onClick={handlePostsListView}
-                  alt=""
-                />
-              </button>
-              <button>
-                <img
-                  className={`w-7 h-7 p-1.5 rounded-full ${
-                    state.postsView === "grid" ? "bg-dark/10" : ""
-                  }`}
-                  src={iconGrid}
-                  onClick={handlePostsGridView}
-                  alt=""
-                />
-              </button>
-            </div>
-          </div>
-        </header>
+        <GridHeader gridViewProp={"postsView"} captionProp={"showPostsCaption"}>
+          <h1>All posts</h1>
+        </GridHeader>
         <div
           className={`grid gap-1 ${
             state.postsView === "grid"
