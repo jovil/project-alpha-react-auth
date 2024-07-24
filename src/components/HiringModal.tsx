@@ -34,170 +34,153 @@ const HiringModal = ({
           >
             <div className="min-h-[calc(100vh-48px)] mt-12 p-4 bg-white rounded flex flex-col gap-3 relative pointer-events-auto cursor-default">
               {isUser ? (
-                <div className="grid grid-cols-2 gap-4 h-full flex-grow">
-                  <div className="flex flex-col justify-center gap-3 px-12">
-                    <h2 className="text-3xl font-semibold">
-                      Hire {isUser.userName} for your next event!
-                    </h2>
-                    <p>
-                      Bring your favorite characters to life. From events and
-                      photoshoots to promotional appearances, {isUser.userName}{" "}
-                      offer a range of services to make your occasion
-                      unforgettable.
-                    </p>
-                    <div className="mt-3">
-                      <a
-                        className="btn-outline-dark inline-block"
-                        href={`mailto:${hiringDetails.email}`}
-                      >
-                        Contact @{isUser.userName}
-                      </a>
+                <div className="max-w-[1140px] mx-auto grid grid-cols-12 gap-4 h-full flex-grow">
+                  <div className="flex items-center p-4 col-span-5">
+                    <div className="bg-white flex flex-col w-full p-10 rounded-3xl">
+                      <div className="border-[#dadce0] py-4">
+                        <div className="text-sm flex justify-between gap-2">
+                          <h4>Location:</h4>
+                          <p className="font-medium text-blue-100">
+                            {hiringDetails.location}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="border-t border-[#dadce0] py-4">
+                        <div className="text-sm flex justify-between gap-2">
+                          <h4>Favorite characters:</h4>
+                          <div className="flex gap-1">
+                            {favCharactersArr?.map(
+                              (favChar: any, index: any) => {
+                                return (
+                                  <p
+                                    className="font-medium text-blue-100"
+                                    key={index}
+                                  >
+                                    {favChar}
+                                    <>
+                                      {index !==
+                                        favCharactersArr.length - 1 && <>,</>}
+                                    </>
+                                  </p>
+                                );
+                              }
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="border-t border-[#dadce0] py-4">
+                        <div className="text-sm flex flex-col gap-2">
+                          <h4>Skills and services:</h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {hiringDetails?.services.map(
+                              (service: any, index: any) => {
+                                return (
+                                  <React.Fragment key={index}>
+                                    {service.serviceAvailable && (
+                                      <p className="text-sm font-medium bg-blue-800 text-blue-200 py-1.5 px-3 rounded-full">
+                                        {service.service}
+                                      </p>
+                                    )}
+                                  </React.Fragment>
+                                );
+                              }
+                            )}
+
+                            {otherAvailability.length > 0 && (
+                              <>
+                                {otherAvailabilityArr?.map(
+                                  (item: any, index: any) => {
+                                    return (
+                                      <p
+                                        className="text-sm font-medium bg-blue-800 text-blue-200 py-1.5 px-3 rounded-full"
+                                        key={index}
+                                      >
+                                        {item}
+                                      </p>
+                                    );
+                                  }
+                                )}
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="border-t border-[#dadce0] py-4">
+                        <div className="text-sm flex flex-col gap-2">
+                          <h4>Event availability</h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {hiringDetails.availability?.map(
+                              (available: any, index: any) => {
+                                return (
+                                  <React.Fragment key={index}>
+                                    {available.isAvailable && (
+                                      <p className="text-sm font-medium bg-blue-800 text-blue-200 py-1.5 px-3 rounded-full">
+                                        {available.availabilityName}
+                                      </p>
+                                    )}
+                                  </React.Fragment>
+                                );
+                              }
+                            )}
+
+                            {otherServices.length > 0 && (
+                              <>
+                                {otherServicesArr?.map(
+                                  (item: any, index: any) => {
+                                    return (
+                                      <p
+                                        className="text-sm font-medium bg-blue-800 text-blue-200 py-1.5 px-3 rounded-full"
+                                        key={index}
+                                      >
+                                        {item}
+                                      </p>
+                                    );
+                                  }
+                                )}
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="border-t border-[#dadce0] py-4">
+                        <div className="text-sm flex justify-between gap-2">
+                          <h4>Schedule and travel:</h4>
+                          <p className="font-medium text-blue-100">
+                            <span className="capitalize">
+                              {hiringDetails.preferredSchedule?.type}
+                            </span>
+                            {" & "}
+                            <span className="capitalize">
+                              {hiringDetails.travelAvailability?.type}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="bg-[#101010] text-white rounded-md h-full p-4 grid auto-rows-fr gap-4">
-                    <div className="bg-[#303030] border border-[#4b4b4b] rounded-md p-4">
-                      <div className="flex flex-col gap-1">
-                        <h4 className="font-medium">Location</h4>
-                        <p>{hiringDetails.location}</p>
-                      </div>
-                    </div>
 
-                    <div className="bg-[#303030] border border-[#4b4b4b] rounded-md p-4">
-                      <div className="flex flex-col gap-1">
-                        <h4 className="font-medium">Favorite characters</h4>
-                        <div className="flex gap-1">
-                          {favCharactersArr?.map((favChar: any, index: any) => {
-                            return (
-                              <p key={index}>
-                                {favChar}
-                                <>
-                                  {index !== favCharactersArr.length - 1 && (
-                                    <>,</>
-                                  )}
-                                </>
-                              </p>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-[#303030] border border-[#4b4b4b] rounded-md p-4">
-                      <div className="flex flex-col gap-1">
-                        <h4 className="font-medium">Skills and services</h4>
-                        <div className="grid grid-cols-2 gap-1">
-                          {hiringDetails?.services.map(
-                            (service: any, index: any) => {
-                              return (
-                                <React.Fragment key={index}>
-                                  {service.serviceAvailable && (
-                                    <label className="flex items-center gap-2">
-                                      <input
-                                        className="border border-dark/40 p-3 rounded"
-                                        type="checkbox"
-                                        name={service.service}
-                                        checked={service.serviceAvailable}
-                                        disabled={service.serviceAvailable}
-                                      />
-                                      {service.service}
-                                    </label>
-                                  )}
-                                </React.Fragment>
-                              );
-                            }
-                          )}
-
-                          {otherAvailability.length > 0 && (
-                            <>
-                              {otherAvailabilityArr?.map(
-                                (item: any, index: any) => {
-                                  return (
-                                    <label
-                                      className="flex items-center gap-2"
-                                      key={index}
-                                    >
-                                      <input
-                                        className="border border-dark/40 p-3 rounded"
-                                        type="checkbox"
-                                        name={item}
-                                        checked={true}
-                                        disabled={true}
-                                      />
-                                      {item}
-                                    </label>
-                                  );
-                                }
-                              )}
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-[#303030] border border-[#4b4b4b] rounded-md p-4">
-                      <div className="flex flex-col gap-1">
-                        <h4 className="font-medium">Event availability</h4>
-                        <div className="grid grid-cols-2 gap-1">
-                          {hiringDetails.availability?.map(
-                            (available: any, index: any) => {
-                              return (
-                                <React.Fragment key={index}>
-                                  {available.isAvailable && (
-                                    <label className="flex items-center gap-2">
-                                      <input
-                                        className="border border-dark/40 p-3 rounded"
-                                        type="checkbox"
-                                        name={available.availabilityName}
-                                        checked={available.isAvailable}
-                                        disabled={available.isAvailable}
-                                      />
-                                      {available.availabilityName}
-                                    </label>
-                                  )}
-                                </React.Fragment>
-                              );
-                            }
-                          )}
-
-                          {otherServices.length > 0 && (
-                            <>
-                              {otherServicesArr?.map(
-                                (item: any, index: any) => {
-                                  return (
-                                    <label
-                                      className="flex items-center gap-2"
-                                      key={index}
-                                    >
-                                      <input
-                                        className="border border-dark/40 p-3 rounded"
-                                        type="checkbox"
-                                        name={item}
-                                        checked={true}
-                                        disabled={true}
-                                      />
-                                      {item}
-                                    </label>
-                                  );
-                                }
-                              )}
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-[#303030] border border-[#4b4b4b] rounded-md p-4">
-                      <div className="flex flex-col gap-1">
-                        <h4 className="font-medium">Schedule and travel</h4>
-                        <p>
-                          <span className="capitalize">
-                            {hiringDetails.preferredSchedule?.type}
-                          </span>
-                          {" & "}
-                          <span className="capitalize">
-                            {hiringDetails.travelAvailability?.type}
-                          </span>
-                        </p>
+                  <div className="px-8 col-span-7 flex flex-col justify-center items-center">
+                    <div className="flex flex-col gap-3 max-w-[640px]">
+                      <h2 className="text-3xl font-semibold">
+                        Hire {isUser.userName} for your next event!
+                      </h2>
+                      <p>
+                        Bring your favorite characters to life. From events and
+                        photoshoots to promotional appearances,{" "}
+                        {isUser.userName} offer a range of services to make your
+                        occasion unforgettable.
+                      </p>
+                      <div className="mt-3">
+                        <a
+                          className="btn-outline-dark inline-block"
+                          href={`mailto:${hiringDetails.email}`}
+                        >
+                          Contact @{isUser.userName}
+                        </a>
                       </div>
                     </div>
                   </div>
