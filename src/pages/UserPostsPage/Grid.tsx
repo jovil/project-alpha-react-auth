@@ -21,7 +21,7 @@ interface Posts {
   user: User;
 }
 
-const ProductListComponent = ({ isUser }: { isUser: any }) => {
+const Grid = ({ isUser }: { isUser: any }) => {
   const { userId } = useParams();
   const { state } = useContext(GlobalStateContext);
   const { allPosts } = usePosts();
@@ -97,4 +97,4 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
   );
 };
 
-export default ProductListComponent;
+export default Grid;

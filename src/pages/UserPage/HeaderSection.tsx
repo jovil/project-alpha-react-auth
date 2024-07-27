@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
-import HiringModal from "../../components/HiringModal";
-import { AnimatePresence } from "framer-motion";
 import { apiUrl } from "../../utils/fetchConfig";
 import { postFetchConfig } from "../../utils/fetchConfig";
 
@@ -18,7 +15,6 @@ const HeaderSection = ({
 }) => {
   const { userId } = useParams();
   const { userState, setUserState } = useUser();
-  const [showHiringModal, setShowHiringModal] = useState<boolean>(false);
   const [showDescriptionForm, setShowDescriptionForm] = useState(false);
   const [profileDescriptionText, setProfileDescriptionText] = useState(
     (userState && userState.profileDescription) || null
@@ -27,11 +23,6 @@ const HeaderSection = ({
   useEffect(() => {
     setProfileDescriptionText(userState && userState.profileDescription);
   }, [userState]);
-
-  const handleToggleModal = () => {
-    setShowHiringModal((prevState) => !prevState);
-    document.body.style.overflow = !showHiringModal ? "hidden" : "auto";
-  };
 
   const profileDescriptionInput = (e: any) => {
     const { value } = e.target;
@@ -159,25 +150,8 @@ const HeaderSection = ({
               )}
             </div>
           )}
-          <div className="font-medium flex items-center gap-4">
-            {isUser?.hasHiringDetails && (
-              <button className="btn-outline-dark" onClick={handleToggleModal}>
-                Hire @{isUser.userName}
-              </button>
-            )}
-            {isUser.hasProducts && (
-              <NavLink className="btn-outline-dark" to={`/shop/${userId}`}>
-                @{isUser.userName}'s shop
-              </NavLink>
-            )}
-          </div>
         </div>
       </header>
-      <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
-        {showHiringModal && (
-          <HiringModal userId={isUser?._id} onToggleModal={handleToggleModal} />
-        )}
-      </AnimatePresence>
     </>
   );
 };

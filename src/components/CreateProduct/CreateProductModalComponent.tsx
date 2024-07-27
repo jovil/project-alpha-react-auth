@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useUser } from "../context/UserContext";
-import { useProducts } from "../context/ProductsContext";
+import { useUser } from "../../context/UserContext";
+import { useProducts } from "../../context/ProductsContext";
 import Notify from "simple-notify";
 import "simple-notify/dist/simple-notify.css";
-import loading from "../assets/images/loading.gif";
+import loading from "../../assets/images/loading.gif";
 
 const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
   const { userState, setUserState } = useUser();

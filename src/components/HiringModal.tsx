@@ -26,7 +26,6 @@ const HiringModal = ({
     try {
       const response = await fetch(url, getFetchConfig);
       const result = await response.json();
-      console.log("result", result);
       setUser(result);
 
       if (result.hiringDetails?.description) {

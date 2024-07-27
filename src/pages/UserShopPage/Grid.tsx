@@ -18,15 +18,15 @@ interface Product {
   paymentLink: string;
 }
 
-const ProductListComponent = ({ isUser }: { isUser: any }) => {
-  const { profileId } = useParams();
+const Grid = ({ isUser }: { isUser: any }) => {
+  const { userId } = useParams();
   const { state } = useContext(GlobalStateContext);
   const [products, setProducts] = useState<Product[]>([]);
   const [isProductModalVisible, setIsProductModalVisible] = useState(false);
   const [productId, setProductId] = useState();
 
   const fetchProducts = useCallback(async () => {
-    const url = `${process.env.REACT_APP_API_URL}/products/${profileId}`;
+    const url = `${process.env.REACT_APP_API_URL}/products/${userId}`;
 
     try {
       const response = await fetch(url, getFetchConfig);
@@ -41,7 +41,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
     } catch (error) {
       console.log("Error fetching products:", error);
     }
-  }, [profileId]);
+  }, [userId]);
 
   useEffect(() => {
     fetchProducts();
@@ -66,13 +66,7 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
         gridViewProp={"userProductsView"}
         captionProp={"showUserProductsCaption"}
       >
-        <h1>
-          <NavLink className="capitalize underline" to={`/user/${isUser._id}`}>
-            {isUser.userName}
-          </NavLink>
-          {" > "}
-          <span>Shop</span>
-        </h1>
+        <h1>All products</h1>
       </GridHeader>
       <GridViewContainer
         gridComponent={"userProductsView"}
@@ -170,4 +164,4 @@ const ProductListComponent = ({ isUser }: { isUser: any }) => {
   );
 };
 
-export default ProductListComponent;
+export default Grid;

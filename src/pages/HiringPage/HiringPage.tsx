@@ -101,7 +101,7 @@ const HiringPage = () => {
                     >
                       {showHiringModal && currentUserId === user._id && (
                         <HiringModal
-                          isUser={user}
+                          userId={user._id}
                           onToggleModal={handleToggleModal}
                         />
                       )}

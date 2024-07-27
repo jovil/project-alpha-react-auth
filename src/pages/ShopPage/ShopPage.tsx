@@ -3,7 +3,7 @@ import { GlobalStateContext } from "../../context/Context";
 import { useUser } from "../../context/UserContext";
 import { useProducts } from "../../context/ProductsContext";
 import ProductModal from "../../components/ProductModalComponent";
-import CreateProductComponent from "../../components/CreateProductComponent";
+import CreateProductComponent from "../../components/CreateProduct/CreateProductComponent";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import { AnimatePresence } from "framer-motion";
 import GridHeader from "../../components/Grid/header";

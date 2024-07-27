@@ -1,8 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import HeaderSection from "./HeaderSection";
-import PostListComponent from "./PostListComponent";
-import CreatePost from "../../components/CreatePost";
+import UserNavigation from "../../components/UserNavigation";
 import { getFetchConfig } from "../../utils/fetchConfig";
 
 const UserPostListPage = () => {
@@ -37,8 +36,8 @@ const UserPostListPage = () => {
   return (
     <>
       <HeaderSection isUser={user} isLoadingAvatar={isLoadingAvatar} />
-      <PostListComponent isUser={user} />
-      <CreatePost />
+      My page
+      <UserNavigation />
     </>
   );
 };

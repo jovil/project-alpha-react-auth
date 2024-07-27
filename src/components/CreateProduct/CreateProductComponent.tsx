@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { useUser } from "../context/UserContext";
+import { useUser } from "../../context/UserContext";
 import Cookies from "universal-cookie";
-import defaultAvatar from "../assets/images/toon_6.png";
 import CreateProductModal from "./CreateProductModalComponent";
 const cookies = new Cookies();
 
-const CreateProduct = () => {
+const CreateProduct = ({ alignButton }: { alignButton?: string }) => {
   const { userState } = useUser();
   const [isShowModal, setIsShowModal] = useState(false);
   // eslint-disable-next-line
@@ -38,12 +37,11 @@ const CreateProduct = () => {
     <>
       {isShowModal && <CreateProductModal onToggleModal={handleToggleModal} />}
       <div className="fixed bottom-0 right-0 left-0 z-10 px-4 py-3.5 pointer-events-none">
-        <div className="max-w-[948px] flex flex-col justify-center items-center gap-3.5 mx-auto">
-          <img
-            className="rounded-full w-10 h-10 object-cover border border-dark/30 shadow-md"
-            src={userState.avatar ? userState.avatar : defaultAvatar}
-            alt=""
-          />
+        <div
+          className={`${
+            alignButton === "right" ? "items-end" : "items-center"
+          } max-w-[948px] flex flex-col justify-center gap-3.5 mx-auto`}
+        >
           <div className="flex flex-col pointer-events-auto">
             <button
               className="btn-primary rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer"

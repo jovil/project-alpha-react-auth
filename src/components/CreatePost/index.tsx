@@ -1,14 +1,11 @@
 import { useState } from "react";
-import { useUser } from "../../context/UserContext";
 import CreatePostModal from "./modal";
 import Cookies from "universal-cookie";
 import { Form } from "react-bootstrap";
-import defaultAvatar from "../../assets/images/toon_6.png";
 
-const CreatePost = () => {
+const CreatePost = ({ alignButton }: { alignButton?: string }) => {
   const cookies = new Cookies();
   const token = cookies.get("TOKEN");
-  const { userState } = useUser();
   const [imageBase64, setImageBase64] = useState<string>("");
   const [postImage, setPostImage] = useState<any>();
   const [showModal, setShowModal] = useState(false);
@@ -54,12 +51,11 @@ const CreatePost = () => {
             onToggleModal={handleToggleModal}
           />
           <div className="fixed bottom-0 right-0 left-0 px-4 py-3.5 pointer-events-none">
-            <div className="max-w-[948px] flex flex-col justify-center items-center gap-3.5 mx-auto">
-              <img
-                className="rounded-full w-10 h-10 object-cover border border-dark/30 shadow-md"
-                src={userState.avatar ? userState.avatar : defaultAvatar}
-                alt=""
-              />
+            <div
+              className={`${
+                alignButton === "right" ? "items-end" : "items-center"
+              } max-w-[948px] flex flex-col justify-center gap-3.5 mx-auto`}
+            >
               <Form className="flex flex-col pointer-events-auto">
                 <Form.Label className="m-0" htmlFor="file-upload">
                   <div className="btn-primary rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer">

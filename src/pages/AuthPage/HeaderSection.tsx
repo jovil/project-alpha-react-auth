@@ -95,7 +95,9 @@ const HeaderSection = () => {
                 src={
                   userState.avatar64
                     ? userState.avatar64
-                    : userState.avatar ?? defaultAvatar
+                    : userState.avatar
+                    ? userState.avatar
+                    : defaultAvatar
                 }
                 alt=""
               />

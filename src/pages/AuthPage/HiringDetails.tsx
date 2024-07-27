@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useUser } from "../../context/UserContext";
-import "../../components/Accordion.css";
+import "../../components/Accordion/Accordion.css";
 import Notify from "simple-notify";
 import "simple-notify/dist/simple-notify.css";
 

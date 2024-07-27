@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useLocation, Routes, Route, NavLink } from "react-router-dom";
 import { GlobalStateContext } from "./context/Context";
 import { useUser } from "./context/UserContext";
@@ -8,12 +8,17 @@ import "./App.css";
 import Register from "./pages/RegisterPage/RegisterPage";
 import Login from "./pages/LoginPage/Login";
 import Cookies from "universal-cookie";
-import UserShopPage from "./pages/UserShopPage/UserShopPage";
+import UserShopPage from "./pages/UserShopPage/index";
 import ShopPage from "./pages/ShopPage/ShopPage";
-import UserPage from "./pages/UserPage/UserPage";
+import UserPage from "./pages/UserPage";
 import SeriesPage from "./pages/SeriesPage/SeriesPage";
 import HiringPage from "./pages/HiringPage/HiringPage";
 import SeriesListPage from "./pages/SeriesListPage";
+import Backdrop from "./components/Backdrop";
+import { motion, AnimatePresence } from "framer-motion";
+import { slideInFromRight } from "./utils/animations";
+import UserPostsPage from "./pages/UserPostsPage/index";
+import UserHirePage from "./pages/UserHirePage/index";
 
 function App() {
   const cookies = new Cookies();
@@ -21,6 +26,11 @@ function App() {
   const { userState } = useUser();
   const location = useLocation();
   const token = cookies.get("TOKEN");
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const onToggleDropdown = () => {
+    setShowDropdown((prevState: boolean) => !prevState);
+  };
 
   return (
     <div className="container mx-auto px-4">
@@ -37,16 +47,107 @@ function App() {
             >
               Account
             </NavLink>
-            <NavLink
-              to={`/user/${userState._id}`}
-              className={({ isActive }: { isActive: any }) =>
-                isActive
-                  ? "btn-primary bg-blue-100 border-blue-100 text-white shadow-none hover:bg-blue-300 hover:border-blue-300 text-xs font-semibold"
-                  : "btn-primary bg-blue-100 border-blue-100 text-white shadow-none hover:bg-blue-300 hover:border-blue-300 text-xs font-semibold"
-              }
-            >
-              @{userState.userName}
-            </NavLink>
+            {!userState.hasProducts && !userState.hasHiringDetails && (
+              <NavLink
+                to={`/user/${userState._id}`}
+                className={({ isActive }: { isActive: any }) =>
+                  `text-xs btn-primary ${isActive ? "" : ""}`
+                }
+              >
+                @{userState.userName}
+              </NavLink>
+            )}
+
+            {(userState.hasProducts || userState.hasHiringDetails) && (
+              <>
+                <button
+                  className="text-xs btn-primary"
+                  onClick={onToggleDropdown}
+                >
+                  <div className="flex items-center gap-1">
+                    @{userState.userName}
+                    <svg
+                      className="w-3 h-3"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.02701 8.15332L2.66701 10.5133L16 23.8473L29.333 10.5133L26.973 8.15332L16 19.1273L5.02701 8.15332Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </div>
+                </button>
+
+                <AnimatePresence
+                  initial={false}
+                  mode="wait"
+                  onExitComplete={() => null}
+                >
+                  {showDropdown && (
+                    <Backdrop
+                      onClick={onToggleDropdown}
+                      showCloseButton={false}
+                    >
+                      <motion.div
+                        className="bg-white h-full w-2/5 px-2.5 py-4 overflow-scroll ml-auto cursor-default"
+                        variants={slideInFromRight}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ul className="">
+                          <li>
+                            <NavLink
+                              className="px-8 py-4 block rounded-md hover:bg-blue-800 transition-colors"
+                              to={`/user/${userState._id}`}
+                              onClick={onToggleDropdown}
+                            >
+                              My page
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink
+                              className="px-14 py-4 block rounded-md hover:bg-blue-800 transition-colors"
+                              to={`/posts/${userState._id}`}
+                              onClick={onToggleDropdown}
+                            >
+                              Posts
+                            </NavLink>
+                          </li>
+                          {userState.hasProducts && (
+                            <li>
+                              <NavLink
+                                className="px-14 py-4 block rounded-md hover:bg-blue-800 transition-colors"
+                                to={`/shop/${userState._id}`}
+                                onClick={onToggleDropdown}
+                              >
+                                Shop
+                              </NavLink>
+                            </li>
+                          )}
+                          {userState.hasHiringDetails && (
+                            <li>
+                              <NavLink
+                                className="px-14 py-4 block rounded-md hover:bg-blue-800 transition-colors"
+                                to={`/hire/${userState._id}`}
+                                onClick={onToggleDropdown}
+                              >
+                                Hiring page
+                              </NavLink>
+                            </li>
+                          )}
+                        </ul>
+                      </motion.div>
+                    </Backdrop>
+                  )}
+                </AnimatePresence>
+              </>
+            )}
           </div>
         )}
 
@@ -142,8 +243,10 @@ function App() {
           <Route path="/auth" element={<ProtectedRoutes />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path={`/shop/:profileId`} element={<UserShopPage />} />
+          <Route path={`/shop/:userId`} element={<UserShopPage />} />
           <Route path={`/user/:userId`} element={<UserPage />} />
+          <Route path={`/posts/:userId`} element={<UserPostsPage />} />
+          <Route path={`/hire/:userId`} element={<UserHirePage />} />
           <Route path={`/series/:seriesTitle`} element={<SeriesPage />} />
           <Route path={`/shop`} element={<ShopPage />} />
           <Route path={`/hirecosplayer`} element={<HiringPage />} />

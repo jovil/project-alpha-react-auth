@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { useUser } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 import HeaderSection from "./HeaderSection";
-import CreateProductComponent from "../../components/CreateProductComponent";
-import ProductListComponent from "./ProductListComponent";
+import CreateProductComponent from "../../components/CreateProduct/CreateProductComponent";
+import Grid from "./Grid";
 import { getFetchConfig } from "../../utils/fetchConfig";
+import UserNavigation from "../../components/UserNavigation";
 
 const UserShopPage = () => {
   const { userState } = useUser();
-  const { profileId } = useParams();
+  const { userId } = useParams();
   const [profile, setProfile] = useState<{
     profileName: string;
     email: string;
@@ -19,7 +20,7 @@ const UserShopPage = () => {
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
 
   useEffect(() => {
-    const url = `${process.env.REACT_APP_API_URL}/user/${profileId}`;
+    const url = `${process.env.REACT_APP_API_URL}/user/${userId}`;
 
     const fetchProfile = async () => {
       try {
@@ -33,7 +34,7 @@ const UserShopPage = () => {
     };
 
     fetchProfile();
-  }, [profileId, setProfile]);
+  }, [userId, setProfile]);
 
   return (
     <>
@@ -41,8 +42,11 @@ const UserShopPage = () => {
         isProfile={profile}
         profileLoadingAvatar={isLoadingAvatar}
       />
-      {profileId === userState?._id && <CreateProductComponent />}
-      <ProductListComponent isUser={profile} />
+      {userId === userState?._id && (
+        <CreateProductComponent alignButton={"right"} />
+      )}
+      <Grid isUser={profile} />
+      <UserNavigation />
     </>
   );
 };
