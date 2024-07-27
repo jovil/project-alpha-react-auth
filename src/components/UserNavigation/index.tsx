@@ -1,10 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams, NavLink, useLocation } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 import CreatePost from "../../components/CreatePost";
 import { getFetchConfig } from "../../utils/fetchConfig";
 
 const UserNavigation = () => {
   const { userId } = useParams();
+  const { userState } = useUser();
   const [user, setUser] = useState<Record<string, any | null>>();
   const location = useLocation();
 
@@ -91,7 +93,7 @@ const UserNavigation = () => {
               )}
             </ul>
           </nav>
-          {location.pathname.includes("posts") && (
+          {userState._id === userId && location.pathname.includes("posts") && (
             <CreatePost
               title={
                 <svg
