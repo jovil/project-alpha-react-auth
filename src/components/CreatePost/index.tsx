@@ -3,7 +3,15 @@ import CreatePostModal from "./modal";
 import Cookies from "universal-cookie";
 import { Form } from "react-bootstrap";
 
-const CreatePost = ({ alignButton }: { alignButton?: string }) => {
+const CreatePost = ({
+  title = "Create post",
+  classes = "",
+  btnClasses = "",
+}: {
+  title?: any;
+  classes?: string;
+  btnClasses?: string;
+}) => {
   const cookies = new Cookies();
   const token = cookies.get("TOKEN");
   const [imageBase64, setImageBase64] = useState<string>("");
@@ -50,17 +58,14 @@ const CreatePost = ({ alignButton }: { alignButton?: string }) => {
             isImageBase64={imageBase64}
             onToggleModal={handleToggleModal}
           />
-          <div className="fixed bottom-0 right-0 left-0 px-4 py-3.5 pointer-events-none">
-            <div
-              className={`${
-                alignButton === "right" ? "items-end" : "items-center"
-              } max-w-[948px] flex flex-col justify-center gap-3.5 mx-auto`}
-            >
-              <Form className="flex flex-col pointer-events-auto">
+          <div className={classes}>
+            <div className="max-w-[948px] flex flex-col justify-center items-center gap-3.5 mx-auto">
+              <Form
+                className="flex flex-col pointer-events-auto"
+                title="Create post"
+              >
                 <Form.Label className="m-0" htmlFor="file-upload">
-                  <div className="btn-primary rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer">
-                    Create post
-                  </div>
+                  <div className={`${btnClasses} cursor-pointer`}>{title}</div>
                 </Form.Label>
                 <Form.Group className="hidden">
                   <Form.Control

@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useContext } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import ProductModal from "../../components/ProductModalComponent";
 import { getFetchConfig } from "../../utils/fetchConfig";

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import Grid from "./Grid";
-import CreatePost from "../../components/CreatePost";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import UserNavigation from "../../components/UserNavigation";
 
@@ -31,7 +30,6 @@ const UserPostsPage = () => {
   return (
     <>
       <Grid isUser={user} />
-      <CreatePost alignButton={"right"} />
       <UserNavigation />
     </>
   );
