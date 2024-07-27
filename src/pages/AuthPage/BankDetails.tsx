@@ -48,8 +48,6 @@ const BankDetails = () => {
       setIsSavingBankDetails(false);
       setHasDetailsSaved(true);
       setIsActive(false);
-
-      console.log("result", result);
       setUserState((prev: any) => {
         return {
           ...prev,

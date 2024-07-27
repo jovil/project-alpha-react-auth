@@ -19,6 +19,7 @@ const getInitialState = () => {
           hasPosted: undefined,
           hasProducts: undefined,
           bankAccountDetails: null,
+          hiringDescription: "",
         };
   } catch (error) {
     console.error("Error parsing localStorage userState:", error);
@@ -34,6 +35,7 @@ const getInitialState = () => {
       hasPosted: undefined,
       hasProducts: undefined,
       bankAccountDetails: null,
+      hiringDescription: "",
     };
   }
 };

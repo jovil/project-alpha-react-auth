@@ -20,8 +20,6 @@ const Card = ({
     setRunShimmerAnimation(true);
   };
 
-  console.log("data", data);
-
   return (
     <>
       <div

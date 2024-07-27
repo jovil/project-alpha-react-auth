@@ -45,7 +45,6 @@ const HeaderSection = ({
         };
       });
       setShowDescriptionForm(false);
-      console.log("result", result);
     } catch (error) {
       console.log("error", error);
     }

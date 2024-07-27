@@ -83,7 +83,6 @@ const AuthComponent = () => {
     try {
       const response = await fetch(url, getFetchConfig);
       const result = await response.json();
-      console.log("result", result);
       setUserState((prev: any) => {
         return {
           ...prev,

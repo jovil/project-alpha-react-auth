@@ -175,7 +175,7 @@ const HeaderSection = ({
       </header>
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
         {showHiringModal && (
-          <HiringModal isUser={isUser} onToggleModal={handleToggleModal} />
+          <HiringModal userId={isUser?._id} onToggleModal={handleToggleModal} />
         )}
       </AnimatePresence>
     </>

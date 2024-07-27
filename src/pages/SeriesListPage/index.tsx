@@ -12,7 +12,6 @@ const SeriesListPage = () => {
       try {
         const response = await fetch(url, getFetchConfig);
         const result = await response.json();
-        console.log("result", result);
         setSeriesList(result);
       } catch (error) {
         console.log("error", error);
