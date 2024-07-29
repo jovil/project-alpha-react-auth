@@ -19,6 +19,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { slideInFromRight } from "./utils/animations";
 import UserPostsPage from "./pages/UserPostsPage/index";
 import UserHirePage from "./pages/UserHirePage/index";
+import CreatePost from "./components/CreatePost";
+import CreatePostModal from "./components/CreatePost/modal";
+import useFileUpload from "./hooks/useFileUpload";
 
 function App() {
   const cookies = new Cookies();
@@ -27,6 +30,13 @@ function App() {
   const location = useLocation();
   const token = cookies.get("TOKEN");
   const [showDropdown, setShowDropdown] = useState(false);
+  const {
+    showModal,
+    postImage,
+    imageBase64,
+    handleFileUpload,
+    handleToggleModal,
+  } = useFileUpload();
 
   const onToggleDropdown = () => {
     setShowDropdown((prevState: boolean) => !prevState);
@@ -107,12 +117,12 @@ function App() {
                               to={`/user/${userState._id}`}
                               onClick={onToggleDropdown}
                             >
-                              My page
+                              Profile
                             </NavLink>
                           </li>
                           <li>
                             <NavLink
-                              className="px-14 py-4 block rounded-md hover:bg-blue-800 transition-colors"
+                              className="px-8 py-4 block rounded-md hover:bg-blue-800 transition-colors"
                               to={`/posts/${userState._id}`}
                               onClick={onToggleDropdown}
                             >
@@ -122,7 +132,7 @@ function App() {
                           {userState.hasProducts && (
                             <li>
                               <NavLink
-                                className="px-14 py-4 block rounded-md hover:bg-blue-800 transition-colors"
+                                className="px-8 py-4 block rounded-md hover:bg-blue-800 transition-colors"
                                 to={`/shop/${userState._id}`}
                                 onClick={onToggleDropdown}
                               >
@@ -133,12 +143,20 @@ function App() {
                           {userState.hasHiringDetails && (
                             <li>
                               <NavLink
-                                className="px-14 py-4 block rounded-md hover:bg-blue-800 transition-colors"
+                                className="px-8 py-4 block rounded-md hover:bg-blue-800 transition-colors"
                                 to={`/hire/${userState._id}`}
                                 onClick={onToggleDropdown}
                               >
                                 Hiring page
                               </NavLink>
+                            </li>
+                          )}
+                          {userState?._id && (
+                            <li>
+                              <CreatePost
+                                btnClasses="text-sm text-blue-200 px-5 py-2 bg-blue-800 rounded-full"
+                                onFileUpload={handleFileUpload}
+                              />
                             </li>
                           )}
                         </ul>
@@ -252,6 +270,13 @@ function App() {
           <Route path={`/hirecosplayer`} element={<HiringPage />} />
           <Route path={`/series`} element={<SeriesListPage />} />
         </Routes>
+
+        <CreatePostModal
+          isShowModal={showModal}
+          isPostImage={postImage}
+          isImageBase64={imageBase64}
+          onToggleModal={handleToggleModal}
+        />
       </main>
     </div>
   );

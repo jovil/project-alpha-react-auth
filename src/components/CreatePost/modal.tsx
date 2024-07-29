@@ -183,7 +183,7 @@ const CreatePostModal = ({
     <>
       {isShowModal && (
         <div
-          className="bg-dark/80 backdrop-blur p-4 fixed inset-0 z-10 flex justify-center items-center"
+          className="bg-dark/80 backdrop-blur p-4 fixed inset-0 z-30 flex justify-center items-center"
           onClick={closeModal}
         >
           <section className="w-[500px] p-4 mx-auto flex flex-col gap-4 bg-white rounded-md">

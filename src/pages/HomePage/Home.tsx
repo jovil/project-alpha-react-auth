@@ -1,7 +1,17 @@
 import PostListView from "./PostListView";
 import CreatePost from "../../components/CreatePost";
+import CreatePostModal from "../../components/CreatePost/modal";
+import useFileUpload from "../../hooks/useFileUpload";
 
 export default function Home() {
+  const {
+    showModal,
+    postImage,
+    imageBase64,
+    handleFileUpload,
+    handleToggleModal,
+  } = useFileUpload();
+
   return (
     <>
       <PostListView />
@@ -12,6 +22,13 @@ export default function Home() {
         btnClasses={
           "btn-primary rounded-full text-sm flex gap-2 justify-center items-center"
         }
+        onFileUpload={handleFileUpload}
+      />
+      <CreatePostModal
+        isShowModal={showModal}
+        isPostImage={postImage}
+        isImageBase64={imageBase64}
+        onToggleModal={handleToggleModal}
       />
     </>
   );
