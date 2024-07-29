@@ -4,11 +4,9 @@ import Cookies from "universal-cookie";
 import { Form } from "react-bootstrap";
 
 const CreatePost = ({
-  title = "Create post",
   classes = "",
   btnClasses = "",
 }: {
-  title?: any;
   classes?: string;
   btnClasses?: string;
 }) => {
@@ -65,7 +63,9 @@ const CreatePost = ({
                 title="Create post"
               >
                 <Form.Label className="m-0" htmlFor="file-upload">
-                  <div className={`${btnClasses} cursor-pointer`}>{title}</div>
+                  <div className={`${btnClasses} cursor-pointer`}>
+                    Create post
+                  </div>
                 </Form.Label>
                 <Form.Group className="hidden">
                   <Form.Control

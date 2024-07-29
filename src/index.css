@@ -34,7 +34,7 @@
 
 @layer components {
   .nav-button {
-    @apply py-1.5 px-5 bg-[#f1f1f1] text-black rounded-md focus:outline-none select-none;
+    @apply py-2 px-5 bg-[#f1f1f1] text-black rounded-md focus:outline-none select-none;
   }
 }
 

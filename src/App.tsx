@@ -34,7 +34,7 @@ function App() {
 
   return (
     <div className="container mx-auto px-4">
-      <div className="max-w-[948px] py-6 mx-auto">
+      <div className="max-w-[948px] pt-6 pb-10 mx-auto">
         {token && (
           <div className="flex justify-end gap-4">
             <NavLink
@@ -100,7 +100,7 @@ function App() {
                         exit="exit"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <ul className="">
+                        <ul>
                           <li>
                             <NavLink
                               className="px-8 py-4 block rounded-md hover:bg-blue-800 transition-colors"
@@ -189,10 +189,10 @@ function App() {
         )}
       </div>
       <header className="sticky top-0 z-20 pointer-events-none">
-        <div className="max-w-[948px] mx-auto pt-8 pb-6 flex flex-col gap-5 sm:gap-4">
+        <div className="max-w-[948px] mx-auto pt-4 pb-6 flex flex-col gap-5 sm:gap-4">
           <div className="flex justify-center items-center gap-2">
             <nav className="bg-white rounded-full shadow-nav p-2 pointer-events-auto">
-              <ul className="flex items-center">
+              <ul className="flex items-center gap-1">
                 <li>
                   <NavLink
                     to="/"

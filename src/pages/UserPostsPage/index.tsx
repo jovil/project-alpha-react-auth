@@ -23,10 +23,6 @@ const UserPostsPage = () => {
     fetchUser();
   }, [fetchUser]);
 
-  useEffect(() => {
-    console.log("user", user);
-  }, [user]);
-
   return (
     <>
       <Grid isUser={user} />

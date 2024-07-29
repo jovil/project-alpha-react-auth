@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
-import ProductModal from "../../components/ProductModalComponent";
+import ProductModal from "../../components/ProductModal";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import { AnimatePresence } from "framer-motion";
 import GridHeader from "../../components/Grid/header";

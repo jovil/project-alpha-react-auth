@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import { useUser } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 import HeaderSection from "./HeaderSection";
-import CreateProductComponent from "../../components/CreateProduct/CreateProductComponent";
 import Grid from "./Grid";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import UserNavigation from "../../components/UserNavigation";
 
 const UserShopPage = () => {
-  const { userState } = useUser();
   const { userId } = useParams();
   const [profile, setProfile] = useState<{
     profileName: string;
@@ -42,9 +39,6 @@ const UserShopPage = () => {
         isProfile={profile}
         profileLoadingAvatar={isLoadingAvatar}
       />
-      {userId === userState?._id && (
-        <CreateProductComponent alignButton={"right"} />
-      )}
       <Grid isUser={profile} />
       <UserNavigation />
     </>

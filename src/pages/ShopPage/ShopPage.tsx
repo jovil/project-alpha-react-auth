@@ -2,8 +2,8 @@ import { useEffect, useCallback, useState, useContext } from "react";
 import { GlobalStateContext } from "../../context/Context";
 import { useUser } from "../../context/UserContext";
 import { useProducts } from "../../context/ProductsContext";
-import ProductModal from "../../components/ProductModalComponent";
-import CreateProductComponent from "../../components/CreateProduct/CreateProductComponent";
+import ProductModal from "../../components/ProductModal";
+import CreateProduct from "../../components/CreateProduct";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import { AnimatePresence } from "framer-motion";
 import GridHeader from "../../components/Grid/header";
@@ -15,7 +15,7 @@ const ShopPage = () => {
   const { state } = useContext(GlobalStateContext);
   const { userState } = useUser();
   const { allProducts, setAllProducts } = useProducts();
-  const [isProductModalVisible, setIsProductModalVisible] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [productId, setProductId] = useState();
 
   const fetchProducts = useCallback(async () => {
@@ -35,12 +35,12 @@ const ShopPage = () => {
   }, [fetchProducts]);
 
   useEffect(() => {
-    document.body.style.overflow = isProductModalVisible ? "hidden" : "auto";
-  }, [isProductModalVisible]);
+    document.body.style.overflow = showModal ? "hidden" : "auto";
+  }, [showModal]);
 
   const handleToggleModal = (productItemId: any) => {
     setProductId(productItemId);
-    setIsProductModalVisible((prevState) => !prevState);
+    setShowModal((prevState) => !prevState);
   };
 
   return (
@@ -146,7 +146,7 @@ const ShopPage = () => {
             mode="wait"
             onExitComplete={() => null}
           >
-            {isProductModalVisible && (
+            {showModal && (
               <ProductModal
                 productId={productId}
                 onToggleModal={handleToggleModal}
@@ -155,7 +155,12 @@ const ShopPage = () => {
           </AnimatePresence>
         </GridViewContainer>
       </section>
-      {userState && userState._id && <CreateProductComponent />}
+      {userState && userState._id && (
+        <CreateProduct
+          classes="fixed bottom-0 right-0 left-0 z-10 px-4 py-3.5 pointer-events-none"
+          btnClasses="btn-primary rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer"
+        />
+      )}
     </>
   );
 };
