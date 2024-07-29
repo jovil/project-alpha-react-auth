@@ -10,6 +10,8 @@ import GridHeader from "../../components/Grid/header";
 import GridViewContainer from "../../components/Grid/gridViewContainer";
 import UserAvatar from "../../components/Card/userAvatar";
 import Card from "../../components/Card";
+import CreateProductModal from "../../components/CreateProduct/modal";
+import useCreateProduct from "../../hooks/useCreateProduct";
 
 const ShopPage = () => {
   const { state } = useContext(GlobalStateContext);
@@ -17,6 +19,7 @@ const ShopPage = () => {
   const { allProducts, setAllProducts } = useProducts();
   const [showModal, setShowModal] = useState(false);
   const [productId, setProductId] = useState();
+  const { isShowModal, handleToggleCreateProductModal } = useCreateProduct();
 
   const fetchProducts = useCallback(async () => {
     const url = `${process.env.REACT_APP_API_URL}/products`;
@@ -156,10 +159,24 @@ const ShopPage = () => {
         </GridViewContainer>
       </section>
       {userState && userState._id && (
-        <CreateProduct
-          classes="fixed bottom-0 right-0 left-0 z-10 px-4 py-3.5 pointer-events-none"
-          btnClasses="btn-primary rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer"
-        />
+        <>
+          <CreateProduct
+            classes="fixed bottom-0 right-0 left-0 z-10 px-4 py-3.5 pointer-events-none"
+            btnClasses="btn-primary rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer"
+            onToggleModal={handleToggleCreateProductModal}
+          />
+          <AnimatePresence
+            initial={false}
+            mode="wait"
+            onExitComplete={() => null}
+          >
+            {isShowModal && (
+              <CreateProductModal
+                onToggleModal={handleToggleCreateProductModal}
+              />
+            )}
+          </AnimatePresence>
+        </>
       )}
     </>
   );

@@ -30,7 +30,7 @@ const useFileUpload = () => {
     });
   };
 
-  const handleToggleModal = (value: boolean) => {
+  const handleTogglePostModal = (value: boolean) => {
     setShowModal(value);
   };
 
@@ -39,7 +39,7 @@ const useFileUpload = () => {
     postImage,
     imageBase64,
     handleFileUpload,
-    handleToggleModal,
+    handleTogglePostModal,
   };
 };
 

@@ -22,6 +22,9 @@ import UserHirePage from "./pages/UserHirePage/index";
 import CreatePost from "./components/CreatePost";
 import CreatePostModal from "./components/CreatePost/modal";
 import useFileUpload from "./hooks/useFileUpload";
+import CreateProduct from "./components/CreateProduct";
+import CreateProductModal from "./components/CreateProduct/modal";
+import useCreateProduct from "./hooks/useCreateProduct";
 
 function App() {
   const cookies = new Cookies();
@@ -35,8 +38,9 @@ function App() {
     postImage,
     imageBase64,
     handleFileUpload,
-    handleToggleModal,
+    handleTogglePostModal,
   } = useFileUpload();
+  const { isShowModal, handleToggleCreateProductModal } = useCreateProduct();
 
   const onToggleDropdown = () => {
     setShowDropdown((prevState: boolean) => !prevState);
@@ -159,6 +163,14 @@ function App() {
                               />
                             </li>
                           )}
+                          {userState?._id && (
+                            <li>
+                              <CreateProduct
+                                btnClasses="text-sm text-blue-200 px-5 py-2 bg-blue-800 rounded-full"
+                                onToggleModal={handleToggleCreateProductModal}
+                              />
+                            </li>
+                          )}
                         </ul>
                       </motion.div>
                     </Backdrop>
@@ -275,8 +287,19 @@ function App() {
           isShowModal={showModal}
           isPostImage={postImage}
           isImageBase64={imageBase64}
-          onToggleModal={handleToggleModal}
+          onToggleModal={handleTogglePostModal}
         />
+        <AnimatePresence
+          initial={false}
+          mode="wait"
+          onExitComplete={() => null}
+        >
+          {isShowModal && (
+            <CreateProductModal
+              onToggleModal={handleToggleCreateProductModal}
+            />
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );

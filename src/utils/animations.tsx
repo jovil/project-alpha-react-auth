@@ -26,6 +26,7 @@ export const slideInFromRight = {
     x: "0",
     transition: {
       duration: 0.2,
+      delay: 0.2,
     },
   },
   exit: {

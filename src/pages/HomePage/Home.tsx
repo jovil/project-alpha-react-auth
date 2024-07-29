@@ -9,7 +9,7 @@ export default function Home() {
     postImage,
     imageBase64,
     handleFileUpload,
-    handleToggleModal,
+    handleTogglePostModal,
   } = useFileUpload();
 
   return (
@@ -28,7 +28,7 @@ export default function Home() {
         isShowModal={showModal}
         isPostImage={postImage}
         isImageBase64={imageBase64}
-        onToggleModal={handleToggleModal}
+        onToggleModal={handleTogglePostModal}
       />
     </>
   );
