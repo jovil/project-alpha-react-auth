@@ -20,7 +20,6 @@ const UserNavigation = () => {
       const response = await fetch(url, getFetchConfig);
       const result = await response.json();
       setUser(result);
-      console.log("result", result);
     } catch (error) {
       console.error("Error fetching profile:", error);
     }

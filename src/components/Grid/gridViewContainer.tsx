@@ -6,8 +6,8 @@ const GridViewContainer = ({
   captionComponent,
   children,
 }: {
-  gridComponent: any;
-  captionComponent: any;
+  gridComponent?: any;
+  captionComponent?: any;
   children: any;
 }) => {
   const { state } = useContext(GlobalStateContext);

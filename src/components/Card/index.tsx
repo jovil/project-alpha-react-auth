@@ -7,8 +7,8 @@ const Card = ({
   captionComponent,
   data,
 }: {
-  gridComponent: string;
-  captionComponent: string;
+  gridComponent?: string | null;
+  captionComponent?: string | null;
   data: Record<string, any>;
 }) => {
   const { state } = useContext(GlobalStateContext);
@@ -24,7 +24,8 @@ const Card = ({
     <>
       <div
         className={`w-full h-auto flex flex-col ${
-          state[gridComponent] === "grid" && !state[captionComponent]
+          state[gridComponent ? gridComponent : ""] === "grid" &&
+          !state[captionComponent ? captionComponent : ""]
             ? "tablet:aspect-[4/6]"
             : ""
         }`}
@@ -42,7 +43,8 @@ const Card = ({
           {typeof data.fileUrl === "string" && (
             <img
               className={`object-cover w-full h-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
-                state[gridComponent] === "grid" && state[captionComponent]
+                state[gridComponent ? gridComponent : ""] === "grid" &&
+                state[captionComponent ? captionComponent : ""]
                   ? "aspect-[4/6]"
                   : ""
               }`}
@@ -55,7 +57,8 @@ const Card = ({
           {typeof data.fileUrl === "object" && (
             <img
               className={`object-cover w-full h-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
-                state[gridComponent] === "grid" && state[captionComponent]
+                state[gridComponent ? gridComponent : ""] === "grid" &&
+                state[captionComponent ? captionComponent : ""]
                   ? "aspect-[4/6]"
                   : ""
               }`}
@@ -68,7 +71,8 @@ const Card = ({
           {data.avatar && (
             <img
               className={`object-cover w-full h-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
-                state[gridComponent] === "grid" && state[captionComponent]
+                state[gridComponent ? gridComponent : ""] === "grid" &&
+                state[captionComponent ? captionComponent : ""]
                   ? "aspect-[4/6]"
                   : ""
               }`}

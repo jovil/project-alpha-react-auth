@@ -21,7 +21,7 @@ interface Posts {
   user: User;
 }
 
-const Grid = ({ isUser }: { isUser: any }) => {
+const Grid = ({ isUser }: { isUser?: any }) => {
   const { userId } = useParams();
   const { state } = useContext(GlobalStateContext);
   const { allPosts } = usePosts();

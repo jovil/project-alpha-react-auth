@@ -48,10 +48,6 @@ const Grid = ({ isUser }: { isUser: any }) => {
   }, [fetchProducts]);
 
   useEffect(() => {
-    console.log("products", products);
-  }, [products]);
-
-  useEffect(() => {
     document.body.style.overflow = isProductModalVisible ? "hidden" : "auto";
   }, [isProductModalVisible]);
 
