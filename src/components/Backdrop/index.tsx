@@ -6,7 +6,7 @@ const Backdrop = ({
   showCloseButton,
 }: {
   children: any;
-  onClick: () => void;
+  onClick: (e: any | null) => void;
   showCloseButton: boolean;
 }) => {
   return (

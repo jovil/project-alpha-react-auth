@@ -9,12 +9,17 @@ import GridHeader from "../../components/Grid/header";
 import GridViewContainer from "../../components/Grid/gridViewContainer";
 import UserAvatar from "../../components/Card/userAvatar";
 import Card from "../../components/Card";
+import { motion, AnimatePresence } from "framer-motion";
+import Backdrop from "../../components/Backdrop";
+import { slideInFromBottom } from "../../utils/animations";
 
 const PostListView = () => {
   const { state } = useContext(GlobalStateContext);
   const { allPosts, setAllPosts } = usePosts();
   const [noPosts, setNoPosts] = useState(false);
   const [page, setPage] = useState(1);
+  const [showPostModal, setShowPostModal] = useState(false);
+  const [postModalImageSrc, setPostModalImageSrc] = useState<string>("");
   const limit = 9;
   const url = `${process.env.REACT_APP_API_URL}/posts?page=${page}&limit=${limit}`;
   const isFetchingRef = useRef(false); // To keep track of fetching state
@@ -85,12 +90,53 @@ const PostListView = () => {
     };
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = showPostModal ? "hidden" : "auto";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showPostModal]);
+
   const loadMorePosts = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
+  const togglePostModal = (e: React.MouseEvent<HTMLElement>) => {
+    const image = e.target as HTMLImageElement;
+    const imageSrc = image.src;
+    setPostModalImageSrc(imageSrc);
+    setShowPostModal((prevState) => !prevState);
+  };
+
   return (
     <>
+      <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
+        {showPostModal && (
+          <>
+            <Backdrop onClick={togglePostModal} showCloseButton={true}>
+              <motion.div
+                className="h-full w-full flex justify-center items-center pointer-events-none"
+                variants={slideInFromBottom}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {postModalImageSrc && (
+                  <div className="bg-white h-[calc(100vh-60px)] p-2 rounded-md flex cursor-default pointer-events-auto">
+                    <img
+                      className="max-w-full"
+                      src={postModalImageSrc}
+                      alt=""
+                    />
+                  </div>
+                )}
+              </motion.div>
+            </Backdrop>
+          </>
+        )}
+      </AnimatePresence>
       <section className="max-w-[948px] w-full mx-auto flex flex-col gap-4 min-h-[100vh]">
         <GridHeader gridViewProp={"postsView"} captionProp={"showPostsCaption"}>
           <h1>All posts</h1>
@@ -107,11 +153,36 @@ const PostListView = () => {
                     className="flex flex-col relative group overflow-hidden rounded-3xl"
                     key={index}
                   >
-                    <Card
-                      gridComponent={"postsView"}
-                      captionComponent={"showPostsCaption"}
-                      data={post}
-                    />
+                    <button
+                      className="relative group/modalIcon"
+                      onClick={togglePostModal}
+                    >
+                      <div className="absolute top-2 right-2 z-10 text-white bg-[#1d1d1fcc] w-[30px] h-[30px] p-1 rounded-full flex justify-center items-center opacity-0 group-hover/modalIcon:opacity-100 transition-opacity pointer-events-none">
+                        <svg
+                          fill="currentColor"
+                          width="18px"
+                          height="18px"
+                          viewBox="0 0 32 32"
+                          id="icon"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path d="M28,4H10A2.0059,2.0059,0,0,0,8,6V20a2.0059,2.0059,0,0,0,2,2H28a2.0059,2.0059,0,0,0,2-2V6A2.0059,2.0059,0,0,0,28,4Zm0,16H10V6H28Z"></path>
+                          <path d="M18,26H4V16H6V14H4a2.0059,2.0059,0,0,0-2,2V26a2.0059,2.0059,0,0,0,2,2H18a2.0059,2.0059,0,0,0,2-2V24H18Z"></path>
+                          <rect
+                            id="_Transparent_Rectangle_"
+                            data-name="<Transparent Rectangle>"
+                            fill="none"
+                            width="18"
+                            height="18"
+                          ></rect>
+                        </svg>
+                      </div>
+                      <Card
+                        gridComponent={"postsView"}
+                        captionComponent={"showPostsCaption"}
+                        data={post}
+                      />
+                    </button>
                     {!state.showPostsCaption && (
                       <div className="flex flex-col justify-between gap-6 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
                         <p>{post.characterName}</p>

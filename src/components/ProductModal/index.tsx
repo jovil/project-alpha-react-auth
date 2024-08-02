@@ -78,10 +78,6 @@ const ProductModal = ({
     fetchProduct();
   }, [productId]);
 
-  useEffect(() => {
-    console.log("product", product);
-  }, [product]);
-
   return (
     <Backdrop onClick={onToggleModal} showCloseButton={false}>
       <motion.div
