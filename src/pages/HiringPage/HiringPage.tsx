@@ -30,6 +30,10 @@ const HiringPage = () => {
 
   useEffect(() => {
     fetchUsersForHire();
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
   }, []);
 
   const handleToggleModal = (id: any) => {

@@ -107,7 +107,7 @@ function App() {
                       showCloseButton={false}
                     >
                       <motion.div
-                        className="bg-white h-full w-2/5 px-2.5 py-4 overflow-scroll ml-auto cursor-default"
+                        className="bg-white h-full w-2/5 px-2.5 py-4 overflow-scroll ml-auto cursor-default flex flex-col justify-between"
                         variants={slideInFromRight}
                         initial="hidden"
                         animate="visible"
@@ -155,19 +155,22 @@ function App() {
                               </NavLink>
                             </li>
                           )}
+                        </ul>
+
+                        <ul className="border-t border-black-100/40 py-6 flex flex-col gap-6">
                           {userState?._id && (
-                            <li>
-                              <CreatePost
-                                btnClasses="text-sm text-blue-200 px-5 py-2 bg-blue-800 rounded-full"
-                                onFileUpload={handleFileUpload}
+                            <li className="block text-center">
+                              <CreateProduct
+                                btnClasses="btn-primary w-full"
+                                onToggleModal={handleToggleCreateProductModal}
                               />
                             </li>
                           )}
                           {userState?._id && (
-                            <li>
-                              <CreateProduct
-                                btnClasses="text-sm text-blue-200 px-5 py-2 bg-blue-800 rounded-full"
-                                onToggleModal={handleToggleCreateProductModal}
+                            <li className="block text-center">
+                              <CreatePost
+                                btnClasses="btn-primary"
+                                onFileUpload={handleFileUpload}
                               />
                             </li>
                           )}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import HeaderSection from "./HeaderSection";
 import UserNavigation from "../../components/UserNavigation";
 import { apiUrl } from "../../utils/fetchConfig";
@@ -101,40 +101,49 @@ const UserPostListPage = () => {
   return (
     <>
       <HeaderSection isUser={user} isLoadingAvatar={isLoadingAvatar} />
-      <div className="max-w-[1140px] mx-auto grid grid-cols-12 gap-4 h-full flex-grow">
-        <div className="flex flex-col items-center px-4 col-span-5">
-          <section>
-            <header>
-              <h2>Products</h2>
-            </header>
-            <div className="grid gap-3 tablet:grid-cols-2">
-              {products.map((product: any, index: number) => {
-                return (
-                  <React.Fragment key={index}>
-                    <Card data={product} />
-                  </React.Fragment>
-                );
-              })}
-            </div>
-          </section>
-        </div>
+      <div className="max-w-[1140px] py-16 mx-auto grid grid-cols-12 gap-4 h-full flex-grow">
+        <section className="flex flex-col gap-4 px-4 col-span-5">
+          <header className="flex justify-between items-end">
+            <h2>Products</h2>
+            <NavLink
+              className="text-sm text-blue-100 underline"
+              to={`/shop/${userId}`}
+            >
+              Go to shop
+            </NavLink>
+          </header>
+          <div className="grid gap-3 tablet:grid-cols-2">
+            {products.map((product: any, index: number) => {
+              return (
+                <React.Fragment key={index}>
+                  <Card data={product} />
+                </React.Fragment>
+              );
+            })}
+          </div>
+        </section>
 
-        <div className="px-8 col-span-7 flex flex-col items-center">
-          <section>
-            <header>
-              <h2>Posts</h2>
-            </header>
-            <div className="flex flex-col gap-3">
-              {posts.map((post: any, index: number) => {
-                return (
-                  <React.Fragment key={index}>
-                    <Card data={post} />
-                  </React.Fragment>
-                );
-              })}
-            </div>
-          </section>
-        </div>
+        <section className="px-8 col-span-7 flex flex-col gap-4">
+          <header className="flex justify-between items-end">
+            <h2>Posts</h2>
+
+            <NavLink
+              className="text-sm text-blue-100 underline"
+              to={`/posts/${userId}`}
+            >
+              See all posts
+            </NavLink>
+          </header>
+          <div className="flex flex-col gap-3">
+            {posts.map((post: any, index: number) => {
+              return (
+                <React.Fragment key={index}>
+                  <Card data={post} />
+                </React.Fragment>
+              );
+            })}
+          </div>
+        </section>
       </div>
       <UserNavigation />
     </>

@@ -17,7 +17,7 @@ export default function Home() {
       <PostListView />
       <CreatePost
         classes={
-          "fixed bottom-0 right-0 left-0 px-4 py-3.5 pointer-events-none"
+          "fixed bottom-0 left-1/2 -translate-x-1/2 px-4 py-3.5 pointer-events-none"
         }
         btnClasses={
           "btn-primary rounded-full text-sm flex gap-2 justify-center items-center"

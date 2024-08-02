@@ -15,15 +15,13 @@ const CreateProduct = ({
   return token ? (
     <>
       <div className={classes}>
-        <div className="max-w-[948px] flex flex-col justify-center items-center gap-3.5 mx-auto">
-          <div className="flex flex-col pointer-events-auto">
-            <button
-              className={`${btnClasses} cursor-pointer`}
-              onClick={onToggleModal}
-            >
-              Create product
-            </button>
-          </div>
+        <div className="pointer-events-auto">
+          <button
+            className={`${btnClasses} cursor-pointer`}
+            onClick={onToggleModal}
+          >
+            Create product
+          </button>
         </div>
       </div>
     </>
