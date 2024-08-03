@@ -1,11 +1,5 @@
 import { useContext, useState } from "react";
-import {
-  useLocation,
-  Routes,
-  Route,
-  NavLink,
-  useNavigate,
-} from "react-router-dom";
+import { useLocation, Routes, Route, NavLink } from "react-router-dom";
 import { GlobalStateContext } from "./context/Context";
 import { useUser } from "./context/UserContext";
 import Home from "./pages/HomePage/Home";
@@ -31,9 +25,8 @@ import useFileUpload from "./hooks/useFileUpload";
 import CreateProduct from "./components/CreateProduct";
 import CreateProductModal from "./components/CreateProduct/modal";
 import useCreateProduct from "./hooks/useCreateProduct";
-import { apiUrl } from "./utils/fetchConfig";
-import { getFetchConfig } from "./utils/fetchConfig";
 import SearchPage from "./pages/SearchPage";
+import Search from "./components/Search";
 
 function App() {
   const cookies = new Cookies();
@@ -42,7 +35,7 @@ function App() {
   const location = useLocation();
   const token = cookies.get("TOKEN");
   const [showDropdown, setShowDropdown] = useState(false);
-  const [searchQuery, setSearchQuery] = useState<string>("");
+
   const {
     showModal,
     postImage,
@@ -51,57 +44,16 @@ function App() {
     handleTogglePostModal,
   } = useFileUpload();
   const { isShowModal, handleToggleCreateProductModal } = useCreateProduct();
-  const navigate = useNavigate();
 
   const onToggleDropdown = () => {
     setShowDropdown((prevState: boolean) => !prevState);
-  };
-
-  const handleSearchInput = (e: React.ChangeEvent) => {
-    const input = e.target as HTMLInputElement;
-    setSearchQuery(input.value);
-  };
-
-  const handleSearch = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    const url = `${apiUrl}/search/${searchQuery}`;
-
-    try {
-      const response = await fetch(url, getFetchConfig);
-      const result = await response.json();
-      setSearchQuery("");
-
-      navigate("/search", {
-        state: {
-          searchQuery: searchQuery,
-          searchResult: result,
-        },
-      });
-    } catch (error) {
-      console.log("error", error);
-    }
   };
 
   return (
     <div className="container mx-auto px-4">
       <div className="max-w-[948px] pt-6 pb-10 mx-auto">
         <div className="flex justify-between items-center gap-4">
-          <form className="flex items-center gap-2" onSubmit={handleSearch}>
-            <input
-              className="text-xs py-2 px-5 border border-[#dadce0] rounded-full outline-none"
-              type="search"
-              placeholder="Search username"
-              onChange={handleSearchInput}
-              value={searchQuery}
-            ></input>
-            <button
-              className="text-xs btn-primary"
-              type="submit"
-              onSubmit={handleSearch}
-            >
-              Search
-            </button>
-          </form>
+          <Search />
           {token && (
             <div className="flex justify-end gap-4">
               <NavLink
