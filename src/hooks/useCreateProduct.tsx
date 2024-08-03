@@ -15,10 +15,10 @@ const useCreateProduct = () => {
     setProduct((prev: any) => {
       return {
         ...prev,
-        _id: userState._id,
+        _id: userState?._id,
       };
     });
-  }, [userState._id]);
+  }, [userState?._id]);
 
   useEffect(() => {
     document.body.style.overflow = isShowModal ? "hidden" : "auto";

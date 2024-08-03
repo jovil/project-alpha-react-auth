@@ -66,7 +66,6 @@ const UserPostListPage = () => {
       const response = await fetch(url, getFetchConfig);
       const result: Posts[] = await response.json();
       setPosts(result);
-      console.log("result", result);
     } catch (error) {
       console.log("Error fetching posts:", error);
     }

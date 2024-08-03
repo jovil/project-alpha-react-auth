@@ -7,7 +7,6 @@ const UserNavigation = () => {
   const [user, setUser] = useState<Record<string, any | null>>();
 
   const fetchUser = useCallback(async () => {
-    console.log("user", userId);
     const url = `${process.env.REACT_APP_API_URL}/user/${userId}`;
     try {
       const response = await fetch(url, getFetchConfig);

@@ -44,9 +44,9 @@ const CreatePostModal = ({
     setPost((prev: any) => {
       return {
         ...prev,
-        email: userState.email,
+        email: userState?.email,
         image: isPostImage,
-        _id: userState._id,
+        _id: userState?._id,
       };
     });
   }, [userState, isPostImage]);

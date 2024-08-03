@@ -20,7 +20,7 @@ const HeaderSection = () => {
     cookies.remove("TOKEN", { path: "/" });
     setState({ ...state, isLoggedIn: false });
     setUserState(null);
-    window.location.href = "/";
+    // window.location.href = "/";
   };
 
   const uploadProfileImage = async (data: any) => {
