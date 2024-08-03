@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { apiUrl } from "../../utils/fetchConfig";
@@ -8,15 +8,38 @@ import defaultAvatar from "../../assets/images/toon_6.png";
 import { slideInFromBottom } from "../../utils/animations";
 
 const SearchModal = ({
-  onToggleSearch,
+  onToggleSearchModal,
+  onShowSearchModal,
   isShowSearchModal,
 }: {
-  onToggleSearch: () => void;
+  onToggleSearchModal: () => void;
+  onShowSearchModal: () => void;
   isShowSearchModal: boolean;
 }) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResultQuery, setSearchResultQuery] = useState<string>("");
   const [searchResult, setSearchResult] = useState<Record<string, any>>();
+  const searchResultItemRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.metaKey && event.key === "k") {
+        event.preventDefault();
+        onShowSearchModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onShowSearchModal]);
+
+  useEffect(() => {
+    if (searchResultItemRef.current) {
+      searchResultItemRef.current.focus();
+    }
+  }, [searchResult, onShowSearchModal]);
 
   const handleSearchInput = (e: React.ChangeEvent) => {
     const input = e.target as HTMLInputElement;
@@ -40,7 +63,7 @@ const SearchModal = ({
     <>
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
         {isShowSearchModal && (
-          <Backdrop onClick={onToggleSearch} showCloseButton={false}>
+          <Backdrop onClick={onToggleSearchModal} showCloseButton={false}>
             <motion.div
               className="absolute w-full pointer-events-none py-6"
               variants={slideInFromBottom}
@@ -76,15 +99,19 @@ const SearchModal = ({
                 )}
 
                 {searchResult?.length > 0 && (
-                  <ul className="flex flex-col py-4">
+                  <ul className="flex flex-col py-4 gap-1.5">
                     {searchResult?.map(
                       (user: Record<string, any>, index: number) => {
                         return (
                           <li key={index}>
                             <NavLink
-                              className="flex items-center gap-3 p-4 py-5 rounded-md hover:bg-blue-800 transition-colors"
+                              className="flex items-center gap-3 p-4 py-5 rounded-md hover:bg-blue-800 transition-colors focus:bg-blue-800"
                               to={`/user/${user._id}`}
-                              onClick={onToggleSearch}
+                              onClick={onToggleSearchModal}
+                              ref={
+                                index === 0 ? searchResultItemRef : undefined
+                              }
+                              tabIndex={index + 1}
                             >
                               <img
                                 className="w-9 h-9 rounded-full object-cover"

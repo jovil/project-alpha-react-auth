@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import { getFetchConfig } from "../../utils/fetchConfig";
+import defaultAvatar from "../../assets/images/toon_6.png";
 
 const UserNavigation = () => {
   const { userId } = useParams();
@@ -26,7 +27,7 @@ const UserNavigation = () => {
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 text-xs flex flex-col items-center gap-3">
         <img
           className="h-9 w-9 rounded-full object-cover"
-          src={user?.avatar}
+          src={user?.avatar || defaultAvatar}
           alt=""
         />
         <div className="relative">

@@ -49,7 +49,11 @@ function App() {
     setShowDropdown((prevState: boolean) => !prevState);
   };
 
-  const onToggleSearch = () => {
+  const onToggleSearchModal = () => {
+    setShowSearchModal((prevState: boolean) => !prevState);
+  };
+
+  const onShowSearchModal = () => {
     setShowSearchModal((prevState: boolean) => !prevState);
   };
 
@@ -58,11 +62,12 @@ function App() {
       <div className="max-w-[948px] pt-6 pb-10 mx-auto">
         <div className="flex justify-end items-center gap-4 relative">
           <SearchModal
-            onToggleSearch={onToggleSearch}
+            onToggleSearchModal={onToggleSearchModal}
+            onShowSearchModal={onShowSearchModal}
             isShowSearchModal={showSearchModal}
           />
           <div className="flex justify-end gap-4">
-            <button className="text-blue" onClick={onToggleSearch}>
+            <button className="text-blue" onClick={onToggleSearchModal}>
               <svg
                 className="h-4 w-4 stroke-blue-100"
                 width="24"
