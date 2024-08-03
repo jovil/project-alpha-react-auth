@@ -1,14 +1,9 @@
-import { useEffect } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import defaultAvatar from "../../assets/images/toon_6.png";
 
 const SearchPage = () => {
   const location = useLocation();
   const { searchQuery, searchResult } = location.state;
-
-  useEffect(() => {
-    console.log([searchQuery, searchResult]);
-  }, []);
 
   return (
     <>
