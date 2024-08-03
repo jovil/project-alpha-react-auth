@@ -33,6 +33,7 @@ const Search = () => {
   };
   return (
     <>
+      {/* <Route path={`/search`} element={<SearchPage />} /> */}
       <form className="flex items-center gap-2" onSubmit={handleSearch}>
         <input
           className="text-xs py-2 px-5 border border-[#dadce0] rounded-full outline-none"

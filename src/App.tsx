@@ -16,7 +16,7 @@ import HiringPage from "./pages/HiringPage/HiringPage";
 import SeriesListPage from "./pages/SeriesListPage";
 import Backdrop from "./components/Backdrop";
 import { motion, AnimatePresence } from "framer-motion";
-import { slideInFromRight, slideInFromBottom } from "./utils/animations";
+import { slideInFromRight } from "./utils/animations";
 import UserPostsPage from "./pages/UserPostsPage/index";
 import UserHirePage from "./pages/UserHirePage/index";
 import CreatePost from "./components/CreatePost";
@@ -25,11 +25,7 @@ import useFileUpload from "./hooks/useFileUpload";
 import CreateProduct from "./components/CreateProduct";
 import CreateProductModal from "./components/CreateProduct/modal";
 import useCreateProduct from "./hooks/useCreateProduct";
-import SearchPage from "./pages/SearchPage";
-
-import { apiUrl } from "./utils/fetchConfig";
-import { getFetchConfig } from "./utils/fetchConfig";
-import defaultAvatar from "./assets/images/toon_6.png";
+import SearchModal from "./components/SearchModal";
 
 function App() {
   const cookies = new Cookies();
@@ -57,123 +53,14 @@ function App() {
     setShowSearchModal((prevState: boolean) => !prevState);
   };
 
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [searchResultQuery, setSearchResultQuery] = useState<string>("");
-  const [searchResult, setSearchResult] = useState<Record<string, any>>();
-
-  const handleSearchInput = (e: React.ChangeEvent) => {
-    const input = e.target as HTMLInputElement;
-    setSearchQuery(input.value);
-  };
-
-  const handleSearch = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    const url = `${apiUrl}/search/${searchQuery}`;
-
-    try {
-      const response = await fetch(url, getFetchConfig);
-      const result = await response.json();
-      setSearchResult(result);
-      setSearchResultQuery(searchQuery);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
   return (
     <div className="container mx-auto px-4">
       <div className="max-w-[948px] pt-6 pb-10 mx-auto">
         <div className="flex justify-end items-center gap-4 relative">
-          <AnimatePresence
-            initial={false}
-            mode="wait"
-            onExitComplete={() => null}
-          >
-            {showSearchModal && (
-              <Backdrop onClick={onToggleSearch} showCloseButton={false}>
-                <motion.div
-                  className="absolute w-full pointer-events-none py-6"
-                  variants={slideInFromBottom}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="bg-white border p-4 relative left-1/2 -translate-x-1/2 max-w-[948px] pointer-events-auto rounded-md">
-                    <form
-                      className="flex items-center justify-between w-full gap-6"
-                      onSubmit={handleSearch}
-                    >
-                      <input
-                        className="py-2 px-5 border-b border-[#dadce0] outline-none w-full"
-                        type="search"
-                        placeholder="Search username"
-                        onChange={handleSearchInput}
-                        value={searchQuery}
-                        autoFocus
-                      ></input>
-                      <button
-                        className="btn-primary"
-                        type="submit"
-                        onSubmit={handleSearch}
-                      >
-                        Search
-                      </button>
-                    </form>
-
-                    {searchResult?.length === 0 && (
-                      <p className="px-4 pt-6 pb-2">0 matches</p>
-                    )}
-
-                    {searchResult?.length > 0 && (
-                      <ul className="flex flex-col py-4">
-                        {searchResult?.map(
-                          (user: Record<string, any>, index: number) => {
-                            return (
-                              <li key={index}>
-                                <NavLink
-                                  className="flex items-center gap-3 p-4 py-5 rounded-md hover:bg-blue-800 transition-colors"
-                                  to={`/user/${user._id}`}
-                                  onClick={onToggleSearch}
-                                >
-                                  <img
-                                    className="w-9 h-9 rounded-full object-cover"
-                                    src={user.avatar || defaultAvatar}
-                                    alt=""
-                                  />
-                                  <div className="flex flex-col">
-                                    <p className="font-medium">
-                                      {user.userName}
-                                    </p>
-                                    <p className="text-xs text-dark/60">
-                                      {user.hiringDetails.location}
-                                    </p>
-                                  </div>
-                                </NavLink>
-                              </li>
-                            );
-                          }
-                        )}
-                      </ul>
-                    )}
-                    {searchResultQuery && searchResult?.length > 0 && (
-                      <div className="flex justify-end text-xs text-dark/60 px-6 pt-4 border-t border-[#dadce0]">
-                        <p>
-                          <span className="font-medium">
-                            {searchResult?.length}
-                          </span>{" "}
-                          {searchResult?.length > 1 ? "matches" : "match"} for{" "}
-                          <span className="font-medium">
-                            "{searchResultQuery}"
-                          </span>
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              </Backdrop>
-            )}
-          </AnimatePresence>
+          <SearchModal
+            onToggleSearch={onToggleSearch}
+            isShowSearchModal={showSearchModal}
+          />
           <div className="flex justify-end gap-4">
             <button className="text-blue" onClick={onToggleSearch}>
               <svg
@@ -438,7 +325,6 @@ function App() {
           <Route path={`/shop`} element={<ShopPage />} />
           <Route path={`/hirecosplayer`} element={<HiringPage />} />
           <Route path={`/series`} element={<SeriesListPage />} />
-          <Route path={`/search`} element={<SearchPage />} />
         </Routes>
 
         <CreatePostModal
