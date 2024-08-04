@@ -5,7 +5,7 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
 
   return (
     <>
-      <form className="text-sm max-w-[580px] mx-auto flex flex-col gap-4">
+      <form className="text-sm max-w-[580px] mx-auto flex flex-col gap-4 p-4">
         <div className="flex flex-col gap-2">
           <label>Email:</label>
           <input

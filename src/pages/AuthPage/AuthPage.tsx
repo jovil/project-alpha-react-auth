@@ -65,14 +65,19 @@ const initialHiringDetails: HiringDetails = {
   travelAvailability: { type: "local" },
 };
 
+enum View {
+  Account = "Account",
+  UserDetails = "UserDetails",
+  BankDetails = "BankDetails",
+}
+
 const AuthComponent = () => {
   const { userState, setUserState } = useUser();
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const [hiringDetails, setHiringDetails] = useState<HiringDetails | null>(
     initialHiringDetails
   );
-  const [showAccount, setShowAccount] = useState<boolean>(true);
-  const [showUserDetails, setShowUserDetails] = useState<boolean>(false);
+  const [currentView, setCurrentView] = useState<View>(View.Account);
   const [password, setPassword] = useState<string>("");
 
   const handleEditingMode = (value: boolean) => {
@@ -119,6 +124,10 @@ const AuthComponent = () => {
     setIsEditing(true);
   }, []);
 
+  const handleViewClick = (view: View) => {
+    setCurrentView(view);
+  };
+
   return (
     <>
       <div className="container grid grid-cols-12 gap-4">
@@ -128,12 +137,9 @@ const AuthComponent = () => {
               <li className="w-full">
                 <button
                   className={`text-xs text-left px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full ${
-                    showAccount ? "bg-blue-900" : ""
+                    currentView === View.Account ? "bg-blue-900" : ""
                   }`}
-                  onClick={() => {
-                    setShowAccount(true);
-                    setShowUserDetails(false);
-                  }}
+                  onClick={() => handleViewClick(View.Account)}
                 >
                   Account
                 </button>
@@ -141,25 +147,31 @@ const AuthComponent = () => {
               <li className="w-full">
                 <button
                   className={`text-xs text-left px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full ${
-                    showUserDetails ? "bg-blue-900" : ""
+                    currentView === View.UserDetails ? "bg-blue-900" : ""
                   }`}
-                  onClick={() => {
-                    setShowAccount(false);
-                    setShowUserDetails(true);
-                  }}
+                  onClick={() => handleViewClick(View.UserDetails)}
                 >
                   User details
+                </button>
+              </li>
+              <li className="w-full">
+                <button
+                  className={`text-xs text-left px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full ${
+                    currentView === View.BankDetails ? "bg-blue-900" : ""
+                  }`}
+                  onClick={() => handleViewClick(View.BankDetails)}
+                >
+                  Bank account details
                 </button>
               </li>
             </ul>
           </nav>
         </aside>
         <div className="col-span-9">
-          {showAccount && (
+          {currentView === View.Account && (
             <>
               <HeaderSection />
               <section className="max-w-[580px] py-16 mx-auto">
-                <BankDetails />
                 <HiringDetailsComponent
                   isEditing={isEditing}
                   onHandleEditingMode={handleEditingMode}
@@ -169,7 +181,11 @@ const AuthComponent = () => {
               </section>
             </>
           )}
-          {showUserDetails && <UserDetails isPassword={password} />}
+          {currentView === View.UserDetails && (
+            <UserDetails isPassword={password} />
+          )}
+
+          {currentView === View.BankDetails && <BankDetails />}
         </div>
       </div>
     </>
