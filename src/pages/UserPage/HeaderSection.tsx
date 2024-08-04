@@ -90,16 +90,17 @@ const HeaderSection = ({
           </div>
           {userState && userState._id === userId && (
             <>
-              {userState.profileDescription?.length === 0 && (
-                <div className="py-3">
-                  <button
-                    className="text-sm text-black-100/80 underline"
-                    onClick={addProfileDescription}
-                  >
-                    Add profile description
-                  </button>
-                </div>
-              )}
+              {userState.profileDescription === undefined ||
+                (userState.profileDescription === "" && (
+                  <div className="py-3">
+                    <button
+                      className="text-sm text-black-100/80 underline"
+                      onClick={addProfileDescription}
+                    >
+                      Add profile description
+                    </button>
+                  </div>
+                ))}
 
               {showDescriptionForm && (
                 <form

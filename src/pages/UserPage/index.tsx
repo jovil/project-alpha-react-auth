@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { NavLink, useParams } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 import HeaderSection from "./HeaderSection";
 import UserNavigation from "../../components/UserNavigation";
 import { apiUrl } from "../../utils/fetchConfig";
@@ -31,6 +32,7 @@ interface Product {
 
 const UserPostListPage = () => {
   const { userId } = useParams();
+  const { setUserState } = useUser();
   const [user, setUser] = useState<{
     profileName: string;
     email: string;
@@ -49,12 +51,21 @@ const UserPostListPage = () => {
     try {
       const response = await fetch(url, getFetchConfig);
       const result = await response.json();
+      console.log("result", result);
+      setUserState((prevState: any) => {
+        return {
+          ...prevState,
+          profileDescription: result.profileDescription,
+        };
+      });
       setUser(result);
       setIsLoadingAvatar(false);
     } catch (error) {
       console.error("Error fetching profile:", error);
     }
-  }, [userId, setUser]);
+
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     fetchUser();
@@ -134,7 +145,7 @@ const UserPostListPage = () => {
           </div>
         </section>
 
-        <section className="px-8 col-span-7 flex flex-col gap-4">
+        <section className="px-4 col-span-7 flex flex-col gap-4">
           <header className="flex justify-between items-end">
             <h2>Posts</h2>
 

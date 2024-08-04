@@ -43,57 +43,65 @@ const Grid = ({ isUser }: { isUser?: any }) => {
   }, [fetchPosts, allPosts]);
 
   return (
-    <section className="container flex flex-col gap-4 py-16">
-      <GridHeader
-        gridViewProp={"userPostsView"}
-        captionProp={"showUserPostsCaption"}
-      >
-        <h2>{posts.length ? "All posts" : "No posts"}</h2>
-      </GridHeader>
-      <GridViewContainer
-        gridComponent={"userPostsView"}
-        captionComponent={"showUserPostsCaption"}
-      >
-        {posts?.length ? (
-          <>
-            {posts?.toReversed().map((post: any, index: number) => {
-              if (!post || !post.fileUrl || !post.fileUrl.length) {
-                console.warn("Post or fileUrl is undefined or empty", post);
-                return null; // Skip this post if data is invalid
-              }
+    <>
+      {posts.length > 0 ? (
+        <section className="container flex flex-col gap-4 py-16">
+          <GridHeader
+            gridViewProp={"userPostsView"}
+            captionProp={"showUserPostsCaption"}
+          >
+            <h2>All posts</h2>
+          </GridHeader>
+          <GridViewContainer
+            gridComponent={"userPostsView"}
+            captionComponent={"showUserPostsCaption"}
+          >
+            {posts?.length ? (
+              <>
+                {posts?.toReversed().map((post: any, index: number) => {
+                  if (!post || !post.fileUrl || !post.fileUrl.length) {
+                    console.warn("Post or fileUrl is undefined or empty", post);
+                    return null; // Skip this post if data is invalid
+                  }
 
-              return (
-                <div
-                  className="flex flex-col relative group overflow-hidden rounded-3xl"
-                  key={index}
-                >
-                  <Card
-                    gridComponent={"userPostsView"}
-                    captionComponent={"showUserPostsCaption"}
-                    data={post}
-                  />
-                  {!state.showUserPostsCaption && (
-                    <div className="flex flex-col justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
-                      <p>{post.characterName}</p>
-                      <p className="text-xs">from {post.seriesTitle}</p>
-                    </div>
-                  )}
+                  return (
+                    <div
+                      className="flex flex-col relative group overflow-hidden rounded-3xl"
+                      key={index}
+                    >
+                      <Card
+                        gridComponent={"userPostsView"}
+                        captionComponent={"showUserPostsCaption"}
+                        data={post}
+                      />
+                      {!state.showUserPostsCaption && (
+                        <div className="flex flex-col justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
+                          <p>{post.characterName}</p>
+                          <p className="text-xs">from {post.seriesTitle}</p>
+                        </div>
+                      )}
 
-                  {state.showUserPostsCaption && (
-                    <div className="flex flex-col justify-between gap-4 px-3 pb-3 tablet:py-6 w-full">
-                      <p>{post.characterName}</p>
-                      <p className="text-xs">from {post.seriesTitle}</p>
+                      {state.showUserPostsCaption && (
+                        <div className="flex flex-col justify-between gap-4 px-3 pb-3 tablet:py-6 w-full">
+                          <p>{post.characterName}</p>
+                          <p className="text-xs">from {post.seriesTitle}</p>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              );
-            })}
-          </>
-        ) : (
-          ""
-        )}
-      </GridViewContainer>
-    </section>
+                  );
+                })}
+              </>
+            ) : (
+              ""
+            )}
+          </GridViewContainer>
+        </section>
+      ) : (
+        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          No posts
+        </div>
+      )}
+    </>
   );
 };
 

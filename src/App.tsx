@@ -174,6 +174,7 @@ function App() {
                 </li>
               </ul>
             </nav>
+
             <div className="flex gap-4 items-center">
               <button className="text-blue" onClick={onToggleSearchModal}>
                 <svg
@@ -200,103 +201,93 @@ function App() {
                   />
                 </svg>
               </button>
+
               {token && (
                 <>
-                  {(userState.hasProducts || userState.hasHiringDetails) && (
-                    <div className="relative" ref={menuDropdownRef}>
-                      <button
-                        className="text-xs btn-outline-dark shadow-none border-grey text-blue-100 hover:bg-blue-900 hover:text-blue-100"
-                        onClick={onToggleMenuDropdown}
-                      >
-                        <div className="flex items-center gap-1">
-                          @{userState.userName}
-                          <svg
-                            className={`w-3 h-3 transition-transform ${
-                              showDropdown ? "rotate-180" : ""
-                            }`}
-                            width="32"
-                            height="32"
-                            viewBox="0 0 32 32"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M5.02701 8.15332L2.66701 10.5133L16 23.8473L29.333 10.5133L26.973 8.15332L16 19.1273L5.02701 8.15332Z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        </div>
-                      </button>
-                      {showDropdown && (
-                        <div className="min-w-32 p-1.5 bg-white shadow-nav rounded-md absolute top-full right-0 translate-y-3 flex flex-col gap-1 z-10">
-                          <ul>
-                            <li className="flex">
-                              <NavLink
-                                className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                                to={`/user/${userState._id}`}
-                                onClick={onToggleMenuDropdown}
-                              >
-                                Profile
-                              </NavLink>
-                            </li>
-                            <li className="flex">
-                              <NavLink
-                                className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                                to={`/posts/${userState._id}`}
-                                onClick={onToggleMenuDropdown}
-                              >
-                                Posts
-                              </NavLink>
-                            </li>
-                            {userState.hasProducts && (
-                              <li className="flex">
-                                <NavLink
-                                  className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                                  to={`/shop/${userState._id}`}
-                                  onClick={onToggleMenuDropdown}
-                                >
-                                  Shop
-                                </NavLink>
-                              </li>
-                            )}
-                            {userState.hasHiringDetails && (
-                              <li className="flex">
-                                <NavLink
-                                  className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                                  to={`/hire/${userState._id}`}
-                                  onClick={onToggleMenuDropdown}
-                                >
-                                  Book me
-                                </NavLink>
-                              </li>
-                            )}
-                          </ul>
-                          <hr className="h-[1px] bg-grey border-none" />
-                          <ul>
-                            <li className="flex">
-                              <NavLink
-                                to="/auth"
-                                className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                                onClick={onToggleMenuDropdown}
-                              >
-                                Account
-                              </NavLink>
-                            </li>
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {!userState.hasProducts && !userState.hasHiringDetails && (
-                    <NavLink
-                      to={`/user/${userState._id}`}
-                      className={({ isActive }: { isActive: any }) =>
-                        `text-xs btn-primary ${isActive ? "" : ""}`
-                      }
+                  <div className="relative" ref={menuDropdownRef}>
+                    <button
+                      className="text-xs btn-outline-dark shadow-none border-grey text-blue-100 hover:bg-blue-900 hover:text-blue-100"
+                      onClick={onToggleMenuDropdown}
                     >
-                      @{userState.userName}
-                    </NavLink>
-                  )}
+                      <div className="flex items-center gap-1">
+                        @{userState.userName}
+                        <svg
+                          className={`w-3 h-3 transition-transform ${
+                            showDropdown ? "rotate-180" : ""
+                          }`}
+                          width="32"
+                          height="32"
+                          viewBox="0 0 32 32"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M5.02701 8.15332L2.66701 10.5133L16 23.8473L29.333 10.5133L26.973 8.15332L16 19.1273L5.02701 8.15332Z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                    {showDropdown && (
+                      <div className="min-w-32 p-1.5 bg-white shadow-nav rounded-md absolute top-full right-0 translate-y-3 flex flex-col gap-1 z-10">
+                        <ul>
+                          <li className="flex">
+                            <NavLink
+                              className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                              to={`/user/${userState._id}`}
+                              onClick={onToggleMenuDropdown}
+                            >
+                              Profile
+                            </NavLink>
+                          </li>
+                          <li className="flex">
+                            <NavLink
+                              className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                              to={`/posts/${userState._id}`}
+                              onClick={onToggleMenuDropdown}
+                            >
+                              Posts
+                            </NavLink>
+                          </li>
+                          {userState.hasProducts && (
+                            <li className="flex">
+                              <NavLink
+                                className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                                to={`/shop/${userState._id}`}
+                                onClick={onToggleMenuDropdown}
+                              >
+                                Shop
+                              </NavLink>
+                            </li>
+                          )}
+                          {userState.hasHiringDetails && (
+                            <li className="flex">
+                              <NavLink
+                                className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                                to={`/hire/${userState._id}`}
+                                onClick={onToggleMenuDropdown}
+                              >
+                                Book me
+                              </NavLink>
+                            </li>
+                          )}
+                        </ul>
+                        <hr className="h-[1px] bg-grey border-none" />
+                        <ul>
+                          <li className="flex">
+                            <NavLink
+                              to="/auth"
+                              className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                              onClick={onToggleMenuDropdown}
+                            >
+                              Account
+                            </NavLink>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+
                   <div className="relative" ref={createDropdownRef}>
                     <button
                       className="btn-primary p-2 shadow-none"

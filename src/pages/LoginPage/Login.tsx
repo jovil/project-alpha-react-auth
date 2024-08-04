@@ -57,7 +57,6 @@ const Login = () => {
           hasProducts: result.hasProducts,
           hasHiringDetails: result.hasHiringDetails,
           avatar: result.avatar,
-          profileDescription: result.profileDescription,
           shopDescription: result.shopDescription,
         });
 

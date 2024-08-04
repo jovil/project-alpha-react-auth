@@ -1,8 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import HeaderSection from "./HeaderSection";
-import CreatePost from "./CreatePost";
-import CreateProduct from "./CreateProduct";
 import HiringDetailsComponent from "./HiringDetails";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import BankDetails from "./BankDetails";
@@ -119,11 +117,7 @@ const AuthComponent = () => {
   return (
     <>
       <HeaderSection />
-      <section className="flex justify-center gap-6 py-16">
-        <CreatePost />
-        <CreateProduct />
-      </section>
-      <section className="max-w-[580px] mx-auto">
+      <section className="max-w-[580px] py-16 mx-auto">
         <BankDetails />
         <HiringDetailsComponent
           isEditing={isEditing}
