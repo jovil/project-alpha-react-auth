@@ -310,7 +310,7 @@ const PostListView = () => {
         </GridViewContainer>
       </section>
       <footer
-        className="flex justify-center py-12 text-dark/80"
+        className="flex justify-center py-16 text-dark/80"
         data-site-footer
       >
         {postsRef.current >= limit ? (

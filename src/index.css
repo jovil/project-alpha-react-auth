@@ -81,12 +81,6 @@ html {
   min-height: 100%;
 }
 
-html,
-body,
-#root {
-  height: 100%;
-}
-
 body {
   position: relative;
   -webkit-font-smoothing: antialiased;
@@ -97,6 +91,10 @@ body {
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+
+header.is-hidden {
+  transform: translateY(-100%);
 }
 
 .shimmer-overlay {

@@ -34,8 +34,40 @@ function App() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [showCreateDropdown, setShowCreateDropdown] = useState(false);
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(window.scrollY);
+  const [isPastHeader, setIsPastHeader] = useState<boolean>(false);
+  const headerRef = useRef<any>(null);
   const menuDropdownRef = useRef<any>(null);
   const createDropdownRef = useRef<any>(null);
+
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+    const headerHeight = headerRef.current.clientHeight;
+    if (currentScrollY > lastScrollY) {
+      setIsScrollingDown(true);
+    } else {
+      setIsScrollingDown(false);
+    }
+
+    if (currentScrollY > headerHeight) {
+      setIsPastHeader(true);
+    } else {
+      setIsPastHeader(false);
+    }
+
+    setLastScrollY(currentScrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+
+    // eslint-disable-next-line
+  }, [lastScrollY]);
 
   const handleClickOutside = (e: MouseEvent) => {
     if (
@@ -86,239 +118,21 @@ function App() {
   };
 
   return (
-    <div className="container mx-auto px-4">
-      <div className="max-w-[948px] pt-6 pb-10 mx-auto">
-        <div className="flex justify-end items-center gap-4 relative">
+    <>
+      <header
+        className={`bg-white sticky top-0 z-20 py-3.5 transition ${
+          isScrollingDown ? "is-hidden" : ""
+        } ${isPastHeader ? "shadow-nav" : ""}`}
+        ref={headerRef}
+      >
+        <div className="max-w-[948px] mx-auto relative">
           <SearchModal
             onToggleSearchModal={onToggleSearchModal}
             onShowSearchModal={onShowSearchModal}
             isShowSearchModal={showSearchModal}
           />
-          <div className="flex justify-end gap-4">
-            <button className="text-blue" onClick={onToggleSearchModal}>
-              <svg
-                className="h-4 w-4 stroke-blue-100"
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10.8889 19.7778C15.7981 19.7778 19.7778 15.7981 19.7778 10.8889C19.7778 5.97969 15.7981 2 10.8889 2C5.97969 2 2 5.97969 2 10.8889C2 15.7981 5.97969 19.7778 10.8889 19.7778Z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M22.0003 22.0003L17.167 17.167"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-            {token && (
-              <>
-                {(userState.hasProducts || userState.hasHiringDetails) && (
-                  <div className="relative" ref={menuDropdownRef}>
-                    <button
-                      className="text-xs btn-outline-dark shadow-none border-grey text-blue-100 hover:bg-blue-900 hover:text-blue-100"
-                      onClick={onToggleMenuDropdown}
-                    >
-                      <div className="flex items-center gap-1">
-                        @{userState.userName}
-                        <svg
-                          className={`w-3 h-3 transition-transform ${
-                            showDropdown ? "rotate-180" : ""
-                          }`}
-                          width="32"
-                          height="32"
-                          viewBox="0 0 32 32"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M5.02701 8.15332L2.66701 10.5133L16 23.8473L29.333 10.5133L26.973 8.15332L16 19.1273L5.02701 8.15332Z"
-                            fill="currentColor"
-                          />
-                        </svg>
-                      </div>
-                    </button>
-
-                    {showDropdown && (
-                      <div className="min-w-32 p-1.5 bg-white shadow-nav rounded-md absolute top-full right-0 translate-y-3 flex flex-col gap-1 z-10">
-                        <ul>
-                          <li className="flex">
-                            <NavLink
-                              className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                              to={`/user/${userState._id}`}
-                              onClick={onToggleMenuDropdown}
-                            >
-                              Profile
-                            </NavLink>
-                          </li>
-                          <li className="flex">
-                            <NavLink
-                              className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                              to={`/posts/${userState._id}`}
-                              onClick={onToggleMenuDropdown}
-                            >
-                              Posts
-                            </NavLink>
-                          </li>
-                          {userState.hasProducts && (
-                            <li className="flex">
-                              <NavLink
-                                className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                                to={`/shop/${userState._id}`}
-                                onClick={onToggleMenuDropdown}
-                              >
-                                Shop
-                              </NavLink>
-                            </li>
-                          )}
-                          {userState.hasHiringDetails && (
-                            <li className="flex">
-                              <NavLink
-                                className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                                to={`/hire/${userState._id}`}
-                                onClick={onToggleMenuDropdown}
-                              >
-                                Book me
-                              </NavLink>
-                            </li>
-                          )}
-                        </ul>
-
-                        <hr className="h-[1px] bg-grey border-none" />
-
-                        <ul>
-                          <li className="flex">
-                            <NavLink
-                              to="/auth"
-                              className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                              onClick={onToggleMenuDropdown}
-                            >
-                              Account
-                            </NavLink>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {!userState.hasProducts && !userState.hasHiringDetails && (
-                  <NavLink
-                    to={`/user/${userState._id}`}
-                    className={({ isActive }: { isActive: any }) =>
-                      `text-xs btn-primary ${isActive ? "" : ""}`
-                    }
-                  >
-                    @{userState.userName}
-                  </NavLink>
-                )}
-
-                <div className="relative" ref={createDropdownRef}>
-                  <button
-                    className="btn-primary p-2 shadow-none"
-                    onClick={handleCreateDropdown}
-                  >
-                    <svg
-                      className={`text-white h-4 w-4 transition-transform ${
-                        showCreateDropdown ? "rotate-45" : ""
-                      }`}
-                      width="24"
-                      height="25"
-                      viewBox="0 0 24 25"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 3V21"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M3 12H21"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
-                  {showCreateDropdown && (
-                    <ul className="p-1.5 bg-white shadow-nav rounded-md absolute top-full right-0 translate-y-3 flex flex-col gap-1">
-                      {userState?._id && (
-                        <li>
-                          <CreatePost
-                            btnClasses="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap"
-                            onFileUpload={handleFileUpload}
-                          />
-                        </li>
-                      )}
-                      {userState?._id && (
-                        <li>
-                          <CreateProduct
-                            btnClasses="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap"
-                            onToggleModal={handleToggleCreateProductModal}
-                          />
-                        </li>
-                      )}
-                    </ul>
-                  )}
-                </div>
-              </>
-            )}
-            {!token && (
-              <>
-                {!state.isLoggedIn ? (
-                  <>
-                    <>
-                      {location.pathname !== "/login" && (
-                        <NavLink
-                          to="/login"
-                          className={({ isActive }: { isActive: any }) =>
-                            isActive
-                              ? "btn-outline-dark text-xs font-semibold border-[#dadce0] text-blue-100 hover:text-blue-100 hover:bg-blue-900 shadow-none"
-                              : "btn-outline-dark text-xs font-semibold border-[#dadce0] text-blue-100 hover:text-blue-100 hover:bg-blue-900 shadow-none"
-                          }
-                        >
-                          Login
-                        </NavLink>
-                      )}
-                    </>
-                    {location.pathname !== "/register" && (
-                      <NavLink
-                        to="/register"
-                        className={({ isActive }: { isActive: any }) =>
-                          isActive
-                            ? "btn-primary text-xs font-semibold"
-                            : "btn-primary bg-blue-100 border-blue-100 text-white shadow-none hover:bg-blue-300 hover:border-blue-300 text-xs font-semibold"
-                        }
-                      >
-                        Register
-                      </NavLink>
-                    )}
-                  </>
-                ) : (
-                  ""
-                )}
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-      <header className="sticky top-0 z-20 pointer-events-none">
-        <div className="max-w-[948px] mx-auto pt-4 pb-6 flex flex-col gap-5 sm:gap-4">
-          <div className="flex justify-center items-center gap-2">
-            <nav className="bg-white rounded-full shadow-nav p-2 pointer-events-auto">
+          <div className="flex justify-between gap-4 w-full">
+            <nav>
               <ul className="flex items-center gap-1">
                 <li>
                   <NavLink
@@ -360,11 +174,225 @@ function App() {
                 </li>
               </ul>
             </nav>
+            <div className="flex gap-4 items-center">
+              <button className="text-blue" onClick={onToggleSearchModal}>
+                <svg
+                  className="h-4 w-4 stroke-blue-100"
+                  width="24"
+                  height="25"
+                  viewBox="0 0 24 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10.8889 19.7778C15.7981 19.7778 19.7778 15.7981 19.7778 10.8889C19.7778 5.97969 15.7981 2 10.8889 2C5.97969 2 2 5.97969 2 10.8889C2 15.7981 5.97969 19.7778 10.8889 19.7778Z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M22.0003 22.0003L17.167 17.167"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              {token && (
+                <>
+                  {(userState.hasProducts || userState.hasHiringDetails) && (
+                    <div className="relative" ref={menuDropdownRef}>
+                      <button
+                        className="text-xs btn-outline-dark shadow-none border-grey text-blue-100 hover:bg-blue-900 hover:text-blue-100"
+                        onClick={onToggleMenuDropdown}
+                      >
+                        <div className="flex items-center gap-1">
+                          @{userState.userName}
+                          <svg
+                            className={`w-3 h-3 transition-transform ${
+                              showDropdown ? "rotate-180" : ""
+                            }`}
+                            width="32"
+                            height="32"
+                            viewBox="0 0 32 32"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M5.02701 8.15332L2.66701 10.5133L16 23.8473L29.333 10.5133L26.973 8.15332L16 19.1273L5.02701 8.15332Z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                      {showDropdown && (
+                        <div className="min-w-32 p-1.5 bg-white shadow-nav rounded-md absolute top-full right-0 translate-y-3 flex flex-col gap-1 z-10">
+                          <ul>
+                            <li className="flex">
+                              <NavLink
+                                className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                                to={`/user/${userState._id}`}
+                                onClick={onToggleMenuDropdown}
+                              >
+                                Profile
+                              </NavLink>
+                            </li>
+                            <li className="flex">
+                              <NavLink
+                                className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                                to={`/posts/${userState._id}`}
+                                onClick={onToggleMenuDropdown}
+                              >
+                                Posts
+                              </NavLink>
+                            </li>
+                            {userState.hasProducts && (
+                              <li className="flex">
+                                <NavLink
+                                  className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                                  to={`/shop/${userState._id}`}
+                                  onClick={onToggleMenuDropdown}
+                                >
+                                  Shop
+                                </NavLink>
+                              </li>
+                            )}
+                            {userState.hasHiringDetails && (
+                              <li className="flex">
+                                <NavLink
+                                  className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                                  to={`/hire/${userState._id}`}
+                                  onClick={onToggleMenuDropdown}
+                                >
+                                  Book me
+                                </NavLink>
+                              </li>
+                            )}
+                          </ul>
+                          <hr className="h-[1px] bg-grey border-none" />
+                          <ul>
+                            <li className="flex">
+                              <NavLink
+                                to="/auth"
+                                className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                                onClick={onToggleMenuDropdown}
+                              >
+                                Account
+                              </NavLink>
+                            </li>
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {!userState.hasProducts && !userState.hasHiringDetails && (
+                    <NavLink
+                      to={`/user/${userState._id}`}
+                      className={({ isActive }: { isActive: any }) =>
+                        `text-xs btn-primary ${isActive ? "" : ""}`
+                      }
+                    >
+                      @{userState.userName}
+                    </NavLink>
+                  )}
+                  <div className="relative" ref={createDropdownRef}>
+                    <button
+                      className="btn-primary p-2 shadow-none"
+                      onClick={handleCreateDropdown}
+                    >
+                      <svg
+                        className={`text-white h-4 w-4 transition-transform ${
+                          showCreateDropdown ? "rotate-45" : ""
+                        }`}
+                        width="24"
+                        height="25"
+                        viewBox="0 0 24 25"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 3V21"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M3 12H21"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </button>
+                    {showCreateDropdown && (
+                      <ul className="p-1.5 bg-white shadow-nav rounded-md absolute top-full right-0 translate-y-3 flex flex-col gap-1">
+                        {userState?._id && (
+                          <li>
+                            <CreatePost
+                              btnClasses="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap"
+                              onFileUpload={handleFileUpload}
+                            />
+                          </li>
+                        )}
+                        {userState?._id && (
+                          <li>
+                            <CreateProduct
+                              btnClasses="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap"
+                              onToggleModal={handleToggleCreateProductModal}
+                            />
+                          </li>
+                        )}
+                      </ul>
+                    )}
+                  </div>
+                </>
+              )}
+              {!token && (
+                <>
+                  {!state.isLoggedIn ? (
+                    <>
+                      <>
+                        {location.pathname !== "/login" && (
+                          <NavLink
+                            to="/login"
+                            className={({ isActive }: { isActive: any }) =>
+                              isActive
+                                ? "btn-outline-dark text-xs font-semibold border-[#dadce0] text-blue-100 hover:text-blue-100 hover:bg-blue-900 shadow-none"
+                                : "btn-outline-dark text-xs font-semibold border-[#dadce0] text-blue-100 hover:text-blue-100 hover:bg-blue-900 shadow-none"
+                            }
+                          >
+                            Login
+                          </NavLink>
+                        )}
+                      </>
+                      {location.pathname !== "/register" && (
+                        <NavLink
+                          to="/register"
+                          className={({ isActive }: { isActive: any }) =>
+                            isActive
+                              ? "btn-primary text-xs font-semibold"
+                              : "btn-primary bg-blue-100 border-blue-100 text-white shadow-none hover:bg-blue-300 hover:border-blue-300 text-xs font-semibold"
+                          }
+                        >
+                          Register
+                        </NavLink>
+                      )}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </>
+              )}
+            </div>
           </div>
         </div>
       </header>
 
-      <main className="py-16">
+      <main className="py-20">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<ProtectedRoutes />} />
@@ -398,7 +426,7 @@ function App() {
           )}
         </AnimatePresence>
       </main>
-    </div>
+    </>
   );
 }
 
