@@ -20,7 +20,6 @@ const HeaderSection = () => {
     cookies.remove("TOKEN", { path: "/" });
     setState({ ...state, isLoggedIn: false });
     setUserState(null);
-    // window.location.href = "/";
   };
 
   const uploadProfileImage = async (data: any) => {
@@ -84,11 +83,9 @@ const HeaderSection = () => {
 
   return (
     <section className="text-center">
-      <div className="container grid grid-cols-12">
-        <div className="col-span-2"></div>
-        <div className="flex justify-center col-span-8">
+      <div className="grid grid-cols-9 gap-4">
+        <div className="flex justify-center col-span-6">
           <div className="flex flex-col justify-center items-center gap-3">
-            <p className="text-xs text-dark">Account</p>
             <div className="text-xs font-medium flex flex-col gap-3 items-center">
               <img
                 className="w-16 h-16 object-cover rounded shadow-md"
@@ -143,7 +140,7 @@ const HeaderSection = () => {
             </Form>
           </div>
         </div>
-        <div className="col-span-2">
+        <div className="col-span-3">
           <div className="flex justify-end items-center">
             <button
               className="btn-outline-danger bg-[#dc35451a] text-[#d50b1f] hover:text-[#d50b1f] hover:bg-[#da6c7733] border-transparent shadow-none text-xs font-semibold"
