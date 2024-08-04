@@ -197,7 +197,7 @@ const Accordion = ({
         className="accordion-title p-4 flex justify-between items-center gap-4"
         onClick={handleToggle}
       >
-        Add a “Hire Me” button to your profile
+        Add a “Book me” button to your profile
         {hasHiringDetails && (
           <p className="bg-[#4fde8e33] text-xs font-medium text-[#10a854] rounded-full px-4 py-1.5">
             Saved

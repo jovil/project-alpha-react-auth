@@ -57,21 +57,6 @@ const UserNavigation = () => {
                   Posts
                 </NavLink>
               </li>
-              {user?.hasHiringDetails && (
-                <li>
-                  <NavLink
-                    to={`/hire/${user._id}`}
-                    className={({ isActive }: { isActive: any }) =>
-                      isActive
-                        ? "nav-button rounded-full text-sm flex items-center"
-                        : "text-sm px-5 py-2 flex items-center text-black-200"
-                    }
-                  >
-                    Hire
-                  </NavLink>
-                </li>
-              )}
-
               {user?.hasProducts && (
                 <li>
                   <NavLink
@@ -83,6 +68,20 @@ const UserNavigation = () => {
                     to={`/shop/${user?._id}`}
                   >
                     Shop
+                  </NavLink>
+                </li>
+              )}
+              {user?.hasHiringDetails && (
+                <li>
+                  <NavLink
+                    to={`/hire/${user._id}`}
+                    className={({ isActive }: { isActive: any }) =>
+                      isActive
+                        ? "nav-button rounded-full text-sm flex items-center"
+                        : "text-sm px-5 py-2 flex items-center text-black-200"
+                    }
+                  >
+                    Book me
                   </NavLink>
                 </li>
               )}
