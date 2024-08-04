@@ -72,7 +72,7 @@ const SearchModal = ({
               exit="exit"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="bg-white border p-4 relative left-1/2 -translate-x-1/2 max-w-[948px] pointer-events-auto rounded-md">
+              <div className="container bg-white border p-4 relative pointer-events-auto rounded-md">
                 <form
                   className="flex items-center justify-between w-full gap-6"
                   onSubmit={handleSearch}

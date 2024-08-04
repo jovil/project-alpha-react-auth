@@ -125,7 +125,7 @@ function App() {
         } ${isPastHeader ? "shadow-nav" : ""}`}
         ref={headerRef}
       >
-        <div className="max-w-[948px] mx-auto relative">
+        <div className="container relative">
           <SearchModal
             onToggleSearchModal={onToggleSearchModal}
             onShowSearchModal={onShowSearchModal}

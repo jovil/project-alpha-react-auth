@@ -7,7 +7,7 @@ const SearchPage = () => {
 
   return (
     <>
-      <section className="max-w-[948px] w-full mx-auto flex flex-col gap-4">
+      <section className="container flex flex-col gap-4">
         <header>
           <div className="">
             <h1>

@@ -62,7 +62,7 @@ const HeaderSection = ({
 
   return (
     <>
-      <header className="max-w-[948px] justify-center mx-auto relative">
+      <header className="container justify-center relative">
         <div className="text-xs flex flex-col gap-4 items-center">
           <div className="flex flex-col gap-3 items-center">
             <p className="text-dark">Profile</p>

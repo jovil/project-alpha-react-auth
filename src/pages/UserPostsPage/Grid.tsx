@@ -43,7 +43,7 @@ const Grid = ({ isUser }: { isUser?: any }) => {
   }, [fetchPosts, allPosts]);
 
   return (
-    <section className="max-w-[948px] w-full mx-auto flex flex-col gap-4 py-16">
+    <section className="container flex flex-col gap-4 py-16">
       <GridHeader
         gridViewProp={"userPostsView"}
         captionProp={"showUserPostsCaption"}

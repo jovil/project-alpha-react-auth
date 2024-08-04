@@ -84,7 +84,7 @@ const HeaderSection = () => {
 
   return (
     <section className="text-center">
-      <div className="max-w-[948px] mx-auto grid grid-cols-12">
+      <div className="container grid grid-cols-12">
         <div className="col-span-2"></div>
         <div className="flex justify-center col-span-8">
           <div className="flex flex-col justify-center items-center gap-3">

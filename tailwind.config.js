@@ -54,6 +54,15 @@ module.exports = {
       tablet: "768px",
       desktop: "1024px",
     },
+    container: {
+      screens: {
+        DEFAULT: "980px",
+      },
+      padding: {
+        DEFAULT: "1rem",
+      },
+      center: true,
+    },
   },
   plugins: [],
 };
