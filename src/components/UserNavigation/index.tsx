@@ -24,74 +24,72 @@ const UserNavigation = () => {
 
   return (
     <>
-      {user?.hasPosted && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 text-xs flex flex-col items-center gap-3">
-          <img
-            className="h-9 w-9 rounded-full object-cover"
-            src={user?.avatar || defaultAvatar}
-            alt=""
-          />
-          <div className="relative">
-            <nav className="bg-white rounded-full shadow-nav p-2 pointer-events-auto">
-              <ul className="flex items-center gap-1">
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 text-xs flex flex-col items-center gap-3">
+        <img
+          className="h-9 w-9 rounded-full object-cover"
+          src={user?.avatar || defaultAvatar}
+          alt=""
+        />
+        <div className="relative">
+          <nav className="bg-white rounded-full shadow-nav p-2 pointer-events-auto">
+            <ul className="flex items-center gap-1">
+              <li>
+                <NavLink
+                  className={({ isActive }: { isActive: any }) =>
+                    isActive
+                      ? "nav-button rounded-full text-sm flex items-center"
+                      : "text-sm px-5 py-2 flex items-center text-black-200"
+                  }
+                  to={`/user/${user?._id}`}
+                >
+                  Profile
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={({ isActive }: { isActive: any }) =>
+                    isActive
+                      ? "nav-button rounded-full text-sm flex items-center"
+                      : "text-sm px-5 py-2 flex items-center text-black-200"
+                  }
+                  to={`/posts/${user?._id}`}
+                >
+                  Posts
+                </NavLink>
+              </li>
+              {user?.hasHiringDetails && (
                 <li>
                   <NavLink
+                    to={`/hire/${user._id}`}
                     className={({ isActive }: { isActive: any }) =>
                       isActive
                         ? "nav-button rounded-full text-sm flex items-center"
                         : "text-sm px-5 py-2 flex items-center text-black-200"
                     }
-                    to={`/user/${user?._id}`}
                   >
-                    Profile
+                    Hire
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink
-                    className={({ isActive }: { isActive: any }) =>
-                      isActive
-                        ? "nav-button rounded-full text-sm flex items-center"
-                        : "text-sm px-5 py-2 flex items-center text-black-200"
-                    }
-                    to={`/posts/${user?._id}`}
-                  >
-                    Posts
-                  </NavLink>
-                </li>
-                {user?.hasHiringDetails && (
-                  <li>
-                    <NavLink
-                      to={`/hire/${user._id}`}
-                      className={({ isActive }: { isActive: any }) =>
-                        isActive
-                          ? "nav-button rounded-full text-sm flex items-center"
-                          : "text-sm px-5 py-2 flex items-center text-black-200"
-                      }
-                    >
-                      Hire
-                    </NavLink>
-                  </li>
-                )}
+              )}
 
-                {user?.hasProducts && (
-                  <li>
-                    <NavLink
-                      className={({ isActive }: { isActive: any }) =>
-                        isActive
-                          ? "nav-button rounded-full text-sm flex items-center"
-                          : "text-sm px-5 py-2 flex items-center text-black-200"
-                      }
-                      to={`/shop/${user?._id}`}
-                    >
-                      Shop
-                    </NavLink>
-                  </li>
-                )}
-              </ul>
-            </nav>
-          </div>
+              {user?.hasProducts && (
+                <li>
+                  <NavLink
+                    className={({ isActive }: { isActive: any }) =>
+                      isActive
+                        ? "nav-button rounded-full text-sm flex items-center"
+                        : "text-sm px-5 py-2 flex items-center text-black-200"
+                    }
+                    to={`/shop/${user?._id}`}
+                  >
+                    Shop
+                  </NavLink>
+                </li>
+              )}
+            </ul>
+          </nav>
         </div>
-      )}
+      </div>
     </>
   );
 };

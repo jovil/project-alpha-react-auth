@@ -18,7 +18,7 @@ const CreatePostModal = ({
   onToggleModal: (value: boolean) => void;
 }) => {
   const cookies = new Cookies();
-  const { userState, setUserState } = useUser();
+  const { userState } = useUser();
   const { setAllPosts } = usePosts();
   const [post, setPost] = useState<{
     email: string;
@@ -128,7 +128,6 @@ const CreatePostModal = ({
     try {
       const response = await fetch(url, configuration);
       const result = await response.json();
-      !userState.hasPosted && (await updateHasPosted());
       // Add new post to the start of the array
       setAllPosts((prevPosts: any) => [result.post, ...prevPosts]);
       onToggleModal(false);
@@ -145,28 +144,6 @@ const CreatePostModal = ({
           image: "",
           characterName: "",
           seriesTitle: "",
-        };
-      });
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
-  const updateHasPosted = async () => {
-    const url = `${process.env.REACT_APP_API_URL}/update-hasPosted/${userState._id}`;
-
-    try {
-      await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Specify the content type as JSON
-        },
-        body: JSON.stringify({ hasPosted: true }), // Convert the data to JSON string
-      });
-      setUserState((prev: any) => {
-        return {
-          ...prev,
-          hasPosted: true,
         };
       });
     } catch (error) {
