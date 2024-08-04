@@ -104,14 +104,20 @@ const UserPostListPage = () => {
         <section className="flex flex-col gap-4 px-4 col-span-5">
           <header className="flex justify-between items-end">
             <h2>Products</h2>
-            <NavLink
-              className="text-sm text-blue-100 underline"
-              to={`/shop/${userId}`}
-            >
-              Go to shop
-            </NavLink>
+            {products.length > 0 && (
+              <NavLink
+                className="text-sm text-blue-100 underline"
+                to={`/shop/${userId}`}
+              >
+                Go to shop
+              </NavLink>
+            )}
           </header>
-          <div className="grid gap-3 tablet:grid-cols-2">
+          <div
+            className={`${
+              products.length > 0 ? "grid gap-3 tablet:grid-cols-2" : ""
+            }`}
+          >
             {products.map((product: any, index: number) => {
               return (
                 <React.Fragment key={index}>
@@ -119,6 +125,12 @@ const UserPostListPage = () => {
                 </React.Fragment>
               );
             })}
+
+            {products.length === 0 && (
+              <div className="rounded-md bg-dark/5 px-4 py-20 flex justify-center items-center">
+                No products found
+              </div>
+            )}
           </div>
         </section>
 
@@ -126,12 +138,14 @@ const UserPostListPage = () => {
           <header className="flex justify-between items-end">
             <h2>Posts</h2>
 
-            <NavLink
-              className="text-sm text-blue-100 underline"
-              to={`/posts/${userId}`}
-            >
-              See all posts
-            </NavLink>
+            {posts.length > 0 && (
+              <NavLink
+                className="text-sm text-blue-100 underline"
+                to={`/posts/${userId}`}
+              >
+                See all posts
+              </NavLink>
+            )}
           </header>
           <div className="flex flex-col gap-3">
             {posts.map((post: any, index: number) => {
@@ -141,6 +155,12 @@ const UserPostListPage = () => {
                 </React.Fragment>
               );
             })}
+
+            {posts.length === 0 && (
+              <div className="rounded-md bg-dark/5 px-4 py-20 flex justify-center items-center">
+                No posts found
+              </div>
+            )}
           </div>
         </section>
       </div>
