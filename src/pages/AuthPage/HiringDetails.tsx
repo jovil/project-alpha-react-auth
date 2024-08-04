@@ -142,7 +142,6 @@ const Accordion = ({
     const postData = {
       email: hiringDetails.email || "",
       whatsApp: hiringDetails.whatsApp || "",
-      location: hiringDetails.location || "",
       favoriteCharacters: hiringDetails.favoriteCharacters || "",
       services:
         hiringDetails.services?.map((service: any) => ({
@@ -233,20 +232,6 @@ const Accordion = ({
                 placeholder="Phone number"
                 name="whatsApp"
                 value={hiringDetails?.whatsApp}
-                onChange={handleChangeHiringDetailsInput}
-                required
-                disabled={!isEditing}
-              />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <label>Location:</label>
-              <input
-                className="border border-dark/40 p-3 rounded"
-                type="text"
-                placeholder="City, Country"
-                name="location"
-                value={hiringDetails?.location}
                 onChange={handleChangeHiringDetailsInput}
                 required
                 disabled={!isEditing}

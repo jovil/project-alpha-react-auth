@@ -172,7 +172,7 @@ const UserHirePage = () => {
                     <div className="text-sm flex justify-between gap-2">
                       <h4>Location:</h4>
                       <p className="font-medium text-blue-100">
-                        {user.hiringDetails.location}
+                        {user.state}, {user.city}
                       </p>
                     </div>
                   </div>
