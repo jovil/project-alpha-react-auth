@@ -121,7 +121,7 @@ const SearchModal = ({
                               <div className="flex flex-col">
                                 <p className="font-medium">{user.userName}</p>
                                 <p className="text-xs text-dark/60">
-                                  {user.hiringDetails.location}
+                                  {user.state}, {user.city}
                                 </p>
                               </div>
                             </NavLink>

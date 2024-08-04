@@ -90,7 +90,7 @@ const HeaderSection = ({
           </div>
           {userState && userState._id === userId && (
             <>
-              {userState.profileDescription.length === 0 && (
+              {userState.profileDescription?.length === 0 && (
                 <div className="py-3">
                   <button
                     className="text-sm text-black-100/80 underline"
