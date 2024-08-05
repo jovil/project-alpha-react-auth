@@ -16,3 +16,10 @@ export const postFetchConfig = (data: any) => {
     body: JSON.stringify(data),
   };
 };
+
+export const deleteFetchConfig = {
+  method: "DELETE",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};

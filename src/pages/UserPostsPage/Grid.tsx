@@ -68,11 +68,13 @@ const Grid = ({ isUser }: { isUser?: any }) => {
                     <div
                       className="flex flex-col relative group overflow-hidden rounded-3xl"
                       key={index}
+                      data-item
                     >
                       <Card
                         gridComponent={"userPostsView"}
                         captionComponent={"showUserPostsCaption"}
                         data={post}
+                        isShowSettings={true}
                       />
                       {!state.showUserPostsCaption && (
                         <div className="flex flex-col justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
