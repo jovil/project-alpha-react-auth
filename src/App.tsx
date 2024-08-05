@@ -249,7 +249,7 @@ function App() {
                               Posts
                             </NavLink>
                           </li>
-                          {userState.hasProducts && (
+                          {userState?.productCount > 0 && (
                             <li className="flex">
                               <NavLink
                                 className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"

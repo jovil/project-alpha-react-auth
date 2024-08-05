@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { useProducts } from "../../context/ProductsContext";
 import Notify from "simple-notify";
@@ -32,7 +31,6 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     _id: userState._id,
     userName: userState.userName,
   });
-  const location = useLocation();
   const url = `${process.env.REACT_APP_API_URL}/create/product`;
 
   useEffect(() => {
@@ -116,8 +114,6 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
       );
       // Add new product to the start of the array
       setAllProducts((prev: any) => [data, ...prev]);
-      if (location.pathname === "/auth")
-        !userState.hasProducts && (await updateHasProducts());
       onToggleModal(false);
       setIsLoading(false);
       new Notify({
@@ -210,28 +206,6 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
       };
     });
   }
-
-  const updateHasProducts = async () => {
-    const url = `${process.env.REACT_APP_API_URL}/update-hasProducts/${userState._id}`;
-
-    try {
-      await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Specify the content type as JSON
-        },
-        body: JSON.stringify({ hasProducts: true }), // Convert the data to JSON string
-      });
-      setUserState((prev: any) => {
-        return {
-          ...prev,
-          hasProducts: true,
-        };
-      });
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
 
   return (
     <Backdrop onClick={onToggleModal} showCloseButton={false}>

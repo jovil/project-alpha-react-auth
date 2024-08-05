@@ -1,12 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams, NavLink } from "react-router-dom";
-import { useUser } from "../../context/UserContext";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import defaultAvatar from "../../assets/images/toon_6.png";
 
 const UserNavigation = () => {
   const { userId } = useParams();
-  const { userState } = useUser();
   const [user, setUser] = useState<Record<string, any | null>>();
 
   const fetchUser = useCallback(async () => {
@@ -59,7 +57,7 @@ const UserNavigation = () => {
                   Posts
                 </NavLink>
               </li>
-              {userState?.productCount > 0 && (
+              {user?.productCount > 0 && (
                 <li>
                   <NavLink
                     className={({ isActive }: { isActive: any }) =>

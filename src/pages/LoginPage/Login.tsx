@@ -55,7 +55,6 @@ const Login = () => {
           _id: result._id,
           state: result.state,
           city: result.city,
-          hasProducts: result.hasProducts,
           hasHiringDetails: result.hasHiringDetails,
           avatar: result.avatar,
           shopDescription: result.shopDescription,

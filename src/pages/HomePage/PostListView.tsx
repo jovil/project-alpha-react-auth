@@ -198,7 +198,7 @@ const PostListView = () => {
                           </div>
                           <div className="flex-grow flex justify-between items-center">
                             <UserAvatar data={post} />
-                            {post.user?.hasProducts && (
+                            {post.user?.productCount > 0 && (
                               <div className="ml-auto">
                                 <NavLink
                                   className="btn-primary-layered text-center group flex items-center gap-1.5"
@@ -253,7 +253,7 @@ const PostListView = () => {
                           </div>
                           <div className="flex-grow flex justify-between items-center">
                             <UserAvatar data={post} />
-                            {post.user?.hasProducts && (
+                            {post.user?.productCount > 0 && (
                               <div className="ml-auto">
                                 <NavLink
                                   className="btn-primary-small text-center group flex items-center gap-1.5"
