@@ -23,6 +23,8 @@ module.exports = {
       },
       red: {
         DEFAULT: "#fee2e2",
+        700: "#bb2d3b",
+        800: "#dc3545",
         900: "#450a0a",
       },
       dark: "#212529",

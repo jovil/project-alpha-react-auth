@@ -5,6 +5,9 @@ import loading from "../../assets/images/loading.gif";
 import { apiUrl, deleteFetchConfig } from "../../utils/fetchConfig";
 import Notify from "simple-notify";
 import "simple-notify/dist/simple-notify.css";
+import Backdrop from "../Backdrop";
+import { motion, AnimatePresence } from "framer-motion";
+import { fadeIn } from "../../utils/animations";
 
 const Card = ({
   gridComponent,
@@ -25,6 +28,10 @@ const Card = ({
   const [showSettings] = useState<boolean>(isShowSettings || false);
   const [showSettingsDropdown, setShowSettingsDropdown] =
     useState<boolean>(false);
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] =
+    useState<boolean>(false);
+  const [post, setPost] = useState<Element | null>(null);
+  const [postId, setPostId] = useState<string>();
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -51,13 +58,19 @@ const Card = ({
     setShowSettingsDropdown((prevState: boolean) => !prevState);
   };
 
-  const deletePost = async (
+  const handleConfirmationModal = (
     e: React.MouseEvent<HTMLElement>,
     postId: string
   ) => {
-    const url = `${apiUrl}/posts/delete/${postId}`;
     const target = e.target;
     const post = (target as HTMLElement).closest("[data-item]");
+    setPostId(postId);
+    setPost(post);
+    setShowDeleteConfirmationModal(true);
+  };
+
+  const deletePost = async () => {
+    const url = `${apiUrl}/posts/delete/${postId}`;
 
     try {
       await fetch(url, deleteFetchConfig);
@@ -109,7 +122,7 @@ const Card = ({
                       <li>
                         <button
                           className="text-xs text-left px-4 py-3 rounded-md hover:bg-red whitespace-nowrap w-full"
-                          onClick={(e) => deletePost(e, data._id)}
+                          onClick={(e) => handleConfirmationModal(e, data._id)}
                         >
                           Delete
                         </button>
@@ -172,6 +185,36 @@ const Card = ({
           )}
         </div>
       </div>
+      <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
+        {showDeleteConfirmationModal && (
+          <Backdrop
+            onClick={() => setShowDeleteConfirmationModal(false)}
+            showCloseButton={false}
+          >
+            <motion.div
+              className="bg-white rounded-md p-4 py-6 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 max-w-[300px] w-full flex flex-col justify-center items-center gap-4 aspect-3/4 shadow-md"
+              variants={fadeIn}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2>Are you sure?</h2>
+              <div className="flex gap-4">
+                <button className="btn-danger" onClick={deletePost}>
+                  Delete
+                </button>
+                <button
+                  className="btn-outline-dark border-grey shadow-none text-blue-100 hover:bg-blue-900 hover:text-blue-100"
+                  onClick={() => setShowDeleteConfirmationModal(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </motion.div>
+          </Backdrop>
+        )}
+      </AnimatePresence>
     </>
   );
 };
