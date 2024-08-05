@@ -14,11 +14,13 @@ const Card = ({
   captionComponent,
   data,
   isShowSettings = false,
+  view,
 }: {
   gridComponent?: string | null;
   captionComponent?: string | null;
   data: Record<string, any>;
   isShowSettings?: boolean;
+  view?: string;
 }) => {
   const settingsDropdownRef = useRef<any>(null);
   const { state } = useContext(GlobalStateContext);
@@ -33,6 +35,10 @@ const Card = ({
   const [postElement, setPostElement] = useState<Element | null>(null);
   const [postId, setPostId] = useState<string>("");
   const [postFileUrl, setPostFileUrl] = useState<string>("");
+  const [productElement, setProductElement] = useState<Element | null>(null);
+  const [productId, setProductId] = useState<string>("");
+  const [productFileUrls, setProductFileUrls] = useState<string>("");
+  const [currentView, setCurrentView] = useState<string | null>();
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -40,6 +46,11 @@ const Card = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    showSettings && setCurrentView(view);
+    // eslint-disable-next-line
+  }, [showSettings]);
 
   const handleClickOutside = (e: MouseEvent) => {
     if (
@@ -66,9 +77,17 @@ const Card = ({
   ) => {
     const target = e.target;
     const post = (target as HTMLElement).closest("[data-item]");
-    setPostId(postId);
-    setPostElement(post);
-    setPostFileUrl(fileUrl);
+
+    if (currentView === "post") {
+      setPostId(postId);
+      setPostElement(post);
+      setPostFileUrl(fileUrl);
+    } else if (currentView === "product") {
+      setProductId(postId);
+      setProductElement(post);
+      setProductFileUrls(fileUrl);
+    }
+
     setShowDeleteConfirmationModal(true);
   };
 
@@ -80,6 +99,20 @@ const Card = ({
       postElement?.remove();
       new Notify({
         title: "Post deleted successfully",
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const deleteProduct = async () => {
+    const url = `${apiUrl}/products/delete/${productId}?fileUrl=${productFileUrls}`;
+
+    try {
+      await fetch(url, deleteFetchConfig);
+      productElement?.remove();
+      new Notify({
+        title: "Product deleted successfully",
       });
     } catch (error) {
       console.log("error", error);
@@ -206,9 +239,17 @@ const Card = ({
             >
               <h2>Are you sure?</h2>
               <div className="flex gap-4">
-                <button className="btn-danger" onClick={deletePost}>
-                  Delete
-                </button>
+                {currentView === "post" && (
+                  <button className="btn-danger" onClick={deletePost}>
+                    Delete post
+                  </button>
+                )}
+
+                {currentView === "product" && (
+                  <button className="btn-danger" onClick={deleteProduct}>
+                    Delete product
+                  </button>
+                )}
                 <button
                   className="btn-outline-dark border-grey shadow-none text-blue-100 hover:bg-blue-900 hover:text-blue-100"
                   onClick={() => setShowDeleteConfirmationModal(false)}
