@@ -30,8 +30,9 @@ const Card = ({
     useState<boolean>(false);
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] =
     useState<boolean>(false);
-  const [post, setPost] = useState<Element | null>(null);
-  const [postId, setPostId] = useState<string>();
+  const [postElement, setPostElement] = useState<Element | null>(null);
+  const [postId, setPostId] = useState<string>("");
+  const [postFileUrl, setPostFileUrl] = useState<string>("");
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -60,21 +61,23 @@ const Card = ({
 
   const handleConfirmationModal = (
     e: React.MouseEvent<HTMLElement>,
-    postId: string
+    postId: string,
+    fileUrl: string
   ) => {
     const target = e.target;
     const post = (target as HTMLElement).closest("[data-item]");
     setPostId(postId);
-    setPost(post);
+    setPostElement(post);
+    setPostFileUrl(fileUrl);
     setShowDeleteConfirmationModal(true);
   };
 
   const deletePost = async () => {
-    const url = `${apiUrl}/posts/delete/${postId}`;
+    const url = `${apiUrl}/posts/delete/${postId}?fileUrl=${postFileUrl}`;
 
     try {
       await fetch(url, deleteFetchConfig);
-      post?.remove();
+      postElement?.remove();
       new Notify({
         title: "Post deleted successfully",
       });
@@ -122,7 +125,9 @@ const Card = ({
                       <li>
                         <button
                           className="text-xs text-left px-4 py-3 rounded-md hover:bg-red whitespace-nowrap w-full"
-                          onClick={(e) => handleConfirmationModal(e, data._id)}
+                          onClick={(e) =>
+                            handleConfirmationModal(e, data._id, data.fileUrl)
+                          }
                         >
                           Delete
                         </button>

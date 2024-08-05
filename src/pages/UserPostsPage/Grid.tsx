@@ -58,7 +58,7 @@ const Grid = ({ isUser }: { isUser?: any }) => {
           >
             {posts?.length ? (
               <>
-                {posts?.toReversed().map((post: any, index: number) => {
+                {posts?.map((post: any, index: number) => {
                   if (!post || !post.fileUrl || !post.fileUrl.length) {
                     console.warn("Post or fileUrl is undefined or empty", post);
                     return null; // Skip this post if data is invalid
