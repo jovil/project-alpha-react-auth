@@ -99,12 +99,20 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     try {
       const response = await fetch(url, configuration);
       const data = await response.json();
+      setUserState((prevState: any) => {
+        return {
+          ...prevState,
+          productCount: data.productCount,
+        };
+      });
       await createStripeProduct(
-        data._id,
-        data.productName,
-        data.productDescription.length > 0 ? data.productDescription : " ",
-        data.productPrice,
-        data.fileUrl
+        data.newProduct._id,
+        data.newProduct.productName,
+        data.newProduct.productDescription.length > 0
+          ? data.newProduct.productDescription
+          : " ",
+        data.newProduct.productPrice,
+        data.newProduct.fileUrl
       );
       // Add new product to the start of the array
       setAllProducts((prev: any) => [data, ...prev]);

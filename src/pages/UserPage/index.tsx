@@ -32,7 +32,7 @@ interface Product {
 
 const UserPostListPage = () => {
   const { userId } = useParams();
-  const { setUserState } = useUser();
+  const { userState, setUserState } = useUser();
   const [user, setUser] = useState<{
     profileName: string;
     email: string;
@@ -51,7 +51,6 @@ const UserPostListPage = () => {
     try {
       const response = await fetch(url, getFetchConfig);
       const result = await response.json();
-      console.log("result", result);
       setUserState((prevState: any) => {
         return {
           ...prevState,
@@ -106,7 +105,7 @@ const UserPostListPage = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [fetchProducts]);
+  }, [fetchProducts, userState.productCount]);
 
   return (
     <>

@@ -24,7 +24,7 @@ const Card = ({
 }) => {
   const settingsDropdownRef = useRef<any>(null);
   const { state } = useContext(GlobalStateContext);
-  const { userState } = useUser();
+  const { userState, setUserState } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
   const [showSettings] = useState<boolean>(isShowSettings || false);
@@ -106,13 +106,20 @@ const Card = ({
   };
 
   const deleteProduct = async () => {
-    const url = `${apiUrl}/products/delete/${productId}?fileUrl=${productFileUrls}`;
+    const url = `${apiUrl}/products/delete/${productId}?fileUrl=${productFileUrls}&userId=${userState._id}`;
 
     try {
-      await fetch(url, deleteFetchConfig);
+      const response = await fetch(url, deleteFetchConfig);
+      const result = await response.json();
       productElement?.remove();
       new Notify({
         title: "Product deleted successfully",
+      });
+      setUserState((prevState: any) => {
+        return {
+          ...prevState,
+          productCount: result.productCount,
+        };
       });
     } catch (error) {
       console.log("error", error);

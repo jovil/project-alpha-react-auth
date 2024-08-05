@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 import HeaderSection from "./HeaderSection";
 import Grid from "./Grid";
 import { getFetchConfig } from "../../utils/fetchConfig";
@@ -7,6 +8,7 @@ import UserNavigation from "../../components/UserNavigation";
 
 const UserShopPage = () => {
   const { userId } = useParams();
+  const { userState } = useUser();
   const [profile, setProfile] = useState<{
     profileName: string;
     email: string;
@@ -35,11 +37,19 @@ const UserShopPage = () => {
 
   return (
     <>
-      <HeaderSection
-        isProfile={profile}
-        profileLoadingAvatar={isLoadingAvatar}
-      />
-      <Grid isUser={profile} />
+      {userState?.productCount > 0 ? (
+        <>
+          <HeaderSection
+            isProfile={profile}
+            profileLoadingAvatar={isLoadingAvatar}
+          />
+          <Grid isUser={profile} />
+        </>
+      ) : (
+        <p className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
+          No products.
+        </p>
+      )}
       <UserNavigation />
     </>
   );

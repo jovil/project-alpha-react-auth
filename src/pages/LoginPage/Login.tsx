@@ -59,6 +59,7 @@ const Login = () => {
           hasHiringDetails: result.hasHiringDetails,
           avatar: result.avatar,
           shopDescription: result.shopDescription,
+          productCount: result.productCount,
         });
 
         // redirect user to the auth page
