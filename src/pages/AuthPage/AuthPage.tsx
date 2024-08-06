@@ -2,9 +2,15 @@ import { useState, useCallback, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import HeaderSection from "./HeaderSection";
 import HiringDetailsComponent from "./HiringDetails";
-import { getFetchConfig } from "../../utils/fetchConfig";
+import {
+  apiUrl,
+  getFetchConfig,
+  postFetchConfig,
+} from "../../utils/fetchConfig";
 import BankDetails from "./BankDetails";
 import UserDetails from "./UserDetails";
+import Notify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
 
 interface PreferredSchedule {
   type: "weekdays" | "weekends" | "flexible";
@@ -69,6 +75,7 @@ enum View {
   Account = "Account",
   UserDetails = "UserDetails",
   BankDetails = "BankDetails",
+  InviteUser = "InviteUser",
 }
 
 const AuthComponent = () => {
@@ -79,6 +86,7 @@ const AuthComponent = () => {
   );
   const [currentView, setCurrentView] = useState<View>(View.Account);
   const [password, setPassword] = useState<string>("");
+  const [emailInvite, setEmailInvite] = useState<string>("");
 
   const handleEditingMode = (value: boolean) => {
     setIsEditing(value);
@@ -128,6 +136,20 @@ const AuthComponent = () => {
     setCurrentView(view);
   };
 
+  const submitFormInviteUser = async (e: any) => {
+    e.preventDefault();
+    const url = `${apiUrl}/create/invite`;
+
+    try {
+      await fetch(url, postFetchConfig({ email: emailInvite }));
+      new Notify({
+        title: "Invite code created successfully",
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   return (
     <>
       <div className="container grid grid-cols-12 gap-4">
@@ -164,10 +186,49 @@ const AuthComponent = () => {
                   Bank account details
                 </button>
               </li>
+              {userState.email === "hi@jovil.dev" && (
+                <li className="w-full">
+                  <button
+                    className={`text-xs text-left px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full ${
+                      currentView === View.InviteUser ? "bg-blue-900" : ""
+                    }`}
+                    onClick={() => handleViewClick(View.InviteUser)}
+                  >
+                    Invite user
+                  </button>
+                </li>
+              )}
             </ul>
           </nav>
         </aside>
         <div className="col-span-9">
+          {currentView === View.InviteUser && (
+            <>
+              <form
+                className="text-sm max-w-[580px] mx-auto p-4 flex flex-col gap-4"
+                onSubmit={(e) => submitFormInviteUser(e)}
+              >
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="invite_user">Invite user:</label>
+                  <input
+                    className="border border-dark/40 p-3 rounded"
+                    value={emailInvite}
+                    onChange={(e) => setEmailInvite(e.target.value)}
+                    type="email"
+                    placeholder="Enter email"
+                    name="invite_user"
+                  />
+                </div>
+                <button
+                  className="btn-primary"
+                  onSubmit={(e) => submitFormInviteUser(e)}
+                  type="submit"
+                >
+                  Invite user
+                </button>
+              </form>
+            </>
+          )}
           {currentView === View.Account && (
             <>
               <HeaderSection />

@@ -1,5 +1,5 @@
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import { useUser } from "../../context/UserContext";
 import Cookies from "universal-cookie";
@@ -11,15 +11,28 @@ export default function Register() {
   const { state, setState } = useContext(GlobalStateContext);
   const { setUserState } = useUser();
   const [register, setRegister] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [searchParams] = useSearchParams();
+  const inviteCode = searchParams.get("code");
   const [formData, setFormData] = useState({
     email: "",
     userName: "",
     password: "",
     state: "Johor",
     city: "",
+    code: inviteCode,
   });
+
+  useEffect(() => {
+    setFormData((prevData) => {
+      return {
+        ...prevData,
+        code: inviteCode,
+      };
+    });
+  }, [inviteCode]);
 
   const handleLoginState = () => {
     setState({ ...state, isLoggedIn: true });
@@ -41,7 +54,21 @@ export default function Register() {
       const response = await fetch(url, configuration);
       const result = await response.json();
 
-      if (result.error) return setErrorMessage(true);
+      if (response.status === 400) {
+        setShowErrorMessage(true);
+        setErrorMessage(result.message);
+        return;
+      } else if (response.status === 404) {
+        setShowErrorMessage(true);
+        setErrorMessage(result.message);
+        return;
+      } else if (response.status === 500) {
+        setShowErrorMessage(true);
+        setErrorMessage(result.message);
+        return;
+      } else {
+        setShowErrorMessage(false);
+      }
 
       await setUserState((prev: any) => {
         return {
@@ -212,7 +239,7 @@ export default function Register() {
           )}
         </div>
         <div>
-          {errorMessage && <p className="text-error">Email already exist</p>}
+          {showErrorMessage && <p className="text-error">{errorMessage}</p>}
 
           {/* display success message */}
           {register && (
