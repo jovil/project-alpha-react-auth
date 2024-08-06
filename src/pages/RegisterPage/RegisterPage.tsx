@@ -260,23 +260,25 @@ export default function Register() {
       </div>
       <div className="col-span-7 pb-4 px-4">
         <div className="text-white bg-[#093cf4] p-16 rounded-xl h-full">
-          <div className="max-w-[570px] flex flex-col gap-8">
-            <h1 className="font-medium text-3xl">
-              Exclusive Platform for Creators to Share, Sell, and Shine
-            </h1>
+          <div className="max-w-[570px] flex flex-col gap-16">
+            <div className="flex flex-col gap-6">
+              <h1 className="font-medium text-3xl">
+                Exclusive Platform for Creators to Share, Sell, and Shine
+              </h1>
 
-            <p>
-              Join a community of talented creators showcasing their work,
-              selling unique products, and offering bespoke services. Our
-              platform ensures a dedicated space for your creativity to flourish
-              and your income to grow.
-            </p>
+              <p>
+                Join a community of talented creators showcasing their work,
+                selling unique products, and offering bespoke services. Our
+                platform ensures a dedicated space for your creativity to
+                flourish and your income to grow.
+              </p>
+            </div>
 
             <div className="flex flex-col gap-8">
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-4">
                 <p className="font-semibold">Why Sign Up?</p>
 
-                <ul className="list-disc flex flex-col gap-3">
+                <ul className="list-disc max-w-[470px] flex flex-col gap-3">
                   <li>
                     <span className="font-semibold">Showcase Your Work:</span>{" "}
                     Share your latest creations with a community that
@@ -295,10 +297,10 @@ export default function Register() {
                 </ul>
               </div>
 
-              <p className="font-semibold">
-                Start Making Money Doing What You Love. All in One Beautiful
-                Space.
-              </p>
+              <div className="font-semibold">
+                <p>Start Making Money Doing What You Love.</p>
+                <p>All in One Beautiful Space.</p>
+              </div>
             </div>
           </div>
         </div>
