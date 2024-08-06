@@ -383,7 +383,13 @@ function App() {
         </div>
       </header>
 
-      <main className="py-20">
+      <main
+        className={`${
+          location.pathname === "/register"
+            ? "flex flex-col justify-center items-center"
+            : "py-20"
+        }`}
+      >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<ProtectedRoutes />} />

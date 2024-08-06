@@ -105,7 +105,7 @@ const UserPostListPage = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [fetchProducts, userState.productCount]);
+  }, [fetchProducts, userState?.productCount]);
 
   return (
     <>
