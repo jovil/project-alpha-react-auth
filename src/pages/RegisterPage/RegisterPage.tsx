@@ -131,7 +131,7 @@ export default function Register() {
                   <div className="flex flex-col gap-2">
                     <label className="text-black-200">Email address:</label>
                     <input
-                      className="border border-dark/40 p-3 py-2.5 rounded"
+                      className="bg-blue-900 border border-dark/40 p-3 py-2.5 rounded"
                       type="email"
                       name="email"
                       value={formData.email}
@@ -145,7 +145,7 @@ export default function Register() {
                   <div className="flex flex-col gap-2">
                     <label className="text-black-200">Username:</label>
                     <input
-                      className="border border-dark/40 p-3 py-2.5 rounded"
+                      className="bg-blue-900 border border-dark/40 p-3 py-2.5 rounded"
                       type="text"
                       name="userName"
                       value={formData.userName}
@@ -158,7 +158,7 @@ export default function Register() {
                   <div className="flex flex-col gap-2">
                     <label className="text-black-200">Password:</label>
                     <input
-                      className="border border-dark/40 p-3 py-2.5 rounded"
+                      className="bg-blue-900 border border-dark/40 p-3 py-2.5 rounded"
                       type="password"
                       name="password"
                       value={formData.password}
@@ -177,7 +177,7 @@ export default function Register() {
                       State / Federal Territory:
                     </label>
                     <select
-                      className="border border-dark/40 p-3 py-2.5 rounded"
+                      className="bg-blue-900 border border-dark/40 p-3 py-2.5 rounded"
                       onChange={handleChange}
                       name="state"
                       value={formData.state}
@@ -205,7 +205,7 @@ export default function Register() {
                   <div className="flex flex-col gap-2">
                     <label className="text-black-200">City / District:</label>
                     <input
-                      className="border border-dark/40 p-3 py-2.5 rounded"
+                      className="bg-blue-900 border border-dark/40 p-3 py-2.5 rounded"
                       type="text"
                       name="city"
                       value={formData.city}

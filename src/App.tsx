@@ -393,7 +393,7 @@ function App() {
           location.pathname === "/register"
             ? "flex flex-col justify-center items-center"
             : "py-20"
-        }`}
+        } ${location.pathname === "/" ? "pb-8" : ""}`}
       >
         <Routes>
           <Route path="/" element={<Home />} />
