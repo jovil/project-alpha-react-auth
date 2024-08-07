@@ -91,10 +91,10 @@ const PostListView = () => {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = showPostModal ? "hidden" : "";
+    document.body.style.overflow = showPostModal ? "hidden" : "auto";
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = "auto";
     };
   }, [showPostModal]);
 

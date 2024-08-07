@@ -24,6 +24,7 @@ import CreateProduct from "./components/CreateProduct";
 import CreateProductModal from "./components/CreateProduct/modal";
 import useCreateProduct from "./hooks/useCreateProduct";
 import SearchModal from "./components/SearchModal";
+import DiscoverPage from "./pages/DiscoverPage";
 
 function App() {
   const cookies = new Cookies();
@@ -131,12 +132,12 @@ function App() {
             onShowSearchModal={onShowSearchModal}
             isShowSearchModal={showSearchModal}
           />
-          <div className="flex justify-between gap-4 w-full">
-            <nav>
+          <div className="grid grid-cols-12 items-center gap-4 w-full">
+            <nav className="col-span-5">
               <ul className="flex items-center gap-1">
                 <li>
                   <NavLink
-                    to="/"
+                    to="/discover"
                     className={({ isActive }: { isActive: any }) =>
                       isActive
                         ? "nav-button rounded-full text-sm flex items-center"
@@ -175,7 +176,11 @@ function App() {
               </ul>
             </nav>
 
-            <div className="flex gap-4 items-center">
+            <div className="col-span-2 flex justify-center">
+              <NavLink to="/">Home</NavLink>
+            </div>
+
+            <div className="col-span-5 justify-end flex gap-4 items-center">
               <button className="text-blue" onClick={onToggleSearchModal}>
                 <svg
                   className="h-4 w-4 stroke-blue-100"
@@ -392,6 +397,7 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/discover" element={<DiscoverPage />} />
           <Route path="/auth" element={<ProtectedRoutes />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

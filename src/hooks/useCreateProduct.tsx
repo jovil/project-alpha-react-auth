@@ -21,7 +21,7 @@ const useCreateProduct = () => {
   }, [userState?._id]);
 
   useEffect(() => {
-    document.body.style.overflow = isShowModal ? "hidden" : "auto";
+    document.body.style.overflow = isShowModal ? "hidden" : "";
   }, [isShowModal]);
 
   const handleToggleCreateProductModal = (e: any) => {

@@ -189,3 +189,18 @@ header.is-hidden {
 .toggle-btn.toggled .thumb {
   left: calc(50px - 28px);
 }
+
+.marquee-track {
+  width: fit-content;
+  animation: marquee 72s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(calc(-50% - 16px), 0, 0);
+  }
+}
