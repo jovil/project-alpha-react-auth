@@ -1,5 +1,5 @@
-import { useState, useContext, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import { useUser } from "../../context/UserContext";
 import Cookies from "universal-cookie";
@@ -14,25 +14,14 @@ export default function Register() {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [searchParams] = useSearchParams();
-  const inviteCode = searchParams.get("code");
   const [formData, setFormData] = useState({
     email: "",
     userName: "",
     password: "",
     state: "Johor",
     city: "",
-    code: inviteCode,
+    code: "",
   });
-
-  useEffect(() => {
-    setFormData((prevData) => {
-      return {
-        ...prevData,
-        code: inviteCode,
-      };
-    });
-  }, [inviteCode]);
 
   const handleLoginState = () => {
     setState({ ...state, isLoggedIn: true });
@@ -109,6 +98,7 @@ export default function Register() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
+    showErrorMessage && setShowErrorMessage(false);
 
     setFormData((prevData) => ({
       ...prevData,
@@ -119,7 +109,7 @@ export default function Register() {
   return (
     <div className="grid grid-cols-12 flex-grow w-full">
       <div className="col-span-5 flex flex-col justify-center px-4">
-        <div className="flex flex-col justify-center gap-6 max-w-[400px] h-[400px] mx-auto w-full">
+        <div className="flex flex-col gap-6 max-w-[400px] h-[400px] mx-auto w-full">
           <h1 className="text-2xl">Create your account</h1>
           <form
             className="flex flex-col gap-4"
@@ -127,6 +117,21 @@ export default function Register() {
           >
             <div className="flex flex-col gap-4">
               {currentStep === 1 && (
+                <div className="flex flex-col gap-2">
+                  <label className="text-black-200">Invite code:</label>
+                  <input
+                    className="bg-blue-900 border border-dark/40 p-3 py-2.5 rounded"
+                    type="text"
+                    name="code"
+                    value={formData.code}
+                    onChange={handleChange}
+                    placeholder="Invite code"
+                    autoFocus
+                    required
+                  />
+                </div>
+              )}
+              {currentStep === 2 && (
                 <>
                   <div className="flex flex-col gap-2">
                     <label className="text-black-200">Email address:</label>
@@ -170,7 +175,7 @@ export default function Register() {
                 </>
               )}
 
-              {currentStep === 2 && (
+              {currentStep === 3 && (
                 <>
                   <div className="flex flex-col gap-2">
                     <label className="text-black-200" htmlFor="state">
@@ -219,7 +224,7 @@ export default function Register() {
             </div>
 
             <div className="flex gap-2">
-              {currentStep === 1 && (
+              {(currentStep === 1 || currentStep === 2) && (
                 <button
                   className="btn-primary shadow-none"
                   type="button"
@@ -230,6 +235,16 @@ export default function Register() {
               )}
 
               {currentStep === 2 && (
+                <button
+                  className="px-5 py-2 text-blue-100 font-medium"
+                  type="button"
+                  onClick={handlePrev}
+                >
+                  Go back
+                </button>
+              )}
+
+              {currentStep === 3 && (
                 <>
                   <button
                     className="btn-primary"
