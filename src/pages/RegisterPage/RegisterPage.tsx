@@ -207,7 +207,7 @@ export default function Register() {
                         <option value="Labuan">Labuan</option>
                       </select>
 
-                      <div className="absolute right-5 top-1/2 -translate-y-1/2">
+                      <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none">
                         <svg
                           className="h-5 w-5 pointer-events-none"
                           width="24"
@@ -219,9 +219,9 @@ export default function Register() {
                           <path
                             d="M5 8.86035L12 15.8604L19 8.86035"
                             stroke="#5D5A88"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                         </svg>
                       </div>

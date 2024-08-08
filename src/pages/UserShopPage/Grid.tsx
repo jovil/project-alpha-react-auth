@@ -62,8 +62,6 @@ const Grid = ({ isUser }: { isUser: any }) => {
                 return (
                   <ProductCard
                     key={product._id}
-                    gridComponent={"userProductsView"}
-                    captionComponent={"showUserProductsCaption"}
                     data={product}
                     isShowSettings={true}
                   />

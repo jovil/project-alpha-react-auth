@@ -1,5 +1,4 @@
-import { useState, useContext, useRef, useEffect } from "react";
-import { GlobalStateContext } from "../../context/Context";
+import { useState, useRef, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import ProductModal from "../../components/ProductModal";
 import loading from "../../assets/images/loading.gif";
@@ -11,18 +10,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { fadeIn } from "../../utils/animations";
 
 const ProductCard = ({
-  gridComponent,
-  captionComponent,
   data,
   isShowSettings = false,
 }: {
-  gridComponent?: string | null;
-  captionComponent?: string | null;
   data: Record<string, any>;
   isShowSettings?: boolean;
 }) => {
   const settingsDropdownRef = useRef<any>(null);
-  const { state } = useContext(GlobalStateContext);
   const { userState, setUserState } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
