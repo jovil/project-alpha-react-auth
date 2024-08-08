@@ -108,7 +108,7 @@ const ProductCard = ({
 
   return (
     <>
-      <div className="flex flex-col relative group overflow-hidden">
+      <div className="flex flex-col relative group overflow-hidden" data-item>
         <div
           className={`w-full h-auto flex flex-col ${
             state[gridComponent ? gridComponent : ""] === "grid" &&
@@ -116,7 +116,6 @@ const ProductCard = ({
               ? "tablet:aspect-square"
               : ""
           }`}
-          key={data._id}
         >
           <div className="h-full relative overflow-hidden rounded-2xl group/settingsIcon">
             {showSettings && (
@@ -243,7 +242,7 @@ const ProductCard = ({
       </div>
 
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
-        {showModal && (
+        {showModal && productId === data._id && (
           <ProductModal
             productId={productId}
             onToggleModal={handleToggleModal}

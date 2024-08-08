@@ -26,7 +26,6 @@ const Accordion = ({
 
   const onLoad = useCallback(() => {
     setHiringDetails(isHiringDetails);
-    console.log("isHiringDetails", isHiringDetails);
   }, [isHiringDetails]);
 
   useEffect(() => {
