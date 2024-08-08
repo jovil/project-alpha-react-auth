@@ -14,17 +14,15 @@ const Card = ({
   captionComponent,
   data,
   isShowSettings = false,
-  view,
 }: {
   gridComponent?: string | null;
   captionComponent?: string | null;
   data: Record<string, any>;
   isShowSettings?: boolean;
-  view?: string;
 }) => {
   const settingsDropdownRef = useRef<any>(null);
   const { state } = useContext(GlobalStateContext);
-  const { userState, setUserState } = useUser();
+  const { userState } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
   const [showSettings] = useState<boolean>(isShowSettings || false);
@@ -35,10 +33,6 @@ const Card = ({
   const [postElement, setPostElement] = useState<Element | null>(null);
   const [postId, setPostId] = useState<string>("");
   const [postFileUrl, setPostFileUrl] = useState<string>("");
-  const [productElement, setProductElement] = useState<Element | null>(null);
-  const [productId, setProductId] = useState<string>("");
-  const [productFileUrls, setProductFileUrls] = useState<string>("");
-  const [currentView, setCurrentView] = useState<string | null>();
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -46,11 +40,6 @@ const Card = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  useEffect(() => {
-    showSettings && setCurrentView(view);
-    // eslint-disable-next-line
-  }, [showSettings]);
 
   const handleClickOutside = (e: MouseEvent) => {
     if (
@@ -78,16 +67,9 @@ const Card = ({
     const target = e.target;
     const post = (target as HTMLElement).closest("[data-item]");
 
-    if (currentView === "post") {
-      setPostId(postId);
-      setPostElement(post);
-      setPostFileUrl(fileUrl);
-    } else if (currentView === "product") {
-      setProductId(postId);
-      setProductElement(post);
-      setProductFileUrls(fileUrl);
-    }
-
+    setPostId(postId);
+    setPostElement(post);
+    setPostFileUrl(fileUrl);
     setShowDeleteConfirmationModal(true);
   };
 
@@ -99,27 +81,6 @@ const Card = ({
       postElement?.remove();
       new Notify({
         title: "Post deleted successfully",
-      });
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
-  const deleteProduct = async () => {
-    const url = `${apiUrl}/products/delete/${productId}?fileUrl=${productFileUrls}&userId=${userState._id}`;
-
-    try {
-      const response = await fetch(url, deleteFetchConfig);
-      const result = await response.json();
-      productElement?.remove();
-      new Notify({
-        title: "Product deleted successfully",
-      });
-      setUserState((prevState: any) => {
-        return {
-          ...prevState,
-          productCount: result.productCount,
-        };
       });
     } catch (error) {
       console.log("error", error);
@@ -200,20 +161,6 @@ const Card = ({
               onLoad={handleOnLoad}
             />
           )}
-          {typeof data.fileUrl === "object" && (
-            <img
-              className={`object-cover w-full h-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
-                state[gridComponent ? gridComponent : ""] === "grid" &&
-                state[captionComponent ? captionComponent : ""]
-                  ? "aspect-[4/6]"
-                  : ""
-              }`}
-              src={data.fileUrl[data.fileUrl.length - 1]}
-              alt=""
-              loading="lazy"
-              onLoad={handleOnLoad}
-            />
-          )}
           {data.avatar && (
             <img
               className={`object-cover w-full h-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
@@ -246,19 +193,12 @@ const Card = ({
             >
               <h2>Are you sure?</h2>
               <div className="flex gap-4">
-                {currentView === "post" && (
-                  <button className="btn-danger" onClick={deletePost}>
-                    Delete post
-                  </button>
-                )}
+                <button className="btn-danger" onClick={deletePost}>
+                  Delete post
+                </button>
 
-                {currentView === "product" && (
-                  <button className="btn-danger" onClick={deleteProduct}>
-                    Delete product
-                  </button>
-                )}
                 <button
-                  className="btn-outline-dark border-grey shadow-none text-blue-100 hover:bg-blue-900 hover:text-blue-100"
+                  className="btn-outline-dark border-grey-100 shadow-none text-blue-100 hover:bg-blue-900 hover:text-blue-100"
                   onClick={() => setShowDeleteConfirmationModal(false)}
                 >
                   Cancel

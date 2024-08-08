@@ -113,7 +113,7 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
         data.newProduct.fileUrl
       );
       // Add new product to the start of the array
-      setAllProducts((prev: any) => [data, ...prev]);
+      setAllProducts((prev: any) => [data.newProduct, ...prev]);
       onToggleModal(false);
       setIsLoading(false);
       new Notify({

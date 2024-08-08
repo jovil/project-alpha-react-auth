@@ -26,6 +26,7 @@ const Accordion = ({
 
   const onLoad = useCallback(() => {
     setHiringDetails(isHiringDetails);
+    console.log("isHiringDetails", isHiringDetails);
   }, [isHiringDetails]);
 
   useEffect(() => {
@@ -35,17 +36,6 @@ const Accordion = ({
   const editHiringDetails = (e: any) => {
     e.preventDefault();
     onHandleEditingMode(true);
-  };
-
-  const handleChangeHiringDetailsInput = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value } = e.target;
-
-    setHiringDetails((prev: any) => ({
-      ...(prev || {}),
-      [name]: value,
-    }));
   };
 
   const handleServices = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +51,9 @@ const Accordion = ({
     }));
   };
 
-  const handleHiringInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleHiringInput = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
 
     setHiringDetails((prev: any) => ({
@@ -140,6 +132,8 @@ const Accordion = ({
     setShowErrorBlock(false);
 
     const postData = {
+      headline: hiringDetails.headline || "",
+      subheading: hiringDetails.subheading || "",
       whatsApp: hiringDetails.whatsApp || "",
       favoriteCharacters: hiringDetails.favoriteCharacters || "",
       services:
@@ -171,7 +165,6 @@ const Accordion = ({
     };
 
     try {
-      console.log("postData", postData);
       await fetch(url, configuration);
       setIsActive(false);
       onHandleEditingMode(false);
@@ -210,6 +203,33 @@ const Accordion = ({
           </p>
           <form className="flex flex-col gap-4" onSubmit={submitHiringDetails}>
             <div className="flex flex-col gap-2">
+              <label>Headline:</label>
+              <input
+                className="border border-dark/40 p-3 rounded"
+                type="text"
+                placeholder="Headline"
+                name="headline"
+                value={hiringDetails?.headline}
+                onChange={handleHiringInput}
+                required
+                disabled={!isEditing}
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label>Description:</label>
+              <textarea
+                className="border border-dark/40 p-3 rounded"
+                placeholder="Enter a description"
+                name="subheading"
+                value={hiringDetails?.subheading}
+                onChange={handleHiringInput}
+                required
+                disabled={!isEditing}
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
               <label>WhatsApp:</label>
               <input
                 className="border border-dark/40 p-3 rounded"
@@ -217,7 +237,7 @@ const Accordion = ({
                 placeholder="Phone number"
                 name="whatsApp"
                 value={hiringDetails?.whatsApp}
-                onChange={handleChangeHiringDetailsInput}
+                onChange={handleHiringInput}
                 required
                 disabled={!isEditing}
               />
@@ -231,7 +251,7 @@ const Accordion = ({
                 placeholder="Separate characters by comma (,)"
                 name="favoriteCharacters"
                 value={hiringDetails?.favoriteCharacters}
-                onChange={handleChangeHiringDetailsInput}
+                onChange={handleHiringInput}
                 required
                 disabled={!isEditing}
               />

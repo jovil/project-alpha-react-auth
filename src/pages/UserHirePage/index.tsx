@@ -297,17 +297,12 @@ const UserHirePage = () => {
                 </div>
               </div>
 
-              <div className="px-8 col-span-7 flex flex-col items-center">
+              <div className="px-8 col-span-7 flex flex-col">
                 <div className="flex flex-col gap-3 max-w-[640px]">
                   <h2 className="text-3xl font-semibold">
-                    Hire {user.userName} for your next event!
+                    {user.hiringDetails.headline}
                   </h2>
-                  <p>
-                    Bring your favorite characters to life. From events and
-                    photoshoots to promotional appearances, {user.userName}{" "}
-                    offer a range of services to make your occasion
-                    unforgettable.
-                  </p>
+                  <p>{user.hiringDetails.subheading}</p>
                 </div>
               </div>
             </div>

@@ -163,14 +163,14 @@ function App() {
                 <li>
                   <NavLink
                     end
-                    to="/hirecosplayer"
+                    to="/talent"
                     className={({ isActive }: { isActive: any }) =>
                       isActive
                         ? "nav-button rounded-full text-sm flex items-center"
                         : "text-sm px-5 py-2 flex items-center text-black-200"
                     }
                   >
-                    Hire cosplayer
+                    Talent
                   </NavLink>
                 </li>
               </ul>
@@ -211,7 +211,7 @@ function App() {
                 <>
                   <div className="relative" ref={menuDropdownRef}>
                     <button
-                      className="text-xs btn-outline-dark shadow-none border-grey text-blue-100 hover:bg-blue-900 hover:text-blue-100"
+                      className="text-xs btn-outline-dark shadow-none border-grey-100 text-blue-100 hover:bg-blue-900 hover:text-blue-100"
                       onClick={onToggleMenuDropdown}
                     >
                       <div className="flex items-center gap-1">
@@ -277,7 +277,7 @@ function App() {
                             </li>
                           )}
                         </ul>
-                        <hr className="h-[1px] bg-grey border-none" />
+                        <hr className="h-[1px] bg-grey-100 border-none" />
                         <ul>
                           <li className="flex">
                             <NavLink
@@ -407,7 +407,7 @@ function App() {
           <Route path={`/hire/:userId`} element={<UserHirePage />} />
           <Route path={`/series/:seriesTitle`} element={<SeriesPage />} />
           <Route path={`/shop`} element={<ShopPage />} />
-          <Route path={`/hirecosplayer`} element={<HiringPage />} />
+          <Route path={`/talent`} element={<HiringPage />} />
           <Route path={`/series`} element={<SeriesListPage />} />
         </Routes>
 

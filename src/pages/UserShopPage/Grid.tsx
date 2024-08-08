@@ -7,7 +7,7 @@ import { getFetchConfig } from "../../utils/fetchConfig";
 import { AnimatePresence } from "framer-motion";
 import GridHeader from "../../components/Grid/header";
 import GridViewContainer from "../../components/Grid/gridViewContainer";
-import Card from "../../components/Card";
+import ProductCard from "../../components/ProductCard";
 
 interface Product {
   _id: string;
@@ -88,12 +88,11 @@ const Grid = ({ isUser }: { isUser: any }) => {
                     key={index}
                     data-item
                   >
-                    <Card
+                    <ProductCard
                       gridComponent={"userProductsView"}
                       captionComponent={"showUserProductsCaption"}
                       data={product}
                       isShowSettings={true}
-                      view={"product"}
                     />
                     {!state.showUserProductsCaption && (
                       <div className="flex flex-col flex-grow justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">

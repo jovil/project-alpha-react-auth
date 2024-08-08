@@ -31,7 +31,8 @@ interface Availability {
 }
 
 interface HiringDetails {
-  email?: string;
+  headline?: String;
+  subheading?: String;
   whatsApp?: number | string;
   location?: string;
   favoriteCharacters?: string;
@@ -59,7 +60,8 @@ const initialAvailability: Availability[] = [
 ];
 
 const initialHiringDetails: HiringDetails = {
-  email: "",
+  headline: "",
+  subheading: "",
   whatsApp: "",
   location: "",
   favoriteCharacters: "",
@@ -153,7 +155,7 @@ const AuthComponent = () => {
   return (
     <>
       <div className="container grid grid-cols-12 gap-4">
-        <aside className="col-span-3 border border-grey rounded">
+        <aside className="col-span-3 border border-grey-100 rounded">
           <nav>
             <ul className="p-1.5 bg-white rounded flex flex-col items-start gap-1">
               <li className="w-full">
