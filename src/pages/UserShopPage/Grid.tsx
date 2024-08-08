@@ -2,8 +2,6 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { getFetchConfig } from "../../utils/fetchConfig";
-import GridHeader from "../../components/Grid/header";
-import GridViewContainer from "../../components/Grid/gridViewContainer";
 import ProductCard from "../../components/ProductCard";
 
 interface Product {
@@ -47,16 +45,10 @@ const Grid = ({ isUser }: { isUser: any }) => {
     <>
       {products.length > 0 && (
         <section className="container flex flex-col gap-4 py-16">
-          <GridHeader
-            gridViewProp={"userProductsView"}
-            captionProp={"showUserProductsCaption"}
-          >
+          <header className="hidden tablet:flex justify-between items-center gap-2 h-7">
             <h1>All products</h1>
-          </GridHeader>
-          <GridViewContainer
-            gridComponent={"userProductsView"}
-            captionComponent={"showUserProductsCaption"}
-          >
+          </header>
+          <div className="grid gap-4 tablet:grid-cols-2 desktop:grid-cols-3 gap-y-9">
             <>
               {products?.map((product: any, index: number) => {
                 if (!product || !product.fileUrl || !product.fileUrl.length) {
@@ -69,7 +61,7 @@ const Grid = ({ isUser }: { isUser: any }) => {
 
                 return (
                   <ProductCard
-                    key={index}
+                    key={product._id}
                     gridComponent={"userProductsView"}
                     captionComponent={"showUserProductsCaption"}
                     data={product}
@@ -78,7 +70,7 @@ const Grid = ({ isUser }: { isUser: any }) => {
                 );
               })}
             </>
-          </GridViewContainer>
+          </div>
         </section>
       )}
     </>

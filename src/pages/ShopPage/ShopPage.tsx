@@ -40,7 +40,7 @@ const ShopPage = () => {
           <h1>All products</h1>
         </header>
 
-        <div className="grid gap-3 tablet:grid-cols-2 desktop:grid-cols-3 gap-y-9">
+        <div className="grid gap-4 tablet:grid-cols-2 desktop:grid-cols-3 gap-y-9">
           {allProducts?.length ? (
             <>
               {allProducts?.map((product: any, index: number) => {

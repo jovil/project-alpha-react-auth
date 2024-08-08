@@ -44,7 +44,7 @@ function App() {
 
   const handleScroll = () => {
     const currentScrollY = window.scrollY;
-    const headerHeight = headerRef.current.clientHeight;
+    const headerHeight = headerRef.current?.clientHeight;
     if (currentScrollY > lastScrollY) {
       setIsScrollingDown(true);
     } else {

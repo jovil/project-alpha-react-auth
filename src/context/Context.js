@@ -13,16 +13,12 @@ export const GlobalStateProvider = ({ children }) => {
           isLoggedIn: false,
           postsView: "grid",
           showPostsCaption: false,
-          productsView: "grid",
-          showProductsCaption: false,
           seriesView: "grid",
           showSeriesCaption: false,
           hiringView: "grid",
           showHiringCaption: false,
           userPostsView: "grid",
           showUserPostsCaption: false,
-          userProductsView: "grid",
-          showUserProductsCaption: false,
         };
   });
 
