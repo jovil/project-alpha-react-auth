@@ -161,7 +161,7 @@ const UserHirePage = () => {
                   <div className="w-full">
                     <a
                       className="btn-primary text-sm block text-center"
-                      href={`mailto:${user.hiringDetails.email}`}
+                      href={`mailto:${user.email}`}
                     >
                       Contact @{user.userName}
                     </a>

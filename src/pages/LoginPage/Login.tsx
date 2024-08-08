@@ -61,7 +61,7 @@ const Login = () => {
         });
 
         // redirect user to the auth page
-        navigate("/");
+        navigate("/discover");
       })
       .catch((error) => {
         console.log(error);

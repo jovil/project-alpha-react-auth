@@ -140,7 +140,6 @@ const Accordion = ({
     setShowErrorBlock(false);
 
     const postData = {
-      email: hiringDetails.email || "",
       whatsApp: hiringDetails.whatsApp || "",
       favoriteCharacters: hiringDetails.favoriteCharacters || "",
       services:
@@ -211,20 +210,6 @@ const Accordion = ({
           </p>
           <form className="flex flex-col gap-4" onSubmit={submitHiringDetails}>
             <div className="flex flex-col gap-2">
-              <label>Email address:</label>
-              <input
-                className="border border-dark/40 p-3 rounded"
-                type="text"
-                placeholder="Email address"
-                name="email"
-                value={hiringDetails?.email}
-                onChange={handleChangeHiringDetailsInput}
-                required
-                disabled={!isEditing}
-              />
-            </div>
-
-            <div className="flex flex-col gap-2">
               <label>WhatsApp:</label>
               <input
                 className="border border-dark/40 p-3 rounded"
@@ -259,7 +244,7 @@ const Accordion = ({
                 (service: Record<string, any>, index: number) => (
                   <label className="flex items-center gap-2" key={index}>
                     <input
-                      className="checkbox-service"
+                      className="appearance-auto"
                       type="checkbox"
                       name={service.service}
                       checked={service.serviceAvailable}
@@ -290,7 +275,7 @@ const Accordion = ({
                   (available: Record<string, any>, index: number) => (
                     <label className="flex items-center gap-2" key={index}>
                       <input
-                        className="checkbox-availability"
+                        className="appearance-auto"
                         type="checkbox"
                         name={available.availabilityName}
                         checked={available.isAvailable}
@@ -319,7 +304,7 @@ const Accordion = ({
                   <p className="font-medium my-4">Preferred schedule:</p>
                   <label className="flex items-center gap-2">
                     <input
-                      className="border border-dark/40 p-3 rounded"
+                      className="appearance-auto border border-dark/40 p-3 rounded"
                       type="radio"
                       name="preferredSchedule"
                       value="weekdays"
@@ -336,7 +321,7 @@ const Accordion = ({
 
                   <label className="flex items-center gap-2">
                     <input
-                      className="border border-dark/40 p-3 rounded"
+                      className="appearance-auto border border-dark/40 p-3 rounded"
                       type="radio"
                       name="preferredSchedule"
                       value="weekends"
@@ -353,7 +338,7 @@ const Accordion = ({
 
                   <label className="flex items-center gap-2">
                     <input
-                      className="border border-dark/40 p-3 rounded"
+                      className="appearance-auto border border-dark/40 p-3 rounded"
                       type="radio"
                       name="preferredSchedule"
                       value="flexible"
@@ -374,7 +359,7 @@ const Accordion = ({
 
                   <label className="flex items-center gap-2">
                     <input
-                      className="border border-dark/40 p-3 rounded"
+                      className="appearance-auto border border-dark/40 p-3 rounded"
                       type="radio"
                       name="travelAvailability"
                       value="local"
@@ -390,7 +375,7 @@ const Accordion = ({
 
                   <label className="flex items-center gap-2">
                     <input
-                      className="border border-dark/40 p-3 rounded"
+                      className="appearance-auto border border-dark/40 p-3 rounded"
                       type="radio"
                       name="travelAvailability"
                       value="national"
@@ -406,7 +391,7 @@ const Accordion = ({
 
                   <label className="flex items-center gap-2">
                     <input
-                      className="border border-dark/40 p-3 rounded"
+                      className="appearance-auto border border-dark/40 p-3 rounded"
                       type="radio"
                       name="travelAvailability"
                       value="international"
