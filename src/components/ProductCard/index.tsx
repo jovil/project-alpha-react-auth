@@ -109,14 +109,7 @@ const ProductCard = ({
             handleToggleModal(data._id);
           }}
         >
-          <div
-            className={`w-full h-auto flex flex-col ${
-              state[gridComponent ? gridComponent : ""] === "grid" &&
-              !state[captionComponent ? captionComponent : ""]
-                ? "tablet:aspect-square"
-                : ""
-            }`}
-          >
+          <div className="w-full h-auto flex flex-col aspect-square">
             <div className="h-full relative overflow-hidden rounded-2xl group/settingsIcon">
               {showSettings && (
                 <>
@@ -176,12 +169,7 @@ const ProductCard = ({
               )}
               {typeof data.fileUrl === "object" && (
                 <img
-                  className={`object-cover w-full h-full group-hover:scale-[1.03] transition-transform ${
-                    state[gridComponent ? gridComponent : ""] === "grid" &&
-                    state[captionComponent ? captionComponent : ""]
-                      ? "aspect-square"
-                      : ""
-                  }`}
+                  className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform aspect-square"
                   src={data.fileUrl[data.fileUrl.length - 1]}
                   alt=""
                   loading="lazy"

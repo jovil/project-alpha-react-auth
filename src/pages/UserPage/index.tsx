@@ -6,6 +6,7 @@ import UserNavigation from "../../components/UserNavigation";
 import { apiUrl } from "../../utils/fetchConfig";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import Card from "../../components/Card";
+import ProductCard from "../../components/ProductCard";
 
 interface User {
   _id: string;
@@ -131,7 +132,7 @@ const UserPostListPage = () => {
             {products.map((product: any, index: number) => {
               return (
                 <React.Fragment key={index}>
-                  <Card data={product} />
+                  <ProductCard data={product} />
                 </React.Fragment>
               );
             })}
