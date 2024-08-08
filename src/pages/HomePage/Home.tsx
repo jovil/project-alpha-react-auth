@@ -41,10 +41,18 @@ const Home = () => {
   return (
     <>
       <div className="flex flex-col gap-24">
-        <section className="container flex flex-col justify-center items-center gap-12">
-          <h1 className="max-w-[800px] text-center text-5xl font-medium mx-auto leading-tight">
-            Community Platform for Creators to Share, Sell, and Shine
-          </h1>
+        <section className="container flex flex-col justify-center items-center gap-10">
+          <div className="flex flex-col items-center gap-4">
+            <h1 className="max-w-[800px] text-center text-5xl font-medium mx-auto leading-tight">
+              Community Platform for Creators to Share, Sell, and Shine
+            </h1>
+
+            <p className="text-center max-w-[500px]">
+              Showcase your talent, sell unique products, and offer bespoke
+              services. Flourish creatively and grow your income in our
+              dedicated creator community.
+            </p>
+          </div>
 
           <form
             className="flex flex-col relative"
@@ -52,7 +60,7 @@ const Home = () => {
           >
             <div className="flex gap-2">
               <input
-                className="bg-blue-900 border border-dark/40 p-3 py-2.5 rounded min-w-[280px]"
+                className="bg-blue-900 border-b border-dark/40 p-5 py-2.5 min-w-[280px]"
                 type="email"
                 name="email"
                 placeholder="Email"

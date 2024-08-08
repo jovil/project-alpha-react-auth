@@ -83,6 +83,12 @@
   }
 }
 
+* {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 html {
   min-height: 100%;
 }

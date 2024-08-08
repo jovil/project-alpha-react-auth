@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import { GlobalStateContext } from "../../context/Context";
 import { useUser } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import { Form } from "react-bootstrap";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -70,44 +69,42 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2 w-[500px] mx-auto">
-      <h2 className="text-4xl">Login</h2>
-      <Form className="flex flex-col gap-4" onSubmit={(e) => handleLogin(e)}>
-        <div className="flex flex-col gap-4">
+    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-6 w-[400px] mx-auto">
+      <h2 className="text-2xl">Login</h2>
+      <form
+        className="max-w-[400px] flex flex-col items-center gap-4"
+        onSubmit={(e) => handleLogin(e)}
+      >
+        <div className="flex flex-col gap-4 w-full">
           {/* email */}
-          <Form.Group
-            className="flex flex-col gap-2"
-            controlId="formBasicEmail"
-          >
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              className="border border-dark/40 p-3 rounded"
+          <div className="flex flex-col gap-2">
+            <label className="text-black-200">Email address</label>
+            <input
+              className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
               type="email"
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter email"
+              autoFocus
             />
-          </Form.Group>
+          </div>
 
           {/* password */}
-          <Form.Group
-            className="flex flex-col gap-2"
-            controlId="formBasicPassword"
-          >
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              className="border border-dark/40 p-3 rounded"
+          <div className="flex flex-col gap-2">
+            <label className="text-black-200">Password</label>
+            <input
+              className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
               type="password"
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
             />
-          </Form.Group>
+          </div>
         </div>
 
-        <div>
+        <div className="w-full">
           {/* submit button */}
           <button
             className="btn-primary"
@@ -125,7 +122,7 @@ const Login = () => {
           {/* display email not found message */}
           {emailNotFound && <p className="text-danger">Email doesn't exist.</p>}
         </div>
-      </Form>
+      </form>
     </div>
   );
 };
