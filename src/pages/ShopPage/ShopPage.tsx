@@ -32,6 +32,8 @@ const ShopPage = () => {
     } catch (error) {
       console.log("error creating post", error);
     }
+
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -81,6 +83,14 @@ const ShopPage = () => {
     sortAndSetProducts(fetchedProducts, newSortBy); // Sort fetched products on client side
   };
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchedProducts = fetchedProducts.filter((product: any) =>
+      product.productName.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+
+    sortAndSetProducts(searchedProducts, sortBy);
+  };
+
   return (
     <>
       <section className="container flex flex-col gap-12">
@@ -90,6 +100,7 @@ const ShopPage = () => {
               className="border border-dark/30 p-3 py-2 rounded w-full"
               type="search"
               placeholder="Search product"
+              onChange={handleSearch}
             />
           </form>
 
