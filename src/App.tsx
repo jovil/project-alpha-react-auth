@@ -272,7 +272,7 @@ function App() {
                                 to={`/hire/${userState._id}`}
                                 onClick={onToggleMenuDropdown}
                               >
-                                Book me
+                                Hire me
                               </NavLink>
                             </li>
                           )}

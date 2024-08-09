@@ -81,7 +81,7 @@ const UserNavigation = () => {
                         : "text-sm px-5 py-2 flex items-center text-black-200"
                     }
                   >
-                    Book me
+                    Hire {user.userName}
                   </NavLink>
                 </li>
               )}

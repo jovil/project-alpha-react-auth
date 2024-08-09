@@ -49,7 +49,7 @@ const HiringPage = () => {
           gridViewProp={"hiringView"}
           captionProp={"showHiringCaption"}
         >
-          <h1>All cosplayers</h1>
+          <h1>All talent</h1>
         </GridHeader>
         <GridViewContainer
           gridComponent={"hiringView"}
@@ -116,7 +116,7 @@ const HiringPage = () => {
             </>
           ) : noUsers ? (
             <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
-              No cosplayers for hire.
+              No talent for hire.
             </p>
           ) : (
             <img
