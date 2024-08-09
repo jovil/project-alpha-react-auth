@@ -1,7 +1,54 @@
+import { useState } from "react";
 import { useUser } from "../../context/UserContext";
+import { apiUrl, postFetchConfig } from "../../utils/fetchConfig";
+import Notify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
 
 const UserDetails = ({ isPassword }: { isPassword: string }) => {
-  const { userState } = useUser();
+  const { userState, setUserState } = useUser();
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [formData, setFormData] = useState(userState);
+
+  const editUserDetails = (e: any) => {
+    e.preventDefault();
+    setIsEditing(true);
+
+    setFormData((prevState: Record<string, any>) => ({
+      ...prevState,
+      talents: formData.talents.toString(),
+    }));
+  };
+
+  const handleFormInput = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+
+    setFormData((prevState: Record<string, any>) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const submitUserDetails = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const url = `${apiUrl}/user/update/userDetails/${userState._id}`;
+
+    try {
+      await fetch(url, postFetchConfig(formData));
+
+      setUserState((prevState: Record<string, any>) => ({
+        ...prevState,
+        ...formData,
+      }));
+      setIsEditing(false);
+      new Notify({
+        title: "User details saved successfully",
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <>
@@ -11,10 +58,12 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
           <input
             className="border border-dark/40 p-3 rounded"
             type="email"
-            value={userState.email}
+            name="email"
+            value={formData.email}
+            onChange={handleFormInput}
             placeholder="Enter email"
             required
-            disabled
+            disabled={!isEditing}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -22,10 +71,12 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
           <input
             className="border border-dark/40 p-3 rounded"
             type="text"
-            value={userState.userName}
+            name="userName"
+            value={formData.userName}
+            onChange={handleFormInput}
             placeholder="Enter username"
             required
-            disabled
+            disabled={!isEditing}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -33,6 +84,7 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
           <input
             className="border border-dark/40 p-3 rounded"
             type="password"
+            name="password"
             value={isPassword}
             placeholder="Password"
             required
@@ -41,13 +93,42 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
         </div>
 
         <div className="flex flex-col gap-2">
+          <label>Creative role:</label>
+          <input
+            className="border border-dark/40 p-3 rounded"
+            type="text"
+            name="role"
+            value={formData.role}
+            onChange={handleFormInput}
+            placeholder="Primary role (e.g., Costume Designer, Makeup Artist)"
+            required
+            disabled={!isEditing}
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label>Talents:</label>
+          <input
+            className="border border-dark/40 p-3 rounded"
+            type="text"
+            name="talents"
+            value={formData.talents.toString()}
+            onChange={handleFormInput}
+            placeholder="Your talents (e.g., Painting, Content Creation)"
+            required
+            disabled={!isEditing}
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
           <label htmlFor="state">State / Federal Territory:</label>
           <select
             className="border border-dark/40 p-3 rounded"
             name="state"
-            value={userState.state}
+            value={formData.state}
+            onChange={handleFormInput}
             required
-            disabled
+            disabled={!isEditing}
           >
             <option value="Johor">Johor</option>
             <option value="Kedah">Kedah</option>
@@ -74,12 +155,30 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
             className="border border-dark/40 p-3 rounded"
             type="text"
             name="city"
-            value={userState.city}
+            value={formData.city}
+            onChange={handleFormInput}
             placeholder="Enter city/district"
             required
-            disabled
+            disabled={!isEditing}
           />
         </div>
+
+        {!isEditing ? (
+          <button
+            className="btn-primary flex justify-center items-center"
+            onClick={editUserDetails}
+          >
+            Edit
+          </button>
+        ) : (
+          <button
+            className="btn-primary flex justify-center items-center"
+            onClick={submitUserDetails}
+            type="submit"
+          >
+            Save
+          </button>
+        )}
       </form>
     </>
   );

@@ -20,6 +20,8 @@ export default function Register() {
     password: "",
     state: "Johor",
     city: "",
+    talents: "",
+    role: "",
     code: "",
   });
 
@@ -67,6 +69,8 @@ export default function Register() {
           userName: result.userName,
           state: result.state,
           city: result.city,
+          role: result.role,
+          talents: result.talents,
         };
       });
 
@@ -178,6 +182,38 @@ export default function Register() {
               {currentStep === 3 && (
                 <>
                   <div className="flex flex-col gap-2">
+                    <label className="text-black-200">Creative role:</label>
+                    <input
+                      className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
+                      type="text"
+                      name="role"
+                      value={formData.role}
+                      onChange={handleChange}
+                      placeholder="Primary role (e.g., Costume Designer, Makeup Artist)"
+                      autoFocus
+                      required
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-black-200">Talents:</label>
+                    <input
+                      className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
+                      type="text"
+                      name="talents"
+                      value={formData.talents}
+                      onChange={handleChange}
+                      placeholder="Your talents (e.g., Painting, Content Creation)"
+                      autoFocus
+                      required
+                    />
+                  </div>
+                </>
+              )}
+
+              {currentStep === 4 && (
+                <>
+                  <div className="flex flex-col gap-2">
                     <label className="text-black-200" htmlFor="state">
                       State / Federal Territory:
                     </label>
@@ -245,7 +281,9 @@ export default function Register() {
             </div>
 
             <div className="flex gap-2">
-              {(currentStep === 1 || currentStep === 2) && (
+              {(currentStep === 1 ||
+                currentStep === 2 ||
+                currentStep === 3) && (
                 <button
                   className="btn-primary shadow-none"
                   type="button"
@@ -255,7 +293,7 @@ export default function Register() {
                 </button>
               )}
 
-              {currentStep === 2 && (
+              {(currentStep === 2 || currentStep === 3) && (
                 <button
                   className="px-5 py-2 text-blue-100 font-medium"
                   type="button"
@@ -265,7 +303,7 @@ export default function Register() {
                 </button>
               )}
 
-              {currentStep === 3 && (
+              {currentStep === 4 && (
                 <>
                   <button
                     className="btn-primary"
