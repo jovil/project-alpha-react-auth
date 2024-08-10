@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { apiUrl, getFetchConfig } from "../../utils/fetchConfig";
 import loading from "../../assets/images/loading.gif";
 import TalentCard from "../../components/TalentCard";
@@ -37,7 +37,11 @@ const HiringPage = () => {
           {users?.length ? (
             <>
               {users?.map((user: any, index: number) => {
-                return <TalentCard key={index} talent={user} />;
+                return (
+                  <React.Fragment key={index}>
+                    {user.talentProfileActive && <TalentCard talent={user} />}
+                  </React.Fragment>
+                );
               })}
             </>
           ) : noUsers ? (

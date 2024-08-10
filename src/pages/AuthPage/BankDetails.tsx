@@ -88,7 +88,7 @@ const BankDetails = () => {
 
   return (
     <>
-      <div className="max-w-[580px] mx-auto">
+      <div className="max-w-[400px] mx-auto w-full">
         <div className="p-4">Add your bank account details for payouts</div>
 
         <div className="p-4 pb-6">

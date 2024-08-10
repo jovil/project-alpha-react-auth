@@ -56,7 +56,7 @@ const UserPostListPage = () => {
       setUserState((prevState: any) => {
         return {
           ...prevState,
-          profileDescription: result.profileDescription,
+          profileDescription: result?.profileDescription,
         };
       });
       setUser(result);
@@ -160,7 +160,7 @@ const UserPostListPage = () => {
             )}
           </header>
           <div className="flex flex-col gap-3">
-            {posts.map((post: any, index: number) => {
+            {posts?.map((post: any, index: number) => {
               return (
                 <React.Fragment key={index}>
                   <Card data={post} />

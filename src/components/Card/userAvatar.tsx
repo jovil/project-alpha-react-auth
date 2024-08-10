@@ -7,7 +7,8 @@ const UserAvatar = ({ data }: { data: any }) => {
       <div className="flex">
         <NavLink
           className="flex gap-2 items-center"
-          to={`/user/${data.user?._id || data._id}`}
+          to={`/user/${data.user?.userName}`}
+          state={{ userId: data.user._id }}
         >
           <img
             className="rounded-full w-7 h-7 object-cover"

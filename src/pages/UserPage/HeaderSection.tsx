@@ -79,14 +79,14 @@ const HeaderSection = ({
                 src={
                   isLoadingAvatar
                     ? defaultAvatar
-                    : isUser.avatar
-                    ? isUser.avatar
+                    : isUser?.avatar
+                    ? isUser?.avatar
                     : defaultAvatar
                 }
                 alt=""
               />
             </div>
-            <p className="font-medium">{isUser.userName}</p>
+            <p className="font-medium">{isUser?.userName}</p>
           </div>
           {userState && userState._id === userId && (
             <>

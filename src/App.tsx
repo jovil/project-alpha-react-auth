@@ -266,18 +266,16 @@ function App() {
                               Shop
                             </NavLink>
                           </li>
-                          {userState.hasHiringDetails && (
-                            <li className="flex">
-                              <NavLink
-                                className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                                to={`/hire/${userState.userName}`}
-                                state={{ userId: userState._id }}
-                                onClick={onToggleMenuDropdown}
-                              >
-                                Hire me
-                              </NavLink>
-                            </li>
-                          )}
+                          <li className="flex">
+                            <NavLink
+                              className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                              to={`/hire/${userState.userName}`}
+                              state={{ userId: userState._id }}
+                              onClick={onToggleMenuDropdown}
+                            >
+                              Talent page
+                            </NavLink>
+                          </li>
                         </ul>
                         <hr className="h-[1px] bg-grey-100 border-none" />
                         <ul>

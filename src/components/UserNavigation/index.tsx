@@ -79,10 +79,10 @@ const UserNavigation = () => {
                   </NavLink>
                 </li>
               )}
-              {user?.hasHiringDetails && (
+              {(userState?._id === user?._id || user?.talentProfileActive) && (
                 <li>
                   <NavLink
-                    to={`/hire/${user.userName}`}
+                    to={`/hire/${user?.userName}`}
                     state={{ userId: user?._id }}
                     className={({ isActive }: { isActive: any }) =>
                       isActive
@@ -90,7 +90,7 @@ const UserNavigation = () => {
                         : "text-sm px-5 py-2 flex items-center text-black-200"
                     }
                   >
-                    Hire {user.userName}
+                    Hire {user?.userName}
                   </NavLink>
                 </li>
               )}

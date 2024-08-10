@@ -202,7 +202,8 @@ const PostListView = () => {
                               <div className="ml-auto">
                                 <NavLink
                                   className="btn-primary-layered text-center group flex items-center gap-1.5"
-                                  to={`/shop/${post.user._id}`}
+                                  to={`/shop/${post.user.userName}`}
+                                  state={{ userId: post.user._id }}
                                 >
                                   <p>Shop</p>
                                   <svg
@@ -257,7 +258,8 @@ const PostListView = () => {
                               <div className="ml-auto">
                                 <NavLink
                                   className="btn-primary-small text-center group flex items-center gap-1.5"
-                                  to={`/shop/${post.user._id}`}
+                                  to={`/shop/${post.user.userName}`}
+                                  state={{ userId: post.user._id }}
                                 >
                                   <p>Shop</p>
                                   <svg

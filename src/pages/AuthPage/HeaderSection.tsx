@@ -1,26 +1,16 @@
-import { useContext, useState } from "react";
-import { GlobalStateContext } from "../../context/Context";
+import { useState } from "react";
 import { useUser } from "../../context/UserContext";
 import { Form } from "react-bootstrap";
-import Cookies from "universal-cookie";
 import defaultAvatar from "../../assets/images/toon_6.png";
 import loading from "../../assets/images/loading.gif";
 
 const HeaderSection = () => {
-  const cookies = new Cookies();
-  const { state, setState } = useContext(GlobalStateContext);
   const { userState, setUserState } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const [avatarUploaded, setAvatarUploaded] = useState(false);
   const [avatarSavedMessage, setAvatarSavedMessage] = useState(false);
   const apiUrl = process.env.REACT_APP_API_URL;
   const uploadsUrl = `${apiUrl}/uploads`;
-
-  const logout = () => {
-    cookies.remove("TOKEN", { path: "/" });
-    setState({ ...state, isLoggedIn: false });
-    setUserState(null);
-  };
 
   const uploadProfileImage = async (data: any) => {
     const file = userState.avatar;
@@ -83,73 +73,60 @@ const HeaderSection = () => {
 
   return (
     <section className="text-center">
-      <div className="grid grid-cols-9 gap-4">
-        <div className="flex justify-center col-span-6">
-          <div className="flex flex-col justify-center items-center gap-3">
-            <div className="text-xs font-medium flex flex-col gap-3 items-center">
-              <img
-                className="w-16 h-16 object-cover rounded shadow-md"
-                src={
-                  userState.avatar64
-                    ? userState.avatar64
-                    : userState.avatar
-                    ? userState.avatar
-                    : defaultAvatar
-                }
-                alt=""
+      <div className="flex justify-center col-span-6">
+        <div className="flex flex-col justify-center items-center gap-3">
+          <div className="text-xs font-medium flex flex-col gap-3 items-center">
+            <img
+              className="w-16 h-16 object-cover rounded shadow-md"
+              src={
+                userState.avatar64
+                  ? userState.avatar64
+                  : userState.avatar
+                  ? userState.avatar
+                  : defaultAvatar
+              }
+              alt=""
+            />
+            <p>{userState.userName}</p>
+          </div>
+          <Form
+            onSubmit={(e) => handleSubmit(e)}
+            className="flex flex-col gap-3"
+          >
+            {!avatarUploaded && (
+              <Form.Label htmlFor="file-upload">
+                <div className="text-xs btn-outline-dark flex gap-2 justify-center items-center cursor-pointer">
+                  {!avatarSavedMessage ? "Upload" : "Saved!"}
+                </div>
+              </Form.Label>
+            )}
+            <Form.Group className="hidden">
+              <Form.Control
+                id="file-upload"
+                type="file"
+                name="image"
+                accept=".jpeg, .png, .jpg"
+                onChange={(e) => handleFileUpload(e)}
               />
-              <p>{userState.userName}</p>
-            </div>
-            <Form
-              onSubmit={(e) => handleSubmit(e)}
-              className="flex flex-col gap-3"
-            >
-              {!avatarUploaded && (
-                <Form.Label htmlFor="file-upload">
-                  <div className="text-xs btn-outline-dark flex gap-2 justify-center items-center cursor-pointer">
-                    {!avatarSavedMessage ? "Upload" : "Saved!"}
-                  </div>
-                </Form.Label>
-              )}
-              <Form.Group className="hidden">
-                <Form.Control
-                  id="file-upload"
-                  type="file"
-                  name="image"
-                  accept=".jpeg, .png, .jpg"
-                  onChange={(e) => handleFileUpload(e)}
-                />
-              </Form.Group>
-              {avatarUploaded && (
-                <button
-                  className={
-                    isLoading
-                      ? "btn-outline-dark min-w-[90px] text-xs flex justify-center items-center text-dark/20 border-dark/20 shadow-none pointer-events-none"
-                      : "btn-outline-dark min-w-[90px] text-xs flex justify-center items-center"
-                  }
-                  type="submit"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <img className="w-5 h-5" src={loading} alt="" />
-                  ) : (
-                    <>Save</>
-                  )}
-                </button>
-              )}
-            </Form>
-          </div>
-        </div>
-        <div className="col-span-3">
-          <div className="flex justify-end items-center">
-            <button
-              className="btn-outline-danger bg-[#dc35451a] text-[#d50b1f] hover:text-[#d50b1f] hover:bg-[#da6c7733] border-transparent shadow-none text-xs font-semibold"
-              type="submit"
-              onClick={() => logout()}
-            >
-              Logout
-            </button>
-          </div>
+            </Form.Group>
+            {avatarUploaded && (
+              <button
+                className={
+                  isLoading
+                    ? "btn-outline-dark min-w-[90px] text-xs flex justify-center items-center text-dark/20 border-dark/20 shadow-none pointer-events-none"
+                    : "btn-outline-dark min-w-[90px] text-xs flex justify-center items-center"
+                }
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <img className="w-5 h-5" src={loading} alt="" />
+                ) : (
+                  <>Save</>
+                )}
+              </button>
+            )}
+          </Form>
         </div>
       </div>
     </section>

@@ -52,14 +52,17 @@ const Login = () => {
           email: result.email,
           userName: result.userName,
           _id: result._id,
-          role: result.role,
-          talents: result.talents,
+          talentProfile: {
+            role: result.role,
+            talents: result.talents,
+          },
           state: result.state,
           city: result.city,
-          hasHiringDetails: result.hasHiringDetails,
           avatar: result.avatar,
           shopDescription: result.shopDescription,
           productCount: result.productCount,
+          postCount: result.postCount,
+          hiringDetails: result.hiringDetails,
         });
 
         // redirect user to the auth page

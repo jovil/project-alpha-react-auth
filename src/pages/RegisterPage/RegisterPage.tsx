@@ -20,8 +20,10 @@ export default function Register() {
     password: "",
     state: "Johor",
     city: "",
-    talents: "",
-    role: "",
+    talentProfile: {
+      talents: "",
+      role: "",
+    },
     code: "",
   });
 
@@ -69,8 +71,10 @@ export default function Register() {
           userName: result.userName,
           state: result.state,
           city: result.city,
-          role: result.role,
-          talents: result.talents,
+          talentProfile: {
+            role: result.role,
+            talents: result.talents,
+          },
         };
       });
 
@@ -107,6 +111,21 @@ export default function Register() {
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+  };
+
+  const handleTalentChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    showErrorMessage && setShowErrorMessage(false);
+
+    setFormData((prevData) => ({
+      ...prevData,
+      talentProfile: {
+        ...prevData.talentProfile,
+        [name]: value,
+      },
     }));
   };
 
@@ -187,8 +206,8 @@ export default function Register() {
                       className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
                       type="text"
                       name="role"
-                      value={formData.role}
-                      onChange={handleChange}
+                      value={formData.talentProfile.role}
+                      onChange={handleTalentChange}
                       placeholder="Primary role (e.g., Costume Designer, Makeup Artist)"
                       autoFocus
                       required
@@ -201,8 +220,8 @@ export default function Register() {
                       className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
                       type="text"
                       name="talents"
-                      value={formData.talents}
-                      onChange={handleChange}
+                      value={formData.talentProfile.talents}
+                      onChange={handleTalentChange}
                       placeholder="Your talents (e.g., Painting, Content Creation)"
                       autoFocus
                       required

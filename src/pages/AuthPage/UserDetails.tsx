@@ -15,7 +15,10 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
 
     setFormData((prevState: Record<string, any>) => ({
       ...prevState,
-      talents: formData.talents.toString(),
+      talentProfile: {
+        ...prevState.talentProfile,
+        talents: formData.talents.toString(),
+      },
     }));
   };
 
@@ -27,6 +30,20 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
     setFormData((prevState: Record<string, any>) => ({
       ...prevState,
       [name]: value,
+    }));
+  };
+
+  const handleTalentFormInput = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+
+    setFormData((prevState: Record<string, any>) => ({
+      ...prevState,
+      talentProfile: {
+        ...prevState.talentProfile,
+        [name]: value,
+      },
     }));
   };
 
@@ -52,7 +69,7 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
 
   return (
     <>
-      <form className="text-sm max-w-[580px] mx-auto flex flex-col gap-4 p-4">
+      <form className="text-sm max-w-[400px] mx-auto flex flex-col gap-4 p-4 w-full">
         <div className="flex flex-col gap-2">
           <label>Email:</label>
           <input
@@ -98,8 +115,8 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
             className="border border-dark/40 p-3 rounded"
             type="text"
             name="role"
-            value={formData.role}
-            onChange={handleFormInput}
+            value={formData?.talentProfile?.role}
+            onChange={handleTalentFormInput}
             placeholder="Primary role (e.g., Costume Designer, Makeup Artist)"
             required
             disabled={!isEditing}
@@ -112,8 +129,8 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
             className="border border-dark/40 p-3 rounded"
             type="text"
             name="talents"
-            value={formData.talents.toString()}
-            onChange={handleFormInput}
+            value={formData?.talentProfile?.talents?.toString()}
+            onChange={handleTalentFormInput}
             placeholder="Your talents (e.g., Painting, Content Creation)"
             required
             disabled={!isEditing}
