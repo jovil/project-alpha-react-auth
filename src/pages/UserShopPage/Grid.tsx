@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import ProductCard from "../../components/ProductCard";
@@ -15,7 +15,8 @@ interface Product {
 }
 
 const Grid = ({ isUser }: { isUser: any }) => {
-  const { userId } = useParams();
+  const location = useLocation();
+  const { userId } = location.state || {};
   const { userState } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
 

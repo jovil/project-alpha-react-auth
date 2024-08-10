@@ -239,7 +239,8 @@ function App() {
                           <li className="flex">
                             <NavLink
                               className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                              to={`/user/${userState._id}`}
+                              to={`/user/${userState.userName}`}
+                              state={{ userId: userState._id }}
                               onClick={onToggleMenuDropdown}
                             >
                               Profile
@@ -248,28 +249,29 @@ function App() {
                           <li className="flex">
                             <NavLink
                               className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                              to={`/posts/${userState._id}`}
+                              to={`/posts/${userState.userName}`}
+                              state={{ userId: userState._id }}
                               onClick={onToggleMenuDropdown}
                             >
                               Posts
                             </NavLink>
                           </li>
-                          {userState?.productCount > 0 && (
-                            <li className="flex">
-                              <NavLink
-                                className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                                to={`/shop/${userState._id}`}
-                                onClick={onToggleMenuDropdown}
-                              >
-                                Shop
-                              </NavLink>
-                            </li>
-                          )}
+                          <li className="flex">
+                            <NavLink
+                              className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                              to={`/shop/${userState.userName}`}
+                              state={{ userId: userState._id }}
+                              onClick={onToggleMenuDropdown}
+                            >
+                              Shop
+                            </NavLink>
+                          </li>
                           {userState.hasHiringDetails && (
                             <li className="flex">
                               <NavLink
                                 className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
-                                to={`/hire/${userState._id}`}
+                                to={`/hire/${userState.userName}`}
+                                state={{ userId: userState._id }}
                                 onClick={onToggleMenuDropdown}
                               >
                                 Hire me
@@ -389,9 +391,9 @@ function App() {
       </header>
 
       <main
-        className={`${
+        className={`flex flex-col ${
           location.pathname === "/register"
-            ? "flex flex-col justify-center items-center"
+            ? "justify-center items-center"
             : "py-20"
         } ${location.pathname === "/" ? "pb-8" : ""}`}
       >
@@ -401,10 +403,10 @@ function App() {
           <Route path="/auth" element={<ProtectedRoutes />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path={`/shop/:userId`} element={<UserShopPage />} />
-          <Route path={`/user/:userId`} element={<UserPage />} />
-          <Route path={`/posts/:userId`} element={<UserPostsPage />} />
-          <Route path={`/hire/:userId`} element={<UserHirePage />} />
+          <Route path={`/shop/:userName`} element={<UserShopPage />} />
+          <Route path={`/user/:userName`} element={<UserPage />} />
+          <Route path={`/posts/:userName`} element={<UserPostsPage />} />
+          <Route path={`/hire/:userName`} element={<UserHirePage />} />
           <Route path={`/series/:seriesTitle`} element={<SeriesPage />} />
           <Route path={`/shop`} element={<ShopPage />} />
           <Route path={`/talent`} element={<HiringPage />} />

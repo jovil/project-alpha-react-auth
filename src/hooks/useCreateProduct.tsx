@@ -24,8 +24,7 @@ const useCreateProduct = () => {
     document.body.style.overflow = isShowModal ? "hidden" : "";
   }, [isShowModal]);
 
-  const handleToggleCreateProductModal = (e: any) => {
-    if (e.target !== e.currentTarget) return;
+  const handleToggleCreateProductModal = () => {
     setIsShowModal((prevState) => !prevState);
   };
   return {

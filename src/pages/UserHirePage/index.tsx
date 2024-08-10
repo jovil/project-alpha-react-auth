@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import loading from "../../assets/images/loading.gif";
 import { apiUrl } from "../../utils/fetchConfig";
 import { getFetchConfig, postFetchConfig } from "../../utils/fetchConfig";
 import UserNavigation from "../../components/UserNavigation";
+import defaultAvatar from "../../assets/images/toon_6.png";
 
 const UserHirePage = () => {
-  const { userId } = useParams();
+  const location = useLocation();
+  const { userId } = location.state || {};
   const { userState, setUserState } = useUser();
   const [showDescriptionForm, setShowDescriptionForm] = useState(false);
   const [hiringDescriptionText, setHiringDescriptionText] = useState(
@@ -92,7 +94,7 @@ const UserHirePage = () => {
                 <div className="flex flex-col items-center gap-4 w-full px-10">
                   <img
                     className="w-20 h-20 object-cover rounded-full"
-                    src={user.avatar}
+                    src={user.avatar || defaultAvatar}
                     alt=""
                   />
                   <p className="font-medium">{user.userName}</p>

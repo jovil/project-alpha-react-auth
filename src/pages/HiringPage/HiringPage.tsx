@@ -36,7 +36,7 @@ const HiringPage = () => {
         <div className="grid gap-4 tablet:grid-cols-2 desktop:grid-cols-3 gap-y-9">
           {users?.length ? (
             <>
-              {users?.toReversed().map((user: any, index: number) => {
+              {users?.map((user: any, index: number) => {
                 return <TalentCard key={index} talent={user} />;
               })}
             </>

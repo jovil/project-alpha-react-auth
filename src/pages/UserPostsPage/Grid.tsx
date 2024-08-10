@@ -1,12 +1,16 @@
 import { useEffect, useState, useCallback, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
+import { useUser } from "../../context/UserContext";
 import { usePosts } from "../../context/PostsContext";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import { apiUrl } from "../../utils/fetchConfig";
 import GridHeader from "../../components/Grid/header";
 import GridViewContainer from "../../components/Grid/gridViewContainer";
 import Card from "../../components/Card";
+import useFileUpload from "../../hooks/useFileUpload";
+import CreatePostModal from "../../components/CreatePost/modal";
+import SadFace from "../../assets/images/sad-face.svg";
 
 interface User {
   _id: string;
@@ -22,10 +26,19 @@ interface Posts {
 }
 
 const Grid = ({ isUser }: { isUser?: any }) => {
-  const { userId } = useParams();
+  const location = useLocation();
+  const { userId } = location.state || {};
   const { state } = useContext(GlobalStateContext);
+  const { userState } = useUser();
   const { allPosts } = usePosts();
   const [posts, setPosts] = useState<Posts[]>([]);
+  const {
+    showModal,
+    postImage,
+    imageBase64,
+    handleFileUpload,
+    handleTogglePostModal,
+  } = useFileUpload();
 
   const fetchPosts = useCallback(async () => {
     const url = `${apiUrl}/posts/${userId}`;
@@ -75,7 +88,6 @@ const Grid = ({ isUser }: { isUser?: any }) => {
                         captionComponent={"showUserPostsCaption"}
                         data={post}
                         isShowSettings={true}
-                        view={"post"}
                       />
                       {!state.showUserPostsCaption && (
                         <div className="flex flex-col justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
@@ -100,9 +112,43 @@ const Grid = ({ isUser }: { isUser?: any }) => {
           </GridViewContainer>
         </section>
       ) : (
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          No posts
-        </div>
+        <>
+          {userState._id === userId && (
+            <>
+              <section className="flex justify-center items-center flex-grow">
+                <div className="container">
+                  <form className="bg-blue-900 w-full flex flex-col border border-dashed border-dark/60 rounded pointer-events-auto">
+                    <label
+                      className="p-16 m-0 cursor-pointer"
+                      htmlFor="file-upload"
+                    >
+                      <div className="flex flex-col justify-center items-center gap-4">
+                        <img className="h-16 w-16" src={SadFace} alt="" />
+                        <p>You don't have any posts.</p>
+                        <div className="btn-primary">Create a post</div>
+                      </div>
+                    </label>
+                    <div className="hidden">
+                      <input
+                        id="file-upload"
+                        type="file"
+                        name="image"
+                        accept=".jpeg, .png, .jpg"
+                        onChange={handleFileUpload}
+                      />
+                    </div>
+                  </form>
+                </div>
+              </section>
+              <CreatePostModal
+                isShowModal={showModal}
+                isPostImage={postImage}
+                isImageBase64={imageBase64}
+                onToggleModal={handleTogglePostModal}
+              />
+            </>
+          )}
+        </>
       )}
     </>
   );

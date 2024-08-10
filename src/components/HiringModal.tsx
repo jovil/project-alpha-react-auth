@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { NavLink } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import loading from "../assets/images/loading.gif";
 import Backdrop from "./Backdrop";
@@ -6,6 +7,7 @@ import { motion } from "framer-motion";
 import { slideInFromBottom } from "../utils/animations";
 import { apiUrl } from "../utils/fetchConfig";
 import { getFetchConfig, postFetchConfig } from "../utils/fetchConfig";
+import defaultAvatar from "../assets/images/toon_6.png";
 
 const HiringModal = ({
   userId,
@@ -103,12 +105,18 @@ const HiringModal = ({
                 <div className="max-w-[1140px] mx-auto grid grid-cols-12 gap-4 h-full flex-grow">
                   <div className="flex flex-col justify-center items-center px-4 py-10 col-span-5">
                     <div className="flex flex-col items-center gap-4 w-full px-10">
-                      <img
-                        className="w-20 h-20 object-cover rounded-full"
-                        src={user.avatar}
-                        alt=""
-                      />
-                      <p className="font-medium">{user.userName}</p>
+                      <NavLink
+                        className="flex flex-col items-center gap-4"
+                        to={`/user/${user.userName}`}
+                        state={{ userId: user._id }}
+                      >
+                        <img
+                          className="w-20 h-20 object-cover rounded-full"
+                          src={user.avatar || defaultAvatar}
+                          alt=""
+                        />
+                        <p className="font-medium">{user.userName}</p>
+                      </NavLink>
 
                       {user && user._id === userState?._id && (
                         <>

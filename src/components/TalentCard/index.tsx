@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import HiringModal from "../../components/HiringModal";
 import loading from "../../assets/images/loading.gif";
+import defaultAvatar from "../../assets/images/toon_6.png";
 
 const TalentCard = ({
   talent,
@@ -33,7 +34,7 @@ const TalentCard = ({
         className="flex flex-col relative group overflow-hidden cursor-pointer"
         onClick={() => handleToggleModal(talent._id)}
       >
-        <div className="w-full h-auto flex flex-col" key={talent._id}>
+        <div className="w-full h-full flex flex-col" key={talent._id}>
           <div className="h-full relative overflow-hidden">
             {runShimmerAnimation && <div className="shimmer-overlay"></div>}
             {isLoading && (
@@ -43,20 +44,19 @@ const TalentCard = ({
                 alt=""
               />
             )}
-            {talent.avatar && (
-              <img
-                className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform aspect-[5/6]"
-                src={talent.avatar}
-                alt=""
-                loading="lazy"
-                onLoad={handleOnLoad}
-              />
-            )}
+            <img
+              className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform aspect-[5/6]"
+              src={talent.avatar || defaultAvatar}
+              alt=""
+              loading="lazy"
+              onLoad={handleOnLoad}
+            />
           </div>
         </div>
         <div className="p-4 absolute bottom-0 w-full">
-          <div className="bg-white/90 font-medium p-4 flex flex-col justify-between">
-            <p>{talent.userName}</p>
+          <div className="bg-white/90 p-4 flex flex-col justify-between gap-1">
+            <p className="font-medium">{talent.userName}</p>
+            <p className="text-sm">{talent.role}</p>
           </div>
         </div>
       </div>

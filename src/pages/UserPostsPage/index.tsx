@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Grid from "./Grid";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import UserNavigation from "../../components/UserNavigation";
 
 const UserPostsPage = () => {
-  const { userId } = useParams();
+  const location = useLocation();
+  const { userId } = location.state || {};
   const [user, setUser] = useState<Record<string, any | null>>();
 
   const fetchUser = useCallback(async () => {

@@ -1,10 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import defaultAvatar from "../../assets/images/toon_6.png";
 
 const UserNavigation = () => {
-  const { userId } = useParams();
+  const location = useLocation();
+  const { userId } = location.state || {};
+  const { userState } = useUser();
   const [user, setUser] = useState<Record<string, any | null>>();
 
   const fetchUser = useCallback(async () => {
@@ -40,24 +43,13 @@ const UserNavigation = () => {
                       ? "nav-button rounded-full text-sm flex items-center"
                       : "text-sm px-5 py-2 flex items-center text-black-200"
                   }
-                  to={`/user/${user?._id}`}
+                  to={`/user/${user?.userName}`}
+                  state={{ userId: user?._id }}
                 >
                   Profile
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  className={({ isActive }: { isActive: any }) =>
-                    isActive
-                      ? "nav-button rounded-full text-sm flex items-center"
-                      : "text-sm px-5 py-2 flex items-center text-black-200"
-                  }
-                  to={`/posts/${user?._id}`}
-                >
-                  Posts
-                </NavLink>
-              </li>
-              {user?.productCount > 0 && (
+              {(userState?._id === user?._id || user?.postCount > 0) && (
                 <li>
                   <NavLink
                     className={({ isActive }: { isActive: any }) =>
@@ -65,7 +57,23 @@ const UserNavigation = () => {
                         ? "nav-button rounded-full text-sm flex items-center"
                         : "text-sm px-5 py-2 flex items-center text-black-200"
                     }
-                    to={`/shop/${user?._id}`}
+                    to={`/posts/${user?.userName}`}
+                    state={{ userId: user?._id }}
+                  >
+                    Posts
+                  </NavLink>
+                </li>
+              )}
+              {(userState?._id === user?._id || user?.productCount > 0) && (
+                <li>
+                  <NavLink
+                    className={({ isActive }: { isActive: any }) =>
+                      isActive
+                        ? "nav-button rounded-full text-sm flex items-center"
+                        : "text-sm px-5 py-2 flex items-center text-black-200"
+                    }
+                    to={`/shop/${user?.userName}`}
+                    state={{ userId: user?._id }}
                   >
                     Shop
                   </NavLink>
@@ -74,7 +82,8 @@ const UserNavigation = () => {
               {user?.hasHiringDetails && (
                 <li>
                   <NavLink
-                    to={`/hire/${user._id}`}
+                    to={`/hire/${user.userName}`}
+                    state={{ userId: user?._id }}
                     className={({ isActive }: { isActive: any }) =>
                       isActive
                         ? "nav-button rounded-full text-sm flex items-center"

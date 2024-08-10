@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import HeaderSection from "./HeaderSection";
 import UserNavigation from "../../components/UserNavigation";
@@ -32,7 +32,8 @@ interface Product {
 }
 
 const UserPostListPage = () => {
-  const { userId } = useParams();
+  const location = useLocation();
+  const { userId } = location.state || {};
   const { userState, setUserState } = useUser();
   const [user, setUser] = useState<{
     profileName: string;
@@ -111,7 +112,7 @@ const UserPostListPage = () => {
   return (
     <>
       <HeaderSection isUser={user} isLoadingAvatar={isLoadingAvatar} />
-      <div className="max-w-[1140px] py-16 mx-auto grid grid-cols-12 gap-4 h-full flex-grow">
+      <div className="max-w-[1140px] py-16 mx-auto grid grid-cols-12 gap-4 h-full flex-grow w-full">
         <section className="flex flex-col gap-4 px-4 col-span-5">
           <header className="flex justify-between items-end">
             <h2>Products</h2>
