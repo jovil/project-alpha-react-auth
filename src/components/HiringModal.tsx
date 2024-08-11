@@ -202,25 +202,26 @@ const HiringModal = ({
                         <div className="text-sm flex justify-between gap-2">
                           <h4>Favorite characters:</h4>
                           <div className="flex gap-1">
-                            {user.hiringDetails.favoriteCharacters
-                              .split(",")
-                              ?.map((favChar: any, index: any) => {
-                                return (
-                                  <p
-                                    className="font-medium text-blue-100"
-                                    key={index}
-                                  >
-                                    {favChar}
-                                    <>
-                                      {index !==
-                                        user.hiringDetails.favoriteCharacters.split(
-                                          ","
-                                        )?.length -
-                                          1 && <>,</>}
-                                    </>
-                                  </p>
-                                );
-                              })}
+                            {user.hiringDetails.favoriteCharacters &&
+                              user?.hiringDetails?.favoriteCharacters
+                                .split(",")
+                                ?.map((favChar: any, index: any) => {
+                                  return (
+                                    <p
+                                      className="font-medium text-blue-100"
+                                      key={index}
+                                    >
+                                      {favChar}
+                                      <>
+                                        {index !==
+                                          user.hiringDetails.favoriteCharacters.split(
+                                            ","
+                                          )?.length -
+                                            1 && <>,</>}
+                                      </>
+                                    </p>
+                                  );
+                                })}
                           </div>
                         </div>
                       </div>
