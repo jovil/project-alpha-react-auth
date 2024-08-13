@@ -115,15 +115,13 @@ const SearchModal = ({
                               tabIndex={index + 1}
                             >
                               <img
-                                className="w-9 h-9 rounded-full object-cover"
+                                className="w-10 h-10 rounded-full object-cover"
                                 src={user.avatar || defaultAvatar}
                                 alt=""
                               />
                               <div className="flex flex-col">
                                 <p className="font-bold">{user.userName}</p>
-                                <p className="text-sm text-grey">
-                                  {user.state}, {user.city}
-                                </p>
+                                <p className="text-grey">{user.role}</p>
                               </div>
                             </NavLink>
                           </li>
@@ -133,7 +131,7 @@ const SearchModal = ({
                   </ul>
                 )}
                 {searchResultQuery && searchResult?.length > 0 && (
-                  <div className="flex justify-end text-xs text-dark/60 px-6 pt-4 border-t-2 border-[#444]">
+                  <div className="flex justify-end text-sm text-dark/60 px-6 pt-4 border-t-2 border-[#444]">
                     <p>
                       <span className="font-bold">{searchResult?.length}</span>{" "}
                       {searchResult?.length > 1 ? "matches" : "match"} for{" "}

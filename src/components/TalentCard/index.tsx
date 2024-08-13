@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import HiringModal from "../../components/HiringModal";
+import TalentModal from "../TalentModal";
 import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
 
@@ -63,7 +63,7 @@ const TalentCard = ({
 
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
         {showHiringModal && currentUserId === talent._id && (
-          <HiringModal userId={talent._id} onToggleModal={handleToggleModal} />
+          <TalentModal userId={talent._id} onToggleModal={handleToggleModal} />
         )}
       </AnimatePresence>
     </>

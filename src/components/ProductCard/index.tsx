@@ -174,7 +174,7 @@ const ProductCard = ({
         <div className="flex flex-col justify-between gap-4 w-full flex-grow">
           <div className="flex flex-col gap-1">
             <p className="font-bold">{data.productName}</p>
-            <p className="text-sm text-grey">{data.productDescription}</p>
+            <p className="text-grey">{data.productDescription}</p>
           </div>
 
           <p className="font-bold">RM {data.productPrice}</p>

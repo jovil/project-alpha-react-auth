@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useUser } from "../context/UserContext";
-import loadingImage from "../assets/images/loading.gif";
-import Backdrop from "./Backdrop";
+import { useUser } from "../../context/UserContext";
+import loadingImage from "../../assets/images/loading.gif";
+import Backdrop from "../Backdrop";
 import { motion } from "framer-motion";
-import { slideInFromBottom } from "../utils/animations";
-import { getFetchConfig } from "../utils/fetchConfig";
-import defaultAvatar from "../assets/images/toon_6.png";
+import { slideInFromBottom } from "../../utils/animations";
+import { getFetchConfig } from "../../utils/fetchConfig";
+import defaultAvatar from "../../assets/images/toon_6.png";
 import { NavLink } from "react-router-dom";
 
-const HiringModal = ({
+const TalentModal = ({
   userId,
   onToggleModal,
 }: {
@@ -59,10 +59,10 @@ const HiringModal = ({
             className="h-full overflow-scroll mx-auto pointer-events-none"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-white min-h-[calc(100vh-48px)] mt-12 rounded flex flex-col gap-10 relative pointer-events-auto cursor-default">
+            <div className="bg-[#f6f5f2] h-[calc(100vh-48px)] mt-12 rounded flex flex-col relative pointer-events-auto cursor-default">
               {user ? (
                 <div
-                  className="container pt-12 h-full overflow-scroll mx-auto pointer-events-none"
+                  className="container pt-24 h-full overflow-scroll mx-auto pointer-events-none"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="container flex flex-col gap-10 relative pointer-events-auto cursor-default">
@@ -90,8 +90,8 @@ const HiringModal = ({
                               </div>
                             </div>
 
-                            <div className="col-span-4">
-                              <div className="col-span-4 flex flex-col gap-4">
+                            <div className="col-span-4 flex flex-col gap-4">
+                              <div className="col-span-4 flex flex-col gap-4 bg-white rounded-xl p-4 shadow-chunky">
                                 <img
                                   className="w-46 h-46 object-cover rounded-lg"
                                   src={user.avatar || defaultAvatar}
@@ -107,15 +107,15 @@ const HiringModal = ({
                                     <span>{user?.talentProfile?.role}</span>
                                   </NavLink>
 
-                                  <p className="font-medium text-sm text-dark">
+                                  <p className="text-grey">
                                     {user.state}, {user.city}
                                   </p>
                                 </div>
                               </div>
 
-                              <div className="flex flex-col items-center col-span-4">
-                                <div className="py-6 border-b-2 border-[#444] w-full">
-                                  <div className="text-sm flex flex-col justify-between gap-2">
+                              <div className="flex flex-col items-center col-span-4 bg-white rounded-xl p-4 shadow-chunky">
+                                <div className="w-full">
+                                  <div className="text-sm flex flex-col justify-between gap-3">
                                     <h4 className="subtitle">Talents:</h4>
                                     <div className="flex flex-wrap gap-2">
                                       {user?.talentProfile?.talents?.map(
@@ -161,4 +161,4 @@ const HiringModal = ({
   );
 };
 
-export default HiringModal;
+export default TalentModal;

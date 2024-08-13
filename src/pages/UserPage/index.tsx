@@ -85,7 +85,7 @@ const UserPostListPage = () => {
     }
 
     // eslint-disable-next-line
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     fetchUser();
