@@ -101,7 +101,7 @@ const ShopPage = () => {
         <header className="hidden tablet:flex justify-end items-center gap-4">
           <form className="min-w-[200px]" onSubmit={handleSubmit}>
             <input
-              className="font-bold border-2 border-[#444] p-3 py-2 rounded w-full"
+              className="font-bold border-2 border-[#444] p-3 py-2 rounded-lg w-full"
               type="search"
               placeholder="Search product"
               onChange={handleSearch}
@@ -112,7 +112,7 @@ const ShopPage = () => {
             <form>
               <div className="relative">
                 <select
-                  className="font-bold border-2 border-[#444] p-3 py-2 rounded min-w-[200px]"
+                  className="font-bold border-2 border-[#444] p-3 py-2 rounded-lg min-w-[200px]"
                   name="state"
                   value={sortBy}
                   onChange={handleSortBy}

@@ -182,7 +182,10 @@ const Card = ({
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
         {showDeleteConfirmationModal && (
           <Backdrop
-            onClick={() => setShowDeleteConfirmationModal(false)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowDeleteConfirmationModal(false);
+            }}
             showCloseButton={false}
           >
             <motion.div

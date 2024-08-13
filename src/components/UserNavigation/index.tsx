@@ -34,14 +34,14 @@ const UserNavigation = () => {
           alt=""
         />
         <div className="relative">
-          <nav className="bg-white border-2 border-[#444] rounded-full shadow-nav p-2 pointer-events-auto">
+          <nav className="bg-white border-2 border-[#444] rounded-xl shadow-nav shadow-chunky p-2 pointer-events-auto">
             <ul className="flex items-center gap-1">
               <li>
                 <NavLink
                   className={({ isActive }: { isActive: any }) =>
-                    isActive
-                      ? "font-bold text-sm px-5 py-2 flex items-center text-blue-100"
-                      : "font-bold text-sm px-5 py-2 flex items-center text-black-200"
+                    `font-bold text-sm rounded-lg px-5 py-2 flex items-center transition-colors hover:bg-blue-900 ${
+                      isActive ? "text-blue-100 bg-blue-900" : ""
+                    }`
                   }
                   to={`/user/${user?.userName.toLowerCase()}`}
                   state={{ userId: user?._id }}
@@ -53,9 +53,9 @@ const UserNavigation = () => {
                 <li>
                   <NavLink
                     className={({ isActive }: { isActive: any }) =>
-                      isActive
-                        ? "font-bold text-sm px-5 py-2 flex items-center text-blue-100"
-                        : "font-bold text-sm px-5 py-2 flex items-center text-black-200"
+                      `font-bold text-sm rounded-lg px-5 py-2 flex items-center transition-colors hover:bg-blue-900 ${
+                        isActive ? "text-blue-100 bg-blue-900" : ""
+                      }`
                     }
                     to={`/posts/${user?.userName.toLowerCase()}`}
                     state={{ userId: user?._id }}
@@ -68,9 +68,9 @@ const UserNavigation = () => {
                 <li>
                   <NavLink
                     className={({ isActive }: { isActive: any }) =>
-                      isActive
-                        ? "font-bold text-sm px-5 py-2 flex items-center text-blue-100"
-                        : "font-bold text-sm px-5 py-2 flex items-center text-black-200"
+                      `font-bold text-sm rounded-lg px-5 py-2 flex items-center transition-colors hover:bg-blue-900 ${
+                        isActive ? "text-blue-100 bg-blue-900" : ""
+                      }`
                     }
                     to={`/shop/${user?.userName.toLowerCase()}`}
                     state={{ userId: user?._id }}
@@ -82,15 +82,15 @@ const UserNavigation = () => {
               {(userState?._id === user?._id || user?.talentProfileActive) && (
                 <li>
                   <NavLink
-                    to={`/hire/${user?.userName.toLowerCase()}`}
+                    to={`/talent/${user?.userName.toLowerCase()}`}
                     state={{ userId: user?._id }}
                     className={({ isActive }: { isActive: any }) =>
-                      isActive
-                        ? "font-bold text-sm px-5 py-2 flex items-center text-blue-100"
-                        : "font-bold text-sm px-5 py-2 flex items-center text-black-200"
+                      `font-bold text-sm rounded-lg px-5 py-2 flex items-center transition-colors hover:bg-blue-900 ${
+                        isActive ? "text-blue-100 bg-blue-900" : ""
+                      }`
                     }
                   >
-                    Hire {user?.userName}
+                    Talent
                   </NavLink>
                 </li>
               )}

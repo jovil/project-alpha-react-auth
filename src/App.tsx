@@ -12,11 +12,11 @@ import UserShopPage from "./pages/UserShopPage/index";
 import ShopPage from "./pages/ShopPage/ShopPage";
 import UserPage from "./pages/UserPage";
 import SeriesPage from "./pages/SeriesPage/SeriesPage";
-import HiringPage from "./pages/HiringPage/HiringPage";
+import TalentPage from "./pages/TalentPage";
 import SeriesListPage from "./pages/SeriesListPage";
 import { AnimatePresence } from "framer-motion";
 import UserPostsPage from "./pages/UserPostsPage/index";
-import UserHirePage from "./pages/UserHirePage/index";
+import UserTalentPage from "./pages/UserTalentPage/index";
 import CreatePost from "./components/CreatePost";
 import CreatePostModal from "./components/CreatePost/modal";
 import useFileUpload from "./hooks/useFileUpload";
@@ -275,11 +275,11 @@ function App() {
                           <li className="flex">
                             <NavLink
                               className="text-sm font-bold px-5 py-5 hover:bg-blue-900 whitespace-nowrap w-full"
-                              to={`/hire/${userState.userName.toLowerCase()}`}
+                              to={`/talent/${userState.userName.toLowerCase()}`}
                               state={{ userId: userState._id }}
                               onClick={onToggleMenuDropdown}
                             >
-                              Talent page
+                              Talent
                             </NavLink>
                           </li>
                         </ul>
@@ -410,10 +410,10 @@ function App() {
           <Route path={`/shop/:userName`} element={<UserShopPage />} />
           <Route path={`/user/:userName`} element={<UserPage />} />
           <Route path={`/posts/:userName`} element={<UserPostsPage />} />
-          <Route path={`/hire/:userName`} element={<UserHirePage />} />
+          <Route path={`/talent/:userName`} element={<UserTalentPage />} />
           <Route path={`/series/:seriesTitle`} element={<SeriesPage />} />
           <Route path={`/shop`} element={<ShopPage />} />
-          <Route path={`/talent`} element={<HiringPage />} />
+          <Route path={`/talent`} element={<TalentPage />} />
           <Route path={`/series`} element={<SeriesListPage />} />
         </Routes>
 

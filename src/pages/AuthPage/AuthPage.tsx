@@ -136,13 +136,15 @@ const AuthComponent = () => {
 
   return (
     <>
-      <div className="container flex flex-col gap-4">
-        <nav>
+      <div className="container flex flex-col gap-6">
+        <nav className="shadow-chunky rounded-xl overflow-hidden">
           <ul className="font-bold text-sm p-1.5 bg-white rounded flex items-start gap-1">
             <li className="w-full">
               <button
-                className={`text-left px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full ${
-                  currentView === View.Account ? "bg-blue-900" : ""
+                className={`text-left px-8 py-3 rounded-lg hover:bg-blue-900 whitespace-nowrap w-full transition-colors ${
+                  currentView === View.Account
+                    ? "bg-blue-900 text-blue-100"
+                    : ""
                 }`}
                 onClick={() => handleViewClick(View.Account)}
               >
@@ -151,8 +153,10 @@ const AuthComponent = () => {
             </li>
             <li className="w-full">
               <button
-                className={`text-left px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full ${
-                  currentView === View.TalentProfile ? "bg-blue-900" : ""
+                className={`text-left px-8 py-3 rounded-lg hover:bg-blue-900 whitespace-nowrap w-full transition-colors ${
+                  currentView === View.TalentProfile
+                    ? "bg-blue-900 text-blue-100"
+                    : ""
                 }`}
                 onClick={() => handleViewClick(View.TalentProfile)}
               >
@@ -161,8 +165,10 @@ const AuthComponent = () => {
             </li>
             <li className="w-full">
               <button
-                className={`text-left px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full ${
-                  currentView === View.BankDetails ? "bg-blue-900" : ""
+                className={`text-left px-8 py-3 rounded-lg hover:bg-blue-900 whitespace-nowrap w-full transition-colors ${
+                  currentView === View.BankDetails
+                    ? "bg-blue-900 text-blue-100"
+                    : ""
                 }`}
                 onClick={() => handleViewClick(View.BankDetails)}
               >
@@ -172,8 +178,10 @@ const AuthComponent = () => {
             {userState.email === "hi@jovil.dev" && (
               <li className="w-full">
                 <button
-                  className={`text-left px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full ${
-                    currentView === View.InviteUser ? "bg-blue-900" : ""
+                  className={`text-left px-8 py-3 rounded-lg hover:bg-blue-900 whitespace-nowrap w-full transition-colors ${
+                    currentView === View.InviteUser
+                      ? "bg-blue-900 text-blue-100"
+                      : ""
                   }`}
                   onClick={() => handleViewClick(View.InviteUser)}
                 >
@@ -183,8 +191,8 @@ const AuthComponent = () => {
             )}
           </ul>
         </nav>
-        <div className="p-4 bg-white rounded flex flex-col gap-4">
-          <div className="flex justify-end items-center">
+        <div className="p-4 bg-white shadow-chunky rounded-xl flex flex-col gap-4">
+          <div className="px-4 flex justify-end items-center">
             <button
               className="btn-chunky-danger text-xs"
               type="submit"

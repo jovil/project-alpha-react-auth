@@ -95,7 +95,7 @@ const Grid = ({ isUser }: { isUser?: any }) => {
                 gridViewProp={"userPostsView"}
                 captionProp={"showUserPostsCaption"}
               >
-                <h2>All posts</h2>
+                <h2 className="subtitle">All posts</h2>
               </GridHeader>
               <GridViewContainer
                 gridComponent={"userPostsView"}
