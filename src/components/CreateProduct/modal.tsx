@@ -217,7 +217,7 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
         exit="exit"
         onClick={(e) => e.stopPropagation()}
       >
-        <section className="min-h-[calc(100vh-16px)] m-2 bg-white rounded p-3 pb-16 flex flex-col gap-3 relative">
+        <section className="min-h-[calc(100vh-16px)] m-4 bg-white rounded p-3 pb-16 flex flex-col gap-3 relative">
           <header>
             <h2 className="subtitle">Create product</h2>
           </header>

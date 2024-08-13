@@ -186,7 +186,7 @@ const AuthComponent = () => {
         <div className="p-4 bg-white rounded flex flex-col gap-4">
           <div className="flex justify-end items-center">
             <button
-              className="btn-chunky-danger bg-[#dc35451a] text-[#d50b1f] hover:text-[#d50b1f] hover:bg-[#da6c7733] text-xs"
+              className="btn-chunky-danger text-xs"
               type="submit"
               onClick={() => logout()}
             >
@@ -201,9 +201,7 @@ const AuthComponent = () => {
                   onSubmit={(e) => submitFormInviteUser(e)}
                 >
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm uppercase tracking-wide font-bold">
-                      Invite user:
-                    </label>
+                    <label className="subtitle">Invite user:</label>
                     <input
                       className="border-2 border-[#444] p-3 rounded"
                       value={emailInvite}

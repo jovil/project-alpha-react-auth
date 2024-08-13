@@ -139,9 +139,7 @@ const UserPostListPage = () => {
           <div className="max-w-[1140px] py-16 mx-auto grid grid-cols-12 gap-4 h-full flex-grow w-full">
             <section className="flex flex-col gap-4 px-4 col-span-5">
               <header className="flex justify-between items-end">
-                <h2 className="font-bold tracking-wide uppercase text-sm">
-                  Products
-                </h2>
+                <h2 className="subtitle">Products</h2>
                 {products.length > 0 && (
                   <NavLink
                     className="font-bold text-sm text-blue-100 underline"
@@ -154,7 +152,7 @@ const UserPostListPage = () => {
               </header>
               <div
                 className={`${
-                  products.length > 0 ? "grid gap-3 tablet:grid-cols-2" : ""
+                  products.length > 0 ? "grid gap-4 tablet:grid-cols-2" : ""
                 }`}
               >
                 {products.map((product: any, index: number) => {
@@ -217,9 +215,7 @@ const UserPostListPage = () => {
 
             <section className="px-4 col-span-7 flex flex-col gap-4">
               <header className="flex justify-between items-end">
-                <h2 className="font-bold tracking-wide uppercase text-sm">
-                  Posts
-                </h2>
+                <h2 className="subtitle">Posts</h2>
                 {posts.length > 0 && (
                   <NavLink
                     className="font-bold text-sm text-blue-100 underline"

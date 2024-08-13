@@ -83,9 +83,7 @@ const Login = () => {
         <div className="flex flex-col gap-4 w-full">
           {/* email */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm uppercase tracking-wide">
-              Email address
-            </label>
+            <label className="subtitle">Email address</label>
             <input
               className="border-2 border-[#444] p-3 rounded"
               type="email"
@@ -99,7 +97,7 @@ const Login = () => {
 
           {/* password */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm uppercase tracking-wide">Password</label>
+            <label className="subtitle">Password</label>
             <input
               className="border-2 border-[#444] p-3 rounded"
               type="password"

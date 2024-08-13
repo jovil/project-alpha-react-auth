@@ -71,9 +71,7 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
     <>
       <form className="max-w-[400px] mx-auto flex flex-col gap-6 p-4 w-full">
         <div className="flex flex-col gap-2">
-          <label className="text-sm uppercase tracking-wide font-bold">
-            Email:
-          </label>
+          <label className="subtitle">Email:</label>
           <input
             className="border-2 border-[#444] p-3 rounded"
             type="email"
@@ -86,9 +84,7 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-sm uppercase tracking-wide font-bold">
-            Username:
-          </label>
+          <label className="subtitle">Username:</label>
           <input
             className="border-2 border-[#444] p-3 rounded"
             type="text"
@@ -101,9 +97,7 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-sm uppercase tracking-wide font-bold">
-            Password:
-          </label>
+          <label className="subtitle">Password:</label>
           <input
             className="border-2 border-[#444] p-3 rounded"
             type="password"
@@ -116,9 +110,7 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm uppercase tracking-wide font-bold">
-            Creative role:
-          </label>
+          <label className="subtitle">Creative role:</label>
           <input
             className="border-2 border-[#444] p-3 rounded"
             type="text"
@@ -132,9 +124,7 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm uppercase tracking-wide font-bold">
-            Talents:
-          </label>
+          <label className="subtitle">Talents:</label>
           <input
             className="border-2 border-[#444] p-3 rounded"
             type="text"
@@ -148,10 +138,7 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label
-            className="text-sm uppercase tracking-wide font-bold"
-            htmlFor="state"
-          >
+          <label className="subtitle" htmlFor="state">
             State / Federal Territory:
           </label>
           <select
@@ -182,9 +169,7 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm uppercase tracking-wide font-bold">
-            City / District:
-          </label>
+          <label className="subtitle">City / District:</label>
           <input
             className="border-2 border-[#444] p-3 rounded"
             type="text"

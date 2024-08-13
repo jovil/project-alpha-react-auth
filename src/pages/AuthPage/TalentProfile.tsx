@@ -121,9 +121,7 @@ const TalentProfile = ({
           <div className="grid grid-cols-12 gap-6 w-full">
             <div className="col-span-4 flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <label className="text-sm uppercase tracking-wide font-bold">
-                  Creative role:
-                </label>
+                <label className="subtitle">Creative role:</label>
                 <input
                   className="border-2 border-[#444] p-3 rounded"
                   type="text"
@@ -136,9 +134,7 @@ const TalentProfile = ({
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-sm uppercase tracking-wide font-bold">
-                  Talents:
-                </label>
+                <label className="subtitle">Talents:</label>
                 <textarea
                   className="border-2 border-[#444] p-3 rounded"
                   rows={4}
@@ -157,9 +153,7 @@ const TalentProfile = ({
 
             <div className="col-span-4 flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <label className="text-sm uppercase tracking-wide font-bold">
-                  Headline:
-                </label>
+                <label className="subtitle">Headline:</label>
                 <input
                   className="border-2 border-[#444] p-3 rounded"
                   type="text"
@@ -172,9 +166,7 @@ const TalentProfile = ({
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-sm uppercase tracking-wide font-bold">
-                  Description:
-                </label>
+                <label className="subtitle">Description:</label>
                 <textarea
                   className="border-2 border-[#444] p-3 rounded"
                   rows={4}
@@ -191,9 +183,7 @@ const TalentProfile = ({
 
             <div className="col-span-4 flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <label className="text-sm uppercase tracking-wide font-bold">
-                  WhatsApp:
-                </label>
+                <label className="subtitle">WhatsApp:</label>
                 <input
                   className="border-2 border-[#444] p-3 rounded"
                   type="number"

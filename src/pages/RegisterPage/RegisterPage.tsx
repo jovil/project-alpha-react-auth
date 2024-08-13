@@ -141,9 +141,7 @@ export default function Register() {
             <div className="flex flex-col gap-6">
               {currentStep === 1 && (
                 <div className="flex flex-col gap-2">
-                  <label className="text-sm uppercase tracking-wide font-bold">
-                    Invite code:
-                  </label>
+                  <label className="subtitle">Invite code:</label>
                   <input
                     className="border-2 border-[#444] p-3 rounded"
                     type="text"
@@ -159,9 +157,7 @@ export default function Register() {
               {currentStep === 2 && (
                 <>
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm uppercase tracking-wide font-bold">
-                      Email address:
-                    </label>
+                    <label className="subtitle">Email address:</label>
                     <input
                       className="border-2 border-[#444] p-3 rounded"
                       type="email"
@@ -175,9 +171,7 @@ export default function Register() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm uppercase tracking-wide font-bold">
-                      Username:
-                    </label>
+                    <label className="subtitle">Username:</label>
                     <input
                       className="border-2 border-[#444] p-3 rounded"
                       type="text"
@@ -190,9 +184,7 @@ export default function Register() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm uppercase tracking-wide font-bold">
-                      Password:
-                    </label>
+                    <label className="subtitle">Password:</label>
                     <input
                       className="border-2 border-[#444] p-3 rounded"
                       type="password"
@@ -209,9 +201,7 @@ export default function Register() {
               {currentStep === 3 && (
                 <>
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm uppercase tracking-wide font-bold">
-                      Creative role:
-                    </label>
+                    <label className="subtitle">Creative role:</label>
                     <input
                       className="border-2 border-[#444] p-3 rounded"
                       type="text"
@@ -225,9 +215,7 @@ export default function Register() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm uppercase tracking-wide font-bold">
-                      Talents:
-                    </label>
+                    <label className="subtitle">Talents:</label>
                     <input
                       className="border-2 border-[#444] p-3 rounded"
                       type="text"
@@ -245,10 +233,7 @@ export default function Register() {
               {currentStep === 4 && (
                 <>
                   <div className="flex flex-col gap-2">
-                    <label
-                      className="text-sm uppercase tracking-wide font-bold"
-                      htmlFor="state"
-                    >
+                    <label className="subtitle" htmlFor="state">
                       State / Federal Territory:
                     </label>
                     <div className="relative">
@@ -299,9 +284,7 @@ export default function Register() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm uppercase tracking-wide font-bold">
-                      City / District:
-                    </label>
+                    <label className="subtitle">City / District:</label>
                     <input
                       className="border-2 border-[#444] p-3 rounded"
                       type="text"

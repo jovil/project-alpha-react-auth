@@ -90,11 +90,9 @@ const UserHirePage = () => {
                           </div>
 
                           <div className="flex flex-col items-center col-span-4">
-                            <div className="py-6 border-b-2 border-[#444]">
+                            <div className="py-6 border-b-2 border-[#444] w-full">
                               <div className="text-sm flex flex-col justify-between gap-2">
-                                <h4 className="uppercase font-bold tracking-wide">
-                                  Talents:
-                                </h4>
+                                <h4 className="subtitle">Talents:</h4>
                                 <div className="flex flex-wrap gap-2">
                                   {user?.talentProfile?.talents?.map(
                                     (talent: string, index: number) => {

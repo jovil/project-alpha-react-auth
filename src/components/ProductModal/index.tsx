@@ -88,7 +88,7 @@ const ProductModal = ({
         exit="exit"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="min-h-[calc(100vh-16px)] m-2 bg-white rounded p-3 pb-16 flex flex-col gap-3 relative">
+        <div className="min-h-[calc(100vh-16px)] m-4 bg-white rounded p-3 pb-16 flex flex-col gap-3 relative">
           {product ? (
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-3">
@@ -145,7 +145,7 @@ const ProductModal = ({
                 <div>
                   <NavLink
                     to={product.paymentLink}
-                    className="btn-primary block text-center py-2.5"
+                    className="btn-chunky-primary block text-center"
                   >
                     Buy now
                   </NavLink>

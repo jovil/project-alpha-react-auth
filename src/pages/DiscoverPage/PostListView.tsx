@@ -143,9 +143,7 @@ const PostListView = () => {
       </AnimatePresence>
       <section className="container flex flex-col gap-4 min-h-[100vh]">
         <GridHeader gridViewProp={"postsView"} captionProp={"showPostsCaption"}>
-          <h1 className="uppercase font-bold tracking-wide text-sm">
-            All posts
-          </h1>
+          <h1 className="subtitle">All posts</h1>
         </GridHeader>
         <GridViewContainer
           gridComponent={"postsView"}

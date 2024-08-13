@@ -58,9 +58,7 @@ const Grid = ({ isUser }: { isUser: any }) => {
           {products.length > 0 && (
             <section className="container flex flex-col gap-4 py-16">
               <header className="hidden tablet:flex justify-between items-center gap-2 h-7">
-                <h1 className="text-sm font-bold uppercase tracking-wide">
-                  All products
-                </h1>
+                <h1 className="subtitle">All products</h1>
               </header>
               <div className="grid gap-4 tablet:grid-cols-2 desktop:grid-cols-3 gap-y-9">
                 <>

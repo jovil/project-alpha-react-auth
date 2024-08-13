@@ -96,9 +96,7 @@ const BankDetails = () => {
         <div className="p-4 pb-6">
           <form className="flex flex-col gap-6" onSubmit={submitBankDetails}>
             <div className="flex flex-col gap-2">
-              <label className="text-sm uppercase tracking-wide font-bold">
-                Account holder's name:
-              </label>
+              <label className="subtitle">Account holder's name:</label>
               <input
                 className="border-2 border-[#444] p-3 rounded"
                 type="text"
@@ -120,9 +118,7 @@ const BankDetails = () => {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-sm uppercase tracking-wide font-bold">
-                Bank name:
-              </label>
+              <label className="subtitle">Bank name:</label>
               <input
                 className="border-2 border-[#444] p-3 rounded"
                 type="text"
@@ -139,9 +135,7 @@ const BankDetails = () => {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-sm uppercase tracking-wide font-bold">
-                Account number:
-              </label>
+              <label className="subtitle">Account number:</label>
               <input
                 className="border-2 border-[#444] p-3 rounded"
                 type="number"
