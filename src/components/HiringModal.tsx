@@ -97,7 +97,7 @@ const HiringModal = ({
                                   src={user.avatar || defaultAvatar}
                                   alt=""
                                 />
-                                <div>
+                                <div className="flex flex-col gap-1">
                                   <NavLink
                                     className="font-bold text-blue-100"
                                     to={`/user/${user.userName.toLowerCase()}`}
@@ -107,7 +107,7 @@ const HiringModal = ({
                                     <span>{user?.talentProfile?.role}</span>
                                   </NavLink>
 
-                                  <p className="text-sm text-dark">
+                                  <p className="font-medium text-sm text-dark">
                                     {user.state}, {user.city}
                                   </p>
                                 </div>

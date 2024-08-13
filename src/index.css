@@ -228,10 +228,9 @@ header.is-hidden {
 
 .toggle-btn {
   background-color: #b7b9ba;
-  border: 2px solid #444;
   border-radius: 99px;
-  width: 46px;
-  height: 26px;
+  width: 42px;
+  height: 24px;
   transition: background-color 0.1s ease, border-color 0.2s ease;
   cursor: pointer;
   position: relative;
@@ -245,13 +244,13 @@ header.is-hidden {
   transform: translateX(0);
   transition: left 0.15s ease;
   position: absolute;
-  left: 3px;
+  left: 4px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .toggle-btn.toggled {
-  background-color: #15b58e;
+  background-color: #009934;
 }
 
 .toggle-btn.toggled .thumb {

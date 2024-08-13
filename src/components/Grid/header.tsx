@@ -1,7 +1,5 @@
 import { useContext } from "react";
 import { GlobalStateContext } from "../../context/Context";
-import iconGrid from "../../assets/images/icon-grid.svg";
-import iconList from "../../assets/images/icon-list.svg";
 
 const GridHeader = ({
   children,
@@ -61,24 +59,74 @@ const GridHeader = ({
                 state[gridViewProp] === "list" ? "bg-dark/10" : ""
               }`}
             >
-              <img
+              <svg
                 className={`w-8 h-8 p-1.5`}
-                src={iconList}
                 onClick={() => handleListView(gridViewProp)}
-                alt=""
-              />
+                width="800px"
+                height="800px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3.5 20.5L3.5 13.5L20.5 13.5V20.5H3.5Z"
+                  stroke="#000000"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M3.5 10.5L3.5 3.5L20.5 3.5V10.5L3.5 10.5Z"
+                  stroke="#000000"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </button>
             <button
               className={`rounded-full ${
                 state[gridViewProp] === "grid" ? "bg-dark/10" : ""
               }`}
             >
-              <img
+              <svg
                 className={`w-8 h-8 p-1.5`}
-                src={iconGrid}
                 onClick={() => handleGridView(gridViewProp)}
-                alt=""
-              />
+                width="800px"
+                height="800px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3.5 3.5H10.5V10.5H3.5V3.5Z"
+                  stroke="#000000"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M3.5 13.5H10.5V20.5H3.5V13.5Z"
+                  stroke="#000000"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M13.5 3.5H20.5V10.5H13.5V3.5Z"
+                  stroke="#000000"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M13.5 13.5H20.5V20.5H13.5V13.5Z"
+                  stroke="#000000"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </button>
           </div>
         </div>

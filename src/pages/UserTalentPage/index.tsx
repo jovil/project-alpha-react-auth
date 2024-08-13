@@ -77,13 +77,17 @@ const UserHirePage = () => {
                               src={user.avatar || defaultAvatar}
                               alt=""
                             />
-                            <div>
-                              <p className="font-bold">
+                            <div className="flex flex-col gap-1">
+                              <NavLink
+                                className="font-bold text-blue-100"
+                                to={`/user/${user.userName.toLowerCase()}`}
+                                state={{ userId: user._id }}
+                              >
                                 {user.userName},{" "}
                                 <span>{user?.talentProfile?.role}</span>
-                              </p>
+                              </NavLink>
 
-                              <p className="text-sm text-blue-100">
+                              <p className="font-medium text-sm text-dark">
                                 {user.state}, {user.city}
                               </p>
                             </div>
