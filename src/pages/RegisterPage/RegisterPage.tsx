@@ -373,14 +373,14 @@ export default function Register() {
         </div>
       </div>
       <div className="col-span-7 pb-4 px-4">
-        <div className="text-white bg-[#093cf4] p-16 rounded-xl h-full">
-          <div className="max-w-[570px] flex flex-col gap-16">
+        <div className="text-white bg-[#0730c5] p-16 rounded-xl h-full">
+          <div className="max-w-[500px] flex flex-col gap-16">
             <div className="flex flex-col gap-6">
               <h1 className="font-medium text-3xl">
                 Exclusive Platform for Creators to Share, Sell, and Shine
               </h1>
 
-              <p>
+              <p className="leading-7">
                 Join a community of talented creators showcasing their work,
                 selling unique products, and offering bespoke services. Our
                 platform ensures a dedicated space for your creativity to
@@ -392,7 +392,7 @@ export default function Register() {
               <div className="flex flex-col gap-4">
                 <p className="font-bold">Why Sign Up?</p>
 
-                <ul className="list-disc max-w-[470px] flex flex-col gap-3">
+                <ul className="leading-7 list-disc max-w-[470px] flex flex-col gap-3">
                   <li>
                     <span className="font-bold">Showcase Your Work:</span> Share
                     your latest creations with a community that appreciates
@@ -411,7 +411,7 @@ export default function Register() {
                 </ul>
               </div>
 
-              <div className="font-bold">
+              <div className="font-bold leading-7">
                 <p>Start Making Money Doing What You Love.</p>
                 <p>All in One Beautiful Space.</p>
               </div>
