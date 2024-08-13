@@ -7,7 +7,7 @@ const UserAvatar = ({ data }: { data: any }) => {
       <div className="flex">
         <NavLink
           className="flex gap-2 items-center"
-          to={`/user/${data.user?.userName}`}
+          to={`/user/${data.user?.userName.toLowerCase()}`}
           state={{ userId: data.user._id }}
         >
           <img

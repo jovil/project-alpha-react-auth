@@ -91,11 +91,15 @@ const ShopPage = () => {
     sortAndSetProducts(searchedProducts, sortBy);
   };
 
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <>
       <section className="container flex flex-col gap-12">
         <header className="text-sm hidden tablet:flex justify-end items-center gap-4">
-          <form className="min-w-[200px]">
+          <form className="min-w-[200px]" onSubmit={handleSubmit}>
             <input
               className="font-bold border-2 border-[#444] p-3 py-2 rounded w-full"
               type="search"

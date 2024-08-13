@@ -49,7 +49,7 @@ const UserHirePage = () => {
                 {user ? (
                   <>
                     <div className="flex justify-between items-center w-full">
-                      <div className="grid grid-cols-12 gap-16">
+                      <div className="grid grid-cols-12 gap-16 w-full">
                         <div className="col-span-8 py-12 flex flex-col gap-10">
                           <div className="flex flex-col gap-6">
                             <h2 className="text-6xl font-medium leading-tight">
@@ -130,7 +130,7 @@ const UserHirePage = () => {
                 <>
                   <section className="flex justify-center items-center flex-grow">
                     <div className="container">
-                      <div className="bg-blue-900 w-full flex flex-col border border-dashed border-dark/60 rounded pointer-events-auto">
+                      <div className="bg-dark/5 w-full flex flex-col border border-dashed border-dark/60 rounded pointer-events-auto">
                         <NavLink
                           className="p-16 m-0 cursor-pointer"
                           to="/auth?view=talent"

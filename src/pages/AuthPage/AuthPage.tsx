@@ -89,7 +89,6 @@ const AuthComponent = () => {
                 bankName: result.bankAccountDetails?.bankName,
               }
             : null,
-          hasHiringDetails: result.hasHiringDetails,
           talentProfile: result.talentProfile
             ? {
                 title: result.talentProfile.title,
@@ -184,57 +183,61 @@ const AuthComponent = () => {
             )}
           </ul>
         </nav>
-        <div className="flex justify-end items-center">
-          <button
-            className="btn-chunky-danger bg-[#dc35451a] text-[#d50b1f] hover:text-[#d50b1f] hover:bg-[#da6c7733] text-xs"
-            type="submit"
-            onClick={() => logout()}
-          >
-            Logout
-          </button>
-        </div>
-        <div className="col-span-6">
-          {currentView === View.InviteUser && (
-            <>
-              <form
-                className="text-sm max-w-[400px] mx-auto p-4 flex flex-col gap-4"
-                onSubmit={(e) => submitFormInviteUser(e)}
-              >
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="invite_user">Invite user:</label>
-                  <input
-                    className="border border-dark/40 p-3 rounded"
-                    value={emailInvite}
-                    onChange={(e) => setEmailInvite(e.target.value)}
-                    type="email"
-                    placeholder="Enter email"
-                    name="invite_user"
-                  />
-                </div>
-                <button
-                  className="btn-primary"
+        <div className="p-4 bg-white rounded flex flex-col gap-4">
+          <div className="flex justify-end items-center">
+            <button
+              className="btn-chunky-danger bg-[#dc35451a] text-[#d50b1f] hover:text-[#d50b1f] hover:bg-[#da6c7733] text-xs"
+              type="submit"
+              onClick={() => logout()}
+            >
+              Logout
+            </button>
+          </div>
+          <div className="col-span-6">
+            {currentView === View.InviteUser && (
+              <>
+                <form
+                  className="max-w-[400px] mx-auto p-4 flex flex-col gap-4"
                   onSubmit={(e) => submitFormInviteUser(e)}
-                  type="submit"
                 >
-                  Invite user
-                </button>
-              </form>
-            </>
-          )}
-          {currentView === View.Account && (
-            <>
-              <HeaderSection />
-              <section className="max-w-[400px] py-12 mx-auto">
-                <UserDetails isPassword={password} />
-              </section>
-            </>
-          )}
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm uppercase tracking-wide font-bold">
+                      Invite user:
+                    </label>
+                    <input
+                      className="border-2 border-[#444] p-3 rounded"
+                      value={emailInvite}
+                      onChange={(e) => setEmailInvite(e.target.value)}
+                      type="email"
+                      placeholder="Enter email"
+                      name="invite_user"
+                    />
+                  </div>
+                  <button
+                    className="btn-chunky-primary"
+                    onSubmit={(e) => submitFormInviteUser(e)}
+                    type="submit"
+                  >
+                    Invite user
+                  </button>
+                </form>
+              </>
+            )}
+            {currentView === View.Account && (
+              <>
+                <HeaderSection />
+                <section className="max-w-[400px] py-12 mx-auto">
+                  <UserDetails isPassword={password} />
+                </section>
+              </>
+            )}
 
-          {currentView === View.TalentProfile && (
-            <TalentProfile isHiringDetails={hiringDetails} />
-          )}
+            {currentView === View.TalentProfile && (
+              <TalentProfile isHiringDetails={hiringDetails} />
+            )}
 
-          {currentView === View.BankDetails && <BankDetails />}
+            {currentView === View.BankDetails && <BankDetails />}
+          </div>
         </div>
       </div>
     </>

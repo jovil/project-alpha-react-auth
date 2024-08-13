@@ -60,7 +60,7 @@
     border-radius: 8px;
     position: relative;
     transition: transform 200ms ease, box-shadow 200ms ease;
-    @apply py-2 px-5 bg-transparent text-danger font-bold rounded-full hover:text-white hover:bg-danger focus:outline-none select-none;
+    @apply py-2 px-5 bg-transparent text-danger font-bold hover:text-white hover:bg-danger focus:outline-none select-none;
 
     &:active {
       transform: translate(2px, 2px);
@@ -101,6 +101,12 @@
 }
 
 @layer utilities {
+  .subtitle {
+    @apply font-bold text-sm uppercase tracking-wide;
+  }
+}
+
+@layer utilities {
   .shadow-md-reverse {
     box-shadow: 0 -2px 6px -1px rgb(0 0 0 / 0.1),
       0 -2px 4px -2px rgb(0 0 0 / 0.1);
@@ -128,7 +134,7 @@
     border: solid 2px #444;
     position: relative;
     transition: transform 200ms ease, box-shadow 200ms ease;
-    @apply text-dark font-bold py-2 px-5;
+    @apply bg-white text-dark font-bold py-2 px-5;
 
     &:active {
       transform: translate(2px, 2px);
@@ -159,6 +165,11 @@ body {
   position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+#root > header {
+  background: #f6f5f2;
 }
 
 #root,

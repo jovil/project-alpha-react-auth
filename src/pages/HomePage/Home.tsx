@@ -47,7 +47,7 @@ const Home = () => {
               Community Platform for Creators to Share, Sell, and Shine
             </h1>
 
-            <p className="text-xl leading-8 text-grey text-center max-w-[580px]">
+            <p className="text-xl leading-8 text-dark text-center max-w-[580px]">
               Showcase your talent, sell unique products, and offer bespoke
               services. Flourish creatively and grow your income in our
               dedicated creator community.
@@ -60,7 +60,7 @@ const Home = () => {
           >
             <div className="flex gap-4">
               <input
-                className="font-bold bg-blue-900 border-b-2 border-[#444] p-5 py-2.5 min-w-[280px]"
+                className="font-bold bg-white border-b-2 border-[#444] p-5 py-2.5 min-w-[280px]"
                 type="email"
                 name="email"
                 placeholder="Email"
@@ -91,7 +91,7 @@ const Home = () => {
                   {marqueePeeps?.map((post: any, index: number) => {
                     return (
                       <div
-                        className="min-w-[270px] shadow-chunky rounded-xl p-4 flex"
+                        className="bg-white min-w-[270px] shadow-chunky rounded-xl p-4 flex"
                         key={index}
                       >
                         <>
@@ -125,7 +125,7 @@ const Home = () => {
                   {marqueePeeps?.map((post: any, index: number) => {
                     return (
                       <div
-                        className="min-w-[270px] shadow-chunky rounded-xl p-4 flex"
+                        className="bg-white min-w-[270px] shadow-chunky rounded-xl p-4 flex"
                         key={index}
                       >
                         <>

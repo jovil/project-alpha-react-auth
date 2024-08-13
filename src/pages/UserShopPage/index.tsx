@@ -70,7 +70,7 @@ const UserShopPage = () => {
                 <>
                   <section className="flex justify-center items-center flex-grow">
                     <div className="container">
-                      <div className="bg-blue-900 w-full flex flex-col border border-dashed border-dark/60 rounded pointer-events-auto">
+                      <div className="bg-dark/5 w-full flex flex-col border border-dashed border-dark/60 rounded pointer-events-auto">
                         <div
                           className="p-16 m-0 cursor-pointer"
                           onClick={handleToggleCreateProductModal}

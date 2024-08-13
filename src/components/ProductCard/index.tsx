@@ -96,7 +96,7 @@ const ProductCard = ({
 
   return (
     <>
-      <div className="flex flex-col relative overflow-hidden shadow-chunky rounded-xl p-4 cursor-pointer">
+      <div className="bg-white flex flex-col relative overflow-hidden shadow-chunky rounded-xl p-4 cursor-pointer">
         <div
           className="group flex flex-col gap-4 text-left"
           onClick={() => {

@@ -219,117 +219,125 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
       >
         <section className="min-h-[calc(100vh-16px)] m-2 bg-white rounded p-3 pb-16 flex flex-col gap-3 relative">
           <header>
-            <h2>Create product</h2>
+            <h2 className="subtitle">Create product</h2>
           </header>
-          <div className="flex flex-col gap-4 items-center w-full">
-            <form
-              className={`w-full flex flex-col border border-dashed border-dark/60 rounded pointer-events-auto ${
-                !hasUploadedImages && uploadedFilesLength === 0
-                  ? "!border-danger"
-                  : ""
-              }`}
-              encType="multipart/form-data"
-            >
-              <label
-                className={`p-16 m-0 cursor-pointer ${
-                  isLoading ? "pointer-events-none" : ""
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 items-center w-full">
+              <form
+                className={`bg-dark/5 w-full flex flex-col border border-dashed border-dark/60 rounded pointer-events-auto ${
+                  !hasUploadedImages && uploadedFilesLength === 0
+                    ? "!border-danger"
+                    : ""
                 }`}
-                htmlFor="product-file-upload"
+                encType="multipart/form-data"
               >
-                <p className="text-sm flex justify-center items-center">
-                  {!hasUploadedImages && uploadedFilesLength === 0
-                    ? "Upload atleast 1 image"
-                    : "Upload images"}
-                </p>
-              </label>
-              <div className="hidden">
-                <input
-                  id="product-file-upload"
-                  multiple
-                  type="file"
-                  name="image"
-                  accept=".jpeg, .png, .jpg"
-                  onChange={(e) => handleFileUpload(e)}
-                  required
-                />
-              </div>
-            </form>
-            <div className="grid grid-cols-4 gap-2 w-full">
-              {imageBase64Array.map((base64, index) => (
-                <div
-                  className="col-span-1 overflow-hidden h-full aspect-square border border-dark/40 rounded"
-                  key={index}
+                <label
+                  className={`p-16 m-0 cursor-pointer ${
+                    isLoading ? "pointer-events-none" : ""
+                  }`}
+                  htmlFor="product-file-upload"
                 >
-                  <img
-                    className="w-full object-cover aspect-square"
-                    src={base64}
-                    alt=""
+                  <p className="flex justify-center items-center">
+                    {!hasUploadedImages && uploadedFilesLength === 0
+                      ? "Upload atleast 1 image"
+                      : "Upload images"}
+                  </p>
+                </label>
+                <div className="hidden">
+                  <input
+                    id="product-file-upload"
+                    multiple
+                    type="file"
+                    name="image"
+                    accept=".jpeg, .png, .jpg"
+                    onChange={(e) => handleFileUpload(e)}
+                    required
                   />
                 </div>
-              ))}
+              </form>
+              <div className="grid grid-cols-4 gap-2 w-full">
+                {imageBase64Array.map((base64, index) => (
+                  <div
+                    className="col-span-1 overflow-hidden h-full aspect-square border border-dark/40 rounded"
+                    key={index}
+                  >
+                    <img
+                      className="w-full object-cover aspect-square"
+                      src={base64}
+                      alt=""
+                    />
+                  </div>
+                ))}
+              </div>
+              <form
+                className="w-full flex flex-col gap-6"
+                onSubmit={(e) => createProduct(e)}
+              >
+                <div className="flex flex-col gap-2">
+                  <label className="subtitle">Name</label>
+                  <input
+                    type="text"
+                    className={`border-2 border-[#444] p-3 rounded ${
+                      isInputProductNameEmpty ? "!border-danger" : ""
+                    }`}
+                    placeholder="Product Name"
+                    name="productName"
+                    value={product.productName}
+                    onChange={handleChange}
+                    autoFocus
+                    required
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="subtitle">Price</label>
+                  <input
+                    type="number"
+                    className={`border-2 border-[#444] p-3 rounded ${
+                      isInputPriceEmpty ? "!border-danger" : ""
+                    }`}
+                    placeholder="Price (MYR)"
+                    name="price"
+                    value={product.price}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="subtitle">Description</label>
+                  <input
+                    type="text"
+                    className="border-2 border-[#444] p-3 rounded"
+                    placeholder="Product Description"
+                    name="productDescription"
+                    value={product.productDescription}
+                    onChange={handleChange}
+                  />
+                </div>
+                <button type="submit" className="hidden">
+                  Save
+                </button>
+              </form>
             </div>
-            <form
-              className="w-full flex flex-col gap-3"
-              onSubmit={(e) => createProduct(e)}
-            >
-              <input
-                type="text"
-                className={`border border-dark/40 p-3 rounded ${
-                  isInputProductNameEmpty ? "!border-danger" : ""
+            <footer className="flex justify-end gap-3">
+              <button
+                className={`min-w-[91px] btn-chunky-primary flex justify-center items-center ${
+                  isLoading
+                    ? "bg-blue/20 border-blue/20 text-white/20 shadow-none pointer-events-none"
+                    : ""
                 }`}
-                placeholder="Product Name"
-                name="productName"
-                value={product.productName}
-                onChange={handleChange}
-                autoFocus
-                required
-              />
-              <input
-                type="number"
-                className={`border border-dark/40 p-3 rounded ${
-                  isInputPriceEmpty ? "!border-danger" : ""
-                }`}
-                placeholder="Price (MYR)"
-                name="price"
-                value={product.price}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="text"
-                className="w-full border border-dark/40 p-3 rounded"
-                placeholder="Product Description"
-                name="productDescription"
-                value={product.productDescription}
-                onChange={handleChange}
-              />
-              <button type="submit" className="hidden">
-                Save
+                onClick={createProduct}
+              >
+                {isLoading ? (
+                  <img className="w-4 h-4 object-cover" src={loading} alt="" />
+                ) : (
+                  "Publish"
+                )}
               </button>
-            </form>
+              <button className="btn-chunky-danger" onClick={onToggleModal}>
+                Close
+              </button>
+            </footer>
           </div>
-          <footer className="flex justify-end gap-3">
-            <button
-              className={`min-w-[91px] btn-primary text-sm flex justify-center items-center ${
-                isLoading
-                  ? "bg-blue/20 border-blue/20 text-white/20 shadow-none pointer-events-none"
-                  : ""
-              }`}
-              onClick={createProduct}
-            >
-              {isLoading ? (
-                <img className="w-4 h-4 object-cover" src={loading} alt="" />
-              ) : (
-                "Publish"
-              )}
-            </button>
-            <button
-              className="btn-outline-danger text-sm"
-              onClick={onToggleModal}
-            >
-              Close
-            </button>
-          </footer>
         </section>
       </motion.div>
     </Backdrop>

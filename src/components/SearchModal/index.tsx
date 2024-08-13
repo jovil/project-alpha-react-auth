@@ -106,7 +106,7 @@ const SearchModal = ({
                           <li key={index}>
                             <NavLink
                               className="flex items-center gap-3 p-4 py-5 rounded-md hover:bg-blue-800 transition-colors focus:bg-blue-800"
-                              to={`/user/${user.userName}`}
+                              to={`/user/${user.userName.toLowerCase()}`}
                               state={{ userId: user._id }}
                               onClick={onToggleSearchModal}
                               ref={

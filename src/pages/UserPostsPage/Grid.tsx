@@ -131,7 +131,7 @@ const Grid = ({ isUser }: { isUser?: any }) => {
                 <>
                   <section className="flex justify-center items-center flex-grow">
                     <div className="container">
-                      <form className="bg-blue-900 w-full flex flex-col border border-dashed border-dark/60 rounded pointer-events-auto">
+                      <form className="bg-dark/5 w-full flex flex-col border border-dashed border-dark/60 rounded pointer-events-auto">
                         <label
                           className="p-16 m-0 cursor-pointer"
                           htmlFor="file-upload"

@@ -31,7 +31,7 @@ const TalentCard = ({
   return (
     <>
       <div
-        className="flex flex-col gap-4 relative overflow-hidden cursor-pointer shadow-chunky rounded-xl p-4"
+        className="bg-white flex flex-col gap-4 relative overflow-hidden cursor-pointer shadow-chunky rounded-xl p-4"
         onClick={() => handleToggleModal(talent._id)}
       >
         <div className="w-full flex flex-col" key={talent._id}>

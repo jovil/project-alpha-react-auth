@@ -152,7 +152,7 @@ const PostListView = () => {
               {allPosts?.map((post: any, index: number) => {
                 return (
                   <div
-                    className="p-4 flex flex-col gap-4 relative group overflow-hidden rounded-xl shadow-chunky"
+                    className="bg-white p-4 flex flex-col gap-4 relative group overflow-hidden rounded-xl shadow-chunky"
                     key={index}
                   >
                     <button
@@ -205,7 +205,7 @@ const PostListView = () => {
                               <div className="ml-auto">
                                 <NavLink
                                   className="btn-chunky-primary text-sm text-center group flex items-center gap-1.5"
-                                  to={`/shop/${post.user.userName}`}
+                                  to={`/shop/${post.user.userName.toLowerCase()}`}
                                   state={{ userId: post.user._id }}
                                 >
                                   <p>Shop</p>

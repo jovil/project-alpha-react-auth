@@ -43,7 +43,7 @@ const UserNavigation = () => {
                       ? "font-bold text-sm px-5 py-2 flex items-center text-blue-100"
                       : "font-bold text-sm px-5 py-2 flex items-center text-black-200"
                   }
-                  to={`/user/${user?.userName}`}
+                  to={`/user/${user?.userName.toLowerCase()}`}
                   state={{ userId: user?._id }}
                 >
                   Profile
@@ -57,7 +57,7 @@ const UserNavigation = () => {
                         ? "font-bold text-sm px-5 py-2 flex items-center text-blue-100"
                         : "font-bold text-sm px-5 py-2 flex items-center text-black-200"
                     }
-                    to={`/posts/${user?.userName}`}
+                    to={`/posts/${user?.userName.toLowerCase()}`}
                     state={{ userId: user?._id }}
                   >
                     Posts
@@ -72,7 +72,7 @@ const UserNavigation = () => {
                         ? "font-bold text-sm px-5 py-2 flex items-center text-blue-100"
                         : "font-bold text-sm px-5 py-2 flex items-center text-black-200"
                     }
-                    to={`/shop/${user?.userName}`}
+                    to={`/shop/${user?.userName.toLowerCase()}`}
                     state={{ userId: user?._id }}
                   >
                     Shop
@@ -82,7 +82,7 @@ const UserNavigation = () => {
               {(userState?._id === user?._id || user?.talentProfileActive) && (
                 <li>
                   <NavLink
-                    to={`/hire/${user?.userName}`}
+                    to={`/hire/${user?.userName.toLowerCase()}`}
                     state={{ userId: user?._id }}
                     className={({ isActive }: { isActive: any }) =>
                       isActive

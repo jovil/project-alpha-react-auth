@@ -58,7 +58,8 @@ const HeaderSection = ({
             <p className="text-dark font-bold">Shop</p>
             <NavLink
               className="flex flex-col gap-3 items-center"
-              to={`/user/${isProfile._id}`}
+              to={`/user/${isProfile.userName}`}
+              state={{ userId: isProfile._id }}
             >
               <div className="w-16 h-16 rounded shadow-md relative overflow-hidden">
                 {profileLoadingAvatar && (

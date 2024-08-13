@@ -245,7 +245,7 @@ function App() {
                           <li className="flex">
                             <NavLink
                               className="text-sm font-bold px-5 py-5 hover:bg-blue-900 whitespace-nowrap w-full"
-                              to={`/user/${userState.userName}`}
+                              to={`/user/${userState.userName.toLowerCase()}`}
                               state={{ userId: userState._id }}
                               onClick={onToggleMenuDropdown}
                             >
@@ -255,7 +255,7 @@ function App() {
                           <li className="flex">
                             <NavLink
                               className="text-sm font-bold px-5 py-5 hover:bg-blue-900 whitespace-nowrap w-full"
-                              to={`/posts/${userState.userName}`}
+                              to={`/posts/${userState.userName.toLowerCase()}`}
                               state={{ userId: userState._id }}
                               onClick={onToggleMenuDropdown}
                             >
@@ -265,7 +265,7 @@ function App() {
                           <li className="flex">
                             <NavLink
                               className="text-sm font-bold px-5 py-5 hover:bg-blue-900 whitespace-nowrap w-full"
-                              to={`/shop/${userState.userName}`}
+                              to={`/shop/${userState.userName.toLowerCase()}`}
                               state={{ userId: userState._id }}
                               onClick={onToggleMenuDropdown}
                             >
@@ -275,7 +275,7 @@ function App() {
                           <li className="flex">
                             <NavLink
                               className="text-sm font-bold px-5 py-5 hover:bg-blue-900 whitespace-nowrap w-full"
-                              to={`/hire/${userState.userName}`}
+                              to={`/hire/${userState.userName.toLowerCase()}`}
                               state={{ userId: userState._id }}
                               onClick={onToggleMenuDropdown}
                             >

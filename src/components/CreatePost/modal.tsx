@@ -165,69 +165,78 @@ const CreatePostModal = ({
         >
           <section className="w-[500px] p-4 mx-auto flex flex-col gap-4 bg-white rounded-md">
             <header>
-              <h2>Create post</h2>
+              <h2 className="subtitle">Create post</h2>
             </header>
-            <div className="flex flex-col gap-4 items-center w-full">
-              {isPostImage && (
-                <img
-                  className="w-full h-[50vh] object-cover border border-dark/40 rounded select-none"
-                  src={isImageBase64 ? isImageBase64 : undefined}
-                  alt=""
-                />
-              )}
-              <form className="w-full" onSubmit={(e) => createPost(e)}>
-                <div className="flex flex-col gap-4">
-                  <input
-                    type="text"
-                    className={`border border-dark/40 p-3 rounded ${
-                      isCharacterNameInputEmpty ? "!border-danger" : ""
-                    }`}
-                    placeholder="Character Name"
-                    name="characterName"
-                    value={post.characterName}
-                    onChange={handleChange}
-                    autoFocus
-                    required
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-4 items-center w-full">
+                {isPostImage && (
+                  <img
+                    className="w-full h-[50vh] object-cover border border-dark/40 rounded select-none"
+                    src={isImageBase64 ? isImageBase64 : undefined}
+                    alt=""
                   />
-                  <input
-                    type="text"
-                    className={`border border-dark/40 p-3 rounded ${
-                      isSeriesTitleInputEmpty ? "!border-danger" : ""
-                    }`}
-                    placeholder="Series Title"
-                    name="seriesTitle"
-                    value={post.seriesTitle}
-                    onChange={handleChange}
-                    required
-                  />
-                  <button type="submit" className="hidden">
-                    Save
-                  </button>
-                </div>
-              </form>
-            </div>
-            <footer className="flex justify-end gap-3">
-              <button
-                className={`min-w-[91px] btn-primary text-sm flex justify-center items-center ${
-                  isLoading
-                    ? "bg-blue/20 border-blue/20 text-white/20 shadow-none pointer-events-none"
-                    : ""
-                }`}
-                onClick={createPost}
-              >
-                {isLoading ? (
-                  <img className="w-4 h-4 object-cover" src={loading} alt="" />
-                ) : (
-                  "Publish"
                 )}
-              </button>
-              <button
-                className="btn-outline-danger text-sm"
-                onClick={closeModal}
-              >
-                Close
-              </button>
-            </footer>
+                <form className="w-full" onSubmit={(e) => createPost(e)}>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
+                      <label className="subtitle">Name</label>
+                      <input
+                        type="text"
+                        className={`border-2 border-[#444] p-3 rounded ${
+                          isCharacterNameInputEmpty ? "!border-danger" : ""
+                        }`}
+                        placeholder="Character Name"
+                        name="characterName"
+                        value={post.characterName}
+                        onChange={handleChange}
+                        autoFocus
+                        required
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="subtitle">Title</label>
+                      <input
+                        type="text"
+                        className={`border-2 border-[#444] p-3 rounded ${
+                          isSeriesTitleInputEmpty ? "!border-danger" : ""
+                        }`}
+                        placeholder="Series Title"
+                        name="seriesTitle"
+                        value={post.seriesTitle}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <button type="submit" className="hidden">
+                      Save
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <footer className="flex justify-end gap-3">
+                <button
+                  className={`min-w-[91px] btn-chunky-primary flex justify-center items-center ${
+                    isLoading
+                      ? "bg-blue/20 border-blue/20 text-white/20 shadow-none pointer-events-none"
+                      : ""
+                  }`}
+                  onClick={createPost}
+                >
+                  {isLoading ? (
+                    <img
+                      className="w-4 h-4 object-cover"
+                      src={loading}
+                      alt=""
+                    />
+                  ) : (
+                    "Publish"
+                  )}
+                </button>
+                <button className="btn-chunky-danger" onClick={closeModal}>
+                  Close
+                </button>
+              </footer>
+            </div>
           </section>
         </div>
       )}
