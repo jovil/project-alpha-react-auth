@@ -201,7 +201,7 @@ const ProductCard = ({
                   Delete product
                 </button>
                 <button
-                  className="btn-chunky border-grey-100 shadow-none text-blue-100 hover:bg-blue-900 hover:text-blue-100"
+                  className="btn-chunky"
                   onClick={() => setShowDeleteConfirmationModal(false)}
                 >
                   Cancel

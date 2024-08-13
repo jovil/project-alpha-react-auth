@@ -211,7 +211,7 @@ function App() {
                 <>
                   <div className="relative" ref={menuDropdownRef}>
                     <button
-                      className="text-sm btn-chunky hover:text-blue-100 hover:bg-blue-900"
+                      className="text-sm btn-chunky"
                       onClick={onToggleMenuDropdown}
                     >
                       <div className="flex items-center gap-1.5">
@@ -363,8 +363,8 @@ function App() {
                             to="/login"
                             className={({ isActive }: { isActive: any }) =>
                               isActive
-                                ? "btn-chunky text-sm hover:text-blue-100 hover:bg-blue-900"
-                                : "btn-chunky text-sm hover:text-blue-100 hover:bg-blue-900"
+                                ? "btn-chunky text-sm"
+                                : "btn-chunky text-sm"
                             }
                           >
                             Login

@@ -22,7 +22,7 @@ const Card = ({
 }) => {
   const settingsDropdownRef = useRef<any>(null);
   const { state } = useContext(GlobalStateContext);
-  const { userState } = useUser();
+  const { userState, setUserState } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const [runShimmerAnimation, setRunShimmerAnimation] = useState(false);
   const [showSettings] = useState<boolean>(isShowSettings || false);
@@ -30,7 +30,6 @@ const Card = ({
     useState<boolean>(false);
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] =
     useState<boolean>(false);
-  const [postElement, setPostElement] = useState<Element | null>(null);
   const [postId, setPostId] = useState<string>("");
   const [postFileUrl, setPostFileUrl] = useState<string>("");
 
@@ -64,24 +63,27 @@ const Card = ({
     postId: string,
     fileUrl: string
   ) => {
-    const target = e.target;
-    const post = (target as HTMLElement).closest("[data-item]");
-
     setPostId(postId);
-    setPostElement(post);
     setPostFileUrl(fileUrl);
     setShowDeleteConfirmationModal(true);
   };
 
   const deletePost = async () => {
-    const url = `${apiUrl}/posts/delete/${postId}?fileUrl=${postFileUrl}`;
+    const url = `${apiUrl}/posts/delete/${postId}?fileUrl=${postFileUrl}&userId=${userState._id}`;
 
     try {
-      await fetch(url, deleteFetchConfig);
-      postElement?.remove();
+      const response = await fetch(url, deleteFetchConfig);
+      const result = await response.json();
       new Notify({
         title: "Post deleted successfully",
       });
+      setUserState((prevState: any) => {
+        return {
+          ...prevState,
+          postCount: result.postCount,
+        };
+      });
+      setShowDeleteConfirmationModal(false);
     } catch (error) {
       console.log("error", error);
     }
@@ -105,7 +107,10 @@ const Card = ({
                 <div ref={settingsDropdownRef}>
                   <button
                     className="absolute top-2 left-2 z-10 text-white bg-[#1d1d1fcc] w-[30px] h-[30px] p-1 rounded-full flex justify-center items-center opacity-0 group-hover/settingsIcon:opacity-100 transition-opacity"
-                    onClick={handleSettingsClick}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSettingsClick();
+                    }}
                   >
                     <svg
                       width="20"
@@ -126,9 +131,10 @@ const Card = ({
                       <li>
                         <button
                           className="text-sm font-medium text-left px-4 py-3 rounded-md hover:bg-red whitespace-nowrap w-full"
-                          onClick={(e) =>
-                            handleConfirmationModal(e, data._id, data.fileUrl)
-                          }
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleConfirmationModal(e, data._id, data.fileUrl);
+                          }}
                         >
                           Delete
                         </button>
@@ -194,7 +200,7 @@ const Card = ({
                 </button>
 
                 <button
-                  className="btn-chunky border-grey-100 shadow-none text-blue-100 hover:bg-blue-900 hover:text-blue-100"
+                  className="btn-chunky"
                   onClick={() => setShowDeleteConfirmationModal(false)}
                 >
                   Cancel

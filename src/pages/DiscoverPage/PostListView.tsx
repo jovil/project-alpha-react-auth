@@ -60,10 +60,6 @@ const PostListView = () => {
   }, [fetchPosts]);
 
   useEffect(() => {
-    console.log("allPosts", allPosts);
-  }, [allPosts]);
-
-  useEffect(() => {
     const handleIntersect = (entries: any) => {
       entries.forEach((entry: any) => {
         if (entry.isIntersecting && !isFetchingRef.current) {
@@ -158,7 +154,7 @@ const PostListView = () => {
                     key={index}
                   >
                     <button
-                      className="relative group/modalIcon"
+                      className="relative group/modalIcon cursor-zoom-in"
                       onClick={togglePostModal}
                     >
                       <div className="absolute top-2 right-2 z-10 text-white bg-[#1d1d1fcc] w-[30px] h-[30px] p-1 rounded-full flex justify-center items-center opacity-0 group-hover/modalIcon:opacity-100 transition-opacity pointer-events-none">
