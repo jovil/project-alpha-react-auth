@@ -60,6 +60,10 @@ const PostListView = () => {
   }, [fetchPosts]);
 
   useEffect(() => {
+    console.log("allPosts", allPosts);
+  }, [allPosts]);
+
+  useEffect(() => {
     const handleIntersect = (entries: any) => {
       entries.forEach((entry: any) => {
         if (entry.isIntersecting && !isFetchingRef.current) {
@@ -188,7 +192,10 @@ const PostListView = () => {
 
                     {state.showPostsCaption && (
                       <div className="flex flex-col justify-between gap-6 w-full">
-                        <p className="font-bold">{post.characterName}</p>
+                        <div className="flex flex-col gap-1">
+                          <p className="font-bold">{post.title}</p>
+                          <p className="text-grey">{post.description}</p>
+                        </div>
                         <footer className="flex flex-col gap-4">
                           <div className="flex items-center gap-2">
                             <p className="text-sm">from</p>

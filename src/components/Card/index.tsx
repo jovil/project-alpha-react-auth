@@ -125,7 +125,7 @@ const Card = ({
                     <ul className="min-w-24 p-1.5 bg-white shadow-nav rounded-md absolute top-[38px] left-2 translate-y-3 flex flex-col gap-1 z-10">
                       <li>
                         <button
-                          className="text-xs text-left px-4 py-3 rounded-md hover:bg-red whitespace-nowrap w-full"
+                          className="text-sm font-medium text-left px-4 py-3 rounded-md hover:bg-red whitespace-nowrap w-full"
                           onClick={(e) =>
                             handleConfirmationModal(e, data._id, data.fileUrl)
                           }
@@ -149,12 +149,7 @@ const Card = ({
           )}
           {typeof data.fileUrl === "string" && (
             <img
-              className={`object-cover w-full h-full rounded-lg group-hover:scale-[1.03] transition-transform ${
-                state[gridComponent ? gridComponent : ""] === "grid" &&
-                state[captionComponent ? captionComponent : ""]
-                  ? "aspect-[4/6]"
-                  : ""
-              }`}
+              className={`object-cover w-full h-full rounded-lg group-hover:scale-[1.03] transition-transform aspect-[4/6]`}
               src={data.fileUrl}
               alt=""
               loading="lazy"
@@ -185,21 +180,21 @@ const Card = ({
             showCloseButton={false}
           >
             <motion.div
-              className="bg-white rounded-md p-4 py-6 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 max-w-[300px] w-full flex flex-col justify-center items-center gap-4 aspect-3/4 shadow-md"
+              className="bg-white rounded-md p-10 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 max-w-[400px] w-full flex flex-col justify-center items-center gap-6 aspect-3/4 shadow-md"
               variants={fadeIn}
               initial="hidden"
               animate="visible"
               exit="exit"
               onClick={(e) => e.stopPropagation()}
             >
-              <h2>Are you sure?</h2>
+              <h2 className="font-bold text-xl">Are you sure?</h2>
               <div className="flex gap-4">
-                <button className="btn-danger" onClick={deletePost}>
+                <button className="btn-chunky-danger" onClick={deletePost}>
                   Delete post
                 </button>
 
                 <button
-                  className="btn-outline-dark border-grey-100 shadow-none text-blue-100 hover:bg-blue-900 hover:text-blue-100"
+                  className="btn-chunky border-grey-100 shadow-none text-blue-100 hover:bg-blue-900 hover:text-blue-100"
                   onClick={() => setShowDeleteConfirmationModal(false)}
                 >
                   Cancel

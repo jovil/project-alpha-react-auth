@@ -31,11 +31,11 @@ const TalentCard = ({
   return (
     <>
       <div
-        className="bg-white flex flex-col gap-4 relative overflow-hidden cursor-pointer shadow-chunky rounded-xl p-4"
+        className="group bg-white flex flex-col gap-4 relative overflow-hidden cursor-pointer shadow-chunky rounded-xl p-4"
         onClick={() => handleToggleModal(talent._id)}
       >
         <div className="w-full flex flex-col" key={talent._id}>
-          <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden rounded-lg">
             {runShimmerAnimation && <div className="shimmer-overlay"></div>}
             {isLoading && (
               <img
@@ -45,7 +45,7 @@ const TalentCard = ({
               />
             )}
             <img
-              className="object-cover w-full transition-transform aspect-square rounded-lg"
+              className="object-cover w-full transition-transform aspect-square rounded-lg group-hover:scale-[1.03]"
               src={talent.avatar || defaultAvatar}
               alt=""
               loading="lazy"

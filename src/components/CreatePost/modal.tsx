@@ -23,20 +23,19 @@ const CreatePostModal = ({
   const [post, setPost] = useState<{
     email: string;
     image: any;
-    characterName: string;
-    seriesTitle: string;
+    title: string;
+    description: string;
     _id: string;
   }>({
     email: "",
     image: "",
-    characterName: "",
-    seriesTitle: "",
+    title: "",
+    description: "",
     _id: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [isCharacterNameInputEmpty, setIsCharacterNameInputEmpty] =
-    useState(false);
-  const [isSeriesTitleInputEmpty, setIsSeriesTitleInputEmpty] = useState(false);
+  const [isTitleInputEmpty, setIsTitleInputEmpty] = useState(false);
+  const [isDescriptionInputEmpty, setIsDescriptionInputEmpty] = useState(false);
   const token = cookies.get("TOKEN");
   const url = `${process.env.REACT_APP_API_URL}/create`;
 
@@ -56,8 +55,8 @@ const CreatePostModal = ({
   }, [isLoading]);
 
   useEffect(() => {
-    if (post.characterName.length > 0) setIsCharacterNameInputEmpty(false);
-    if (post.seriesTitle.length > 0) setIsSeriesTitleInputEmpty(false);
+    if (post.title.length > 0) setIsTitleInputEmpty(false);
+    if (post.description.length > 0) setIsDescriptionInputEmpty(false);
   }, [post]);
 
   const handleChange = (e: any) => {
@@ -81,41 +80,41 @@ const CreatePostModal = ({
         _id: userState._id,
         userName: userState.userName,
         email: userState.email,
-        characterName: post.characterName,
-        seriesTitle: post.seriesTitle,
+        title: post.title,
+        description: post.description,
       })
     );
 
     return formData;
   };
 
-  // Modify handleCharacterName to return a boolean
-  const handleCharacterName = () => {
-    if (post.characterName.length === 0) {
-      setIsCharacterNameInputEmpty(true);
-      return false; // Return false if characterName is empty
+  // Modify handleTitle to return a boolean
+  const handleTitle = () => {
+    if (post.title.length === 0) {
+      setIsTitleInputEmpty(true);
+      return false; // Return false if title is empty
     }
-    setIsCharacterNameInputEmpty(false);
-    return true; // Return true if characterName is valid
+    setIsTitleInputEmpty(false);
+    return true; // Return true if title is valid
   };
 
-  // Modify handleSeriesTitle to return a boolean
-  const handleSeriesTitle = () => {
-    if (post.seriesTitle.length === 0) {
-      setIsSeriesTitleInputEmpty(true);
-      return false; // Return false if seriesTitle is empty
+  // Modify handleDescription to return a boolean
+  const handleDescription = () => {
+    if (post.description.length === 0) {
+      setIsDescriptionInputEmpty(true);
+      return false; // Return false if description is empty
     }
-    setIsSeriesTitleInputEmpty(false);
-    return true; // Return true if seriesTitle is valid
+    setIsDescriptionInputEmpty(false);
+    return true; // Return true if description is valid
   };
 
   const createPost = async (e: any) => {
     e.preventDefault();
 
-    // Return if characterName is empty
-    if (!handleCharacterName()) return;
-    // Return if seriesTitle is empty
-    if (!handleSeriesTitle()) return;
+    // Return if title is empty
+    if (!handleTitle()) return;
+    // Return if description is empty
+    if (!handleDescription()) return;
     setIsLoading(true);
 
     const formData = handleFormData();
@@ -142,8 +141,8 @@ const CreatePostModal = ({
         return {
           ...prev,
           image: "",
-          characterName: "",
-          seriesTitle: "",
+          title: "",
+          description: "",
         };
       });
     } catch (error) {
@@ -179,32 +178,31 @@ const CreatePostModal = ({
                 <form className="w-full" onSubmit={(e) => createPost(e)}>
                   <div className="flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
-                      <label className="subtitle">Name</label>
+                      <label className="subtitle">Title</label>
                       <input
                         type="text"
                         className={`border-2 border-[#444] p-3 rounded ${
-                          isCharacterNameInputEmpty ? "!border-danger" : ""
+                          isTitleInputEmpty ? "!border-danger" : ""
                         }`}
-                        placeholder="Character Name"
-                        name="characterName"
-                        value={post.characterName}
+                        placeholder="Create a title"
+                        name="title"
+                        value={post.title}
                         onChange={handleChange}
                         autoFocus
                         required
                       />
                     </div>
                     <div className="flex flex-col gap-2">
-                      <label className="subtitle">Title</label>
+                      <label className="subtitle">Description</label>
                       <input
                         type="text"
                         className={`border-2 border-[#444] p-3 rounded ${
-                          isSeriesTitleInputEmpty ? "!border-danger" : ""
+                          isDescriptionInputEmpty ? "!border-danger" : ""
                         }`}
-                        placeholder="Series Title"
-                        name="seriesTitle"
-                        value={post.seriesTitle}
+                        placeholder="Create a description"
+                        name="description"
+                        value={post.description}
                         onChange={handleChange}
-                        required
                       />
                     </div>
                     <button type="submit" className="hidden">

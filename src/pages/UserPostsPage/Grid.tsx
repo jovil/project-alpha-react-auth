@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useContext } from "react";
+import React, { useEffect, useState, useCallback, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import { useUser } from "../../context/UserContext";
@@ -22,7 +22,8 @@ interface User {
 interface Posts {
   email: string;
   fileUrl: string;
-  charactherName: string;
+  title: string;
+  description: string;
   user: User;
 }
 
@@ -93,9 +94,8 @@ const Grid = ({ isUser }: { isUser?: any }) => {
 
                       return (
                         <div
-                          className="flex flex-col relative group overflow-hidden rounded-3xl"
+                          className="bg-white p-4 flex flex-col gap-4 relative group overflow-hidden rounded-xl shadow-chunky"
                           key={index}
-                          data-item
                         >
                           <Card
                             gridComponent={"userPostsView"}
@@ -103,16 +103,12 @@ const Grid = ({ isUser }: { isUser?: any }) => {
                             data={post}
                             isShowSettings={true}
                           />
-                          {!state.showUserPostsCaption && (
-                            <div className="flex flex-col justify-between gap-4 tablet:absolute px-3 pb-3 tablet:p-3 tablet:pt-12 tablet:bottom-0 w-full tablet:bg-gradient-to-t tablet:from-dark tablet:text-white tablet:opacity-0 tablet:translate-y-2 tablet:group-hover:opacity-100 tablet:group-hover:translate-y-0 tablet:transition">
-                              <p>{post.characterName}</p>
-                              <p className="text-xs">from {post.seriesTitle}</p>
-                            </div>
-                          )}
-
                           {state.showUserPostsCaption && (
-                            <div className="flex flex-col justify-between gap-4 px-3 pb-3 tablet:py-6 w-full">
-                              <p>{post.characterName}</p>
+                            <div className="flex flex-col justify-between gap-6 w-full">
+                              <div className="flex flex-col gap-1">
+                                <p className="font-bold">{post.title}</p>
+                                <p className="text-grey">{post.description}</p>
+                              </div>
                               <p className="text-xs">from {post.seriesTitle}</p>
                             </div>
                           )}

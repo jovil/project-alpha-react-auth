@@ -230,12 +230,15 @@ const UserPostListPage = () => {
                   </NavLink>
                 )}
               </header>
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3 gap-y-9">
                 {posts?.map((post: any, index: number) => {
                   return (
-                    <React.Fragment key={index}>
+                    <div
+                      className="bg-white p-4 flex flex-col gap-4 relative group overflow-hidden rounded-xl shadow-chunky"
+                      key={index}
+                    >
                       <Card data={post} />
-                    </React.Fragment>
+                    </div>
                   );
                 })}
                 <>
