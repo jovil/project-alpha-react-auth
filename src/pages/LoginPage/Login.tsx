@@ -77,15 +77,17 @@ const Login = () => {
     <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-6 w-[400px] mx-auto">
       <h2 className="text-2xl">Login</h2>
       <form
-        className="max-w-[400px] flex flex-col items-center gap-4"
+        className="font-bold max-w-[400px] flex flex-col items-center gap-4"
         onSubmit={(e) => handleLogin(e)}
       >
         <div className="flex flex-col gap-4 w-full">
           {/* email */}
           <div className="flex flex-col gap-2">
-            <label className="text-black-200">Email address</label>
+            <label className="text-sm uppercase tracking-wide">
+              Email address
+            </label>
             <input
-              className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
+              className="border-2 border-[#444] p-3 rounded"
               type="email"
               name="email"
               value={email}
@@ -97,9 +99,9 @@ const Login = () => {
 
           {/* password */}
           <div className="flex flex-col gap-2">
-            <label className="text-black-200">Password</label>
+            <label className="text-sm uppercase tracking-wide">Password</label>
             <input
-              className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
+              className="border-2 border-[#444] p-3 rounded"
               type="password"
               name="password"
               value={password}
@@ -112,7 +114,7 @@ const Login = () => {
         <div className="w-full">
           {/* submit button */}
           <button
-            className="btn-primary"
+            className="btn-chunky-primary"
             type="submit"
             onSubmit={(e) => handleLogin(e)}
           >

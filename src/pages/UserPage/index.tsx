@@ -36,11 +36,11 @@ const UserPostListPage = () => {
   const { userId } = location.state || {};
   const { userState, setUserState } = useUser();
   const [user, setUser] = useState<{
-    profileName: string;
+    userName: string;
     email: string;
     hasHiringDetails: boolean;
   }>({
-    profileName: "",
+    userName: "",
     email: "",
     hasHiringDetails: false,
   });
@@ -115,11 +115,14 @@ const UserPostListPage = () => {
       <div className="max-w-[1140px] py-16 mx-auto grid grid-cols-12 gap-4 h-full flex-grow w-full">
         <section className="flex flex-col gap-4 px-4 col-span-5">
           <header className="flex justify-between items-end">
-            <h2>Products</h2>
+            <h2 className="font-bold tracking-wide uppercase text-sm">
+              Products
+            </h2>
             {products.length > 0 && (
               <NavLink
-                className="text-sm text-blue-100 underline"
-                to={`/shop/${userId}`}
+                className="font-bold text-sm text-blue-100 underline"
+                to={`/shop/${user && user?.userName}`}
+                state={{ userId: userId }}
               >
                 Go to shop
               </NavLink>
@@ -148,7 +151,7 @@ const UserPostListPage = () => {
 
         <section className="px-4 col-span-7 flex flex-col gap-4">
           <header className="flex justify-between items-end">
-            <h2>Posts</h2>
+            <h2 className="font-bold tracking-wide uppercase text-sm">Posts</h2>
 
             {posts.length > 0 && (
               <NavLink

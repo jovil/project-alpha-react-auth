@@ -20,7 +20,7 @@ const DiscoverPage = () => {
           "fixed bottom-0 left-1/2 -translate-x-1/2 px-4 py-3.5 pointer-events-none"
         }
         btnClasses={
-          "btn-primary rounded-full text-sm flex gap-2 justify-center items-center"
+          "btn-chunky-primary text-sm flex gap-2 justify-center items-center"
         }
         onFileUpload={handleFileUpload}
       />

@@ -94,10 +94,10 @@ const ShopPage = () => {
   return (
     <>
       <section className="container flex flex-col gap-12">
-        <header className="text-sm hidden tablet:flex justify-end items-center gap-2">
+        <header className="text-sm hidden tablet:flex justify-end items-center gap-4">
           <form className="min-w-[200px]">
             <input
-              className="border border-dark/30 p-3 py-2 rounded w-full"
+              className="font-bold border-2 border-[#444] p-3 py-2 rounded w-full"
               type="search"
               placeholder="Search product"
               onChange={handleSearch}
@@ -108,7 +108,7 @@ const ShopPage = () => {
             <form>
               <div className="relative">
                 <select
-                  className="border border-dark/30 p-3 py-2 rounded min-w-[200px]"
+                  className="font-bold border-2 border-[#444] p-3 py-2 rounded min-w-[200px]"
                   name="state"
                   value={sortBy}
                   onChange={handleSortBy}
@@ -144,7 +144,7 @@ const ShopPage = () => {
           </div>
         </header>
 
-        <div className="grid gap-4 tablet:grid-cols-2 desktop:grid-cols-3 gap-y-9">
+        <div className="grid gap-6 tablet:grid-cols-2 desktop:grid-cols-3 gap-y-9">
           {allProducts?.length ? (
             <>
               {allProducts?.map((product: any, index: number) => {
@@ -172,7 +172,7 @@ const ShopPage = () => {
         <>
           <CreateProduct
             classes="fixed bottom-0 left-1/2 -translate-x-1/2 z-10 px-4 py-3.5 pointer-events-none"
-            btnClasses="btn-primary rounded-full text-sm flex gap-2 justify-center items-center cursor-pointer"
+            btnClasses="btn-chunky-primary text-sm flex gap-2 justify-center items-center cursor-pointer"
             onToggleModal={handleToggleCreateProductModal}
           />
           <AnimatePresence

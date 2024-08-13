@@ -41,7 +41,7 @@ module.exports = {
       transparent: "transparent",
     },
     fontFamily: {
-      sans: ["Graphik", "sans-serif"],
+      sans: ["HelveticaNowDisplay", "sans-serif"],
       serif: ["Merriweather", "serif"],
     },
     extend: {

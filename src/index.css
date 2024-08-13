@@ -9,6 +9,21 @@
 }
 
 @layer components {
+  .btn-chunky-primary {
+    box-shadow: 2px 2px 0 0 #444;
+    border-radius: 8px;
+    position: relative;
+    transition: transform 200ms ease, box-shadow 200ms ease;
+    @apply font-bold py-2 px-5 bg-blue-100 border-2 border-[#444] text-white hover:bg-blue-300 focus:outline-none select-none transition-colors;
+
+    &:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0 0 #444;
+    }
+  }
+}
+
+@layer components {
   .btn-danger {
     @apply py-2 px-5 bg-red-800 border border-red-800 text-white font-medium rounded-full hover:bg-red-700 hover:border-red-700 focus:outline-none select-none transition-colors;
   }
@@ -39,8 +54,24 @@
 }
 
 @layer components {
+  .btn-chunky-danger {
+    border: 2px solid #444;
+    box-shadow: 2px 2px 0 0 #444;
+    border-radius: 8px;
+    position: relative;
+    transition: transform 200ms ease, box-shadow 200ms ease;
+    @apply py-2 px-5 bg-transparent text-danger font-bold rounded-full hover:text-white hover:bg-danger focus:outline-none select-none;
+
+    &:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0 0 #444;
+    }
+  }
+}
+
+@layer components {
   .nav-button {
-    @apply py-2 px-5 bg-[#f1f1f1] text-black rounded-md focus:outline-none select-none;
+    @apply py-2 px-6 bg-[#f1f1f1] text-black rounded-md focus:outline-none select-none;
   }
 }
 
@@ -58,7 +89,7 @@
 
 @layer components {
   .tag {
-    @apply text-xs py-1.5 px-3 bg-blue-800 border border-blue-800 text-blue-200 font-medium rounded-full hover:bg-blue-700 hover:border-blue-700 focus:outline-none select-none;
+    @apply text-sm font-bold py-1 px-3 bg-blue-800 border border-blue-800 text-blue-200 rounded-full hover:bg-blue-700 hover:border-blue-700 focus:outline-none select-none;
   }
 }
 
@@ -83,6 +114,29 @@
   }
 }
 
+@layer utilities {
+  .shadow-chunky {
+    box-shadow: 3px 5px 0 0 #444;
+    border: solid 2px #444;
+  }
+}
+
+@layer utilities {
+  .btn-chunky {
+    box-shadow: 2px 2px 0 0 #444;
+    border-radius: 8px;
+    border: solid 2px #444;
+    position: relative;
+    transition: transform 200ms ease, box-shadow 200ms ease;
+    @apply text-dark font-bold py-2 px-5;
+
+    &:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0 0 #444;
+    }
+  }
+}
+
 * {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -98,6 +152,7 @@ body,
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  font-weight: 500;
 }
 
 body {
@@ -162,10 +217,10 @@ header.is-hidden {
 
 .toggle-btn {
   background-color: #b7b9ba;
-  border: 1px solid #aaa;
+  border: 2px solid #444;
   border-radius: 99px;
-  width: 44px;
-  height: 24px;
+  width: 46px;
+  height: 26px;
   transition: background-color 0.1s ease, border-color 0.2s ease;
   cursor: pointer;
   position: relative;
@@ -188,12 +243,8 @@ header.is-hidden {
   background-color: #15b58e;
 }
 
-.toggle-btn:hover {
-  border-color: #6f6f6f;
-}
-
 .toggle-btn.toggled .thumb {
-  left: calc(50px - 28px);
+  left: calc(50px - 29px);
 }
 
 .marquee-track {
@@ -209,4 +260,40 @@ header.is-hidden {
   100% {
     transform: translate3d(calc(-50% - 16px), 0, 0);
   }
+}
+
+@font-face {
+  font-family: "HelveticaNowDisplay";
+  src: url("./assets/fonts/HelveticaNowDisplay/HelveticaNowDisplay-Regular.woff2");
+  src: url("./assets/fonts/HelveticaNowDisplay/HelveticaNowDisplay-Regular.woff2")
+      format("woff2"),
+    url("./assets/fonts/HelveticaNowDisplay/HelveticaNowDisplay-Regular.woff")
+      format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HelveticaNowDisplay";
+  src: url("./assets/fonts/HelveticaNowDisplay/HelveticaNowDisplay-Medium.woff2");
+  src: url("./assets/fonts/HelveticaNowDisplay/HelveticaNowDisplay-Medium.woff2")
+      format("woff2"),
+    url("./assets/fonts/HelveticaNowDisplay/HelveticaNowDisplay-Medium.woff")
+      format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HelveticaNowDisplay";
+  src: url("./assets/fonts/HelveticaNowDisplay/HelveticaNowDisplay-Bold.woff2");
+  src: url("./assets/fonts/HelveticaNowDisplay/HelveticaNowDisplay-Bold.woff2")
+      format("woff2"),
+    url("./assets/fonts/HelveticaNowDisplay/HelveticaNowDisplay-Bold.woff")
+      format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }

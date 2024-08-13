@@ -19,7 +19,7 @@ const UserAvatar = ({ data }: { data: any }) => {
             }
             alt=""
           />
-          <p className="text-sm underline">
+          <p className="text-sm font-bold underline">
             @{data.user?.userName || data.userName}
           </p>
         </NavLink>

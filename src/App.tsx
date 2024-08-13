@@ -121,9 +121,9 @@ function App() {
   return (
     <>
       <header
-        className={`bg-white sticky top-0 z-20 py-3.5 transition ${
+        className={`bg-white sticky top-0 z-20 py-4 transition ${
           isScrollingDown ? "is-hidden" : ""
-        } ${isPastHeader ? "shadow-nav" : ""}`}
+        } ${isPastHeader ? "border-b-2 border-[#444] shadow-nav" : ""}`}
         ref={headerRef}
       >
         <div className="container relative">
@@ -134,14 +134,14 @@ function App() {
           />
           <div className="grid grid-cols-12 items-center gap-4 w-full">
             <nav className="col-span-5">
-              <ul className="flex items-center gap-1">
+              <ul className="flex items-center gap-2">
                 <li>
                   <NavLink
                     to="/discover"
                     className={({ isActive }: { isActive: any }) =>
                       isActive
-                        ? "nav-button rounded-full text-sm flex items-center"
-                        : "text-sm px-5 py-2 flex items-center text-black-200"
+                        ? "font-bold px-6 py-2 flex items-center text-blue-100"
+                        : "font-bold px-6 py-2 flex items-center text-dark"
                     }
                   >
                     Discover
@@ -153,8 +153,8 @@ function App() {
                     to="/shop"
                     className={({ isActive }: { isActive: any }) =>
                       isActive
-                        ? "nav-button rounded-full text-sm flex items-center"
-                        : "text-sm px-5 py-2 flex items-center text-black-200"
+                        ? "font-bold px-6 py-2 flex items-center text-blue-100"
+                        : "font-bold px-6 py-2 flex items-center text-dark"
                     }
                   >
                     Shop
@@ -166,8 +166,8 @@ function App() {
                     to="/talent"
                     className={({ isActive }: { isActive: any }) =>
                       isActive
-                        ? "nav-button rounded-full text-sm flex items-center"
-                        : "text-sm px-5 py-2 flex items-center text-black-200"
+                        ? "font-bold px-6 py-2 flex items-center text-blue-100"
+                        : "font-bold px-6 py-2 flex items-center text-dark"
                     }
                   >
                     Talent
@@ -180,10 +180,10 @@ function App() {
               <NavLink to="/">Home</NavLink>
             </div>
 
-            <div className="col-span-5 justify-end flex gap-4 items-center">
+            <div className="col-span-5 justify-end flex gap-6 items-center">
               <button className="text-blue" onClick={onToggleSearchModal}>
                 <svg
-                  className="h-4 w-4 stroke-blue-100"
+                  className="h-5 w-5 stroke-blue-100"
                   width="24"
                   height="25"
                   viewBox="0 0 24 25"
@@ -193,14 +193,14 @@ function App() {
                   <path
                     d="M10.8889 19.7778C15.7981 19.7778 19.7778 15.7981 19.7778 10.8889C19.7778 5.97969 15.7981 2 10.8889 2C5.97969 2 2 5.97969 2 10.8889C2 15.7981 5.97969 19.7778 10.8889 19.7778Z"
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth="3"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                   <path
                     d="M22.0003 22.0003L17.167 17.167"
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth="3"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
@@ -211,10 +211,10 @@ function App() {
                 <>
                   <div className="relative" ref={menuDropdownRef}>
                     <button
-                      className="text-xs btn-outline-dark shadow-none border-grey-100 text-blue-100 hover:bg-blue-900 hover:text-blue-100"
+                      className="text-sm btn-chunky hover:text-blue-100 hover:bg-blue-900"
                       onClick={onToggleMenuDropdown}
                     >
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1.5">
                         @{userState.userName}
                         <svg
                           className={`w-3 h-3 transition-transform ${
@@ -227,18 +227,24 @@ function App() {
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M5.02701 8.15332L2.66701 10.5133L16 23.8473L29.333 10.5133L26.973 8.15332L16 19.1273L5.02701 8.15332Z"
-                            fill="currentColor"
+                            d="M3.5 10.1299L16.5 23.1299"
+                            stroke="currentColor"
+                            strokeWidth="4.5"
+                          />
+                          <path
+                            d="M28.5 10.1306L14.7629 23.8679"
+                            stroke="currentColor"
+                            strokeWidth="4.5"
                           />
                         </svg>
                       </div>
                     </button>
                     {showDropdown && (
-                      <div className="min-w-32 p-1.5 bg-white shadow-nav rounded-md absolute top-full right-0 translate-y-3 flex flex-col gap-1 z-10">
+                      <div className="min-w-44 bg-white border-2 border-[#444] rounded-md absolute top-full right-0 translate-y-3 flex flex-col z-10 overflow-hidden">
                         <ul>
                           <li className="flex">
                             <NavLink
-                              className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                              className="text-sm font-bold px-5 py-5 hover:bg-blue-900 whitespace-nowrap w-full"
                               to={`/user/${userState.userName}`}
                               state={{ userId: userState._id }}
                               onClick={onToggleMenuDropdown}
@@ -248,7 +254,7 @@ function App() {
                           </li>
                           <li className="flex">
                             <NavLink
-                              className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                              className="text-sm font-bold px-5 py-5 hover:bg-blue-900 whitespace-nowrap w-full"
                               to={`/posts/${userState.userName}`}
                               state={{ userId: userState._id }}
                               onClick={onToggleMenuDropdown}
@@ -258,7 +264,7 @@ function App() {
                           </li>
                           <li className="flex">
                             <NavLink
-                              className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                              className="text-sm font-bold px-5 py-5 hover:bg-blue-900 whitespace-nowrap w-full"
                               to={`/shop/${userState.userName}`}
                               state={{ userId: userState._id }}
                               onClick={onToggleMenuDropdown}
@@ -268,7 +274,7 @@ function App() {
                           </li>
                           <li className="flex">
                             <NavLink
-                              className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                              className="text-sm font-bold px-5 py-5 hover:bg-blue-900 whitespace-nowrap w-full"
                               to={`/hire/${userState.userName}`}
                               state={{ userId: userState._id }}
                               onClick={onToggleMenuDropdown}
@@ -277,12 +283,12 @@ function App() {
                             </NavLink>
                           </li>
                         </ul>
-                        <hr className="h-[1px] bg-grey-100 border-none" />
+                        <hr className="h-[2px] bg-[#444] border-none" />
                         <ul>
                           <li className="flex">
                             <NavLink
                               to="/auth"
-                              className="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap w-full"
+                              className="text-sm font-bold px-5 py-5 hover:bg-blue-900 whitespace-nowrap w-full"
                               onClick={onToggleMenuDropdown}
                             >
                               Account
@@ -295,7 +301,7 @@ function App() {
 
                   <div className="relative" ref={createDropdownRef}>
                     <button
-                      className="btn-primary p-2 shadow-none"
+                      className="btn-chunky-primary !p-2 !rounded-full"
                       onClick={handleCreateDropdown}
                     >
                       <svg
@@ -311,25 +317,25 @@ function App() {
                         <path
                           d="M12 3V21"
                           stroke="currentColor"
-                          strokeWidth="2"
+                          strokeWidth="3"
                           strokeLinecap="round"
                           strokeLinejoin="round"
                         />
                         <path
                           d="M3 12H21"
                           stroke="currentColor"
-                          strokeWidth="2"
+                          strokeWidth="3"
                           strokeLinecap="round"
                           strokeLinejoin="round"
                         />
                       </svg>
                     </button>
                     {showCreateDropdown && (
-                      <ul className="p-1.5 bg-white shadow-nav rounded-md absolute top-full right-0 translate-y-3 flex flex-col gap-1">
+                      <ul className="bg-white border-2 border-[#444] rounded-md absolute top-full right-0 translate-y-3 flex flex-col overflow-hidden">
                         {userState?._id && (
                           <li>
                             <CreatePost
-                              btnClasses="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap"
+                              btnClasses="text-sm font-bold px-5 py-5 hover:bg-blue-900 whitespace-nowrap w-full"
                               onFileUpload={handleFileUpload}
                             />
                           </li>
@@ -337,7 +343,7 @@ function App() {
                         {userState?._id && (
                           <li>
                             <CreateProduct
-                              btnClasses="text-xs px-4 py-3 rounded-md hover:bg-blue-900 whitespace-nowrap"
+                              btnClasses="text-sm font-bold px-5 py-5 hover:bg-blue-900 whitespace-nowrap w-full"
                               onToggleModal={handleToggleCreateProductModal}
                             />
                           </li>
@@ -357,8 +363,8 @@ function App() {
                             to="/login"
                             className={({ isActive }: { isActive: any }) =>
                               isActive
-                                ? "btn-outline-dark text-xs font-semibold border-[#dadce0] text-blue-100 hover:text-blue-100 hover:bg-blue-900 shadow-none"
-                                : "btn-outline-dark text-xs font-semibold border-[#dadce0] text-blue-100 hover:text-blue-100 hover:bg-blue-900 shadow-none"
+                                ? "btn-chunky text-sm hover:text-blue-100 hover:bg-blue-900"
+                                : "btn-chunky text-sm hover:text-blue-100 hover:bg-blue-900"
                             }
                           >
                             Login
@@ -370,8 +376,8 @@ function App() {
                           to="/register"
                           className={({ isActive }: { isActive: any }) =>
                             isActive
-                              ? "btn-primary text-xs font-semibold"
-                              : "btn-primary bg-blue-100 border-blue-100 text-white shadow-none hover:bg-blue-300 hover:border-blue-300 text-xs font-semibold"
+                              ? "btn-chunky-primary text-sm font-bold"
+                              : "btn-chunky-primary text-sm font-bold bg-blue-100 text-white hover:bg-blue-300"
                           }
                         >
                           Register
@@ -392,7 +398,7 @@ function App() {
         className={`flex flex-col ${
           location.pathname === "/register"
             ? "justify-center items-center"
-            : "py-20"
+            : "py-24"
         } ${location.pathname === "/" ? "pb-8" : ""}`}
       >
         <Routes>

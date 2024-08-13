@@ -132,18 +132,20 @@ export default function Register() {
   return (
     <div className="grid grid-cols-12 flex-grow w-full">
       <div className="col-span-5 flex flex-col justify-center px-4">
-        <div className="flex flex-col gap-6 max-w-[400px] h-[380px] mx-auto w-full">
+        <div className="flex flex-col gap-6 max-w-[400px] h-[412px] mx-auto w-full">
           <h1 className="text-2xl">Create your account</h1>
           <form
-            className="flex flex-col justify-between gap-4 h-full relative"
+            className="flex flex-col justify-between gap-6 h-full relative font-bold"
             onSubmit={(e) => handleSubmit(e)}
           >
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-6">
               {currentStep === 1 && (
                 <div className="flex flex-col gap-2">
-                  <label className="text-black-200">Invite code:</label>
+                  <label className="text-sm uppercase tracking-wide font-bold">
+                    Invite code:
+                  </label>
                   <input
-                    className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
+                    className="border-2 border-[#444] p-3 rounded"
                     type="text"
                     name="code"
                     value={formData.code}
@@ -157,9 +159,11 @@ export default function Register() {
               {currentStep === 2 && (
                 <>
                   <div className="flex flex-col gap-2">
-                    <label className="text-black-200">Email address:</label>
+                    <label className="text-sm uppercase tracking-wide font-bold">
+                      Email address:
+                    </label>
                     <input
-                      className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
+                      className="border-2 border-[#444] p-3 rounded"
                       type="email"
                       name="email"
                       value={formData.email}
@@ -171,9 +175,11 @@ export default function Register() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-black-200">Username:</label>
+                    <label className="text-sm uppercase tracking-wide font-bold">
+                      Username:
+                    </label>
                     <input
-                      className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
+                      className="border-2 border-[#444] p-3 rounded"
                       type="text"
                       name="userName"
                       value={formData.userName}
@@ -184,9 +190,11 @@ export default function Register() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-black-200">Password:</label>
+                    <label className="text-sm uppercase tracking-wide font-bold">
+                      Password:
+                    </label>
                     <input
-                      className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
+                      className="border-2 border-[#444] p-3 rounded"
                       type="password"
                       name="password"
                       value={formData.password}
@@ -201,9 +209,11 @@ export default function Register() {
               {currentStep === 3 && (
                 <>
                   <div className="flex flex-col gap-2">
-                    <label className="text-black-200">Creative role:</label>
+                    <label className="text-sm uppercase tracking-wide font-bold">
+                      Creative role:
+                    </label>
                     <input
-                      className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
+                      className="border-2 border-[#444] p-3 rounded"
                       type="text"
                       name="role"
                       value={formData.talentProfile.role}
@@ -215,9 +225,11 @@ export default function Register() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-black-200">Talents:</label>
+                    <label className="text-sm uppercase tracking-wide font-bold">
+                      Talents:
+                    </label>
                     <input
-                      className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
+                      className="border-2 border-[#444] p-3 rounded"
                       type="text"
                       name="talents"
                       value={formData.talentProfile.talents}
@@ -233,12 +245,15 @@ export default function Register() {
               {currentStep === 4 && (
                 <>
                   <div className="flex flex-col gap-2">
-                    <label className="text-black-200" htmlFor="state">
+                    <label
+                      className="text-sm uppercase tracking-wide font-bold"
+                      htmlFor="state"
+                    >
                       State / Federal Territory:
                     </label>
                     <div className="relative">
                       <select
-                        className="h-[45px] bg-blue-900 border-b border-dark/40 p-5 py-2.5 w-full"
+                        className="border-2 border-[#444] p-3 rounded w-full"
                         onChange={handleChange}
                         name="state"
                         value={formData.state}
@@ -262,7 +277,7 @@ export default function Register() {
                         <option value="Labuan">Labuan</option>
                       </select>
 
-                      <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none">
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
                         <svg
                           className="h-5 w-5 pointer-events-none"
                           width="24"
@@ -284,9 +299,11 @@ export default function Register() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-black-200">City / District:</label>
+                    <label className="text-sm uppercase tracking-wide font-bold">
+                      City / District:
+                    </label>
                     <input
-                      className="bg-blue-900 border-b border-dark/40 p-5 py-2.5"
+                      className="border-2 border-[#444] p-3 rounded"
                       type="text"
                       name="city"
                       value={formData.city}
@@ -304,7 +321,7 @@ export default function Register() {
                 currentStep === 2 ||
                 currentStep === 3) && (
                 <button
-                  className="btn-primary shadow-none"
+                  className="btn-chunky-primary"
                   type="button"
                   onClick={handleNext}
                 >
@@ -314,7 +331,7 @@ export default function Register() {
 
               {(currentStep === 2 || currentStep === 3) && (
                 <button
-                  className="px-5 py-2 text-blue-100 font-medium"
+                  className="btn-chunky"
                   type="button"
                   onClick={handlePrev}
                 >
@@ -325,7 +342,7 @@ export default function Register() {
               {currentStep === 4 && (
                 <>
                   <button
-                    className="btn-primary"
+                    className="btn-chunky-primary"
                     type="submit"
                     onSubmit={(e) => handleSubmit(e)}
                   >
@@ -333,7 +350,7 @@ export default function Register() {
                   </button>
 
                   <button
-                    className="px-5 py-2 text-blue-100 font-medium"
+                    className="btn-chunky"
                     type="button"
                     onClick={handlePrev}
                   >
@@ -359,7 +376,7 @@ export default function Register() {
         <div className="text-white bg-[#093cf4] p-16 rounded-xl h-full">
           <div className="max-w-[570px] flex flex-col gap-16">
             <div className="flex flex-col gap-6">
-              <h1 className="font-medium text-3xl leading-tight">
+              <h1 className="font-medium text-3xl">
                 Exclusive Platform for Creators to Share, Sell, and Shine
               </h1>
 
@@ -373,28 +390,28 @@ export default function Register() {
 
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-4">
-                <p className="font-semibold">Why Sign Up?</p>
+                <p className="font-bold">Why Sign Up?</p>
 
                 <ul className="list-disc max-w-[470px] flex flex-col gap-3">
                   <li>
-                    <span className="font-semibold">Showcase Your Work:</span>{" "}
-                    Share your latest creations with a community that
-                    appreciates quality and creativity.
+                    <span className="font-bold">Showcase Your Work:</span> Share
+                    your latest creations with a community that appreciates
+                    quality and creativity.
                   </li>
                   <li>
-                    <span className="font-semibold">Sell Your Products:</span>{" "}
-                    Open your personal shop with no listing fees and start
-                    selling digital or physical items effortlessly.
+                    <span className="font-bold">Sell Your Products:</span> Open
+                    your personal shop with no listing fees and start selling
+                    digital or physical items effortlessly.
                   </li>
                   <li>
-                    <span className="font-semibold">Offer Your Services:</span>{" "}
+                    <span className="font-bold">Offer Your Services:</span>{" "}
                     Monetize your skills by offering commissions, memberships,
                     or personalized services.
                   </li>
                 </ul>
               </div>
 
-              <div className="font-semibold">
+              <div className="font-bold">
                 <p>Start Making Money Doing What You Love.</p>
                 <p>All in One Beautiful Space.</p>
               </div>

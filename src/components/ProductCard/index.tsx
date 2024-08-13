@@ -96,15 +96,15 @@ const ProductCard = ({
 
   return (
     <>
-      <div className="flex flex-col relative overflow-hidden">
+      <div className="flex flex-col relative overflow-hidden shadow-chunky rounded-xl p-4 cursor-pointer">
         <div
-          className="group text-left"
+          className="group flex flex-col gap-4 text-left"
           onClick={() => {
             handleToggleModal(data._id);
           }}
         >
           <div className="w-full h-auto flex flex-col aspect-square">
-            <div className="h-full relative overflow-hidden rounded-2xl group/settingsIcon">
+            <div className="h-full relative overflow-hidden rounded-lg group/settingsIcon">
               {showSettings && (
                 <>
                   {data.user._id === userState._id && (
@@ -172,13 +172,13 @@ const ProductCard = ({
               )}
             </div>
           </div>
-          <div className="flex flex-col justify-between gap-4 pb-3 tablet:py-4 w-full flex-grow">
-            <div>
-              <p>{data.productName}</p>
+          <div className="flex flex-col justify-between gap-4 w-full flex-grow">
+            <div className="flex flex-col gap-1">
+              <p className="font-bold">{data.productName}</p>
               <p className="text-sm text-grey">{data.productDescription}</p>
             </div>
 
-            <p>RM {data.productPrice}</p>
+            <p className="font-bold">RM {data.productPrice}</p>
           </div>
         </div>
       </div>

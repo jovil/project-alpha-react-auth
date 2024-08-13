@@ -42,12 +42,12 @@ const Home = () => {
     <>
       <div className="flex flex-col gap-24">
         <section className="container flex flex-col justify-center items-center gap-10">
-          <div className="flex flex-col items-center gap-4">
-            <h1 className="max-w-[800px] text-center text-5xl font-medium mx-auto leading-tight">
+          <div className="flex flex-col items-center gap-6">
+            <h1 className="max-w-[900px] text-center text-6xl font-medium mx-auto leading-tight">
               Community Platform for Creators to Share, Sell, and Shine
             </h1>
 
-            <p className="text-center max-w-[500px]">
+            <p className="text-xl leading-8 text-grey text-center max-w-[580px]">
               Showcase your talent, sell unique products, and offer bespoke
               services. Flourish creatively and grow your income in our
               dedicated creator community.
@@ -58,9 +58,9 @@ const Home = () => {
             className="flex flex-col relative"
             onSubmit={(e) => handleSubmit(e)}
           >
-            <div className="flex gap-2">
+            <div className="flex gap-4">
               <input
-                className="bg-blue-900 border-b border-dark/40 p-5 py-2.5 min-w-[280px]"
+                className="font-bold bg-blue-900 border-b-2 border-[#444] p-5 py-2.5 min-w-[280px]"
                 type="email"
                 name="email"
                 placeholder="Email"
@@ -69,7 +69,7 @@ const Home = () => {
                 required
               />
               <button
-                className="btn-primary"
+                className="btn-chunky-primary"
                 onSubmit={(e) => handleSubmit(e)}
                 type="submit"
               >
@@ -84,42 +84,40 @@ const Home = () => {
           </form>
         </section>
         <section>
-          <div className="overflow-hidden">
+          <div className="overflow-hidden pb-2">
             <div className="marquee-track">
               {marqueePeeps?.length ? (
-                <div className="flex flex-nowrap gap-8 overflow-hidden">
+                <div className="flex flex-nowrap gap-8">
                   {marqueePeeps?.map((post: any, index: number) => {
                     return (
                       <div
-                        className="min-w-[270px] flex flex-col relative overflow-hidden rounded-3xl"
+                        className="min-w-[270px] shadow-chunky rounded-xl p-4 flex"
                         key={index}
                       >
-                        <div className="relative">
-                          <>
-                            <div className={`w-full h-auto flex flex-col`}>
-                              <div className="h-full relative overflow-hidden rounded-3xl">
-                                {runShimmerAnimation && (
-                                  <div className="shimmer-overlay"></div>
-                                )}
-                                {isLoading && (
-                                  <img
-                                    className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
-                                    src={loading}
-                                    alt=""
-                                  />
-                                )}
-
+                        <>
+                          <div className={`w-full h-auto flex flex-col`}>
+                            <div className="h-full relative overflow-hidden rounded-lg">
+                              {runShimmerAnimation && (
+                                <div className="shimmer-overlay"></div>
+                              )}
+                              {isLoading && (
                                 <img
-                                  className="object-cover w-full h-full rounded-3xl aspect-[5/6]"
-                                  src={post.fileUrl}
+                                  className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
+                                  src={loading}
                                   alt=""
-                                  loading="lazy"
-                                  onLoad={handleOnLoad}
                                 />
-                              </div>
+                              )}
+
+                              <img
+                                className="object-cover w-full h-full rounded-lg aspect-[5/6]"
+                                src={post.fileUrl}
+                                alt=""
+                                loading="lazy"
+                                onLoad={handleOnLoad}
+                              />
                             </div>
-                          </>
-                        </div>
+                          </div>
+                        </>
                       </div>
                     );
                   })}
@@ -127,35 +125,33 @@ const Home = () => {
                   {marqueePeeps?.map((post: any, index: number) => {
                     return (
                       <div
-                        className="min-w-[270px] flex flex-col relative overflow-hidden rounded-3xl"
+                        className="min-w-[270px] shadow-chunky rounded-xl p-4 flex"
                         key={index}
                       >
-                        <div className="relative">
-                          <>
-                            <div className={`w-full h-auto flex flex-col`}>
-                              <div className="h-full relative overflow-hidden rounded-3xl">
-                                {runShimmerAnimation && (
-                                  <div className="shimmer-overlay"></div>
-                                )}
-                                {isLoading && (
-                                  <img
-                                    className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
-                                    src={loading}
-                                    alt=""
-                                  />
-                                )}
-
+                        <>
+                          <div className={`w-full h-auto flex flex-col`}>
+                            <div className="h-full relative overflow-hidden rounded-lg">
+                              {runShimmerAnimation && (
+                                <div className="shimmer-overlay"></div>
+                              )}
+                              {isLoading && (
                                 <img
-                                  className="object-cover w-full h-full rounded-3xl aspect-[5/6]"
-                                  src={post.fileUrl}
+                                  className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
+                                  src={loading}
                                   alt=""
-                                  loading="lazy"
-                                  onLoad={handleOnLoad}
                                 />
-                              </div>
+                              )}
+
+                              <img
+                                className="object-cover w-full h-full rounded-lg aspect-[5/6]"
+                                src={post.fileUrl}
+                                alt=""
+                                loading="lazy"
+                                onLoad={handleOnLoad}
+                              />
                             </div>
-                          </>
-                        </div>
+                          </div>
+                        </>
                       </div>
                     );
                   })}

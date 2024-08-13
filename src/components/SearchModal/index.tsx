@@ -72,13 +72,13 @@ const SearchModal = ({
               exit="exit"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="container bg-white border p-4 relative pointer-events-auto rounded-md">
+              <div className="container bg-white p-4 relative pointer-events-auto rounded-md border-2 border-[#444]">
                 <form
                   className="flex items-center justify-between w-full gap-6"
                   onSubmit={handleSearch}
                 >
                   <input
-                    className="py-2 px-5 border-b border-[#dadce0] outline-none w-full"
+                    className="font-bold py-2.5 px-5 border-b-2 border-[#444] outline-none w-full"
                     type="search"
                     placeholder="Search username"
                     onChange={handleSearchInput}
@@ -86,7 +86,7 @@ const SearchModal = ({
                     autoFocus
                   ></input>
                   <button
-                    className="btn-primary"
+                    className="btn-chunky-primary"
                     type="submit"
                     onSubmit={handleSearch}
                   >
@@ -120,8 +120,8 @@ const SearchModal = ({
                                 alt=""
                               />
                               <div className="flex flex-col">
-                                <p className="font-medium">{user.userName}</p>
-                                <p className="text-xs text-dark/60">
+                                <p className="font-bold">{user.userName}</p>
+                                <p className="text-sm text-grey">
                                   {user.state}, {user.city}
                                 </p>
                               </div>
@@ -133,13 +133,11 @@ const SearchModal = ({
                   </ul>
                 )}
                 {searchResultQuery && searchResult?.length > 0 && (
-                  <div className="flex justify-end text-xs text-dark/60 px-6 pt-4 border-t border-[#dadce0]">
+                  <div className="flex justify-end text-xs text-dark/60 px-6 pt-4 border-t-2 border-[#444]">
                     <p>
-                      <span className="font-medium">
-                        {searchResult?.length}
-                      </span>{" "}
+                      <span className="font-bold">{searchResult?.length}</span>{" "}
                       {searchResult?.length > 1 ? "matches" : "match"} for{" "}
-                      <span className="font-medium">"{searchResultQuery}"</span>
+                      <span className="font-bold">"{searchResultQuery}"</span>
                     </p>
                   </div>
                 )}

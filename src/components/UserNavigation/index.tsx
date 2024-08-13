@@ -34,14 +34,14 @@ const UserNavigation = () => {
           alt=""
         />
         <div className="relative">
-          <nav className="bg-white rounded-full shadow-nav p-2 pointer-events-auto">
+          <nav className="bg-white border-2 border-[#444] rounded-full shadow-nav p-2 pointer-events-auto">
             <ul className="flex items-center gap-1">
               <li>
                 <NavLink
                   className={({ isActive }: { isActive: any }) =>
                     isActive
-                      ? "nav-button rounded-full text-sm flex items-center"
-                      : "text-sm px-5 py-2 flex items-center text-black-200"
+                      ? "font-bold text-sm px-5 py-2 flex items-center text-blue-100"
+                      : "font-bold text-sm px-5 py-2 flex items-center text-black-200"
                   }
                   to={`/user/${user?.userName}`}
                   state={{ userId: user?._id }}
@@ -54,8 +54,8 @@ const UserNavigation = () => {
                   <NavLink
                     className={({ isActive }: { isActive: any }) =>
                       isActive
-                        ? "nav-button rounded-full text-sm flex items-center"
-                        : "text-sm px-5 py-2 flex items-center text-black-200"
+                        ? "font-bold text-sm px-5 py-2 flex items-center text-blue-100"
+                        : "font-bold text-sm px-5 py-2 flex items-center text-black-200"
                     }
                     to={`/posts/${user?.userName}`}
                     state={{ userId: user?._id }}
@@ -69,8 +69,8 @@ const UserNavigation = () => {
                   <NavLink
                     className={({ isActive }: { isActive: any }) =>
                       isActive
-                        ? "nav-button rounded-full text-sm flex items-center"
-                        : "text-sm px-5 py-2 flex items-center text-black-200"
+                        ? "font-bold text-sm px-5 py-2 flex items-center text-blue-100"
+                        : "font-bold text-sm px-5 py-2 flex items-center text-black-200"
                     }
                     to={`/shop/${user?.userName}`}
                     state={{ userId: user?._id }}
@@ -86,8 +86,8 @@ const UserNavigation = () => {
                     state={{ userId: user?._id }}
                     className={({ isActive }: { isActive: any }) =>
                       isActive
-                        ? "nav-button rounded-full text-sm flex items-center"
-                        : "text-sm px-5 py-2 flex items-center text-black-200"
+                        ? "font-bold text-sm px-5 py-2 flex items-center text-blue-100"
+                        : "font-bold text-sm px-5 py-2 flex items-center text-black-200"
                     }
                   >
                     Hire {user?.userName}

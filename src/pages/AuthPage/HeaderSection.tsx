@@ -74,8 +74,8 @@ const HeaderSection = () => {
   return (
     <section className="text-center">
       <div className="flex justify-center col-span-6">
-        <div className="flex flex-col justify-center items-center gap-3">
-          <div className="text-xs font-medium flex flex-col gap-3 items-center">
+        <div className="flex flex-col justify-center items-center gap-4">
+          <div className="text-sm font-medium flex flex-col gap-4 items-center">
             <img
               className="w-16 h-16 object-cover rounded shadow-md"
               src={
@@ -87,7 +87,7 @@ const HeaderSection = () => {
               }
               alt=""
             />
-            <p>{userState.userName}</p>
+            <p className="font-bold">{userState.userName}</p>
           </div>
           <Form
             onSubmit={(e) => handleSubmit(e)}
@@ -95,7 +95,7 @@ const HeaderSection = () => {
           >
             {!avatarUploaded && (
               <Form.Label htmlFor="file-upload">
-                <div className="text-xs btn-outline-dark flex gap-2 justify-center items-center cursor-pointer">
+                <div className="text-sm btn-chunky flex gap-2 justify-center items-center cursor-pointer">
                   {!avatarSavedMessage ? "Upload" : "Saved!"}
                 </div>
               </Form.Label>

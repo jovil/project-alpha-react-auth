@@ -98,7 +98,7 @@ const Card = ({
         }`}
         key={data._id}
       >
-        <div className="h-full relative overflow-hidden rounded-3xl group/settingsIcon">
+        <div className="h-full relative overflow-hidden rounded-xl group/settingsIcon">
           {showSettings && (
             <>
               {data.user._id === userState._id && (
@@ -149,7 +149,7 @@ const Card = ({
           )}
           {typeof data.fileUrl === "string" && (
             <img
-              className={`object-cover w-full h-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
+              className={`object-cover w-full h-full rounded-lg group-hover:scale-[1.03] transition-transform ${
                 state[gridComponent ? gridComponent : ""] === "grid" &&
                 state[captionComponent ? captionComponent : ""]
                   ? "aspect-[4/6]"
@@ -163,7 +163,7 @@ const Card = ({
           )}
           {data.avatar && (
             <img
-              className={`object-cover w-full h-full rounded-3xl group-hover:scale-[1.03] transition-transform ${
+              className={`object-cover w-full h-full rounded-lg group-hover:scale-[1.03] transition-transform ${
                 state[gridComponent ? gridComponent : ""] === "grid" &&
                 state[captionComponent ? captionComponent : ""]
                   ? "aspect-[4/6]"
@@ -177,6 +177,7 @@ const Card = ({
           )}
         </div>
       </div>
+
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
         {showDeleteConfirmationModal && (
           <Backdrop

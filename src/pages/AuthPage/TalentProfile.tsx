@@ -103,9 +103,9 @@ const TalentProfile = ({
   return (
     <>
       <div className="flex flex-col gap-16 p-4 pt-0 w-full">
-        <div className="flex flex-col justify-between gap-4 border border-dark/40 rounded-md p-6">
+        <div className="flex flex-col justify-between gap-4 border-2 border-[#444] rounded-md p-6">
           <div className="flex items-center gap-2">
-            <p className="text-xs">Enable</p>
+            <p className="text-sm">Enable</p>
             <button
               className={`toggle-btn ${enableProfile ? "toggled" : ""}`}
               onClick={handleToggleProfile}
@@ -114,16 +114,18 @@ const TalentProfile = ({
             </button>
           </div>
 
-          <p>Activate your talent profile</p>
+          <p className="font-bold">Activate your talent profile</p>
         </div>
 
         <form className="flex flex-col gap-10" onSubmit={submitHiringDetails}>
           <div className="grid grid-cols-12 gap-6 w-full">
             <div className="col-span-4 flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <label className="text-sm">Creative role:</label>
+                <label className="text-sm uppercase tracking-wide font-bold">
+                  Creative role:
+                </label>
                 <input
-                  className="border border-dark/40 p-3 rounded"
+                  className="border-2 border-[#444] p-3 rounded"
                   type="text"
                   placeholder="Primary role (e.g., Costume Designer, Makeup Artist)"
                   name="role"
@@ -134,9 +136,11 @@ const TalentProfile = ({
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-sm">Talents:</label>
+                <label className="text-sm uppercase tracking-wide font-bold">
+                  Talents:
+                </label>
                 <textarea
-                  className="border border-dark/40 p-3 rounded"
+                  className="border-2 border-[#444] p-3 rounded"
                   rows={4}
                   placeholder="Your talents (e.g., Painting, Content Creation)"
                   name="talents"
@@ -153,9 +157,11 @@ const TalentProfile = ({
 
             <div className="col-span-4 flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <label className="text-sm">Headline:</label>
+                <label className="text-sm uppercase tracking-wide font-bold">
+                  Headline:
+                </label>
                 <input
-                  className="border border-dark/40 p-3 rounded"
+                  className="border-2 border-[#444] p-3 rounded"
                   type="text"
                   placeholder="Catchy title or tagline"
                   name="title"
@@ -166,9 +172,11 @@ const TalentProfile = ({
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-sm">Description:</label>
+                <label className="text-sm uppercase tracking-wide font-bold">
+                  Description:
+                </label>
                 <textarea
-                  className="border border-dark/40 p-3 rounded"
+                  className="border-2 border-[#444] p-3 rounded"
                   rows={4}
                   placeholder="Describe your work and what you offer"
                   name="description"
@@ -183,9 +191,11 @@ const TalentProfile = ({
 
             <div className="col-span-4 flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <label className="text-sm">WhatsApp:</label>
+                <label className="text-sm uppercase tracking-wide font-bold">
+                  WhatsApp:
+                </label>
                 <input
-                  className="border border-dark/40 p-3 rounded"
+                  className="border-2 border-[#444] p-3 rounded"
                   type="number"
                   placeholder="Phone number"
                   name="whatsApp"
@@ -199,7 +209,7 @@ const TalentProfile = ({
           <div className="flex justify-end">
             <button
               onSubmit={submitHiringDetails}
-              className="btn-primary flex justify-center items-center"
+              className="btn-chunky-primary flex justify-center items-center"
               type="submit"
             >
               Save

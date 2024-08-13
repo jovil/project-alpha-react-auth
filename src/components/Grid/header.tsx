@@ -47,7 +47,7 @@ const GridHeader = ({
         {children}
         <div className="flex justify-end items-center gap-4">
           <div className="flex items-center gap-2">
-            <p className="text-xs">Show caption</p>
+            <p className="text-sm">Show caption</p>
             <button
               className={`toggle-btn ${state[captionProp] ? "toggled" : ""}`}
               onClick={() => handleCaption(captionProp)}
@@ -56,21 +56,25 @@ const GridHeader = ({
             </button>
           </div>
           <div className="flex gap-1">
-            <button>
+            <button
+              className={`rounded-full ${
+                state[gridViewProp] === "list" ? "bg-dark/10" : ""
+              }`}
+            >
               <img
-                className={`w-7 h-7 p-1.5 rounded-full ${
-                  state[gridViewProp] === "list" ? "bg-dark/10" : ""
-                }`}
+                className={`w-8 h-8 p-1.5`}
                 src={iconList}
                 onClick={() => handleListView(gridViewProp)}
                 alt=""
               />
             </button>
-            <button>
+            <button
+              className={`rounded-full ${
+                state[gridViewProp] === "grid" ? "bg-dark/10" : ""
+              }`}
+            >
               <img
-                className={`w-7 h-7 p-1.5 rounded-full ${
-                  state[gridViewProp] === "grid" ? "bg-dark/10" : ""
-                }`}
+                className={`w-8 h-8 p-1.5`}
                 src={iconGrid}
                 onClick={() => handleGridView(gridViewProp)}
                 alt=""

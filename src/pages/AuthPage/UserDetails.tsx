@@ -17,7 +17,7 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
       ...prevState,
       talentProfile: {
         ...prevState.talentProfile,
-        talents: formData.talents.toString(),
+        talents: formData.talents && formData.talents.toString(),
       },
     }));
   };
@@ -69,11 +69,13 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
 
   return (
     <>
-      <form className="text-sm max-w-[400px] mx-auto flex flex-col gap-4 p-4 w-full">
+      <form className="max-w-[400px] mx-auto flex flex-col gap-6 p-4 w-full">
         <div className="flex flex-col gap-2">
-          <label>Email:</label>
+          <label className="text-sm uppercase tracking-wide font-bold">
+            Email:
+          </label>
           <input
-            className="border border-dark/40 p-3 rounded"
+            className="border-2 border-[#444] p-3 rounded"
             type="email"
             name="email"
             value={formData.email}
@@ -84,9 +86,11 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label>Username:</label>
+          <label className="text-sm uppercase tracking-wide font-bold">
+            Username:
+          </label>
           <input
-            className="border border-dark/40 p-3 rounded"
+            className="border-2 border-[#444] p-3 rounded"
             type="text"
             name="userName"
             value={formData.userName}
@@ -97,9 +101,11 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label>Password:</label>
+          <label className="text-sm uppercase tracking-wide font-bold">
+            Password:
+          </label>
           <input
-            className="border border-dark/40 p-3 rounded"
+            className="border-2 border-[#444] p-3 rounded"
             type="password"
             name="password"
             value={isPassword}
@@ -110,9 +116,11 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label>Creative role:</label>
+          <label className="text-sm uppercase tracking-wide font-bold">
+            Creative role:
+          </label>
           <input
-            className="border border-dark/40 p-3 rounded"
+            className="border-2 border-[#444] p-3 rounded"
             type="text"
             name="role"
             value={formData?.talentProfile?.role}
@@ -124,9 +132,11 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label>Talents:</label>
+          <label className="text-sm uppercase tracking-wide font-bold">
+            Talents:
+          </label>
           <input
-            className="border border-dark/40 p-3 rounded"
+            className="border-2 border-[#444] p-3 rounded"
             type="text"
             name="talents"
             value={formData?.talentProfile?.talents?.toString()}
@@ -138,9 +148,14 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label htmlFor="state">State / Federal Territory:</label>
+          <label
+            className="text-sm uppercase tracking-wide font-bold"
+            htmlFor="state"
+          >
+            State / Federal Territory:
+          </label>
           <select
-            className="border border-dark/40 p-3 rounded"
+            className="border-2 border-[#444] p-3 rounded"
             name="state"
             value={formData.state}
             onChange={handleFormInput}
@@ -167,9 +182,11 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label>City / District:</label>
+          <label className="text-sm uppercase tracking-wide font-bold">
+            City / District:
+          </label>
           <input
-            className="border border-dark/40 p-3 rounded"
+            className="border-2 border-[#444] p-3 rounded"
             type="text"
             name="city"
             value={formData.city}
@@ -182,14 +199,14 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
 
         {!isEditing ? (
           <button
-            className="btn-primary flex justify-center items-center"
+            className="btn-chunky-primary flex justify-center items-center"
             onClick={editUserDetails}
           >
             Edit
           </button>
         ) : (
           <button
-            className="btn-primary flex justify-center items-center"
+            className="btn-chunky-primary flex justify-center items-center"
             onClick={submitUserDetails}
             type="submit"
           >

@@ -89,17 +89,18 @@ const BankDetails = () => {
   return (
     <>
       <div className="max-w-[400px] mx-auto w-full">
-        <div className="p-4">Add your bank account details for payouts</div>
+        <div className="p-4 font-bold">
+          Add your bank account details for payouts
+        </div>
 
         <div className="p-4 pb-6">
-          <form
-            className="text-sm flex flex-col gap-4"
-            onSubmit={submitBankDetails}
-          >
+          <form className="flex flex-col gap-6" onSubmit={submitBankDetails}>
             <div className="flex flex-col gap-2">
-              <label>Account holder's name:</label>
+              <label className="text-sm uppercase tracking-wide font-bold">
+                Account holder's name:
+              </label>
               <input
-                className="border border-dark/40 p-3 rounded"
+                className="border-2 border-[#444] p-3 rounded"
                 type="text"
                 placeholder="Account holder's name"
                 name="accountHoldersName"
@@ -119,9 +120,11 @@ const BankDetails = () => {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label>Bank name:</label>
+              <label className="text-sm uppercase tracking-wide font-bold">
+                Bank name:
+              </label>
               <input
-                className="border border-dark/40 p-3 rounded"
+                className="border-2 border-[#444] p-3 rounded"
                 type="text"
                 placeholder="Bank name"
                 name="bankName"
@@ -136,9 +139,11 @@ const BankDetails = () => {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label>Account number:</label>
+              <label className="text-sm uppercase tracking-wide font-bold">
+                Account number:
+              </label>
               <input
-                className="border border-dark/40 p-3 rounded"
+                className="border-2 border-[#444] p-3 rounded"
                 type="number"
                 placeholder="Account number"
                 name="accountNumber"
@@ -160,7 +165,7 @@ const BankDetails = () => {
               <>
                 <button
                   onClick={editBankDetails}
-                  className="btn-primary flex justify-center items-center"
+                  className="btn-chunky-primary flex justify-center items-center"
                 >
                   Edit
                 </button>
@@ -169,7 +174,7 @@ const BankDetails = () => {
               <>
                 <button
                   onSubmit={submitBankDetails}
-                  className="btn-primary flex justify-center items-center"
+                  className="btn-chunky-primary flex justify-center items-center"
                   type="submit"
                 >
                   Save

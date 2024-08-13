@@ -53,9 +53,9 @@ const HeaderSection = ({
   return (
     <>
       <header className="flex justify-center relative">
-        <div className="text-xs flex flex-col gap-4 items-center">
+        <div className="text-sm flex flex-col gap-4 items-center">
           <div className="flex flex-col gap-3 items-center">
-            <p className="text-dark">Shop</p>
+            <p className="text-dark font-bold">Shop</p>
             <NavLink
               className="flex flex-col gap-3 items-center"
               to={`/user/${isProfile._id}`}
@@ -80,7 +80,7 @@ const HeaderSection = ({
                   alt=""
                 />
               </div>
-              <p className="font-medium">{isProfile.userName}</p>
+              <p className="font-bold">{isProfile.userName}</p>
             </NavLink>
           </div>
           {userState && userState._id === isProfile._id && (
@@ -121,7 +121,7 @@ const HeaderSection = ({
           )}
           {isProfile && (
             <div className="flex flex-col items-center gap-2 pb-3">
-              <p className="text-sm text-center max-w-[400px]">
+              <p className="text-sm text-dark text-center leading-6 max-w-[420px]">
                 {userState && userState._id === isProfile._id ? (
                   <>{userState && userState.shopDescription}</>
                 ) : (

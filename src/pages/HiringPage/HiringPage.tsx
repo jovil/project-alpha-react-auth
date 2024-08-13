@@ -31,9 +31,11 @@ const HiringPage = () => {
     <>
       <section className="container flex flex-col gap-4">
         <header className="hidden tablet:flex justify-between items-center gap-2">
-          <h1>All talent</h1>
+          <h1 className="uppercase font-bold tracking-wide text-sm">
+            All talent
+          </h1>
         </header>
-        <div className="grid gap-4 tablet:grid-cols-2 desktop:grid-cols-3 gap-y-9">
+        <div className="grid gap-6 tablet:grid-cols-2 desktop:grid-cols-3 gap-y-9">
           {users?.length ? (
             <>
               {users?.map((user: any, index: number) => {
