@@ -30,8 +30,8 @@ const useFileUpload = () => {
     });
   };
 
-  const handleTogglePostModal = (value: boolean) => {
-    setShowModal(value);
+  const handleTogglePostModal = () => {
+    setShowModal((prevState) => !prevState);
   };
 
   return {

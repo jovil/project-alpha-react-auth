@@ -157,7 +157,6 @@ const Grid = ({ isUser }: { isUser?: any }) => {
                                 <p className="font-bold">{post.title}</p>
                                 <p className="text-grey">{post.description}</p>
                               </div>
-                              <p className="text-xs">from {post.seriesTitle}</p>
                             </div>
                           )}
                         </div>

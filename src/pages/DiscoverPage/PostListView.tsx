@@ -185,21 +185,12 @@ const PostListView = () => {
                     </button>
 
                     {state.showPostsCaption && (
-                      <div className="flex flex-col justify-between gap-6 w-full">
+                      <div className="flex flex-col justify-between gap-6 w-full h-full">
                         <div className="flex flex-col gap-1">
                           <p className="font-bold">{post.title}</p>
                           <p className="text-grey">{post.description}</p>
                         </div>
                         <footer className="flex flex-col gap-4">
-                          <div className="flex items-center gap-2">
-                            <p className="text-sm">from</p>
-                            <NavLink
-                              className="tag"
-                              to={`/series/${post.seriesTitle}`}
-                            >
-                              {post.seriesTitle}
-                            </NavLink>
-                          </div>
                           <div className="flex-grow flex justify-between items-center">
                             <UserAvatar data={post} />
                             {post.user?.productCount > 0 && (
