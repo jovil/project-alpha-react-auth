@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
 import { apiUrl } from "../../utils/fetchConfig";
 import { postFetchConfig } from "../../utils/fetchConfig";
+import ShareUser from "../../components/ShareUser";
 
 const HeaderSection = ({
   isUser,
@@ -13,7 +14,8 @@ const HeaderSection = ({
   isUser: any;
   isLoadingAvatar: boolean;
 }) => {
-  const { userId } = useParams();
+  const location = useLocation();
+  const { userId } = location.state || {};
   const { userState, setUserState } = useUser();
   const [showDescriptionForm, setShowDescriptionForm] = useState(false);
   const [profileDescriptionText, setProfileDescriptionText] = useState(
@@ -151,6 +153,8 @@ const HeaderSection = ({
               )}
             </div>
           )}
+
+          <ShareUser title={"Share profile"} />
         </div>
       </header>
     </>

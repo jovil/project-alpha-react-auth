@@ -5,6 +5,7 @@ import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
 import { apiUrl } from "../../utils/fetchConfig";
 import { postFetchConfig } from "../../utils/fetchConfig";
+import ShareUser from "../../components/ShareUser";
 
 const HeaderSection = ({
   isProfile,
@@ -129,18 +130,24 @@ const HeaderSection = ({
                   <>{isProfile && isProfile.shopDescription}</>
                 )}
               </p>
-              {userState &&
-                userState?._id === isProfile._id &&
-                !showDescriptionForm && (
-                  <button
-                    className="text-black-100/60 underline"
-                    onClick={addShopDescription}
-                  >
-                    Edit description
-                  </button>
-                )}
+              {userState && userState.shopDescription && (
+                <>
+                  {userState &&
+                    userState?._id === isProfile._id &&
+                    !showDescriptionForm && (
+                      <button
+                        className="text-black-100/60 underline"
+                        onClick={addShopDescription}
+                      >
+                        Edit description
+                      </button>
+                    )}
+                </>
+              )}
             </div>
           )}
+
+          <ShareUser title={"Share shop"} />
         </div>
       </header>
     </>

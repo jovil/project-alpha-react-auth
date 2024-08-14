@@ -137,9 +137,9 @@ const ProductModal = ({
               </div>
 
               <div className="flex flex-col gap-14">
-                <div className="flex flex-col gap-2">
-                  <h2 className="text-xl">{product.productName}</h2>
-                  <p className="text-xl">RM {product.productPrice}</p>
+                <div className="flex flex-col gap-1">
+                  <h2 className="font-bold text-xl">{product.productName}</h2>
+                  <p className="text-grey text-xl">RM {product.productPrice}</p>
                 </div>
 
                 <div>
@@ -154,8 +154,8 @@ const ProductModal = ({
 
               {product.productDescription && (
                 <div className="flex flex-col gap-1">
-                  <p className="font-medium">Description</p>
-                  <p className="text-dark/80">{product.productDescription}</p>
+                  <p className="subtitle">Product description</p>
+                  <p className="text-dark">{product.productDescription}</p>
                 </div>
               )}
             </div>
