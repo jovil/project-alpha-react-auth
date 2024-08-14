@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useUser } from "../../context/UserContext";
 import { useProducts } from "../../context/ProductsContext";
 import Notify from "simple-notify";
@@ -24,13 +24,19 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     price: string;
     _id: string;
     userName: string;
+    tags: string;
   }>({
     productName: "",
     productDescription: "",
     price: "",
     _id: userState._id,
     userName: userState.userName,
+    tags: "",
   });
+  const [tags, setTags] = useState<string[]>([]);
+  const [showTagsLimitMessage, setShowTagsLimitMessage] =
+    useState<boolean>(false);
+  const tagsContainerRef = useRef<any>(null);
   const url = `${process.env.REACT_APP_API_URL}/create/product`;
 
   useEffect(() => {
@@ -87,7 +93,7 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     productImages.forEach((file) => {
       formData.append(`image`, file);
     });
-    formData.append("product", JSON.stringify(product));
+    formData.append("product", JSON.stringify({ ...product, tags: tags }));
 
     const configuration = {
       method: "POST", // Specify the request method
@@ -207,6 +213,26 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
     });
   }
 
+  const addTag = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (product.tags === "") return;
+    if (tags.length < 3 && showTagsLimitMessage) setShowTagsLimitMessage(false);
+
+    if (tags.length >= 3) setShowTagsLimitMessage(true);
+    if (tags.length >= 3) return;
+    setTags((prevTags: string[]) => [...prevTags, product.tags]);
+    setProduct((prev: any) => ({
+      ...prev,
+      tags: "",
+    }));
+  };
+
+  const deleteTag = (tagToRemove: string) => {
+    setTags((prevTags: string[]) =>
+      prevTags.filter((prevTags) => prevTags !== tagToRemove)
+    );
+  };
+
   return (
     <Backdrop onClick={onToggleModal} showCloseButton={false}>
       <motion.div
@@ -312,6 +338,80 @@ const CreateProductModal = ({ onToggleModal }: { onToggleModal: any }) => {
                     value={product.productDescription}
                     onChange={handleChange}
                   />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="subtitle flex gap-1">
+                    Tags
+                    {showTagsLimitMessage && (
+                      <p className="font-medium text-sm text-danger normal-case">
+                        You can only select up to 3 tags.
+                      </p>
+                    )}
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      className="border-2 border-[#444] p-3 rounded w-full"
+                      placeholder="Create tags"
+                      name="tags"
+                      value={product.tags}
+                      onChange={handleChange}
+                    />
+                    <div className="flex">
+                      <button
+                        className="btn-chunky-primary whitespace-nowrap"
+                        type="button"
+                        onClick={addTag}
+                      >
+                        Add tag
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2" ref={tagsContainerRef}>
+                    {tags.length > 0 && (
+                      <>
+                        {tags.map((tag: string, index: number) => {
+                          return (
+                            <div
+                              className="tag flex items-center gap-1"
+                              key={index}
+                            >
+                              <p>{tag}</p>
+                              <button
+                                type="button"
+                                onClick={() => deleteTag(tag)}
+                              >
+                                <svg
+                                  className="text-blue-100 h-3 w-3 rotate-45"
+                                  width="24"
+                                  height="25"
+                                  viewBox="0 0 24 25"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M12 3V21"
+                                    stroke="currentColor"
+                                    strokeWidth="3"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  />
+                                  <path
+                                    d="M3 12H21"
+                                    stroke="currentColor"
+                                    strokeWidth="3"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  />
+                                </svg>
+                              </button>
+                            </div>
+                          );
+                        })}
+                      </>
+                    )}
+                  </div>
                 </div>
                 <button type="submit" className="hidden">
                   Save
