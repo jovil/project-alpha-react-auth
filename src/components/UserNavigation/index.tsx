@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { getFetchConfig } from "../../utils/fetchConfig";
@@ -19,7 +19,7 @@ const UserNavigation = () => {
     } catch (error) {
       console.error("Error fetching profile:", error);
     }
-  }, [userId, setUser]);
+  }, [userId]);
 
   useEffect(() => {
     fetchUser();
@@ -43,7 +43,7 @@ const UserNavigation = () => {
                       isActive ? "text-blue-100 bg-blue-900" : ""
                     }`
                   }
-                  to={`/user/${user?.userName.toLowerCase()}`}
+                  to={`/user/${user?.userName?.toLowerCase()}`}
                   state={{ userId: user?._id }}
                 >
                   Profile

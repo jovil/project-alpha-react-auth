@@ -8,15 +8,11 @@ import "./App.css";
 import Register from "./pages/RegisterPage/RegisterPage";
 import Login from "./pages/LoginPage/Login";
 import Cookies from "universal-cookie";
-import UserShopPage from "./pages/UserShopPage/index";
 import ShopPage from "./pages/ShopPage/ShopPage";
-import UserPage from "./pages/UserPage";
 import SeriesPage from "./pages/SeriesPage/SeriesPage";
 import TalentPage from "./pages/TalentPage";
 import SeriesListPage from "./pages/SeriesListPage";
 import { AnimatePresence } from "framer-motion";
-import UserPostsPage from "./pages/UserPostsPage/index";
-import UserTalentPage from "./pages/UserTalentPage/index";
 import CreatePost from "./components/CreatePost";
 import CreatePostModal from "./components/CreatePost/modal";
 import useFileUpload from "./hooks/useFileUpload";
@@ -25,6 +21,7 @@ import CreateProductModal from "./components/CreateProduct/modal";
 import useCreateProduct from "./hooks/useCreateProduct";
 import SearchModal from "./components/SearchModal";
 import DiscoverPage from "./pages/DiscoverPage";
+import User from "./pages/User";
 
 function App() {
   const cookies = new Cookies();
@@ -407,10 +404,10 @@ function App() {
           <Route path="/auth" element={<ProtectedRoutes />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path={`/shop/:userName`} element={<UserShopPage />} />
-          <Route path={`/user/:userName`} element={<UserPage />} />
-          <Route path={`/posts/:userName`} element={<UserPostsPage />} />
-          <Route path={`/talent/:userName`} element={<UserTalentPage />} />
+          <Route path={`/shop/:userName`} element={<User />} />
+          <Route path={`/user/:userName`} element={<User />} />
+          <Route path={`/posts/:userName`} element={<User />} />
+          <Route path={`/talent/:userName`} element={<User />} />
           <Route path={`/series/:seriesTitle`} element={<SeriesPage />} />
           <Route path={`/shop`} element={<ShopPage />} />
           <Route path={`/talent`} element={<TalentPage />} />

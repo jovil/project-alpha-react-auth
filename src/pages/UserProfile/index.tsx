@@ -40,19 +40,13 @@ interface Product {
   paymentLink: string;
 }
 
-const UserPostListPage = () => {
+const UserProfile = () => {
   const { userName } = useParams();
   const location = useLocation();
   const { userId } = location.state || {};
   const { userState, setUserState } = useUser();
   const { isShowModal, handleToggleCreateProductModal } = useCreateProduct();
-  const [user, setUser] = useState<{
-    userName: string;
-    email: string;
-  }>({
-    userName: "",
-    email: "",
-  });
+  const [user, setUser] = useState<Record<string, any>>();
   const [posts, setPosts] = useState<Posts[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
@@ -337,7 +331,6 @@ const UserPostListPage = () => {
               </div>
             </section>
           </div>
-          <UserNavigation />
           {posts.length > 0 && (
             <AnimatePresence
               initial={false}
@@ -372,8 +365,9 @@ const UserPostListPage = () => {
           )}
         </>
       )}
+      <UserNavigation />
     </>
   );
 };
 
-export default UserPostListPage;
+export default UserProfile;

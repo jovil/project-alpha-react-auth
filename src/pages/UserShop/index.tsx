@@ -15,15 +15,7 @@ const UserShopPage = () => {
   const location = useLocation();
   const { userId } = location.state || {};
   const { userState } = useUser();
-  const [profile, setProfile] = useState<{
-    profileName: string;
-    email: string;
-    productCount: number;
-  }>({
-    profileName: "",
-    email: "",
-    productCount: 0,
-  });
+  const [user, setUser] = useState<Record<string, any>>();
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
   const { isShowModal, handleToggleCreateProductModal } = useCreateProduct();
   const [loading, setLoading] = useState(true);
@@ -31,20 +23,20 @@ const UserShopPage = () => {
   useEffect(() => {
     const url = `${process.env.REACT_APP_API_URL}/user/${userId}`;
 
-    const fetchProfile = async () => {
+    const fetchUser = async () => {
       try {
         const response = await fetch(url, getFetchConfig);
         const result = await response.json();
-        setProfile(result);
+        setUser(result);
         setIsLoadingAvatar(false);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching profile:", error);
+        console.error("Error fetching user:", error);
       }
     };
 
-    fetchProfile();
-  }, [userId, setProfile]);
+    fetchUser();
+  }, [userId, setUser]);
 
   return (
     <>
@@ -56,13 +48,13 @@ const UserShopPage = () => {
         />
       ) : (
         <>
-          {profile?.productCount > 0 ? (
+          {user?.productCount > 0 ? (
             <>
               <HeaderSection
-                isProfile={profile}
+                isProfile={user}
                 profileLoadingAvatar={isLoadingAvatar}
               />
-              <Grid isUser={profile} />
+              <Grid isUser={user} />
             </>
           ) : (
             <>
