@@ -1,19 +1,12 @@
 import { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import { useLocation } from "react-router-dom";
-import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
 import { apiUrl } from "../../utils/fetchConfig";
 import { postFetchConfig } from "../../utils/fetchConfig";
 import ShareUser from "../../components/ShareUser";
 
-const HeaderSection = ({
-  isUser,
-  isLoadingAvatar,
-}: {
-  isUser: any;
-  isLoadingAvatar: boolean;
-}) => {
+const HeaderSection = ({ isUser }: { isUser: any }) => {
   const location = useLocation();
   const { userId } = location.state || {};
   const { userState, setUserState } = useUser();
@@ -69,22 +62,9 @@ const HeaderSection = ({
           <div className="flex flex-col gap-3 items-center">
             <p className="text-dark font-bold">Profile</p>
             <div className="w-16 h-16 rounded shadow-md relative overflow-hidden">
-              {isLoadingAvatar && (
-                <img
-                  className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
-                  src={loading}
-                  alt=""
-                />
-              )}
               <img
                 className="object-cover aspect-square"
-                src={
-                  isLoadingAvatar
-                    ? defaultAvatar
-                    : isUser?.avatar
-                    ? isUser?.avatar
-                    : defaultAvatar
-                }
+                src={isUser?.avatar ? isUser?.avatar : defaultAvatar}
                 alt=""
               />
             </div>

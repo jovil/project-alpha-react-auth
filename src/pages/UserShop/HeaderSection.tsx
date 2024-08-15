@@ -1,19 +1,12 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-import loading from "../../assets/images/loading.gif";
 import defaultAvatar from "../../assets/images/toon_6.png";
 import { apiUrl } from "../../utils/fetchConfig";
 import { postFetchConfig } from "../../utils/fetchConfig";
 import ShareUser from "../../components/ShareUser";
 
-const HeaderSection = ({
-  isProfile,
-  profileLoadingAvatar,
-}: {
-  isProfile: any;
-  profileLoadingAvatar: boolean;
-}) => {
+const HeaderSection = ({ isProfile }: { isProfile: any }) => {
   const { userState, setUserState } = useUser();
   const [showDescriptionForm, setShowDescriptionForm] = useState(false);
   const [shopDescriptionText, setShopDescriptionText] = useState("");
@@ -63,22 +56,9 @@ const HeaderSection = ({
               state={{ userId: isProfile._id }}
             >
               <div className="w-16 h-16 rounded shadow-md relative overflow-hidden">
-                {profileLoadingAvatar && (
-                  <img
-                    className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-0"
-                    src={loading}
-                    alt=""
-                  />
-                )}
                 <img
                   className="object-cover aspect-square"
-                  src={
-                    profileLoadingAvatar
-                      ? defaultAvatar
-                      : isProfile.avatar
-                      ? isProfile.avatar
-                      : defaultAvatar
-                  }
+                  src={isProfile.avatar ? isProfile.avatar : defaultAvatar}
                   alt=""
                 />
               </div>

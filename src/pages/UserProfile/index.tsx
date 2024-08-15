@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import HeaderSection from "./HeaderSection";
-import UserNavigation from "../../components/UserNavigation";
 import { apiUrl } from "../../utils/fetchConfig";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import Card from "../../components/Card";
@@ -40,16 +39,18 @@ interface Product {
   paymentLink: string;
 }
 
-const UserProfile = () => {
+const UserProfile = ({
+  isUser,
+}: {
+  isUser: Record<string, any> | undefined;
+}) => {
   const { userName } = useParams();
   const location = useLocation();
   const { userId } = location.state || {};
-  const { userState, setUserState } = useUser();
+  const { userState } = useUser();
   const { isShowModal, handleToggleCreateProductModal } = useCreateProduct();
-  const [user, setUser] = useState<Record<string, any>>();
   const [posts, setPosts] = useState<Posts[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [isLoadingAvatar, setIsLoadingAvatar] = useState(true);
   const [loading, setLoading] = useState(true);
   const {
     showModal,
@@ -60,30 +61,6 @@ const UserProfile = () => {
   } = useFileUpload();
   const [showPostModal, setShowPostModal] = useState(false);
   const [postModalImageSrc, setPostModalImageSrc] = useState<string>("");
-
-  const fetchUser = useCallback(async () => {
-    const url = `${process.env.REACT_APP_API_URL}/user/${userId}`;
-    try {
-      const response = await fetch(url, getFetchConfig);
-      const result = await response.json();
-      setUserState((prevState: any) => {
-        return {
-          ...prevState,
-          profileDescription: result?.profileDescription,
-        };
-      });
-      setUser(result);
-      setIsLoadingAvatar(false);
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-    }
-
-    // eslint-disable-next-line
-  }, [userId]);
-
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
 
   const fetchPosts = useCallback(async () => {
     const url = `${apiUrl}/posts/${userId}?limit=4`;
@@ -148,7 +125,7 @@ const UserProfile = () => {
         />
       ) : (
         <>
-          <HeaderSection isUser={user} isLoadingAvatar={isLoadingAvatar} />
+          <HeaderSection isUser={isUser} />
           <div className="max-w-[1140px] py-16 mx-auto grid grid-cols-12 gap-4 h-full flex-grow w-full">
             <section className="flex flex-col gap-4 px-4 col-span-5">
               <header className="flex justify-between items-end">
@@ -156,7 +133,7 @@ const UserProfile = () => {
                 {products.length > 0 && (
                   <NavLink
                     className="font-bold text-sm text-blue-100 underline"
-                    to={`/shop/${user && user?.userName.toLowerCase()}`}
+                    to={`/shop/${isUser && isUser?.userName.toLowerCase()}`}
                     state={{ userId: userId }}
                   >
                     Go to shop
@@ -365,7 +342,6 @@ const UserProfile = () => {
           )}
         </>
       )}
-      <UserNavigation />
     </>
   );
 };
