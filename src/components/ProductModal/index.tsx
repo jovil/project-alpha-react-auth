@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import loading from "../../assets/images/loading.gif";
 import { getFetchConfig } from "../../utils/fetchConfig";
 import { slideInFromRight } from "../../utils/animations";
+import UserAvatar from "../Card/userAvatar";
 
 interface Product {
   productName: string;
@@ -18,9 +19,11 @@ interface Product {
 }
 
 const ProductModal = ({
+  user,
   productId,
   onToggleModal,
 }: {
+  user?: Record<string, any>;
   productId: any;
   onToggleModal: any;
 }) => {
@@ -88,7 +91,7 @@ const ProductModal = ({
         exit="exit"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="min-h-[calc(100vh-16px)] m-4 bg-white rounded p-3 pb-16 flex flex-col gap-3 relative">
+        <div className="min-h-[calc(100vh-16px)] m-4 bg-white rounded p-3 pb-10 flex flex-col gap-3 relative">
           {product ? (
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-3">
@@ -152,12 +155,19 @@ const ProductModal = ({
                 </div>
               </div>
 
-              {product.productDescription && (
-                <div className="flex flex-col gap-1">
-                  <p className="subtitle">Product description</p>
-                  <p className="text-dark">{product.productDescription}</p>
+              <div className="flex flex-col gap-10">
+                {product.productDescription && (
+                  <div className="flex flex-col gap-1">
+                    <p className="subtitle">Product description</p>
+                    <p className="text-dark">{product.productDescription}</p>
+                  </div>
+                )}
+
+                <div className="flex flex-col gap-2">
+                  <p className="text-grey text-sm">Created by:</p>
+                  {user && <UserAvatar user={user} />}
                 </div>
-              )}
+              </div>
             </div>
           ) : (
             <img

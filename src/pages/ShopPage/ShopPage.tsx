@@ -160,7 +160,7 @@ const ShopPage = () => {
                   return null; // Skip this product if data is invalid
                 }
 
-                return <ProductCard key={index} data={product} />;
+                return <ProductCard key={index} product={product} />;
               })}
             </>
           ) : (

@@ -20,6 +20,7 @@ const PostListView = () => {
   const [page, setPage] = useState(1);
   const [showPostModal, setShowPostModal] = useState(false);
   const [postModalImageSrc, setPostModalImageSrc] = useState<string>("");
+  const [user, setUser] = useState<Record<string, any>>();
   const limit = 9;
   const url = `${process.env.REACT_APP_API_URL}/posts?page=${page}&limit=${limit}`;
   const isFetchingRef = useRef(false); // To keep track of fetching state
@@ -102,11 +103,15 @@ const PostListView = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
-  const togglePostModal = (e: React.MouseEvent<HTMLElement>) => {
+  const togglePostModal = (
+    e: React.MouseEvent<HTMLElement>,
+    user?: Record<string, any>
+  ) => {
     const image = e.target as HTMLImageElement;
     const imageSrc = image.src;
     setPostModalImageSrc(imageSrc);
     setShowPostModal((prevState) => !prevState);
+    setUser(user);
   };
 
   return (
@@ -124,12 +129,19 @@ const PostListView = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 {postModalImageSrc && (
-                  <div className="bg-white h-[calc(100vh-60px)] p-2 rounded-md flex cursor-default pointer-events-auto">
-                    <img
-                      className="max-w-full"
-                      src={postModalImageSrc}
-                      alt=""
-                    />
+                  <div className="text-white/80 p-4 flex flex-col gap-2 h-full justify-center">
+                    <div className="bg-white max-h-[calc(100vh-120px)] h-full w-auto p-2 rounded-md  cursor-default pointer-events-auto">
+                      <img
+                        className="max-w-full h-full object-cover rounded"
+                        src={postModalImageSrc}
+                        alt=""
+                      />
+                    </div>
+                    <div className="flex">
+                      <div className="flex pointer-events-auto">
+                        <UserAvatar user={user} />
+                      </div>
+                    </div>
                   </div>
                 )}
               </motion.div>
@@ -155,7 +167,7 @@ const PostListView = () => {
                   >
                     <button
                       className="relative group/modalIcon cursor-zoom-in"
-                      onClick={togglePostModal}
+                      onClick={(e) => togglePostModal(e, post.user)}
                     >
                       <div className="absolute top-2 right-2 z-10 text-white bg-[#1d1d1fcc] w-[30px] h-[30px] p-1 rounded-full flex justify-center items-center opacity-0 group-hover/modalIcon:opacity-100 transition-opacity pointer-events-none">
                         <svg
@@ -192,7 +204,7 @@ const PostListView = () => {
                         </div>
                         <footer className="flex flex-col gap-4">
                           <div className="flex-grow flex justify-between items-center">
-                            <UserAvatar data={post} />
+                            <UserAvatar user={post.user} />
                             {post.user?.productCount > 0 && (
                               <div className="ml-auto">
                                 <NavLink

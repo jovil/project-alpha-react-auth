@@ -148,7 +148,7 @@ const UserProfile = ({
                 {products.map((product: any, index: number) => {
                   return (
                     <React.Fragment key={index}>
-                      <ProductCard data={product} />
+                      <ProductCard product={product} />
                     </React.Fragment>
                   );
                 })}
@@ -249,6 +249,13 @@ const UserProfile = ({
                         </div>
                         <Card data={post} />
                       </button>
+
+                      <div className="flex flex-col justify-between gap-6 w-full h-full">
+                        <div className="flex flex-col gap-1">
+                          <p className="font-bold">{post.title}</p>
+                          <p className="text-grey">{post.description}</p>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}

@@ -45,6 +45,10 @@ const Grid = ({ isUser }: { isUser: any }) => {
     fetchProducts();
   }, [fetchProducts, userState.productCount]);
 
+  useEffect(() => {
+    console.log("p", products);
+  }, [products]);
+
   return (
     <>
       {loading ? (
@@ -78,7 +82,7 @@ const Grid = ({ isUser }: { isUser: any }) => {
                     return (
                       <ProductCard
                         key={product._id}
-                        data={product}
+                        product={product}
                         isShowSettings={true}
                       />
                     );

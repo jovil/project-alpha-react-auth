@@ -10,10 +10,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { fadeIn } from "../../utils/animations";
 
 const ProductCard = ({
-  data,
+  product,
   isShowSettings = false,
 }: {
-  data: Record<string, any>;
+  product: Record<string, any>;
   isShowSettings?: boolean;
 }) => {
   const settingsDropdownRef = useRef<any>(null);
@@ -99,14 +99,14 @@ const ProductCard = ({
       <div
         className="group bg-white flex flex-col gap-4 text-left relative overflow-hidden shadow-chunky rounded-xl p-4 cursor-pointer"
         onClick={() => {
-          handleToggleModal(data._id);
+          handleToggleModal(product._id);
         }}
       >
         <div className="w-full h-auto flex flex-col aspect-square">
           <div className="h-full relative overflow-hidden rounded-lg group/settingsIcon">
             {showSettings && (
               <>
-                {data.user._id === userState._id && (
+                {product.user._id === userState._id && (
                   <div ref={settingsDropdownRef}>
                     <button
                       className="absolute top-2 left-2 z-10 text-white bg-[#1d1d1fcc] w-[30px] h-[30px] p-1 rounded-full flex justify-center items-center opacity-0 group-hover/settingsIcon:opacity-100 transition-opacity"
@@ -137,8 +137,8 @@ const ProductCard = ({
                             onClick={(e) => {
                               handleConfirmationModal(
                                 e,
-                                data._id,
-                                data.fileUrl
+                                product._id,
+                                product.fileUrl
                               );
                               e.stopPropagation();
                             }}
@@ -160,10 +160,10 @@ const ProductCard = ({
                 alt=""
               />
             )}
-            {typeof data.fileUrl === "object" && (
+            {typeof product.fileUrl === "object" && (
               <img
                 className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform aspect-square"
-                src={data.fileUrl[data.fileUrl.length - 1]}
+                src={product.fileUrl[product.fileUrl.length - 1]}
                 alt=""
                 loading="lazy"
                 onLoad={handleOnLoad}
@@ -173,11 +173,11 @@ const ProductCard = ({
         </div>
         <div className="flex flex-col justify-between gap-4 w-full flex-grow">
           <div className="flex flex-col gap-1">
-            <p className="font-bold">{data.productName}</p>
-            <p className="text-grey">{data.productDescription}</p>
+            <p className="font-bold">{product.productName}</p>
+            <p className="text-grey">{product.productDescription}</p>
           </div>
 
-          <p className="font-bold">RM {data.productPrice}</p>
+          <p className="font-bold">RM {product.productPrice}</p>
         </div>
       </div>
 
@@ -213,8 +213,9 @@ const ProductCard = ({
       </AnimatePresence>
 
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
-        {showModal && productId === data._id && (
+        {showModal && productId === product._id && (
           <ProductModal
+            user={product.user}
             productId={productId}
             onToggleModal={handleToggleModal}
           />
