@@ -42,10 +42,6 @@ const TalentModal = ({
     fetchUser();
   }, [fetchUser]);
 
-  useEffect(() => {
-    console.log("user", user);
-  }, [user]);
-
   return (
     <>
       <Backdrop onClick={onToggleModal} showCloseButton={true}>

@@ -56,7 +56,9 @@ const TalentCard = ({
         <div className="w-full">
           <div className="bg-white/90 flex flex-col justify-between gap-1">
             <p className="font-bold">{talent.userName}</p>
-            <p className="text-grey">{talent.talentProfile.role}</p>
+            <p className="text-grey">
+              {talent.talentProfile && talent.talentProfile?.role}
+            </p>
           </div>
         </div>
       </div>

@@ -79,15 +79,15 @@ const HeaderSection = () => {
             <img
               className="w-16 h-16 object-cover rounded shadow-md"
               src={
-                userState.avatar64
+                userState?.avatar64
                   ? userState.avatar64
-                  : userState.avatar
+                  : userState?.avatar
                   ? userState.avatar
                   : defaultAvatar
               }
               alt=""
             />
-            <p className="font-bold">{userState.userName}</p>
+            <p className="font-bold">{userState?.userName}</p>
           </div>
           <Form
             onSubmit={(e) => handleSubmit(e)}

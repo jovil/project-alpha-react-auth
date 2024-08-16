@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useContext } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import { useUser } from "../../context/UserContext";
 import HeaderSection from "./HeaderSection";
@@ -46,6 +46,7 @@ enum View {
 
 const AuthComponent = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { state, setState } = useContext(GlobalStateContext);
   const { userState, setUserState } = useUser();
@@ -72,7 +73,7 @@ const AuthComponent = () => {
   }, [searchParams]);
 
   const fetchUser = useCallback(async () => {
-    const url = `${process.env.REACT_APP_API_URL}/user/${userState._id}`;
+    const url = `${process.env.REACT_APP_API_URL}/user/${userState?._id}`;
 
     try {
       const response = await fetch(url, getFetchConfig);
@@ -104,7 +105,7 @@ const AuthComponent = () => {
     } catch (error) {
       console.log("error", error);
     }
-  }, [setUserState, userState._id]);
+  }, [setUserState, userState?._id]);
 
   useEffect(() => {
     fetchUser();
@@ -132,6 +133,7 @@ const AuthComponent = () => {
     cookies.remove("TOKEN", { path: "/" });
     setState({ ...state, isLoggedIn: false });
     setUserState(null);
+    navigate("/");
   };
 
   return (
@@ -175,7 +177,7 @@ const AuthComponent = () => {
                 Bank account details
               </button>
             </li>
-            {userState.email === "hi@jovil.dev" && (
+            {userState?.email === "hi@jovil.dev" && (
               <li className="w-full">
                 <button
                   className={`text-left px-8 py-3 rounded-lg hover:bg-blue-900 whitespace-nowrap w-full transition-colors ${

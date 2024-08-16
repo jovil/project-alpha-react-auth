@@ -19,6 +19,7 @@ export const GlobalStateProvider = ({ children }) => {
           showHiringCaption: false,
           userPostsView: "grid",
           showUserPostsCaption: false,
+          mobileMenuOpen: false,
         };
   });
 

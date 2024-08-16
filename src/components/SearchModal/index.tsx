@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { GlobalStateContext } from "../../context/Context";
 import { motion, AnimatePresence } from "framer-motion";
 import { apiUrl } from "../../utils/fetchConfig";
 import { getFetchConfig } from "../../utils/fetchConfig";
@@ -16,6 +17,7 @@ const SearchModal = ({
   onShowSearchModal: () => void;
   isShowSearchModal: boolean;
 }) => {
+  const { state, setState } = useContext(GlobalStateContext);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResultQuery, setSearchResultQuery] = useState<string>("");
   const [searchResult, setSearchResult] = useState<Record<string, any>>();
@@ -65,7 +67,7 @@ const SearchModal = ({
         {isShowSearchModal && (
           <Backdrop onClick={onToggleSearchModal} showCloseButton={false}>
             <motion.div
-              className="absolute w-full pointer-events-none py-6"
+              className="absolute w-full pointer-events-none px-4 py-6"
               variants={slideInFromBottom}
               initial="hidden"
               animate="visible"
@@ -108,7 +110,16 @@ const SearchModal = ({
                               className="flex items-center gap-3 p-4 py-5 rounded-md hover:bg-blue-800 transition-colors focus:bg-blue-800"
                               to={`/user/${user.userName.toLowerCase()}`}
                               state={{ userId: user._id }}
-                              onClick={onToggleSearchModal}
+                              onClick={() => {
+                                onToggleSearchModal();
+                                if (state.mobileMenuOpen)
+                                  setState(
+                                    (prevState: Record<string, any>) => ({
+                                      ...prevState,
+                                      mobileMenuOpen: false,
+                                    })
+                                  );
+                              }}
                               ref={
                                 index === 0 ? searchResultItemRef : undefined
                               }

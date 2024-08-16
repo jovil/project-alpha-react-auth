@@ -45,10 +45,6 @@ const Grid = ({ isUser }: { isUser: any }) => {
     fetchProducts();
   }, [fetchProducts, userState.productCount]);
 
-  useEffect(() => {
-    console.log("p", products);
-  }, [products]);
-
   return (
     <>
       {loading ? (
