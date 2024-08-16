@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { GlobalStateContext } from "../../context/Context";
 import { useUser } from "../../context/UserContext";
@@ -19,6 +19,7 @@ const cookies = new Cookies();
 const MobileHeader = () => {
   const token = cookies.get("TOKEN");
   const location = useLocation();
+  const headerRef = useRef<any>(null);
   const { state, setState } = useContext(GlobalStateContext);
   const { userState } = useUser();
   const { showSearchModal, onToggleSearchModal, onShowSearchModal } =
@@ -32,6 +33,9 @@ const MobileHeader = () => {
   } = useFileUpload();
   const { isShowModal, handleToggleCreateProductModal } = useCreateProduct();
   const [showCreateMenu, setShowCreateMenu] = useState(false);
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(window.scrollY);
+  const [isPastHeader, setIsPastHeader] = useState<boolean>(false);
 
   const handleMenu = () => {
     setState((prevState: Record<string, any>) => ({
@@ -44,9 +48,46 @@ const MobileHeader = () => {
     setShowCreateMenu((prevState: boolean) => !prevState);
   };
 
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+    const headerHeight = headerRef.current?.clientHeight;
+    if (currentScrollY > lastScrollY) {
+      setIsScrollingDown(true);
+    } else {
+      setIsScrollingDown(false);
+    }
+
+    if (currentScrollY > headerHeight) {
+      setIsPastHeader(true);
+    } else {
+      setIsPastHeader(false);
+    }
+
+    setLastScrollY(currentScrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+
+    // eslint-disable-next-line
+  }, [lastScrollY]);
+
+  useEffect(() => {
+    document.body.style.overflow = state.mobileMenuOpen ? "hidden" : "auto";
+  }, [state.mobileMenuOpen]);
+
   return (
     <>
-      <header className="bg-white sticky top-0 z-20 py-4 transition">
+      <header
+        className={`bg-white sticky top-0 z-20 py-4 transition ${
+          isScrollingDown ? "is-hidden" : ""
+        } ${isPastHeader ? "border-b-2 border-[#444] shadow-nav" : ""}`}
+        ref={headerRef}
+      >
         <div className="container flex justify-between items-center">
           <NavLink to="/">Home</NavLink>
 
@@ -127,7 +168,7 @@ const MobileHeader = () => {
                       ></span>
                     </button>
                   </header>
-                  <div className="py-4">
+                  <div className="bg-white py-4">
                     {!token && (
                       <div className="px-6 flex items-center gap-4">
                         {!state.isLoggedIn && (
