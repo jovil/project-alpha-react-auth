@@ -60,7 +60,7 @@ const Grid = ({ isUser }: { isUser: any }) => {
               <header className="hidden tablet:flex justify-between items-center gap-2 h-7">
                 <h1 className="subtitle">All products</h1>
               </header>
-              <div className="grid gap-4 tablet:grid-cols-2 desktop:grid-cols-3 gap-y-9">
+              <div className="grid gap-4 grid-cols-2 desktop:grid-cols-3 gap-y-9">
                 <>
                   {products?.map((product: any, index: number) => {
                     if (

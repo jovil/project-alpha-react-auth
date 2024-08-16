@@ -69,7 +69,7 @@ const UserDetails = ({ isPassword }: { isPassword: string }) => {
 
   return (
     <>
-      <form className="max-w-[400px] mx-auto flex flex-col gap-6 p-4 w-full">
+      <form className="flex flex-col gap-6 p-4 w-full">
         <div className="flex flex-col gap-2">
           <label className="subtitle">Email:</label>
           <input

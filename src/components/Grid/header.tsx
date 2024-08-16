@@ -41,7 +41,7 @@ const GridHeader = ({
 
   return (
     <>
-      <header className="hidden tablet:flex justify-between items-center gap-2">
+      <header className="flex justify-between items-center gap-2">
         {children}
         <div className="flex justify-end items-center gap-4">
           <div className="flex items-center gap-2">

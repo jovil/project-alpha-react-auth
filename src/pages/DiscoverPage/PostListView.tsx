@@ -130,7 +130,7 @@ const PostListView = () => {
               >
                 {postModalImageSrc && (
                   <div className="text-white/80 p-4 flex flex-col gap-2 h-full justify-center">
-                    <div className="bg-white max-h-[calc(100vh-120px)] h-full w-auto p-2 rounded-md  cursor-default pointer-events-auto">
+                    <div className="bg-white max-h-[calc(100vh-120px)] h-full w-auto p-2 rounded-md cursor-default pointer-events-auto">
                       <img
                         className="max-w-full h-full object-cover rounded"
                         src={postModalImageSrc}
@@ -203,12 +203,12 @@ const PostListView = () => {
                           <p className="text-grey">{post.description}</p>
                         </div>
                         <footer className="flex flex-col gap-4">
-                          <div className="flex-grow flex justify-between items-center">
+                          <div className="flex-grow flex flex-col-reverse gap-3 tablet:flex-row justify-between tablet:items-center tablet:gap-0">
                             <UserAvatar user={post.user} />
                             {post.user?.productCount > 0 && (
-                              <div className="ml-auto">
+                              <div className="w-full tablet:ml-auto tablet:w-auto">
                                 <NavLink
-                                  className="btn-chunky-primary text-sm text-center group flex items-center gap-1.5"
+                                  className="btn-chunky-primary text-sm text-center group flex justify-center items-center gap-1.5 tablet:justify-normal"
                                   to={`/shop/${post.user.userName.toLowerCase()}`}
                                   state={{ userId: post.user._id }}
                                 >

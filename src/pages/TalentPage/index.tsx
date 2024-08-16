@@ -33,7 +33,7 @@ const HiringPage = () => {
         <header className="hidden tablet:flex justify-between items-center gap-2">
           <h1 className="subtitle">All talent</h1>
         </header>
-        <div className="grid gap-6 tablet:grid-cols-2 desktop:grid-cols-3 gap-y-9">
+        <div className="grid gap-4 grid-cols-2 desktop:grid-cols-3 desktop:gap-6 gap-y-9">
           {users?.length ? (
             <>
               {users?.map((user: any, index: number) => {

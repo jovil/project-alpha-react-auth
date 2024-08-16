@@ -126,8 +126,8 @@ const UserProfile = ({
       ) : (
         <>
           <HeaderSection isUser={isUser} />
-          <div className="max-w-[1140px] py-16 mx-auto grid grid-cols-12 gap-4 h-full flex-grow w-full">
-            <section className="flex flex-col gap-4 px-4 col-span-5">
+          <div className="max-w-[1140px] py-16 mx-auto flex flex-col-reverse tablet:grid tablet:grid-cols-12 gap-4 h-full flex-grow w-full">
+            <section className="flex flex-col gap-4 px-4 col-span-5 pt-16 tablet:pt-0">
               <header className="flex justify-between items-end">
                 <h2 className="subtitle">Products</h2>
                 {products.length > 0 && (
@@ -142,7 +142,9 @@ const UserProfile = ({
               </header>
               <div
                 className={`${
-                  products.length > 0 ? "grid gap-4 tablet:grid-cols-2" : ""
+                  products.length > 0
+                    ? "grid gap-4 gap-y-9 tablet:gap-y-6 grid-cols-2"
+                    : ""
                 }`}
               >
                 {products.map((product: any, index: number) => {
@@ -216,7 +218,7 @@ const UserProfile = ({
                   </NavLink>
                 )}
               </header>
-              <div className="flex flex-col gap-3 gap-y-9">
+              <div className="grid grid-cols-2 gap-4 tablet:flex tablet:flex-col tablet:gap-x-3 gap-y-9">
                 {posts?.map((post: any, index: number) => {
                   return (
                     <div

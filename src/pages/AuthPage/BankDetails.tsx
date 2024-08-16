@@ -88,12 +88,12 @@ const BankDetails = () => {
 
   return (
     <>
-      <div className="max-w-[400px] mx-auto w-full">
+      <div className="max-w-full tablet:max-w-[400px] mx-auto w-full">
         <div className="p-4 font-bold">
           Add your bank account details for payouts
         </div>
 
-        <div className="p-4 pb-6">
+        <div className="p-4">
           <form className="flex flex-col gap-6" onSubmit={submitBankDetails}>
             <div className="flex flex-col gap-2">
               <label className="subtitle">Account holder's name:</label>

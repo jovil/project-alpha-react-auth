@@ -117,8 +117,8 @@ const TalentProfile = ({
           <p className="font-bold">Activate your talent profile</p>
         </div>
 
-        <form className="flex flex-col gap-10" onSubmit={submitHiringDetails}>
-          <div className="grid grid-cols-12 gap-6 w-full">
+        <form className="flex flex-col gap-6" onSubmit={submitHiringDetails}>
+          <div className="flex flex-col tablet:grid tablet:grid-cols-12 gap-6 w-full">
             <div className="col-span-4 flex flex-col gap-4">
               <div className="flex flex-col gap-2">
                 <label className="subtitle">Creative role:</label>
@@ -199,7 +199,7 @@ const TalentProfile = ({
           <div className="flex justify-end">
             <button
               onSubmit={submitHiringDetails}
-              className="btn-chunky-primary flex justify-center items-center"
+              className="btn-chunky-primary flex justify-center items-center w-full tablet:w-auto"
               type="submit"
             >
               Save

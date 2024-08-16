@@ -84,7 +84,7 @@ const ProductModal = ({
   return (
     <Backdrop onClick={onToggleModal} showCloseButton={false}>
       <motion.div
-        className="h-full w-2/5 overflow-scroll ml-auto cursor-default"
+        className="h-full w-4/5 tablet:w-2/5 overflow-scroll ml-auto cursor-default"
         variants={slideInFromRight}
         initial="hidden"
         animate="visible"

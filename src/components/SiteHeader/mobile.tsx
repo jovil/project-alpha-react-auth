@@ -369,6 +369,19 @@ const MobileHeader = () => {
                               Talent
                             </NavLink>
                           </li>
+                          <li>
+                            <NavLink
+                              className={({ isActive }: { isActive: any }) =>
+                                `font-bold px-6 py-5 hover:bg-blue-900 transition-colors block ${
+                                  isActive ? "text-blue-100 bg-blue-900" : ""
+                                }`
+                              }
+                              to="/auth"
+                              onClick={handleMenu}
+                            >
+                              Account
+                            </NavLink>
+                          </li>
                         </ul>
                       </div>
                     )}

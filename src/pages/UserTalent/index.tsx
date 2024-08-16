@@ -18,15 +18,15 @@ const UserTalentPage = ({
     <>
       {isUser?.talentProfileActive ? (
         <div
-          className="h-full mx-auto pointer-events-none"
+          className="h-full w-full mx-auto pointer-events-none pb-16 tablet:pb-0"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="container flex flex-col gap-10 relative pointer-events-auto cursor-default">
             {isUser ? (
               <>
                 <div className="flex justify-between items-center w-full">
-                  <div className="grid grid-cols-12 gap-16 w-full">
-                    <div className="col-span-8 py-12 flex flex-col gap-10">
+                  <div className="flex flex-col tablet:grid tablet:grid-cols-12 gap-16 w-full">
+                    <div className="col-span-8 tablet:py-12 flex flex-col gap-10">
                       <div className="flex flex-col gap-6">
                         <h2 className="text-6xl font-medium leading-tight">
                           {isUser.talentProfile.title}

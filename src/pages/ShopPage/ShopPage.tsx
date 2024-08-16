@@ -148,7 +148,7 @@ const ShopPage = () => {
           </div>
         </header>
 
-        <div className="grid gap-6 tablet:grid-cols-2 desktop:grid-cols-3 gap-y-9">
+        <div className="grid grid-cols-2 gap-4 desktop:grid-cols-3 desktop:gap-6 gap-y-9">
           {allProducts?.length ? (
             <>
               {allProducts?.map((product: any, index: number) => {

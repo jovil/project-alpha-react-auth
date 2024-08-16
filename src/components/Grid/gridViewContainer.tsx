@@ -15,10 +15,10 @@ const GridViewContainer = ({
   return (
     <>
       <div
-        className={`grid gap-6 ${
+        className={`grid ${
           state[gridComponent] === "grid"
-            ? "tablet:grid-cols-2 desktop:grid-cols-3"
-            : ""
+            ? "grid-cols-2 gap-4 desktop:grid-cols-3 desktop:gap-6"
+            : "gap-y-9"
         } ${state[captionComponent] ? "gap-y-9" : ""}`}
       >
         {children}
