@@ -108,9 +108,10 @@ const PostListView = () => {
     user?: Record<string, any>
   ) => {
     const image = e.target as HTMLImageElement;
+    setShowPostModal((prevState) => !prevState);
+    if (image.tagName !== "IMG") return;
     const imageSrc = image.src;
     setPostModalImageSrc(imageSrc);
-    setShowPostModal((prevState) => !prevState);
     setUser(user);
   };
 
